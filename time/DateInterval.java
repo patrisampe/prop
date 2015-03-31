@@ -81,6 +81,14 @@ public class DateInterval{
 		return false;
 	}
 	
+	public String ToString() {
+		return this.Inici.ToString() + " " + this.Fi.ToString();
+	}
+	
+	public String ToNamedString() {
+		return this.Inici.ToNamedString() + " " + this.Fi.ToNamedString();
+	}
+	
 		//retorna la unió si son continus
 	public static DateInterval merge(DateInterval DI1, DateInterval DI2) {
 		DateInterval ret = new DateInterval();
