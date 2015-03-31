@@ -11,7 +11,7 @@ public class Date{
 	private Integer Month;
 	private Integer Year;
 	private static final Map<Integer, String> Meses = CreateMap();
-	
+	public static final Date NULL = new Date(-1, -1, -1);
 	
 	// Constructores
 	public Date(Integer Day, Integer Month, Integer Year){
@@ -62,7 +62,7 @@ public class Date{
 		return Day;
 	}
 	
-	public final Boolean Es_valida(){
+	public Boolean Es_valida(){
 		if (Day > 31 || Day < 1) return false;
 		if (Month > 12 || Month < 1) return false;
 		if ((Month == 4 || Month == 6 || Month == 9 || Month == 11)
@@ -74,7 +74,7 @@ public class Date{
 		return true;
 	}
 	
-	public static final Boolean Es_bisiesto(Integer Year){
+	public static Boolean Es_bisiesto(Integer Year){
 		if (Year%4 != 0) return false;
 		if (Year%100 != 0) return true;
 		if (Year%400 == 0) return true;
