@@ -1,7 +1,7 @@
 package time;
 
 
-public class DateInterval{
+public class DateInterval {
 	
 	//Atributs
 	private Date Inici;
@@ -58,12 +58,13 @@ public class DateInterval{
 	}
 	
 	public Date getInici() {
-		return this.Inici;
+		return Inici;
 	}
 	
 	public Date getFi() {
-		return this.Fi;
+		return Fi;
 	}
+	
 	
 	//Modificadores
 	public Boolean setInici(Date Ini) {
@@ -83,11 +84,11 @@ public class DateInterval{
 	}
 	
 	public String ToString() {
-		return this.Inici.ToString() + " " + this.Fi.ToString();
+		return Inici.ToString() + " " + Fi.ToString();
 	}
 	
 	public String ToNamedString() {
-		return this.Inici.ToNamedString() + " " + this.Fi.ToNamedString();
+		return Inici.ToNamedString() + " " + Fi.ToNamedString();
 	}
 	
 		//retorna la unió si son continus
@@ -95,7 +96,7 @@ public class DateInterval{
 		DateInterval ret = new DateInterval();
 		if(DI1.intersects(DI2)) {
 			ret.Inici = new Date(min(DI1.Inici, DI2.Inici));
-			ret.Fi = new Date(max(DI1.Inici, DI2.Fi));
+			ret.Fi = new Date(max(DI1.Fi, DI2.Fi));
 		}
 		else ret = DateInterval.NULL;
 		return ret;
@@ -112,14 +113,13 @@ public class DateInterval{
 	}
 	
 	
-	
-	
 	//funcions auxiliars
 	private static Date min(Date a, Date b) {
 		return a.compareTo(b) <= 0 ? a : b;
 	}
 	
 	private static Date max(Date a, Date b) {
-		return a.compareTo(b) >= 0 ? a : b;	}
+		return a.compareTo(b) >= 0 ? a : b;
+	}
 		
 }
