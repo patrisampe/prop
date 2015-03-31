@@ -1,5 +1,6 @@
 package time;
 
+
 public class DateInterval{
 	
 	//Atributs
