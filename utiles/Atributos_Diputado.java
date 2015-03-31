@@ -27,4 +27,5 @@ public class Atributos_Diputado {
 		Fecha_de_nacimiento = Unchanged_Date;
 		Legislaturas = Unchanged_Legislatura;
 	}
+	
 }

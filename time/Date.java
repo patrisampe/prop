@@ -74,6 +74,10 @@ public class Date{
 		return true;
 	}
 	
+	public Boolean Es_null(){
+		return equals(NULL);
+	}
+	
 	public static Boolean Es_bisiesto(Integer Year){
 		if (Year%4 != 0) return false;
 		if (Year%100 != 0) return true;

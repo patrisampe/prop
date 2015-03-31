@@ -24,9 +24,12 @@ class ControladorDominioDiputado {
 	public Boolean Modificar_diputado(String nombreDiputado, Atributos_Diputado atributos) {
 		Diputado D = Consultar_diputado(nombreDiputado);
 		Boolean correcto = false;
-		correcto |= D.setPartidoPolitico(atributos.Partido_politico);
-		correcto |= D.setEstado(atributos.Estado);
-		correcto |= D.setFechaNacimiento(atributos.Fecha_de_nacimiento);
+		if (!atributos.Partido_politico.equals(Atributos_Diputado.Unchanged_String))
+			correcto |= D.setPartidoPolitico(atributos.Partido_politico);
+		if (!atributos.Estado.equals(Atributos_Diputado.Unchanged_String))
+			correcto |= D.setEstado(atributos.Estado);
+		if (!atributos.Fecha_de_nacimiento.equals(Atributos_Diputado.Unchanged_Date))
+			correcto |= D.setFechaNacimiento(atributos.Fecha_de_nacimiento);
 		Set<Integer> S = atributos.Legislaturas.keySet();
 		Iterator<Integer> it = S.iterator();
 		while(it.hasNext()){
@@ -73,25 +76,52 @@ class ControladorDominioDiputado {
 	public Boolean Abrir_archivo() {
 		ControladorPersistenciaDiputado C = new ControladorPersistenciaDiputado();
 		//Si hi ha algun problema al obrir: return false;
-		Conjunto_diputados = C.Importa_fichero();
+		Conjunto_diputados = new TreeMap<String, Diputado>();
+		Map<String, Atributos_Diputado> M = C.Importa_fichero();
+		Set<String> S = M.keySet();
+		Iterator<String> it = S.iterator();
+		while (it.hasNext()){
+			String aux = it.next();
+			Conjunto_diputados.put(aux, Crear_diputado(aux, M.get(aux)));
+		}
 		return true;
 	}
 	
 	public Boolean Crear_archivo() {
 		ControladorPersistenciaDiputado C = new ControladorPersistenciaDiputado();
-		return C.Guarda_datos(Conjunto_diputados);
+		Map<String,Atributos_Diputado> M = new TreeMap<String, Atributos_Diputado>();
+		Set<String> S = Conjunto_diputados.keySet();
+		Iterator<String> it = S.iterator();
+		while (it.hasNext()) {
+			String aux = it.next();
+			M.put(aux, Consultar_atributos_diputado(aux));
+		}
+		return C.Exporta_fichero(M);
 	}
 	
 	public Boolean Cargar_datos() {
 		ControladorPersistenciaDiputado C = new ControladorPersistenciaDiputado();
 		//Si hi ha algun problema al carregar: return false;
-		Conjunto_diputados = C.Carga_datos();
+		Conjunto_diputados = new TreeMap<String, Diputado>();
+		Map<String, Atributos_Diputado> M = C.Carga_datos();
+		Set<String> S = M.keySet();
+		Iterator<String> it = S.iterator();
+		while (it.hasNext()){
+			String aux = it.next();
+			Conjunto_diputados.put(aux, Crear_diputado(aux, M.get(aux)));
+		}
 		return true;
 	}
 	
 	public Boolean Guardar_datos() {
 		ControladorPersistenciaDiputado C = new ControladorPersistenciaDiputado();
-		return C.Guarda_datos(Conjunto_diputados);
-	}
+		Map<String,Atributos_Diputado> M = new TreeMap<String, Atributos_Diputado>();
+		Set<String> S = Conjunto_diputados.keySet();
+		Iterator<String> it = S.iterator();
+		while (it.hasNext()) {
+			String aux = it.next();
+			M.put(aux, Consultar_atributos_diputado(aux));
+		}
+		return C.Guarda_datos(M);	}
 
 }
