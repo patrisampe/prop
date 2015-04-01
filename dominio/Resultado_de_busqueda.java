@@ -55,11 +55,11 @@ public class Resultado_de_busqueda {
 		return this.Modificado;
 	}
 	
-	public Integer Consultar_importancia(String nombreTipoEvento) {
+	public Integer getImportancia(String nombreTipoEvento) {
 		return this.Importancia.get(nombreTipoEvento);
 	}
 	
-	public Boolean Cambiar_importancia(String nombreTipoEvento, Integer importancia) {
+	public Boolean setImportancia(String nombreTipoEvento, Integer importancia) {
 		Importancia.put(nombreTipoEvento,importancia);
 		return true;
 	}
