@@ -76,15 +76,11 @@ public class Diputado {
 	}
 	
 	public Boolean addLegistura(Integer identificadorLegislatura) {
-		if (Legislaturas.contains(identificadorLegislatura)) return false;
-		Legislaturas.add(identificadorLegislatura);
-		return true;
+		return Legislaturas.add(identificadorLegislatura);
 	}
 	
 	public Boolean removeLegistura(Integer identificadorLegislatura) {
-		if (!Legislaturas.contains(identificadorLegislatura)) return false;
-		Legislaturas.remove(identificadorLegislatura);
-		return true;
+		return Legislaturas.remove(identificadorLegislatura);
 	}
 	
 }
