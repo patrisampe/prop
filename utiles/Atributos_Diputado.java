@@ -19,6 +19,8 @@ public class Atributos_Diputado {
 	public static final Map<Integer, Boolean> Unchanged_Legislatura = new TreeMap<Integer, Boolean>();
 	public static final Boolean Remove_Legislatura = false;
 	public static final Boolean Add_Legislatura = true;
+	public static final Atributos_Diputado NULL = new Atributos_Diputado();
+
 	
 	
 	public Atributos_Diputado(){
@@ -26,6 +28,10 @@ public class Atributos_Diputado {
 		Estado = Unchanged_String;
 		Fecha_de_nacimiento = Unchanged_Date;
 		Legislaturas = Unchanged_Legislatura;
+	}
+	
+	public Boolean Es_null(){
+		return equals(NULL);
 	}
 	
 }

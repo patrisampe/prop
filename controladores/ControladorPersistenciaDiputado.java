@@ -11,11 +11,11 @@ public class ControladorPersistenciaDiputado{
 		
 	}
 	
-	public Map<String, Atributos_Diputado> Importa_fichero(){
+	public Map<String, Atributos_Diputado> Importa_fichero(String FileName) {
 		return new TreeMap<String, Atributos_Diputado>();
 	}
 	
-	public Boolean Exporta_fichero(Map<String, Atributos_Diputado> Datos) {
+	public Boolean Exporta_fichero(Map<String, Atributos_Diputado> Datos, String FileName) {
 		return true;
 	}
 	
