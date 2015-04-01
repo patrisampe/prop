@@ -5,13 +5,14 @@ import java.util.TreeSet;
 
 import time.*;
 
-class Evento {
+public class Evento {
 
 	private String Nombre;
 	private Date Fecha;
 	
 	private Set <String> Diputados;
-	
+	public static final Evento NULL = new Evento("NULL", Date.NULL);
+
 	public Evento(String Nombre, Date Fecha){
 		this.Nombre=Nombre;
 		this.Fecha=Fecha;
@@ -24,31 +25,36 @@ class Evento {
 		Diputados= new TreeSet<String>(E.Diputados);
 	}
 	
-	public Date Consultar_fecha(){
-		return this.Fecha;
+	public Boolean Es_null(){
+		return (Nombre.equals("NULL"));
 	}
 	
-	public String Consultar_nombre(){
-		return this.Nombre;
+	public String GetNombre(){
+		return Nombre;
 	}
 	
-	public Set<String> Consultar_diputados(){
-		return this.Diputados;
+	public Date GetFecha(){
+		return Fecha;
 	}
-	
-	public Boolean Ha_participado(String nombreDiputado){
-		return Diputados.contains(nombreDiputado);
-	}
-	
-	public Boolean Modificar_fecha(Date nuevaFecha){
+	public Boolean SetFecha(Date nuevaFecha){
 		if (!nuevaFecha.Es_valida()) return false;
 		Fecha = new Date(nuevaFecha);
 		return true;
 	}
 	
-	public Integer Añadir_diputado(String nombreDiputado){
-		//1: ha anat bé
-		//0: aquest nom de diputat no és un diputat
+	public Set<String> GetDiputados(){
+		return Diputados;
+	}
+	
+	public Boolean Es_participante(String nombreDiputado){
+		return Diputados.contains(nombreDiputado);
+	}
+	
+	
+	
+	public Integer AddDiputado(String nombreDiputado){
+		//1: ha anat bï¿½
+		//0: aquest nom de diputat no ï¿½s un diputat
 		//-1: aquest diputat ja participa en el event
 		if(Diputados.contains(nombreDiputado))return -1;
 		if(!Diputado.Existe_diputado(nombreDiputado))return 0;
@@ -56,10 +62,11 @@ class Evento {
 		return 1;
 	}
 	
-	public Boolean Eliminar_diputado(String nombreDiputado) {
-		if (!Diputados.contains(nombreDiputado)) return false;
+	public Integer RemoveDiputado(String nombreDiputado) {
+		if(!Diputado.Existe_diputado(nombreDiputado))return 0;
+		if (!Diputados.contains(nombreDiputado)) return -1;
 		Diputados.remove(nombreDiputado);
-		return true;
+		return 1;
 	}
 	
 	
