@@ -5,14 +5,13 @@ import java.util.TreeSet;
 
 import time.*;
 
-public class Evento {
+class Evento {
 
 	private String Nombre;
 	private Date Fecha;
 	
 	private Set <String> Diputados;
-	public static final Evento NULL = new Evento("NULL", Date.NULL);
-
+	
 	public Evento(String Nombre, Date Fecha){
 		this.Nombre=Nombre;
 		this.Fecha=Fecha;
@@ -25,36 +24,31 @@ public class Evento {
 		Diputados= new TreeSet<String>(E.Diputados);
 	}
 	
-	public Boolean Es_null(){
-		return (Nombre.equals("NULL"));
+	public Date Consultar_fecha(){
+		return this.Fecha;
 	}
 	
-	public String GetNombre(){
-		return Nombre;
+	public String Consultar_nombre(){
+		return this.Nombre;
 	}
 	
-	public Date GetFecha(){
-		return Fecha;
+	public Set<String> Consultar_diputados(){
+		return this.Diputados;
 	}
-	public Boolean SetFecha(Date nuevaFecha){
+	
+	public Boolean Ha_participado(String nombreDiputado){
+		return Diputados.contains(nombreDiputado);
+	}
+	
+	public Boolean Modificar_fecha(Date nuevaFecha){
 		if (!nuevaFecha.Es_valida()) return false;
 		Fecha = new Date(nuevaFecha);
 		return true;
 	}
 	
-	public Set<String> GetDiputados(){
-		return Diputados;
-	}
-	
-	public Boolean Es_participante(String nombreDiputado){
-		return Diputados.contains(nombreDiputado);
-	}
-	
-	
-	
-	public Integer AddDiputado(String nombreDiputado){
-		//1: ha anat bï¿½
-		//0: aquest nom de diputat no ï¿½s un diputat
+	public Integer Añadir_diputado(String nombreDiputado){
+		//1: ha anat bé
+		//0: aquest nom de diputat no és un diputat
 		//-1: aquest diputat ja participa en el event
 		if(Diputados.contains(nombreDiputado))return -1;
 		if(!Diputado.Existe_diputado(nombreDiputado))return 0;
@@ -62,11 +56,10 @@ public class Evento {
 		return 1;
 	}
 	
-	public Integer RemoveDiputado(String nombreDiputado) {
-		if(!Diputado.Existe_diputado(nombreDiputado))return 0;
-		if (!Diputados.contains(nombreDiputado)) return -1;
+	public Boolean Eliminar_diputado(String nombreDiputado) {
+		if (!Diputados.contains(nombreDiputado)) return false;
 		Diputados.remove(nombreDiputado);
-		return 1;
+		return true;
 	}
 	
 	
