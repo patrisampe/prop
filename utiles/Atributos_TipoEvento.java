@@ -5,18 +5,18 @@ public class Atributos_TipoEvento {
 	private Integer Importancia;
 	private String[] Eventos;//Los evento que esten son los que se quieren eliminar
 	
-	public static final Integer ImportanciaNull=0;
-	public static final String[] EventosNull=new String[0];
-	public static final String EventoiNull="NULL";
+	public static final Integer ImportanciaUnchanged=0;
+	public static final String[] EventosUnchanged=new String[0];
+	//public static final String EventoiNull="NULL";
 	
 	public Atributos_TipoEvento() {
-		Importancia = ImportanciaNull;
-		Eventos= EventosNull;
+		Importancia = ImportanciaUnchanged;
+		Eventos= EventosUnchanged;
 	}
 	
-	public Atributos_TipoEvento(Integer importancia) {
+	public Atributos_TipoEvento(Integer importancia, String[] eventos) {
 		Importancia = importancia;
-		Eventos = EventosNull;
+		Eventos = eventos;
 	}
 	
 	public Integer getImportancia() {

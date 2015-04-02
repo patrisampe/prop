@@ -9,30 +9,33 @@ public class Atributos_Evento {
 	
 	private Date Fecha;
 	private Map<String, Boolean> Diputados;
-	//true -> remove
-	//false -> insert
+	//true -> insert
+	//false -> remove
+	public static final Map <String,Boolean> DiputadosUnchanged=new TreeMap<String,Boolean> ();
+	public static final Date DateUnchanged = Date.NULL;
 	
-	public Atributos_Evento(Date fecha) {
+	public Atributos_Evento(Date fecha,Map<String, Boolean> diputados ) {
 		Fecha = fecha;
-		Diputados=new TreeMap<String,Boolean>();
+		Diputados=diputados;
 	}
 	
-	public static final Date Unchanged_Date = Date.NULL;
-
 	public Atributos_Evento() {
-		Fecha = Unchanged_Date;
-		Diputados = new TreeMap<String,Boolean> ();
+		Fecha = DateUnchanged;
+		Diputados = DiputadosUnchanged;
 	}
 	
 	public Date getFecha() {
 		return Fecha;
 	}
+	
 	public void setFecha(Date fecha) {
 		Fecha = fecha;
 	}
+	
 	public Map<String, Boolean> getDiputados() {
 		return Diputados;
 	}
+	
 	public void setDiputados(Map<String, Boolean> diputados) {
 		Diputados = diputados;
 	}
