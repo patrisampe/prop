@@ -44,11 +44,14 @@ public class ControladorDominioEvento {
 		String[] aux2;
 		aux2 = atributos.getEventos();
 		
+		
 		for(int i=0; i<aux2.length;++i){
 			if(!nuevo.RemoveEvento(aux2[i]))return i+1;
 		}
 		
-		Conjunto_tipos.replace(nombreTipoEvento, nuevo);
+		Conjunto_tipos.remove(nombreTipoEvento);
+		Conjunto_tipos.put(nombreTipoEvento, nuevo);
+
 		return -1;
 	}
 	
@@ -71,7 +74,7 @@ public class ControladorDominioEvento {
 	public Boolean AddEvento(String nombreTipoEvento, String nombreEvento, Atributos_Evento atributos){
 		Evento aux= new Evento(nombreEvento,atributos.getFecha());
 		Tipo_de_Evento aux2= Conjunto_tipos.get(nombreTipoEvento);
-		return aux2.Añadir_evento(aux);
+		return aux2.AddEvento(aux);
 	}
 
 	
@@ -80,7 +83,7 @@ public class ControladorDominioEvento {
 		Tipo_de_Evento original= Conjunto_tipos.get(nombreTipoEvento);
 	
 		
-		Evento eoriginal=original.Consultar_evento(nombreEvento);
+		Evento eoriginal=original.GetEvento(nombreEvento);
 		Evento enuevo= new Evento(eoriginal.GetNombre(),eoriginal);
 		
 		if(enuevo.Es_null())return -2;
@@ -92,8 +95,7 @@ public class ControladorDominioEvento {
 			int error;
 			Entry<String, Boolean> mapEntry = dipu.entrySet().iterator().next();
 			if(mapEntry.getValue())error=enuevo.RemoveDiputado(mapEntry.getKey());
-			else  error=enuevo.Añadir_diputado(mapEntry.getKey());
-			
+			else  error=enuevo.AddDiputado(mapEntry.getKey());
 			
 			++i;
 		}
@@ -102,7 +104,7 @@ public class ControladorDominioEvento {
 	}
 
 	public Atributos_Evento GetAtributosEvento(String nombreTipoEvento, String nombreEvento){
-		return new Atributos_Evento(Conjunto_tipos.get(nombreTipoEvento).Consultar_evento(nombreEvento).GetFecha());
+		return new Atributos_Evento(Conjunto_tipos.get(nombreTipoEvento).GetEvento(nombreEvento).GetFecha());
 	}
 	
 }
