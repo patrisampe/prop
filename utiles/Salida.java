@@ -1,4 +1,4 @@
-package utiles;  // Probando
+package utiles;
 
 public class Salida {
 	
