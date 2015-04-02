@@ -17,14 +17,14 @@ public class Tipo_de_Evento {
 	public static final Integer importancia_min=1;
 
 	public Tipo_de_Evento(String Nombre, Integer Importancia) {
-		//Pre: importancia ha de ser valida y nombre no existente
+		//Pre: importancia ha de ser valida
 		this.Nombre=Nombre;
 		this.Importancia=Importancia;
 		Conjunto_eventos=new TreeMap<String, Evento>();
 	}
 	
 	public Tipo_de_Evento(String Nombre, Tipo_de_Evento TP){
-		//Pre: importancia ha de ser valida  y nombre no existente
+		//Pre: importancia ha de ser valida
 		this.Nombre=Nombre;
 		Importancia=TP.Importancia;
 		Conjunto_eventos=TP.Conjunto_eventos;
@@ -41,7 +41,7 @@ public class Tipo_de_Evento {
 		return Importancia;
 	}
 	
-	public static Boolean es_validaImportancia(int nuevaImportancia){
+	public static Boolean es_validaImportancia(Integer nuevaImportancia){
 		return (nuevaImportancia>=importancia_min && nuevaImportancia<=importancia_max);
 	}
 	
@@ -64,7 +64,6 @@ public class Tipo_de_Evento {
 		Conjunto_eventos.remove(nombreEvento);
 	}
 	public void AddEvento(Evento nuevoEvento){
-		// Pre: El evento no puede existir ya en este tipo
 		Conjunto_eventos.put(nuevoEvento.GetNombre(), nuevoEvento);
 	}
 }
