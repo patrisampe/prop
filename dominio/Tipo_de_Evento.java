@@ -13,26 +13,33 @@ public class Tipo_de_Evento {
 	
 	private static Map<String, Tipo_de_Evento> Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
 	private static Tipo_de_Evento NULL = new Tipo_de_Evento("NULL", 0);
+	public static final Integer importancia_max=5;
+	public static final Integer importancia_min=1;
 
 	public Tipo_de_Evento(String Nombre, Integer Importancia) {
-		
+		//Pre: importancia_min<=Importancia<=importancia_max
 		this.Nombre=Nombre;
 		this.Importancia=Importancia;
 		Conjunto_eventos=new TreeMap<String, Evento>();
 	}
 	
 	public Tipo_de_Evento(String Nombre, Tipo_de_Evento TP){
+		//Pre: importancia_min<=Importancia<=importancia_max
 		this.Nombre=Nombre;
-		Importancia=TP.Importancia;
-		Conjunto_eventos=TP.Conjunto_eventos;
+		this.Importancia=TP.Importancia;
+		this.Conjunto_eventos=TP.Conjunto_eventos;
 	}
+	
+	public Boolean ImportanciaValida(int Importancia){
+		if(importancia_min<=Importancia )
+	}
+	
 	public Boolean Es_null(){
 		return (Nombre.equals("NULL"));
 	}
 	
 	public List<String> GetEventos(){
-		List<String> list = new ArrayList<String>(Conjunto_eventos.keySet());
-		return list;
+		return new ArrayList<String>(Conjunto_eventos.keySet());
 	}
 	
 	public Integer GetImportancia(){
@@ -40,7 +47,7 @@ public class Tipo_de_Evento {
 	}
 	
 	public Boolean SetImportancia(Integer nuevaImportancia){
-		if(nuevaImportancia.equals(0))return false;
+		if(nuevaImportancia.)return false;
 		Importancia=nuevaImportancia;
 		return true;
 	}

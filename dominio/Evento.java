@@ -51,16 +51,17 @@ public class Evento {
 		//1: ha anat b�
 		//0: aquest nom de diputat no �s un diputat
 		//-1: aquest diputat ja participa en el event
-		if(Diputados.contains(nombreDiputado))return -1;
-		//if(!ControladorDominioDiputado.Existe_diputado(nombreDiputado))return 0;
+		if(Diputados.contains(nombreDiputado))return 3;
+		//if(!ControladorDominioDiputado.Existe_diputado(nombreDiputado))return 1;
 		Diputados.add(nombreDiputado);
-		return 1;
+		return 0;
 	}
 	
-	public Boolean RemoveDiputado(String nombreDiputado) {
-		if (!Diputados.contains(nombreDiputado)) return false;
+	public Integer RemoveDiputado(String nombreDiputado) {
+		//if(!ControladorDominioDiputado.Existe_diputado(nombreDiputado))return 1;
+		if (!Diputados.contains(nombreDiputado)) return 2;
 		Diputados.remove(nombreDiputado);
-		return true;
+		return 0;
 	}
 	
 	

@@ -14,11 +14,14 @@ public class Error {
 	
 	private static Map<Integer, String> CreateMap() {
 		Map<Integer, String> Diccionario = new HashMap<Integer, String>();
+		Diccionario.put(0, "No hay error");
 		Diccionario.put(1, "Diputado no existe");
 		Diccionario.put(2, "Diputado no esta en este evento");
 		Diccionario.put(3, "Diputado ja esta en este evento");
 		Diccionario.put(4, "Este evento no existe");
 		Diccionario.put(5, "Este evento ya existe");
+		Diccionario.put(5, "Data no válida");
+		Diccionario.put(5, "Este evento no tiene una importancia válida. 1<=I<=5");
         return Collections.unmodifiableMap(Diccionario);
 	}
 
