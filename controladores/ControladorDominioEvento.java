@@ -17,26 +17,9 @@ import dominio.Evento;
 public class ControladorDominioEvento {
 
 	private Map<String, Tipo_de_Evento> Conjunto_tipos;
-	
-	
+		
 	public ControladorDominioEvento(){
 		Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
-	}
-	
-	public Error AddTipoEvento(String nombreTipoEvento, Integer importancia){
-		
-		if(Conjunto_tipos.containsKey(nombreTipoEvento))return new Error(12,nombreTipoEvento);
-		Tipo_de_Evento aux=new Tipo_de_Evento(nombreTipoEvento,importancia);
-		Conjunto_tipos.put(nombreTipoEvento, aux);
-		return new Error(0,nombreTipoEvento);
-	}
-	
-	public List<String> GetTipoEventos(){
-		return new ArrayList<String>(Conjunto_tipos.keySet());
-	}
-	
-	public List<String> GetEventos(String nombreTipoEvento){
-		return Conjunto_tipos.get(nombreTipoEvento).GetEventos();
 	}
 	
 	public Error SetAtributosTipoEvento(String nombreTipoEvento, Atributos_TipoEvento atributos){
@@ -60,9 +43,21 @@ public class ControladorDominioEvento {
 		return new Error(0,nombreTipoEvento);
 	}
 	
-	public Atributos_TipoEvento GetTipoEvento(String nombreTipoEvento){
+	public Atributos_TipoEvento GetAtributosTipoEvento(String nombreTipoEvento){
 		
 		return new Atributos_TipoEvento(Conjunto_tipos.get(nombreTipoEvento).GetImportancia(),Atributos_TipoEvento.EventosUnchanged);
+	}
+	
+	public List<String> GetTipoEventos(){
+		return new ArrayList<String>(Conjunto_tipos.keySet());
+	}
+	
+	public Error AddTipoEvento(String nombreTipoEvento, Integer importancia){
+		
+		if(Conjunto_tipos.containsKey(nombreTipoEvento))return new Error(12,nombreTipoEvento);
+		Tipo_de_Evento aux=new Tipo_de_Evento(nombreTipoEvento,importancia);
+		Conjunto_tipos.put(nombreTipoEvento, aux);
+		return new Error(0,nombreTipoEvento);
 	}
 	
 	public Error RemoveTipoEvento(String nombreTipoEvento){
@@ -71,8 +66,14 @@ public class ControladorDominioEvento {
 		return new Error(0,nombreTipoEvento);
 	}
 	
+
 	public Boolean Es_TipoEvento(String nombreTipoEvento){
 		return Conjunto_tipos.containsKey(nombreTipoEvento);
+	}
+	
+	
+	public List<String> GetEventos(String nombreTipoEvento){
+		return Conjunto_tipos.get(nombreTipoEvento).GetEventos();
 	}
 	
 	
@@ -85,7 +86,6 @@ public class ControladorDominioEvento {
 		return new Error(0,nombreTipoEvento);
 	}
 
-	
 	public Error SetAtributosEvento(String nombreTipoEvento, String nombreEvento, Atributos_Evento atributos){
 		
 		
