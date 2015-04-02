@@ -1,25 +1,24 @@
 package dominio;
-
 import java.util.Set;
 import java.util.TreeSet;
 
 import time.*;
-import controladores.*;
 
 public class Evento {
-
 	private String Nombre;
 	private Date Fecha;
 	
 	private Set <String> Diputados;
 	
 	public Evento(String Nombre, Date Fecha){
+		 //Pre: Fecha valida y Nombre no existente
 		this.Nombre=Nombre;
 		this.Fecha=Fecha;
 		Diputados=new TreeSet<String>();
 	}
 	
 	public Evento(String Nombre, Evento E){
+		//Pre: Fecha valida y Nombre no existente
 		this.Nombre=Nombre;
 		this.Fecha=E.Fecha;
 		Diputados= new TreeSet<String>(E.Diputados);
@@ -41,27 +40,19 @@ public class Evento {
 		return Diputados.contains(nombreDiputado);
 	}
 	
-	public Boolean SetFecha(Date nuevaFecha){
-		if (!nuevaFecha.Es_valida()) return false;
+	public void SetFecha(Date nuevaFecha){
+		//Pre: Fecha valida
 		Fecha = new Date(nuevaFecha);
-		return true;
 	}
 	
-	public Integer AddDiputado(String nombreDiputado){
-		//1: ha anat b�
-		//0: aquest nom de diputat no �s un diputat
-		//-1: aquest diputat ja participa en el event
-		if(Diputados.contains(nombreDiputado))return 3;
-		//if(!ControladorDominioDiputado.Existe_diputado(nombreDiputado))return 1;
+	public void AddDiputado(String nombreDiputado){
+		//Pre: Diputado existe y no ha participado en este evento
 		Diputados.add(nombreDiputado);
-		return 0;
 	}
 	
-	public Integer RemoveDiputado(String nombreDiputado) {
-		//if(!ControladorDominioDiputado.Existe_diputado(nombreDiputado))return 1;
-		if (!Diputados.contains(nombreDiputado)) return 2;
+	public void RemoveDiputado(String nombreDiputado) {
+		//Pre: Diputado existe y ha participado en este evento
 		Diputados.remove(nombreDiputado);
-		return 0;
 	}
 	
 	
