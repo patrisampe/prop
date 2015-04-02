@@ -26,6 +26,12 @@ public class Error {
         return Collections.unmodifiableMap(Diccionario);
 	}
 
+	public Error(Integer codi_error, String clau_externa) {
+		this.codi_error = codi_error;
+		this.clau_externa = clau_externa;
+	}
+
+
 
 	public String getClau_externa() {
 		return clau_externa;
