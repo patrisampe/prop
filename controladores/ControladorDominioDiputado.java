@@ -11,68 +11,65 @@ import dominio.Diputado;
 class ControladorDominioDiputado {
 	
 	private Map<String, Diputado> Conjunto_diputados;
-
 	
 	public ControladorDominioDiputado(){
 		Conjunto_diputados = new TreeMap<String, Diputado>();
 	}
 	
 	public Diputado Crear_diputado(String nombreDiputado, Atributos_Diputado atributos){
-		return new Diputado(nombreDiputado, atributos.Partido_politico, atributos.Estado, atributos.Fecha_de_nacimiento);
+		return new Diputado(nombreDiputado, atributos.getPartidoPolitico(), atributos.getEstado(),
+							atributos.getFechaDeNacimiento());
 	}
 	
-	public Integer Modificar_diputado(String nombreDiputado, Atributos_Diputado atributos) {
-		Integer comptador = 0;
-		Diputado D = Consultar_diputado(nombreDiputado);
-		if (!atributos.Partido_politico.equals(Atributos_Diputado.Unchanged_String))
-			if (!D.setPartidoPolitico(atributos.Partido_politico)) return comptador;
-		++comptador;
-		if (!atributos.Estado.equals(Atributos_Diputado.Unchanged_String))
-			if (!D.setEstado(atributos.Estado)) return comptador;
-		++comptador;
-		if (!atributos.Fecha_de_nacimiento.equals(Atributos_Diputado.Unchanged_Date))
-			if (!D.setFechaNacimiento(atributos.Fecha_de_nacimiento)) return comptador;
-		++comptador;
-		Set<Integer> S = atributos.Legislaturas.keySet();
+	public String setDiputado(String nombreDiputado, Atributos_Diputado atributos) {
+		Diputado D = getDiputado(nombreDiputado);
+		if (!atributos.getPartidoPolitico().equals(Atributos_Diputado.Unchanged_String))
+			if (!D.setPartidoPolitico(atributos.getPartidoPolitico())) return "ERROR";
+		if (!atributos.getEstado().equals(Atributos_Diputado.Unchanged_String))
+			if (!D.setEstado(atributos.getEstado())) return "ERROR";
+		if (!atributos.getFechaDeNacimiento().equals(Atributos_Diputado.Unchanged_Date))
+			if (!D.setFechaNacimiento(atributos.getFechaDeNacimiento())) return "ERROR";
+		Set<Integer> S = atributos.getLegislaturas().keySet();
 		Iterator<Integer> it = S.iterator();
 		while(it.hasNext()){
 			Integer aux = it.next();
-			if(!(atributos.Legislaturas.get(aux) ? D.addLegistura(aux) : D.removeLegistura(aux)))
-				return comptador;
-			++comptador;
+			if(!(atributos.getLegislaturas().get(aux) ? D.addLegistura(aux) : D.removeLegistura(aux)))
+				return "ERROR";
 		}
-		return -1;
+		return "ERROR";
 	}
 
-	public Atributos_Diputado Consultar_atributos_diputado(String nombreDiputado){
-		Diputado D = Consultar_diputado(nombreDiputado);
+	public Atributos_Diputado getAtributosDiputado(String nombreDiputado){
+		Diputado D = getDiputado(nombreDiputado);
 		Atributos_Diputado A = new Atributos_Diputado();
-		A.Partido_politico = D.getPartidoPolitico();
-		A.Estado = D.getEstado();
-		A.Fecha_de_nacimiento = D.getFechaDeNacimiento();
+		A.setPartidoPolitico(D.getPartidoPolitico());
+		A.setEstado(D.getEstado());
+		A.setFechaDeNacimiento(D.getFechaDeNacimiento());
 		Set<Integer> S = D.getLegislaturas();
-		A.Legislaturas = new TreeMap<Integer, Boolean>();
+		Map<Integer, Boolean> M = new TreeMap<Integer, Boolean>();
 		Iterator<Integer> it = S.iterator();
-		while(it.hasNext()) A.Legislaturas.put(it.next(), true);
+		while(it.hasNext()) M.put(it.next(), true);
+		A.setLegislaturas(M);
 		return A;
 	}
 
-	public Boolean Añadir_diputado(Diputado nuevoDiputado) {
+	public Boolean addDiputado(Diputado nuevoDiputado) {
 		String Nombre = nuevoDiputado.getNombre();
 		if (Conjunto_diputados.containsKey(Nombre)) return false;
 		Conjunto_diputados.put(Nombre, nuevoDiputado);
 		return true;
 	}
 	
-	public Diputado Consultar_diputado(String nombreDiputado) {
-		return Conjunto_diputados.getOrDefault(nombreDiputado, Diputado.NULL);
+	public Diputado getDiputado(String nombreDiputado) {
+		if (!Conjunto_diputados.containsKey(nombreDiputado)) return Diputado.NULL;
+		return Conjunto_diputados.get(nombreDiputado);
 	}
 	
 	public Boolean Existe_diputado(String nombreDiputado) {
 		return Conjunto_diputados.containsKey(nombreDiputado);
 	}
 	
-	public Boolean Eliminar_diputado(String nombreDiputado) {
+	public Boolean removeDiputado(String nombreDiputado) {
 		if (!Conjunto_diputados.containsKey(nombreDiputado)) return false;
 		Conjunto_diputados.remove(nombreDiputado);
 		return true;
@@ -99,7 +96,7 @@ class ControladorDominioDiputado {
 		Iterator<String> it = S.iterator();
 		while (it.hasNext()) {
 			String aux = it.next();
-			M.put(aux, Consultar_atributos_diputado(aux));
+			M.put(aux, getAtributosDiputado(aux));
 		}
 		return C.Exporta_fichero(M, FileName);
 	}
@@ -125,7 +122,7 @@ class ControladorDominioDiputado {
 		Iterator<String> it = S.iterator();
 		while (it.hasNext()) {
 			String aux = it.next();
-			M.put(aux, Consultar_atributos_diputado(aux));
+			M.put(aux, getAtributosDiputado(aux));
 		}
 		return C.Guarda_datos(M);	}
 
