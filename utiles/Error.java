@@ -22,7 +22,7 @@ public class Error {
 		Diccionario.put(5, "Este evento ya existe");
 		Diccionario.put(6, "Data no valida");
 		Diccionario.put(7, "Este evento no tiene una importancia valida. 1<=I<=5");
-		Diccionario.put(8, "Este tipo de evento ya no existe");
+		Diccionario.put(8, "Este tipo de evento ya existe");
         return Collections.unmodifiableMap(Diccionario);
 	}
 
