@@ -11,31 +11,26 @@ public class Tipo_de_Evento {
 	private Integer Importancia;
 	private Map<String,Evento> Conjunto_eventos;
 	
-	private static Map<String, Tipo_de_Evento> Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
-	private static Tipo_de_Evento NULL = new Tipo_de_Evento("NULL", 0);
+	//private static Map<String, Tipo_de_Evento> Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
+	//public static final Tipo_de_Evento NULL = new Tipo_de_Evento("NULL", 0);
 	public static final Integer importancia_max=5;
 	public static final Integer importancia_min=1;
 
 	public Tipo_de_Evento(String Nombre, Integer Importancia) {
-		//Pre: importancia_min<=Importancia<=importancia_max
+		//Pre: importancia ha de ser valida y nombre no existente
 		this.Nombre=Nombre;
 		this.Importancia=Importancia;
 		Conjunto_eventos=new TreeMap<String, Evento>();
 	}
 	
 	public Tipo_de_Evento(String Nombre, Tipo_de_Evento TP){
-		//Pre: importancia_min<=Importancia<=importancia_max
+		//Pre: importancia ha de ser valida  y nombre no existente
 		this.Nombre=Nombre;
-		this.Importancia=TP.Importancia;
-		this.Conjunto_eventos=TP.Conjunto_eventos;
+		Importancia=TP.Importancia;
+		Conjunto_eventos=TP.Conjunto_eventos;
 	}
-	
-	public Boolean ImportanciaValida(int Importancia){
-		if(importancia_min<=Importancia )
-	}
-	
-	public Boolean Es_null(){
-		return (Nombre.equals("NULL"));
+	public String getNombre() {
+		return Nombre;
 	}
 	
 	public List<String> GetEventos(){
@@ -46,16 +41,13 @@ public class Tipo_de_Evento {
 		return Importancia;
 	}
 	
-	public Boolean SetImportancia(Integer nuevaImportancia){
-		if(nuevaImportancia.)return false;
-		Importancia=nuevaImportancia;
-		return true;
+	public static Boolean es_validaImportancia(int nuevaImportancia){
+		return (nuevaImportancia>=importancia_min && nuevaImportancia<=importancia_max);
 	}
-
-	public Boolean AddEvento(Evento nuevoEvento){
-		if(Conjunto_eventos.containsKey(nuevoEvento.GetNombre()))return false;
-		Conjunto_eventos.put(nuevoEvento.GetNombre(), nuevoEvento);
-		return true;
+	
+	public void SetImportancia(Integer nuevaImportancia){
+		//Pre: nuevaImportancia tiene de ser valida
+		Importancia=nuevaImportancia;
 	}
 
 	public Boolean Es_Evento(String nombreEvento){
@@ -67,32 +59,12 @@ public class Tipo_de_Evento {
 		return Conjunto_eventos.get(nombreEvento);
 	}
 	
-	public Boolean RemoveEvento(String nombreEvento){
-		if(!Conjunto_eventos.containsKey(nombreEvento))return false;
+	public void RemoveEvento(String nombreEvento){
+		//Pre: El evento tiene de existir en ese tipo
 		Conjunto_eventos.remove(nombreEvento);
-		return true;
 	}
-	
-	public static Boolean AddTipo(Tipo_de_Evento nuevoTipo){
-		if(Conjunto_tipos.containsKey(nuevoTipo.Nombre))return false;
-		Conjunto_tipos.put(nuevoTipo.Nombre, nuevoTipo);
-		return true;
-	}
-
-	public static Boolean Existe_tipo(String nombreTipo){
-		return Conjunto_tipos.containsKey(nombreTipo);
-	}
-	
-	public static Tipo_de_Evento GetTipo(String nombreEvento){
-		for (Map.Entry<String,Tipo_de_Evento> entry : Conjunto_tipos.entrySet()) {
-		    if(entry.getValue().Es_Evento(nombreEvento))return entry.getValue();
-		}
-		return Tipo_de_Evento.NULL;	
-	}
-	
-	public static Boolean RemoveTipo(String nombreTipo){
-		if(!Conjunto_tipos.containsKey(nombreTipo))return false;
-		Conjunto_tipos.remove(nombreTipo);
-		return true;
+	public void AddEvento(Evento nuevoEvento){
+		// Pre: El evento no puede existir ya en este tipo
+		Conjunto_eventos.put(nuevoEvento.GetNombre(), nuevoEvento);
 	}
 }
