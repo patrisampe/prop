@@ -21,6 +21,24 @@ class ControladorDominioDiputado {
 							atributos.getFechaDeNacimiento());
 	}
 	
+	public String setDiputado(String nombreDiputado, Atributos_Diputado atributos) {
+		Diputado D = getDiputado(nombreDiputado);
+		if (!atributos.getPartidoPolitico().equals(Atributos_Diputado.Unchanged_String))
+			if (!D.setPartidoPolitico(atributos.getPartidoPolitico())) return "ERROR";
+		if (!atributos.getEstado().equals(Atributos_Diputado.Unchanged_String))
+			if (!D.setEstado(atributos.getEstado())) return "ERROR";
+		if (!atributos.getFechaDeNacimiento().equals(Atributos_Diputado.Unchanged_Date))
+			if (!D.setFechaNacimiento(atributos.getFechaDeNacimiento())) return "ERROR";
+		Set<Integer> S = atributos.getLegislaturas().keySet();
+		Iterator<Integer> it = S.iterator();
+		while(it.hasNext()){
+			Integer aux = it.next();
+			if(!(atributos.getLegislaturas().get(aux) ? D.addLegistura(aux) : D.removeLegistura(aux)))
+				return "ERROR";
+		}
+		return "ERROR";
+	}
+
 	public Atributos_Diputado getAtributosDiputado(String nombreDiputado){
 		Diputado D = getDiputado(nombreDiputado);
 		Atributos_Diputado A = new Atributos_Diputado();
@@ -42,24 +60,6 @@ class ControladorDominioDiputado {
 		return true;
 	}
 	
-	public String setDiputado(String nombreDiputado, Atributos_Diputado atributos) {
-		Diputado D = getDiputado(nombreDiputado);
-		if (!atributos.getPartidoPolitico().equals(Atributos_Diputado.Unchanged_String))
-			if (!D.setPartidoPolitico(atributos.getPartidoPolitico())) return "ERROR";
-		if (!atributos.getEstado().equals(Atributos_Diputado.Unchanged_String))
-			if (!D.setEstado(atributos.getEstado())) return "ERROR";
-		if (!atributos.getFechaDeNacimiento().equals(Atributos_Diputado.Unchanged_Date))
-			if (!D.setFechaNacimiento(atributos.getFechaDeNacimiento())) return "ERROR";
-		Set<Integer> S = atributos.getLegislaturas().keySet();
-		Iterator<Integer> it = S.iterator();
-		while(it.hasNext()){
-			Integer aux = it.next();
-			if(!(atributos.getLegislaturas().get(aux) ? D.addLegistura(aux) : D.removeLegistura(aux)))
-				return "ERROR";
-		}
-		return "ERROR";
-	}
-
 	public Diputado getDiputado(String nombreDiputado) {
 		if (!Conjunto_diputados.containsKey(nombreDiputado)) return Diputado.NULL;
 		return Conjunto_diputados.get(nombreDiputado);
