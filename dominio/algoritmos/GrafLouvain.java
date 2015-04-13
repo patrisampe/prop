@@ -50,9 +50,11 @@ public class GrafLouvain extends Graf {
 	}
 	
 	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {//Incompletee
-		Integer Posicio = Diccionari.get(id);
+		if (!existeixNode(id)) return -1.0;
+		if (Comunitat.isEmpty()) return -1.0;
+		Double sum = 0.0;
 		
-		return sumaFila(Posicio);
+		return sum;
 	}
 	
 	public Double sumaPesosAdjacents(HashSet<String> C1, HashSet<String> C2) {
