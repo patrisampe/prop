@@ -69,12 +69,14 @@ public class Graf {
 	public Boolean addAresta(String a, String b, Double Pes) {
 		if (!Diccionari.containsKey(a) || !Diccionari.containsKey(b) || existeixAresta(a,b) || Pes < 0) return false;
 		Matriu.get(Diccionari.get(a)).set(Diccionari.get(b),Pes);
+		Matriu.get(Diccionari.get(b)).set(Diccionari.get(a),Pes);
 		return true;
 	}
 	
 	public Boolean removeAresta(String a, String b) {
 		if (!existeixAresta(a,b)) return false;
 		Matriu.get(Diccionari.get(a)).set(Diccionari.get(b),0.0);
+		Matriu.get(Diccionari.get(b)).set(Diccionari.get(a),0.0);
 		return true;
 	}
 	
@@ -87,6 +89,7 @@ public class Graf {
 	public Boolean setPes(String a, String b, Double Pes) {
 		if (!existeixAresta(a,b) || Pes < 0) return false;
 		Matriu.get(Diccionari.get(a)).set(Diccionari.get(b),Pes);
+		Matriu.get(Diccionari.get(b)).set(Diccionari.get(a),Pes);
 		return true;
 	}
 	
