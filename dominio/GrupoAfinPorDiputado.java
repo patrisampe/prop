@@ -6,7 +6,7 @@ public class GrupoAfinPorDiputado extends GrupoAfin{
 	private Date fechaInicio, fechaFin;
 	
 	public GrupoAfinPorDiputado(Integer ID, Date inicio, Date fin) {
-		setID(ID);
+		super(ID);
 		fechaInicio = new Date(inicio);
 		fechaFin = new Date(fin);
 	}

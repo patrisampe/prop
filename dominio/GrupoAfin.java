@@ -10,21 +10,9 @@ abstract class GrupoAfin {
 	private Integer identificador;
 	private Set<String> diputados;
 	
-	public GrupoAfin() {
-		identificador = -1;
-		diputados = new TreeSet<String>();
-	}
-	
 	public GrupoAfin(Integer ID) {
-		if (ID < 0) identificador = -1;
-		else identificador = ID;
+		identificador = ID;
 		diputados = new TreeSet<String>();
-	}
-	
-	public Boolean setID(Integer ID) {
-		if (ID == -1) identificador = ID;
-		else return false;
-		return true;
 	}
 	
 	public Boolean addDiputado(String Diputado) {
