@@ -6,7 +6,7 @@ public class DateInterval {
 	//Atributs
 	private Date Inici;
 	private Date Fi;
-	public static final DateInterval NULL = new DateInterval(Date.NULL,Date.NULL);
+	public static final DateInterval NULL = new DateInterval(Date.NULL, Date.NULL);
 	
 	public DateInterval(){
 		Inici = new Date(Date.NULL);
@@ -84,14 +84,14 @@ public class DateInterval {
 	}
 	
 	public String ToString() {
-		return Inici.ToString() + " " + Fi.ToString();
+		return Inici.ToString() + " - " + Fi.ToString();
 	}
 	
 	public String ToNamedString() {
-		return Inici.ToNamedString() + " " + Fi.ToNamedString();
+		return Inici.ToNamedString() + " - " + Fi.ToNamedString();
 	}
 	
-		//retorna la unió si son continus
+	//retorna la unió si son continus
 	public static DateInterval merge(DateInterval DI1, DateInterval DI2) {
 		DateInterval ret = new DateInterval();
 		if(DI1.intersects(DI2)) {

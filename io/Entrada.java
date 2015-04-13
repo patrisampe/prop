@@ -1,5 +1,7 @@
-package utiles;
+package io;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Entrada{
@@ -10,7 +12,20 @@ public class Entrada{
 	}
 	
 	public Entrada(String FileName){
-		 sc = new Scanner(FileName);
+		File F = new File(FileName);
+		try {
+			sc = new Scanner(F);
+		} catch (FileNotFoundException e) {
+			sc = new Scanner(System.in);
+			System.out.println("Fitxer inexistent.");
+			System.out.println("Entrada per consola establerta.");
+		}
+	}
+	
+	protected void finalize () throws Throwable{
+	    if (sc != null) {
+	        sc.close();
+	    }
 	}
 	
 	public String ReadString(){
@@ -29,8 +44,12 @@ public class Entrada{
     	return sc.nextInt();
 	}
 	
+	public Character ReadCharacter(){
+    	return Character.valueOf((char) sc.nextByte());
+	}
+	
 	public Integer ReadInteger(){
-    	return sc.nextInt();
+    	return Integer.valueOf(sc.nextInt());
 	}
 	
 	public Double ReadDouble(){

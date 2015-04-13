@@ -199,6 +199,14 @@ public class Date{
 		return this;
 	}
 	
+	public Date Incremento(DateInterval DI){
+		int n = DI.days();
+		for (int i = 0; i < n; ++i){
+			Incremento();
+		}
+		return this;
+	}
+	
 	public static Date StringToDate(String S){
 		String D = S.substring(0, 2);
 		String M = S.substring(3, 5);
