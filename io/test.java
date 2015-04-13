@@ -7,8 +7,8 @@ public class test {
 		String Input = EC.ReadString();
 		Entrada EF = new Entrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new Fitxer(Output);
-		Sortida SC = new Consola();
+		Sortida SF = new FitxerSortida(Output);
+		Sortida SC = new ConsolaSortida();
 		String aux = EF.ReadLine();
 		SF.Write(aux);
 		SC.Write(aux);

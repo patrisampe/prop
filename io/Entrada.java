@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Entrada{
+public class Entrada {
 	private Scanner sc;
 
 	public Entrada(){
@@ -22,7 +22,13 @@ public class Entrada{
 		}
 	}
 	
-	protected void finalize () throws Throwable{
+	public void close() {
+	    if (sc != null) {
+	        sc.close();
+	    }
+	}
+	
+	protected void finalize () {
 	    if (sc != null) {
 	        sc.close();
 	    }
