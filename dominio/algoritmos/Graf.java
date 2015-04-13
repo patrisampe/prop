@@ -95,7 +95,7 @@ public class Graf {
 		return Matriu.get(Diccionari.get(a)).get(Diccionari.get(b));
 	}
 	
-	HashSet<String> getAdjacents(String id) {
+	public HashSet<String> getAdjacents(String id) {
 		HashSet<String> Cjt = new HashSet<String>();
 		Integer Posicio = Diccionari.get(id);
 		Integer N = Matriu.size();
