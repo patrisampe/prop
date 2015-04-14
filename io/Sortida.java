@@ -1,7 +1,9 @@
 package io;
 
 public interface Sortida {
-	
+		
+	public void close();
+
 	public void Write(String s);
 	
 	public void Write(char c);

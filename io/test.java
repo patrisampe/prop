@@ -3,9 +3,9 @@ package io;
 public class test {
 	
 	public static void main(String[] args){
-		Entrada EC = new Entrada();
+		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new Entrada(Input);
+		Entrada EF = new FitxerEntrada(Input);
 		String Output = EC.ReadString();
 		Sortida SF = new FitxerSortida(Output);
 		Sortida SC = new ConsolaSortida();

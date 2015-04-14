@@ -5,6 +5,9 @@ public class ConsolaSortida implements Sortida {
 	public ConsolaSortida(){
 	}
 	
+	public void close(){
+	}
+	
 	public void Write(String s){
     	System.out.println(s);
 	}
