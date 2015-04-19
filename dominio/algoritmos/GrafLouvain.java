@@ -53,7 +53,12 @@ public class GrafLouvain extends Graf {
 		if (!existeixNode(id)) return -1.0;
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
-		
+		Integer Posicio = Diccionari.get(id);
+		for (Integer i = 0; i < Matriu.size(); ++i) {
+			if (Comunitat.contains(DiccionariInvers.get(i))) {
+				sum += Matriu.get(Posicio).get(i);
+			}
+		}
 		return sum;
 	}
 	

@@ -53,12 +53,19 @@ public class Graf {
 	public Boolean removeNode(String id) {
 		if (!existeixNode(id)) return false;
 		Integer Posicio = Diccionari.get(id);
-		for(Integer i = 0; i < Matriu.size(); ++i){
+		Integer Size = Matriu.size();
+		for (Integer i = 0; i < Size; ++i){
 			Matriu.get(i).remove(Posicio);
 		}
 		Matriu.remove(Posicio);
 		Diccionari.remove(id);
-		DiccionariInvers.remove(Posicio);
+		for (Integer i = Posicio+1; i < Size; ++i) {
+			String iString = DiccionariInvers.get(i);
+			Diccionari.put(iString,i-1);
+			DiccionariInvers.put(i-1, iString);
+		}
+		
+		DiccionariInvers.remove(Size-1);
 		return true;
 	}
 	
