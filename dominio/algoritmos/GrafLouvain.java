@@ -21,6 +21,14 @@ public class GrafLouvain extends Graf {
 		return sum;
 	}
 	
+	public GrafLouvain() {
+		super();
+	}
+	
+	public GrafLouvain(GrafLouvain G) {
+		super(G);
+	}
+	
 	public Double sumaPesos() {
 		Double sum = 0.0;
 		for (Integer i = 0; i < Matriu.size(); ++i) {
@@ -64,6 +72,7 @@ public class GrafLouvain extends Graf {
 	
 	public Double sumaPesosAdjacents(HashSet<String> C1, HashSet<String> C2) {
 		if (C1.isEmpty() || C2.isEmpty()) return -1.0;
+		if (C1 == C2) return sumaPesos(C1);
 		Double sum = 0.0;
 		Iterator<String> it = C1.iterator();
 		while(it.hasNext()) {
