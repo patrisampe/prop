@@ -35,31 +35,87 @@ public class Louvain {
 		TreeMap<String,HashSet<String> > Mapa = new TreeMap<String, HashSet<String>>();
 		for (Integer i = 0; iHS.hasNext(); ++i) {
 			HashSet<String> Comunidad = new HashSet<String>(iHS.next()); 
-			NouGraf.addNode(i.toString());
-			Mapa.put(i.toString(), Comunidad);
+			if (Comunidad.size() > 0) {
+				NouGraf.addNode(i.toString());
+				Mapa.put(i.toString(), Comunidad);
+			}
 		}
-		Historia.addElement(Mapa);
-		Comunidades = new HashSet< HashSet<String> >();
+		Historia.addElement(Mapa); //Actualitzem la Història de l'algorisme amb un nou pas
 		HashSet<String> Nodes = new HashSet<String> (Historia.get(Historia.size()-1).keySet()); //Agafa els noms tots els noms que se li ha donat als diversos nodes agregats de comunitats.
-		Iterator<String> iS = Nodes.iterator();
-		while(iS.hasNext()) {
-			HashSet<String> unitaria = new HashSet<String>();
-			String act = new String(iS.next());
-			unitaria.add(act);
-			Comunidades.add(unitaria);
+		Comunidades = HSStoHSHSS(Nodes); //Reiniciem les comunitats a comunitats individuals
+		Iterator<String> It = Nodes.iterator();
+		while (It.hasNext()) { //Omplim d'arestes el NouGraf
+			Iterator<String> Jt = Nodes.iterator();
+			while(Jt.hasNext()) {
+				String a = new String(It.next());
+				String b = new String(Jt.next());
+				if(!NouGraf.existeixAresta(a, b)) {
+					Double Pes = G.sumaPesosAdjacents(Historia.get(Historia.size()-1).get(a), Historia.get(Historia.size()-1).get(b));
+					if (Pes > 0) NouGraf.addAresta(a, b, Pes);
+				}
+				
+			}
 		}
-		
-		
-		
-		G = NouGraf;
-		
+		G = NouGraf; //Graf actualitzat
 	}
 	
+
+	private static boolean IncrementModularity() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	private static HashSet<HashSet<String>> retorna(Integer percentatge) {
+		Integer Total = Historia.size();
+		Integer Interesante = Total*percentatge/100;
+		HashSet<String> Generacion = new HashSet<String>(Historia.get(Interesante).keySet());
+		HashSet<HashSet<String> >  ret = HSStoHSHSS(Generacion);
+		Iterator<HashSet<String> > It = ret.iterator();
+		while (It.hasNext()) {
+			ret.add(historiador(Interesante, It.next()));
+		}
+		return ret;
+	}
+	
+	
+	
+	private static HashSet<String> historiador(Integer Posicion, HashSet<String> Com) {
+		HashSet<String> Merged = new HashSet<String>();
+		if (Posicion == 0) {
+		Merged.addAll(Com);	
+		}
+		else {
+			Iterator<String> It = Com.iterator();
+			while (It.hasNext()) {
+				Merged.addAll(historiador(Posicion-1, Historia.get(Posicion).get(It.next())));
+			}
+		}
+		return Merged;	
+	}
+
+	private static HashSet<HashSet<String>> HSStoHSHSS(HashSet<String> seed) {
+		HashSet< HashSet<String> > Plant = new HashSet< HashSet<String> >();
+		Iterator<String> iS = seed.iterator();
+		while(iS.hasNext()) {
+			HashSet<String> unit = new HashSet<String>();
+			String act = new String(iS.next());
+			unit.add(act);
+			Plant.add(unit);
+		}
+		return Plant;
+	}
+
 	public static HashSet< HashSet<String> > executa(GrafLouvain Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);
-		init(Gr);
-		return null;
+		init(Gr); 
+		while(Comunidades.size() > 1) {
+			while(IncrementModularity()); //TODO
+			agregaGraf();
+		}
+		
+		return retorna(percentatge);
 		
 	}
+
 	
 }
