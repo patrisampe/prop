@@ -8,6 +8,7 @@ import java.util.Vector;
 public class Louvain {
 	private static GrafLouvain G;
 	private static HashSet<HashSet<String> > Comunidades;
+	//Potser cal un diccionari<Node, Punter a Comunitat>. Per quan volem saber a quina comunitat pertany un cert node en un cert moment.
 	private static Vector<TreeMap<String,HashSet<String> > > Historia;
 	
 	
@@ -67,7 +68,7 @@ public class Louvain {
 	
 	private static HashSet<HashSet<String>> retorna(Integer percentatge) {
 		Integer Total = Historia.size();
-		Integer Interesante = Total*percentatge/100;
+		Integer Interesante = (100-Total)*percentatge/100;
 		HashSet<String> Generacion = new HashSet<String>(Historia.get(Interesante).keySet());
 		HashSet<HashSet<String> >  ret = HSStoHSHSS(Generacion);
 		Iterator<HashSet<String> > It = ret.iterator();
