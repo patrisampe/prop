@@ -49,27 +49,24 @@ public class Diputado {
 		return Legislaturas;
 	}
 	
-	public Boolean es_activo(Integer identificadorLegislatura){
+	public Boolean esActivo(Integer identificadorLegislatura){
 		return Legislaturas.contains(identificadorLegislatura);
 	}
 
-	public Boolean es_null(){
-		return (Nombre.equals("NULL"));
+	public Boolean esNull(){
+		return (this.equals(NULL)) || (Nombre.equals(""));
 	}
 
 	public void setPartidoPolitico(String nuevoPartido){
 		if (!nuevoPartido.isEmpty()) Partido_politico = nuevoPartido;
-		else Partido_politico = "NULL";
 	}
 	
 	public void setEstado(String nuevoEstado) {
 		if (!nuevoEstado.isEmpty()) Estado = nuevoEstado;
-		else Estado = "NULL";
 	}
 	
 	public void setFechaNacimiento(Date nuevaFecha) {
 		if (nuevaFecha.esValida()) Fecha_de_nacimiento = new Date(nuevaFecha);
-		else Fecha_de_nacimiento = Date.NULL;
 	}
 	
 	public void addLegistura(Integer identificadorLegislatura) {

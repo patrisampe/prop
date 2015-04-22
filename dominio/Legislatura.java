@@ -47,13 +47,37 @@ public class Legislatura{
 		return Fecha_final.esNull();
 	}
 	
+	public Date getFechaFinal() {
+		return Fecha_final;
+	}
 	
-	+ getFechaFinal(): Date
-	+ getDiputados(): Set<String>
-	+ esNull(): Boolean
-	+ setFechaInicio(Date nuevaFecha): void
-	+ setFechaFinal(Date nuevaFecha): void
-	+ addDiputado(String nombreDiputado): void
-	+ removeDiputado(String nombreDiputado): void
+	
+	public Set<String> getDiputados(){
+		return Diputados;
+	}
+	
+	public Boolean esActivo(String nombreDiputado) {
+		return Diputados.contains(nombreDiputado);
+	}
+	
+	public Boolean esNull() {
+		return (this.equals(NULL) || Identificador == -1);
+	}
+	
+	public void setFechaInicio(Date nuevaFecha) {
+		if (nuevaFecha.esValida()) Fecha_inicio = new Date(nuevaFecha);
+	}
+	
+	public void setFechaFinal(Date nuevaFecha) {
+		if (nuevaFecha.esValida()) Fecha_inicio = new Date(nuevaFecha);
+	}
+	
+	public void addDiputado(String nombreDiputado) {
+		Diputados.add(nombreDiputado);
+	}
+	
+	public void removeDiputado(String nombreDiputado) {
+		Diputados.remove(nombreDiputado);
+	}
 	
 }

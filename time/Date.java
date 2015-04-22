@@ -41,7 +41,7 @@ public class Date{
 		Diccionario.put(6, "Junio");
 		Diccionario.put(7, "Julio");
 		Diccionario.put(8, "Agosto");
-		Diccionario.put(9, "Setiembre");
+		Diccionario.put(9, "Septiembre");
 		Diccionario.put(10, "Octubre");
 		Diccionario.put(11, "Noviembre");
 		Diccionario.put(12, "Diciembre");
@@ -211,7 +211,14 @@ public class Date{
 		String D = S.substring(0, 2);
 		String M = S.substring(3, 5);
 		String Y = S.substring(6, S.length());
-		return new Date(Integer.parseInt(D), Integer.parseInt(M), Integer.parseInt(Y));
+		Date ANS;
+		try {
+			ANS = new Date(Integer.parseInt(D), Integer.parseInt(M), Integer.parseInt(Y));
+			if (!ANS.esValida()) ANS = Date.NULL;
+		} catch (NumberFormatException n){
+			ANS = Date.NULL;
+		}
+		return ANS;
 	}
 	
 }
