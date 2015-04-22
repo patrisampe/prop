@@ -18,7 +18,7 @@ public class Date{
 		this.Day = Day;
 		this.Month = Month;
 		this.Year = Year;
-		if (!Es_valida()){
+		if (!esValida()){
 			this.Day = 0;
 			this.Month = 0;
 			this.Year = 0;
@@ -31,7 +31,7 @@ public class Date{
 			this.Year = D.Year;
 	}
 	
-	private static Map<Integer, String> CreateMap() {
+	private static final Map<Integer, String> CreateMap() {
 		Map<Integer, String> Diccionario = new HashMap<Integer, String>();
 		Diccionario.put(1, "Enero");
 		Diccionario.put(2, "Febrero");
@@ -50,42 +50,42 @@ public class Date{
 
 	
 	// Consultores
-	public Integer Day(){
+	public Integer getDay(){
 		return Day;
 	}
 
-	public Integer Month(){
+	public Integer getMonth(){
 		return Month;
 	}
 	
-	public Integer Year(){
+	public Integer getYear(){
 		return Day;
 	}
 	
-	public Boolean Es_valida(){
+	public Boolean esValida(){
 		if (Day > 31 || Day < 1) return false;
 		if (Month > 12 || Month < 1) return false;
 		if ((Month == 4 || Month == 6 || Month == 9 || Month == 11)
 			 && Day == 31) return false;
 		if (Month == 2) { //Febrer
 			if (Day > 29) return false;
-			if (!Es_bisiesto(Year) && Day > 28) return false;
+			if (!esBisiesto(Year) && Day > 28) return false;
 		}
 		return true;
 	}
 	
-	public Boolean Es_null(){
+	public Boolean esNull(){
 		return equals(NULL);
 	}
 	
-	public static Boolean Es_bisiesto(Integer Year){
+	public static Boolean esBisiesto(Integer Year){
 		if (Year%4 != 0) return false;
 		if (Year%100 != 0) return true;
 		if (Year%400 == 0) return true;
 		return false;
 	}
 
-	public String ToString(){
+	public String toString(){
 		String out = "";
 		if (Day < 10) out += "0";
 		out += Day.toString();
@@ -97,7 +97,7 @@ public class Date{
 		return out;
 	}
 	
-	public String ToNamedString(){
+	public String toNamedString(){
 		String out = "";
 		if (Day < 10) out += "0";
 		out += Day.toString();
@@ -132,37 +132,37 @@ public class Date{
 	}
 	
 	// Modificadores
- 	public Boolean SetDay(Integer Day){
+ 	public Boolean setDay(Integer Day){
 		Integer temp = this.Day;
 		this.Day = Day;
-		if (Es_valida()) return true;
+		if (esValida()) return true;
 		else {
 			this.Day = temp;
 			return false;
 		}
 	}
 	
-	public Boolean SetMonth(Integer Month){
+	public Boolean setMonth(Integer Month){
 		Integer temp = this.Month;
 		this.Month = Month;
-		if (Es_valida()) return true;
+		if (esValida()) return true;
 		else {
 			this.Month = temp;
 			return false;
 		}
 	}
 	
-	public Boolean SetYear(Integer Year){
+	public Boolean setYear(Integer Year){
 		Integer temp = this.Year;
 		this.Year = Year;
-		if (Es_valida()) return true;
+		if (esValida()) return true;
 		else {
 			this.Year = temp;
 			return false;
 		}
 	}
 
-	public Date Incremento(){
+	public Date incremento(){
 		++Day;
 		if (Day > 31) {
 			Day = 1;
@@ -178,7 +178,7 @@ public class Date{
 			++Month;
 		}
 		else if (Month == 2){
-			if (Es_bisiesto(Year))
+			if (esBisiesto(Year))
 				if (Day == 30) {
 					Day = 1;
 					++Month;
@@ -192,22 +192,22 @@ public class Date{
 		return this;
 	}
 	
-	public Date Incremento(Integer n){
+	public Date incremento(Integer n){
 		for (int i = 0; i < n; ++i){
-			Incremento();
+			incremento();
 		}
 		return this;
 	}
 	
-	public Date Incremento(DateInterval DI){
+	public Date incremento(DateInterval DI){
 		int n = DI.days();
 		for (int i = 0; i < n; ++i){
-			Incremento();
+			incremento();
 		}
 		return this;
 	}
 	
-	public static Date StringToDate(String S){
+	public static Date stringToDate(String S){
 		String D = S.substring(0, 2);
 		String M = S.substring(3, 5);
 		String Y = S.substring(6, S.length());

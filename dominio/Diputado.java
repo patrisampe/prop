@@ -23,9 +23,9 @@ public class Diputado {
 	
 	public Diputado(String Nombre, Diputado D){
 		this.Nombre = Nombre;
-		this.Partido_politico = D.Partido_politico;
-		this.Estado = D.Estado;
-		this.Fecha_de_nacimiento = D.Fecha_de_nacimiento;
+		Partido_politico = D.Partido_politico;
+		Estado = D.Estado;
+		Fecha_de_nacimiento = D.Fecha_de_nacimiento;
 		Legislaturas = new TreeSet<Integer>(D.Legislaturas);
 	}
 	
@@ -49,24 +49,27 @@ public class Diputado {
 		return Legislaturas;
 	}
 	
-	public Boolean Es_activo(Integer identificadorLegislatura){
+	public Boolean es_activo(Integer identificadorLegislatura){
 		return Legislaturas.contains(identificadorLegislatura);
 	}
 
-	public Boolean Es_null(){
+	public Boolean es_null(){
 		return (Nombre.equals("NULL"));
 	}
 
 	public void setPartidoPolitico(String nuevoPartido){
 		if (!nuevoPartido.isEmpty()) Partido_politico = nuevoPartido;
+		else Partido_politico = "NULL";
 	}
 	
 	public void setEstado(String nuevoEstado) {
 		if (!nuevoEstado.isEmpty()) Estado = nuevoEstado;
+		else Estado = "NULL";
 	}
 	
 	public void setFechaNacimiento(Date nuevaFecha) {
-		if (nuevaFecha.Es_valida()) Fecha_de_nacimiento = new Date(nuevaFecha);
+		if (nuevaFecha.esValida()) Fecha_de_nacimiento = new Date(nuevaFecha);
+		else Fecha_de_nacimiento = Date.NULL;
 	}
 	
 	public void addLegistura(Integer identificadorLegislatura) {

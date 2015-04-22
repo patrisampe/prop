@@ -52,7 +52,7 @@ public class DateInterval {
 		Integer count = 0;
 		while (!aux.equals(Fi)) {
 			++count;
-			aux.Incremento();
+			aux.incremento();
 		}
 		return count;
 	}
@@ -83,12 +83,12 @@ public class DateInterval {
 		return false;
 	}
 	
-	public String ToString() {
-		return Inici.ToString() + " - " + Fi.ToString();
+	public String toString() {
+		return Inici.toString() + " - " + Fi.toString();
 	}
 	
 	public String ToNamedString() {
-		return Inici.ToNamedString() + " - " + Fi.ToNamedString();
+		return Inici.toNamedString() + " - " + Fi.toNamedString();
 	}
 	
 	//retorna la unió si son continus
