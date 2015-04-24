@@ -62,10 +62,44 @@ public class Louvain {
 	
 
 	private static boolean IncrementModularity() {
-		// TODO Auto-generated method stub
+		HashSet<String> Nodes = G.getNodes();
+		Iterator<String> It = Nodes.iterator();
+		Boolean optimitzada = false;
+		while (!optimitzada) {
+			optimitzada = true;
+			while (It.hasNext()) {
+				String Node = It.next();
+				HashSet<String> actual = getComunitat(Node);
+				Iterator<HashSet<String>> iHS = Comunidades.iterator();
+				while(iHS.hasNext()) {
+					HashSet<String> aTractar = iHS.next();
+					if (actual == aTractar) continue;
+					if (ModularityInc(Node, actual, aTractar) > 0.0) {
+						actual.remove(Node);
+						aTractar.add(Node);
+						actual = aTractar;
+						optimitzada = false;
+					}
+					
+				}
+			}
+		}
 		return false;
 	}
 	
+	private static Double ModularityInc(String node, HashSet<String> origen,
+			HashSet<String> destino) {
+		// TODO Auto-generated method stub
+		// Tinc la formula en un paper i ara a la gespa me fa pal treure'l jajaj
+		return 0.0;
+	}
+
+	private static HashSet<String> getComunitat(String node) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 	private static HashSet<HashSet<String>> retorna(Integer percentatge) {
 		Integer Total = Historia.size();
 		Integer Interesante = (100-Total)*percentatge/100;
