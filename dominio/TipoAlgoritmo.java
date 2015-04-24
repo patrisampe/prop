@@ -1,5 +1,5 @@
 package dominio;
 
-public enum Tipo_Algoritmo {
+public enum TipoAlgoritmo {
 	CliquePercolation, GirvanNewmann, Louvain
 }
