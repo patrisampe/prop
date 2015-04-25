@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-abstract class GrupoAfin {
+public abstract class GrupoAfin {
 	private Integer identificador;
 	private Set<String> diputados;
 	

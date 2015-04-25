@@ -5,79 +5,89 @@ import java.util.TreeSet;
 
 import time.Date;
 
-public class Legislatura{
-	private Integer Identificador;
-	private Date Fecha_inicio;
-	private Date Fecha_final;
-	private Set<String> Diputados;
+public class Legislatura extends ObjetoDominio{
+	private Integer identificador;
+	private Date fechaInicio;
+	private Date fechaFinal;
+	private Set<String> diputados;
 	
 	public static final Legislatura NULL = new Legislatura(-1, Date.NULL);
 
-	public Legislatura(Integer Identificador, Date Fecha_inicio, Date Fecha_final){
-		this.Identificador = Identificador;
-		this.Fecha_inicio = Fecha_inicio;
-		this.Fecha_final = Fecha_final;
-		Diputados = new TreeSet<String>();
+	public Legislatura(Integer identificador, Date fechaInicio, Date fechaFinal){
+		this.identificador = identificador;
+		this.fechaInicio = fechaInicio;
+		this.fechaFinal = fechaFinal;
+		diputados = new TreeSet<String>();
 	}
 	
-	public Legislatura(Integer Identificador, Date Fecha_inicio){
-		this.Identificador = Identificador;
-		this.Fecha_inicio = Fecha_inicio;
-		this.Fecha_final = Date.NULL;
-		Diputados = new TreeSet<String>();
+	public Legislatura(Integer identificador, Date fechaInicio){
+		this.identificador = identificador;
+		this.fechaInicio = fechaInicio;
+		this.fechaFinal = Date.NULL;
+		diputados = new TreeSet<String>();
 	}
 	
-	public Legislatura(Integer Identificador, Legislatura L){
-		this.Identificador = Identificador;
-		Fecha_inicio = L.Fecha_inicio;
-		Fecha_final = L.Fecha_final;
-		Diputados = new TreeSet<String>(L.Diputados);
+	public Legislatura(Integer identificador, Legislatura L){
+		this.identificador = identificador;
+		fechaInicio = L.fechaInicio;
+		fechaFinal = L.fechaFinal;
+		diputados = new TreeSet<String>(L.diputados);
 	}
-	
 	
 	public Integer getID() {
-		return Identificador;
+		return identificador;
 	}
 	
 	public Date getFechaInicio() {
-		return Fecha_inicio;
+		return fechaInicio;
 	}
 	
 	public Boolean TieneFechaFinal() {
-		return Fecha_final.esNull();
+		return fechaFinal.esNull();
 	}
 	
 	public Date getFechaFinal() {
-		return Fecha_final;
+		return fechaFinal;
 	}
 	
-	
 	public Set<String> getDiputados(){
-		return Diputados;
+		return diputados;
 	}
 	
 	public Boolean esActivo(String nombreDiputado) {
-		return Diputados.contains(nombreDiputado);
+		return diputados.contains(nombreDiputado);
 	}
 	
 	public Boolean esNull() {
-		return (this.equals(NULL) || Identificador == -1);
+		return (this.equals(NULL) || identificador == -1);
 	}
 	
 	public void setFechaInicio(Date nuevaFecha) {
-		if (nuevaFecha.esValida()) Fecha_inicio = new Date(nuevaFecha);
+		if (nuevaFecha.esValida()) fechaInicio = new Date(nuevaFecha);
 	}
 	
 	public void setFechaFinal(Date nuevaFecha) {
-		if (nuevaFecha.esValida()) Fecha_inicio = new Date(nuevaFecha);
+		if (nuevaFecha.esValida()) fechaInicio = new Date(nuevaFecha);
 	}
 	
 	public void addDiputado(String nombreDiputado) {
-		Diputados.add(nombreDiputado);
+		diputados.add(nombreDiputado);
+	}
+	
+	public void setDiputados(Set<String> diputados) {
+		this.diputados = new TreeSet<String>(diputados);
+	}
+	
+	public Boolean hasDiputado(String nombreDiputado) {
+		return diputados.contains(nombreDiputado);
 	}
 	
 	public void removeDiputado(String nombreDiputado) {
-		Diputados.remove(nombreDiputado);
+		diputados.remove(nombreDiputado);
+	}
+	
+	public void removeDiputados() {
+		diputados.clear();
 	}
 	
 }
