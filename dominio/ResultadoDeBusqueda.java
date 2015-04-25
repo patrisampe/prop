@@ -21,14 +21,13 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	protected Set<GrupoAfin> gruposAfines;
 	//Creadors
 	
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo, Set<GrupoAfin> gruposAfines) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
 		this.intervalo = new DateInterval(intervalo);
-		this.gruposAfines = new TreeSet<GrupoAfin>(gruposAfines);
 	}
 	
 	public ResultadoDeBusqueda(ResultadoDeBusqueda R) {
@@ -38,7 +37,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.importancia = new TreeMap<String,Integer>(R.importancia);
 		this.modificado = new Boolean(R.modificado);
 		this.intervalo = new DateInterval(R.intervalo);
-		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
 	}
 	
 	//Consultors
@@ -50,7 +48,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.nombre = nombre;
 	}
 	
-	public Set<GrupoAfin> consultarGruposAfines() {
+	public Set<GrupoAfin> getGruposAfines() {
 		return new TreeSet<GrupoAfin>(this.gruposAfines);
 	}
 	

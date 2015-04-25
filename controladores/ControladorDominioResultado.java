@@ -7,6 +7,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import dominio.GrupoAfin;
+import dominio.GrupoAfinPorDiputado;
+import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
 import dominio.ResultadoDeBusquedaPorPeriodo;
 import dominio.ResultadoDeBusquedaPorDiputado;
@@ -28,7 +30,7 @@ public class ControladorDominioResultado {
 	}
 	
 	public void nuevoResultadoDeBusquedaPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo/*, Criterio criterio*/) {
-		Set<GrupoAfin> resultado = new HashSet<GrupoAfin>(); // Llamada a ControladorDeBusqueda.NuevaBusqueda()
+		Set<GrupoAfinPorPeriodo> resultado = new HashSet<GrupoAfinPorPeriodo>(); // Llamada a ControladorDeBusqueda.NuevaBusqueda()
 		ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado);
 	}
 
@@ -73,11 +75,16 @@ public class ControladorDominioResultado {
 		return conjuntoResultados.get(nombre).getIntervalo().toString();
 	}
 	
-	public TreeSet<TreeSet<String>> getResultado(String nombre) {
-		TreeSet<TreeSet<String>> listaResultado = new TreeSet<TreeSet<String>>();
-		TreeSet<GrupoAfin>
-		
+	public Set<Set<String>> getResultado(String nombre) {
+		Set<Set<String>> listaResultado = new TreeSet<Set<String>>();
+		Set<GrupoAfin> gruposAfines = conjuntoResultados.get(nombre).getGruposAfines();
+		for (GrupoAfin grup:gruposAfines)
+			listaResultado.add(grup.getDiputados());
 		return listaResultado;
+	}
+	
+	public void removeResultado(String nombre) {
+		conjuntoResultados.remove(nombre);
 	}
 	
 }
