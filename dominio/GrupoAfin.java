@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class GrupoAfin {
+public abstract class GrupoAfin extends ObjetoDominio {
 	private Integer identificador;
 	private Set<String> diputados;
 	

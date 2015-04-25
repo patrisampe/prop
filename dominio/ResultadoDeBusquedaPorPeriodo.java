@@ -1,14 +1,15 @@
 package dominio;
 
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.Map;
 import java.util.Set;
 
+import time.DateInterval;
+
 public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado,  Set<GrupoAfinPorPeriodo> gruposAfines) {
-		super(nombre, indiceAfinidad, algoritmo, importancia, modificado);
-		gruposAfines = new HashSet<GrupoAfinPorPeriodo>(gruposAfines);
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, Set<GrupoAfin> gruposAfines) {
+		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, periodo, gruposAfines);
 	}
 	
 }

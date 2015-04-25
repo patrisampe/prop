@@ -6,6 +6,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 
+import time.DateInterval;
+
+
 public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	
 	//Atributs
@@ -14,15 +17,17 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	private TipoAlgoritmo algoritmo;
 	private Map<String, Integer> importancia;
 	private Boolean modificado;
+	private DateInterval intervalo;
 	protected Set<GrupoAfin> gruposAfines;
 	//Creadors
 	
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo, Set<GrupoAfin> gruposAfines) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
+		this.intervalo = new DateInterval(intervalo);
 		this.gruposAfines = new TreeSet<GrupoAfin>(gruposAfines);
 	}
 	
@@ -32,6 +37,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.algoritmo = R.algoritmo;
 		this.importancia = new TreeMap<String,Integer>(R.importancia);
 		this.modificado = new Boolean(R.modificado);
+		this.intervalo = new DateInterval(R.intervalo);
 		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
 	}
 	
@@ -45,7 +51,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	public Set<GrupoAfin> consultarGruposAfines() {
-		return this.gruposAfines;
+		return new TreeSet<GrupoAfin>(this.gruposAfines);
 	}
 	
 	public Integer getIndiceAfinidad() {
@@ -54,6 +60,10 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	
 	public TipoAlgoritmo getAlgoritmo() {
 		return this.algoritmo;
+	}
+	
+	public DateInterval getIntervalo() {
+		return this.intervalo;
 	}
 	
 	public Boolean esModificado() {
