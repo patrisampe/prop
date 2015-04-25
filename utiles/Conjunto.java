@@ -15,12 +15,12 @@ public class Conjunto<T extends ObjetoDominio> {
 	public Conjunto(Class<T> type){
 		this.type = type;
 		conjunto = new TreeMap<String, T>();
-		if (type.getName().equals("Legislatura") || type.getName().equals("GrupoAfin")
-			|| type.getName().equals("GrupoAfinPorDiputado")
-			|| type.getName().equals("GrupoAfinPorPeriodo"))
+		if (type.equals(Legislatura.class) || type.equals(GrupoAfin.class)
+			|| type.equals(GrupoAfinPorDiputado.class)
+			/*|| type.equals(GrupoAfinPorPeriodo.class)*/)
 				hasIntegerKey = true;
 		else hasIntegerKey = false;
-		//CLASSES AMB INTEGER:
+		//CLASSES AMB INTEGER KEY:
 			//Legislatura
 			//GrupoAfin
 		//esEvento = false;
