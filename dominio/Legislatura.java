@@ -42,7 +42,7 @@ public class Legislatura extends ObjetoDominio{
 		return fechaInicio;
 	}
 	
-	public Boolean TieneFechaFinal() {
+	public Boolean hasFechaFinal() {
 		return fechaFinal.esNull();
 	}
 	
@@ -67,7 +67,11 @@ public class Legislatura extends ObjetoDominio{
 	}
 	
 	public void setFechaFinal(Date nuevaFecha) {
-		if (nuevaFecha.esValida()) fechaInicio = new Date(nuevaFecha);
+		if (nuevaFecha.esValida()) fechaFinal = new Date(nuevaFecha);
+	}
+	
+	public void removeFechaFinal() {
+		fechaFinal = Date.NULL;
 	}
 	
 	public void addDiputado(String nombreDiputado) {

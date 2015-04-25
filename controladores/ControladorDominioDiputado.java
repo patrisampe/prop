@@ -1,14 +1,14 @@
 package controladores;
 
-import java.util.Map;
+import java.util.Set;
 
 import time.Date;
 import utiles.Conjunto;
 import dominio.Diputado;
 
-class ControladorDominioDiputado {
+public class ControladorDominioDiputado {
 	
-	//private CodiError errors;
+	//private CodiError errors; TODO
 	private Conjunto<Diputado> conjuntoDiputados;
 	private static ControladorDominioDiputado instance = null;
 	
@@ -27,13 +27,12 @@ class ControladorDominioDiputado {
 		return conjuntoDiputados.size();
 	}
 	
-	public void addAll(Map<String, Diputado> M){
-		conjuntoDiputados.addAll(M);
+	public void addAll(Set<Diputado> diputados){
+		conjuntoDiputados.addAll(diputados);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Map<String, Diputado> getAll() {
-		return (Map<String, Diputado>) conjuntoDiputados.getAll();
+	public Set<Diputado> getAll() {
+		return conjuntoDiputados.getAll();
 	}
 	
 	public void removeAll() {
@@ -45,28 +44,24 @@ class ControladorDominioDiputado {
 		conjuntoDiputados.add(nombreDiputado, D);
 	}
 
-	public Boolean existeDiputado(String nombreDiputado) {
+	public Boolean existsDiputado(String nombreDiputado) {
 		return conjuntoDiputados.exists(nombreDiputado);
 	}
-
 	
 	public void removeDiputado(String nombreDiputado) {
 		conjuntoDiputados.remove(nombreDiputado);
 	}
 		
 	public void setPartidoPolitico(String nombreDiputado, String nombrePartido) {
-		Diputado D = conjuntoDiputados.get(nombreDiputado);
-		D.setPartidoPolitico(nombrePartido);
+		conjuntoDiputados.get(nombreDiputado).setPartidoPolitico(nombrePartido);
 	}
 
 	public void setEstado(String nombreDiputado, String nombreEstado) {
-		Diputado D = conjuntoDiputados.get(nombreDiputado);
-		D.setEstado(nombreEstado);
+		conjuntoDiputados.get(nombreDiputado).setEstado(nombreEstado);
 	}
 	
 	public void setFechaDeNacimiento(String nombreDiputado, Date FechaDeNacimiento) {
-		Diputado D = conjuntoDiputados.get(nombreDiputado);
-		D.setFechaNacimiento(FechaDeNacimiento);
+		conjuntoDiputados.get(nombreDiputado).setFechaNacimiento(FechaDeNacimiento);
 	}
 
 	public String getPartidoPolitico(String nombreDiputado) {
@@ -83,21 +78,26 @@ class ControladorDominioDiputado {
 	}
 
 	public void addRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
-		Diputado D = conjuntoDiputados.get(nombreDiputado);
-		D.addLegistura(identificadorLegislatura);
+		conjuntoDiputados.get(nombreDiputado).addLegistura(identificadorLegislatura);
 	}
 	
-	public Boolean existeRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
-		Diputado D =  conjuntoDiputados.get(nombreDiputado);
-		return D.hasLegistura(identificadorLegislatura);
+	public void setRLegistura(String nombreDiputado, Set<Integer> legislaturas) {
+		conjuntoDiputados.get(nombreDiputado).setLegisturas(legislaturas);
+	}
+	
+	public Boolean existsRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+		return conjuntoDiputados.get(nombreDiputado).hasLegistura(identificadorLegislatura);
 	}
 	
 	public void removeRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
-		Diputado D = conjuntoDiputados.get(nombreDiputado);
-		D.removeLegisturas();
+		conjuntoDiputados.get(nombreDiputado).removeLegistura(identificadorLegislatura);
 	}
 	
-	public Boolean teCodiError() {
+	public void removeRLegistura(String nombreDiputado) {
+		conjuntoDiputados.get(nombreDiputado).removeLegisturas();
+	}
+	
+	public Boolean hasCodiError() {
 		return false; //TODO
 	}
 	
@@ -121,6 +121,5 @@ class ControladorDominioDiputado {
 	public void guardarDatos() {
 		//TODO
 	}
-
 	
 }
