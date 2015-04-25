@@ -6,7 +6,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 
-public class ResultadoDeBusqueda {
+public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	
 	//Atributs
 	private String nombre; 
@@ -14,16 +14,16 @@ public class ResultadoDeBusqueda {
 	private TipoAlgoritmo algoritmo;
 	private Map<String, Integer> importancia;
 	private Boolean modificado;
-	private Set<Integer> gruposAfines;
+	protected Set<GrupoAfin> gruposAfines;
 	//Creadors
 	
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado,  Set<Integer> gruposAfines) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
-		this.gruposAfines = new TreeSet<Integer>(gruposAfines);
+		this.gruposAfines = new TreeSet<GrupoAfin>(gruposAfines);
 	}
 	
 	public ResultadoDeBusqueda(ResultadoDeBusqueda R) {
@@ -32,7 +32,7 @@ public class ResultadoDeBusqueda {
 		this.algoritmo = R.algoritmo;
 		this.importancia = new TreeMap<String,Integer>(R.importancia);
 		this.modificado = new Boolean(R.modificado);
-		this.gruposAfines = new TreeSet<Integer>(R.gruposAfines);
+		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
 	}
 	
 	//Consultors
@@ -40,7 +40,11 @@ public class ResultadoDeBusqueda {
 		return this.nombre;
 	}
 	
-	public Set<Integer> consultarGruposAfines() {
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public Set<GrupoAfin> consultarGruposAfines() {
 		return this.gruposAfines;
 	}
 	
