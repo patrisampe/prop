@@ -62,6 +62,19 @@ public class Conjunto<T extends ObjetoDominio> {
 		return S;
 	}
 	
+	public Set<Integer> getIntegerKeys() {
+		if (!hasIntegerKey) return new TreeSet<Integer>();
+		Set<Integer> S = new TreeSet<Integer>();
+		Iterator<String> it = conjunto.keySet().iterator();
+		while (it.hasNext()) S.add(Integer.parseInt(it.next()));			
+		return S;
+	}
+	
+	public Set<String> getStringKeys() {
+		if (hasIntegerKey) return new TreeSet<String>();
+		return conjunto.keySet();
+	}
+	
 	public void removeAll() {
 		conjunto.clear();
 	}
