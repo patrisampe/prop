@@ -2,7 +2,9 @@ package utiles;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import dominio.*;
 
@@ -10,26 +12,23 @@ public class Conjunto<T extends ObjetoDominio> {
 	private Map<String, T> conjunto;
 	private final Boolean hasIntegerKey;
     private final Class<T> type;
-	//private final Boolean esEvento;
+	//private final Boolean esEvento; TODO
 	
 	public Conjunto(Class<T> type){
 		this.type = type;
 		conjunto = new TreeMap<String, T>();
-		if (type.equals(Legislatura.class) || type.equals(GrupoAfin.class)
-			|| type.equals(GrupoAfinPorDiputado.class)
-			/*|| type.equals(GrupoAfinPorPeriodo.class)*/)
-				hasIntegerKey = true;
-		else hasIntegerKey = false;
-		//esEvento = false;
+		hasIntegerKey = (type.equals(Legislatura.class)
+						 || type.equals(GrupoAfinPorDiputado.class)
+					   /*|| type.equals(GrupoAfinPorPeriodo.class)*/);
+		//esEvento = false; TODO
 	}
 	
 	public Class<T> getValueType(){
 		return type;
 	}
 	
-	public String getKeyType(){
-		if (hasIntegerKey) return "Integer";
-		return "String";
+	public Boolean KeyTypeIsInteger(){
+		return hasIntegerKey;
 	}
 	
 	public Integer size(){
@@ -40,40 +39,27 @@ public class Conjunto<T extends ObjetoDominio> {
 		return conjunto.isEmpty();
 	}
 	
-	public <U> void addAll(Map<U, T> M){
-		if (!M.isEmpty()) {
-			Boolean integerKey = M.keySet().iterator().next().getClass().equals(Integer.class);
-			Boolean stringKey = M.keySet().iterator().next().getClass().equals(String.class);
-			if (!hasIntegerKey && stringKey){ //String
-				conjunto = new TreeMap<String, T>();
-				Iterator<U> it = M.keySet().iterator();
-				while (it.hasNext()) {
-					U clave = it.next();
-					conjunto.put(clave.toString(), M.get(clave));
+	public void addAll(Set<T> S){
+		if (!S.isEmpty()) {
+			conjunto.clear();
+			Iterator<T> it = S.iterator();
+			while (it.hasNext()) {
+				T elemento = it.next();
+				if (!hasIntegerKey){ //String
+					conjunto.put(elemento.getNombre(), elemento);
 				}
-			}
-			if (hasIntegerKey && integerKey){ //Integer
-				conjunto = new TreeMap<String, T>();
-				Iterator<U> it = M.keySet().iterator();
-				while (it.hasNext()) {
-					U clave = it.next();
-					conjunto.put(clave.toString(), M.get(clave));
+				else { //Integer
+					conjunto.put(elemento.getID().toString(), elemento);				
 				}
 			}
 		}
 	}
 	
-	public Map<?, T> getAll() {
-		Map<Integer, T> M = new TreeMap<Integer, T>();
-		if (!hasIntegerKey) return conjunto;
-		else {
-			Iterator<String> it = conjunto.keySet().iterator();
-			while (it.hasNext()) {
-				String clave = it.next();
-				M.put(Integer.parseInt(clave), conjunto.get(clave));
-			}
-		}
-		return M;
+	public Set<T> getAll() {
+		Set<T> S = new TreeSet<T>();
+		Iterator<String> it = conjunto.keySet().iterator();
+		while (it.hasNext()) S.add(conjunto.get(it.next()));
+		return S;
 	}
 	
 	public void removeAll() {
@@ -115,40 +101,5 @@ public class Conjunto<T extends ObjetoDominio> {
 	public void remove(Integer idObjeto) {
 		if (hasIntegerKey) conjunto.remove(idObjeto.toString());
 	}
-	
-	/*
-	public void addAllString(Map<String, T> M){
-		if (!hasIntegerKey) conjunto = new TreeMap<String, T>(M);
-	}
-	
-	public void addAllInteger(Map<Integer, T> M){
-		if (hasIntegerKey){
-			conjunto = new TreeMap<String, T>();
-			Iterator<Integer> it = M.keySet().iterator();
-			while (it.hasNext()) {
-				Integer clave = it.next();
-				conjunto.put(clave.toString(), M.get(clave));
-			}
-		}
-	}
-		
-	public Map<String, T> getAllString() {
-		if (!hasIntegerKey) return conjunto;
-		return new TreeMap<String, T>();
-	}
-	
-	public Map<Integer, T> getAllInteger() {
-		Map<Integer, T> M = new TreeMap<Integer, T>();
-		if (hasIntegerKey){
-			Iterator<String> it = conjunto.keySet().iterator();
-			while (it.hasNext()) {
-				String clave = it.next();
-				M.put(Integer.parseInt(clave), conjunto.get(clave));
-			}
-		}
-		return M;
-	}
-	
-	*/
 	
 }
