@@ -20,9 +20,6 @@ public class Conjunto<T extends ObjetoDominio> {
 			/*|| type.equals(GrupoAfinPorPeriodo.class)*/)
 				hasIntegerKey = true;
 		else hasIntegerKey = false;
-		//CLASSES AMB INTEGER KEY:
-			//Legislatura
-			//GrupoAfin
 		//esEvento = false;
 	}
 	

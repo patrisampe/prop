@@ -13,7 +13,7 @@ class ControladorDominioDiputado {
 	private static ControladorDominioDiputado instance = null;
 	
 	protected ControladorDominioDiputado(){
-		
+		conjuntoDiputados = new Conjunto<Diputado>(Diputado.class);
 	}
 	
 	public static ControladorDominioDiputado getInstance() {
