@@ -144,7 +144,12 @@ public class Louvain {
 		}
 		return Plant;
 	}
-
+	/**
+	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'aturés.
+	 * @param Gr Graf sobre el que s'executarà l'algorisme.
+	 * @param percentatge 
+	 * @return Conjunt de Comunitats resultant de l'execució.
+	 */
 	public static HashSet< HashSet<String> > executa(GrafLouvain Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);
 		init(Gr); 

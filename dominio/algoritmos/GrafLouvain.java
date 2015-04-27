@@ -20,15 +20,34 @@ public class GrafLouvain extends Graf {
 		}
 		return sum;
 	}
-	
+
+	/**
+	 * Creadora per defecte.
+	 */
 	public GrafLouvain() {
 		super();
 	}
 	
+	/**
+	 * Creadora per còpia a partir d'un GrafLouvain.
+	 * @param G GrafLouvain que es copiarà.
+	 */
 	public GrafLouvain(GrafLouvain G) {
 		super(G);
 	}
 	
+	/**
+	 * Creadora a partir de HashSet. Crea un GrafLouvain que té per nodes el contingut del HashSet.
+	 * @param NodesInicials Nodes del Graf que es crea.
+	 */
+	public GrafLouvain(HashSet<String> NodesInicials) {
+		super(NodesInicials);
+	}
+	
+	/**
+	 * 
+	 * @return Suma dels Pesos de totes les arestes del Graf.
+	 */
 	public Double sumaPesos() {
 		Double sum = 0.0;
 		for (Integer i = 0; i < Matriu.size(); ++i) {
@@ -38,6 +57,11 @@ public class GrafLouvain extends Graf {
 		return sum/2;
 	}
 	
+	/**
+	 * 
+	 * @param Comunitat Conjunt de Nodes del Graf.
+	 * @return Suma dels pesos interns de la Comunitat.
+	 */
 	public Double sumaPesos(HashSet<String> Comunitat) {
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
@@ -49,15 +73,24 @@ public class GrafLouvain extends Graf {
 		return sum;
 	}
 	
-	
-	
+	/**
+	 * 	
+	 * @param id Node del Graf
+	 * @return Suma dels pesos de les Arestes adjacents al Node. -1 si no existeix.
+	 */
 	public Double sumaPesosAdjacents(String id) {
 		if (!existeixNode(id)) return -1.0;
 		Integer Posicio = Diccionari.get(id);
 		return sumaFila(Posicio);
 	}
 	
-	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {//Incompletee
+	/**
+	 * 
+	 * @param id Node
+	 * @param Comunitat Conjunt de Nodes.
+	 * @return Suma dels pesos de les Arestes entre el Node i la Comunitat. -1 si el node no existeix o la comunitat és buida.
+	 */
+	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {//Incompletee TODO?
 		if (!existeixNode(id)) return -1.0;
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
@@ -70,6 +103,12 @@ public class GrafLouvain extends Graf {
 		return sum;
 	}
 	
+	/**
+	 * 
+	 * @param C1 Comunitat 1
+	 * @param C2 Comunitat 1
+	 * @return Suma dels pesos de les Arestes entre les Comunitats, que han de ser disjuntes. -1 si el node no existeix o la comunitat és buida.
+	 */
 	public Double sumaPesosAdjacents(HashSet<String> C1, HashSet<String> C2) {
 		if (C1.isEmpty() || C2.isEmpty()) return -1.0;
 		if (C1 == C2) return sumaPesos(C1);
@@ -82,6 +121,11 @@ public class GrafLouvain extends Graf {
 		return sum;
 	}
 	
+	/**
+	 * 
+	 * @param Comunitat
+	 * @return Suma dels pesos de les arestes adjacents a Nodes de la Comunitat. -1 si és buida.
+	 */
 	public Double sumaPesosAdjacentsInclusiva(HashSet<String> Comunitat) {
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
@@ -92,10 +136,14 @@ public class GrafLouvain extends Graf {
 		}
 		return sum;
 	}
-	
+	/**
+	 * 
+	 * @param Comunitat
+	 * @return Suma dels pesos de les arestes adjacents a Nodes de la Comunitat, excloent els pesos de les arestes internes.
+	 */
 	public Double sumaPesosAdjacentsExclusiva(HashSet<String> Comunitat) { 
 		if (Comunitat.isEmpty()) return -1.0;
-		return sumaPesosAdjacentsInclusiva(Comunitat) + sumaPesos(Comunitat);
+		return sumaPesosAdjacentsInclusiva(Comunitat) - sumaPesos(Comunitat);
 	}
 	
 	
