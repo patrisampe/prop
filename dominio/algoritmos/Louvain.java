@@ -9,6 +9,7 @@ public class Louvain {
 	private static GrafLouvain G;
 	private static HashSet<HashSet<String> > Comunidades;
 	//Potser cal un diccionari<Node, Punter a Comunitat>. Per quan volem saber a quina comunitat pertany un cert node en un cert moment.
+	//O potser no :)
 	private static Vector<TreeMap<String,HashSet<String> > > Historia;
 	
 	
@@ -89,14 +90,19 @@ public class Louvain {
 	
 	private static Double ModularityInc(String node, HashSet<String> origen,
 			HashSet<String> destino) {
-		// TODO Auto-generated method stub
-		// Tinc la formula en un paper i ara a la gespa me fa pal treure'l jajaj
-		return 0.0;
+		Double grauNode = G.sumaPesosAdjacents(node);
+		Double m = G.sumaPesos();
+		Double res = (G.sumaPesosAdjacentsInclusiva(origen)-G.sumaPesosAdjacentsInclusiva(destino) - grauNode)*grauNode/m; //Casi segur és inclusiva, però ens hem d'assegurar que no sigui exclusiva
+		res += G.sumaPesosAdjacents(node, destino) - G.sumaPesosAdjacents(node, origen);
+		res /= 2*m;	
+		return res;
 	}
 
 	private static HashSet<String> getComunitat(String node) {
-		return null;
-		// TODO Auto-generated method stub
+		for (HashSet<String> Comunidad : Comunidades) {
+			if (Comunidad.contains(node)) return Comunidad;
+		}
+		return null; //Nunca llegará aquí.
 		
 	}
 
