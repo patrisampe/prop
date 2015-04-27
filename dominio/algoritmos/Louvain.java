@@ -64,25 +64,24 @@ public class Louvain {
 
 	private static boolean IncrementModularity() {
 		HashSet<String> Nodes = G.getNodes();
-		Iterator<String> It = Nodes.iterator();
 		Boolean optimitzada = false;
 		while (!optimitzada) {
 			optimitzada = true;
-			while (It.hasNext()) {
-				String Node = It.next();
+			for (String Node : Nodes) {
 				HashSet<String> actual = getComunitat(Node);
-				Iterator<HashSet<String>> iHS = Comunidades.iterator();
-				while(iHS.hasNext()) {
-					HashSet<String> aTractar = iHS.next();
+				HashSet<String> maxCom = actual;
+				Double max = 0.0;
+				for(HashSet<String> aTractar : Comunidades) {
 					if (actual == aTractar) continue;
-					if (ModularityInc(Node, actual, aTractar) > 0.0) {
-						actual.remove(Node);
-						aTractar.add(Node);
-						actual = aTractar;
+					Double Inc = ModularityInc(Node, actual, aTractar);
+					if (Inc > max) {
+						max = Inc;
+						maxCom = aTractar;
 						optimitzada = false;
 					}
-					
 				}
+				actual.remove(Node);
+				maxCom.add(Node);
 			}
 		}
 		return false;
@@ -153,7 +152,6 @@ public class Louvain {
 			while(IncrementModularity()); //TODO
 			agregaGraf();
 		}
-		
 		return retorna(percentatge);
 		
 	}
