@@ -1,12 +1,9 @@
 package dominio;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-abstract class GrupoAfin {
+public abstract class GrupoAfin extends ObjetoDominio {
 	private Integer identificador;
 	private Set<String> diputados;
 	
@@ -23,12 +20,8 @@ abstract class GrupoAfin {
 		return identificador;
 	}
 	
-	public List<String> getDiputados() {
-		List<String> Lista_Diputados = new ArrayList<String>();
-		Iterator<String> it = diputados.iterator();
-		while (it.hasNext())
-			Lista_Diputados.add(it.next());
-		return Lista_Diputados;
+	public Set<String> getDiputados() {
+		return new TreeSet<String>(diputados);
 	}
 	
 	public Boolean pertenece(String Diputado) {

@@ -5,54 +5,54 @@ import java.util.TreeSet;
 import time.*;
 
 public class Evento {
-	private String Nombre;
-	private Date Fecha;
+	private String nombre;
+	private Date fecha;
 	
-	private Set <String> Diputados;
+	private Set <String> diputados;
 	
 	public Evento(String Nombre, Date Fecha){
 		 //Pre: Fecha valida y Nombre no existente
-		this.Nombre=Nombre;
-		this.Fecha=Fecha;
-		Diputados=new TreeSet<String>();
+		nombre=Nombre;
+		fecha=Fecha;
+		diputados=new TreeSet<String>();
 	}
 	
 	public Evento(String Nombre, Evento E){
 		//Pre: Fecha valida y Nombre no existente
-		this.Nombre=Nombre;
-		this.Fecha=E.Fecha;
-		Diputados= new TreeSet<String>(E.Diputados);
+		nombre=Nombre;
+		fecha=E.fecha;
+		diputados= new TreeSet<String>(E.diputados);
 	}
 	
-	public Date GetFecha(){
-		return this.Fecha;
+	public Date getFecha(){
+		return fecha;
 	}
 	
-	public String GetNombre(){
-		return this.Nombre;
+	public String getNombre(){
+		return nombre;
 	}
 	
-	public Set<String> GetDiputados(){
-		return this.Diputados;
+	public Set<String> getdiputados(){
+		return diputados;
 	}
 	
-	public Boolean Es_participante(String nombreDiputado){
-		return Diputados.contains(nombreDiputado);
+	public Boolean esParticipante(String nombreDiputado){
+		return diputados.contains(nombreDiputado);
 	}
 	
-	public void SetFecha(Date nuevaFecha){
+	public void setFecha(Date nuevaFecha){
 		//Pre: Fecha valida
-		Fecha = new Date(nuevaFecha);
+		fecha = new Date(nuevaFecha);
 	}
 	
-	public void AddDiputado(String nombreDiputado){
+	public void addDiputado(String nombreDiputado){
 		//Pre: Diputado existe y no ha participado en este evento
-		Diputados.add(nombreDiputado);
+		diputados.add(nombreDiputado);
 	}
 	
-	public void RemoveDiputado(String nombreDiputado) {
+	public void removeDiputado(String nombreDiputado) {
 		//Pre: Diputado existe y ha participado en este evento
-		Diputados.remove(nombreDiputado);
+		diputados.remove(nombreDiputado);
 	}
 	
 	

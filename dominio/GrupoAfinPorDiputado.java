@@ -1,22 +1,23 @@
 package dominio;
 
-import time.*;
+import time.Date;
 
-public class GrupoAfinPorDiputado extends GrupoAfin{
+public class GrupoAfinPorDiputado extends GrupoAfin {
+	
 	private Date fechaInicio, fechaFin;
-	
-	public GrupoAfinPorDiputado(Integer ID, Date inicio, Date fin) {
+
+	public GrupoAfinPorDiputado(Integer ID, Date fechaInicio, Date fechaFin) {
 		super(ID);
-		fechaInicio = new Date(inicio);
-		fechaFin = new Date(fin);
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
 	}
 	
-	public void setFechaInicio(Date inicio) {
-		fechaInicio = new Date(inicio);
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
 	
-	public void setFechaFin(Date fin) {
-		fechaFin = new Date (fin);
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 	
 	public Date getFechaInicio() {
@@ -26,4 +27,5 @@ public class GrupoAfinPorDiputado extends GrupoAfin{
 	public Date getFechaFin() {
 		return new Date(fechaFin);
 	}
+	
 }

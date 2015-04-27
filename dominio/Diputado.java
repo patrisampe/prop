@@ -4,77 +4,89 @@ import java.util.TreeSet;
 
 import time.*;
 
-public class Diputado {
-	private String Nombre;
-	private String Partido_politico;
-	private String Estado;
-	private Date Fecha_de_nacimiento;
-	private Set<Integer> Legislaturas;
+public class Diputado extends ObjetoDominio {
+	private String nombre;
+	private String partidoPolitico;
+	private String estado;
+	private Date fechaDeNacimiento;
+	private Set<Integer> legislaturas;
 
 	public static final Diputado NULL = new Diputado("NULL", "", "", Date.NULL);
 	
-	public Diputado(String Nombre, String Partido_politico, String Estado, Date Fecha_de_nacimiento){
-		this.Nombre = Nombre;
-		this.Partido_politico = Partido_politico;
-		this.Estado = Estado;
-		this.Fecha_de_nacimiento = Fecha_de_nacimiento;
-		Legislaturas = new TreeSet<Integer>();
+	public Diputado(String nombre, String partidoPolitico, String estado, Date fechaDeNacimiento){
+		this.nombre = nombre;
+		this.partidoPolitico = partidoPolitico;
+		this.estado = estado;
+		this.fechaDeNacimiento = fechaDeNacimiento;
+		legislaturas = new TreeSet<Integer>();
 	}
 	
-	public Diputado(String Nombre, Diputado D){
-		this.Nombre = Nombre;
-		Partido_politico = D.Partido_politico;
-		Estado = D.Estado;
-		Fecha_de_nacimiento = D.Fecha_de_nacimiento;
-		Legislaturas = new TreeSet<Integer>(D.Legislaturas);
+	public Diputado(String nombre, Diputado D){
+		this.nombre = nombre;
+		partidoPolitico = D.partidoPolitico;
+		estado = D.estado;
+		fechaDeNacimiento = D.fechaDeNacimiento;
+		legislaturas = new TreeSet<Integer>(D.legislaturas);
 	}
 	
 	public String getNombre(){
-		return Nombre;
+		return nombre;
 	}
 	
 	public String getPartidoPolitico(){
-		return Partido_politico;
+		return partidoPolitico;
 	}
 	
 	public String getEstado(){
-		return Estado;
+		return estado;
 	}
 	
 	public Date getFechaDeNacimiento(){
-		return Fecha_de_nacimiento;
+		return fechaDeNacimiento;
 	}
 	
 	public Set<Integer> getLegislaturas(){
-		return Legislaturas;
+		return legislaturas;
 	}
 	
 	public Boolean esActivo(Integer identificadorLegislatura){
-		return Legislaturas.contains(identificadorLegislatura);
+		return legislaturas.contains(identificadorLegislatura);
 	}
 
 	public Boolean esNull(){
-		return (this.equals(NULL)) || (Nombre.equals(""));
+		return (this.equals(NULL)) || (nombre.equals(""));
 	}
 
 	public void setPartidoPolitico(String nuevoPartido){
-		if (!nuevoPartido.isEmpty()) Partido_politico = nuevoPartido;
+		if (!nuevoPartido.isEmpty()) partidoPolitico = nuevoPartido;
 	}
 	
 	public void setEstado(String nuevoEstado) {
-		if (!nuevoEstado.isEmpty()) Estado = nuevoEstado;
+		if (!nuevoEstado.isEmpty()) estado = nuevoEstado;
 	}
 	
 	public void setFechaNacimiento(Date nuevaFecha) {
-		if (nuevaFecha.esValida()) Fecha_de_nacimiento = new Date(nuevaFecha);
+		if (nuevaFecha.esValida()) fechaDeNacimiento = new Date(nuevaFecha);
 	}
 	
 	public void addLegistura(Integer identificadorLegislatura) {
-		Legislaturas.add(identificadorLegislatura);
+		legislaturas.add(identificadorLegislatura);
+	}
+	
+	public void setLegisturas(Set<Integer> legislaturas) {
+		this.legislaturas = new TreeSet<Integer>(legislaturas);
+	}
+	
+	public Boolean hasLegistura(Integer identificadorLegislatura) {
+		return legislaturas.contains(identificadorLegislatura);
 	}
 	
 	public void removeLegistura(Integer identificadorLegislatura) {
-		Legislaturas.remove(identificadorLegislatura);
+		legislaturas.remove(identificadorLegislatura);
+	}
+	
+	public void removeLegisturas() {
+		legislaturas.clear();
 	}
 	
 }
