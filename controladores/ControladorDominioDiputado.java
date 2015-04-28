@@ -77,23 +77,27 @@ public class ControladorDominioDiputado {
 		return conjuntoDiputados.get(nombreDiputado).getFechaDeNacimiento();
 	}
 
-	public void addRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+	public void addLegistura(String nombreDiputado, Integer identificadorLegislatura) {
 		conjuntoDiputados.get(nombreDiputado).addLegistura(identificadorLegislatura);
 	}
 	
-	public void setRLegistura(String nombreDiputado, Set<Integer> legislaturas) {
+	public void setLegisturas(String nombreDiputado, Set<Integer> legislaturas) {
 		conjuntoDiputados.get(nombreDiputado).setLegisturas(legislaturas);
 	}
 	
-	public Boolean existsRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+	public Set<Integer> getLegislaturas(String nombreDiputado) {
+		return conjuntoDiputados.get(nombreDiputado).getLegislaturas();
+	}
+	
+	public Boolean existsLegistura(String nombreDiputado, Integer identificadorLegislatura) {
 		return conjuntoDiputados.get(nombreDiputado).hasLegistura(identificadorLegislatura);
 	}
 	
-	public void removeRLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+	public void removeLegistura(String nombreDiputado, Integer identificadorLegislatura) {
 		conjuntoDiputados.get(nombreDiputado).removeLegistura(identificadorLegislatura);
 	}
 	
-	public void removeRLegistura(String nombreDiputado) {
+	public void removeLegisturas(String nombreDiputado) {
 		conjuntoDiputados.get(nombreDiputado).removeLegisturas();
 	}
 	
