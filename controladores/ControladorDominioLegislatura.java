@@ -127,7 +127,6 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.get(identificadorLegislatura).getDiputados();
 	}
 
-	
 	public Boolean existsDiputado(Integer identificadorLegislatura, String nombreDiputado) {
 		return conjuntoLegislaturas.get(identificadorLegislatura).hasDiputado(nombreDiputado);
 	}
@@ -147,22 +146,6 @@ public class ControladorDominioLegislatura {
 	
 	public Integer getCodiError() {
 		return 0; //TODO
-	}
-	
-	public void abrirArchivo() {
-		//TODO
-	}
-	
-	public void crearArchivo() {
-		//TODO
-	}
-	
-	public void cargarDatos() {
-		//TODO
-	}
-	
-	public void guardarDatos() {
-		//TODO
 	}
 
 }

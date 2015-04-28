@@ -110,20 +110,4 @@ public class ControladorDominioDiputado {
 		return 0; //TODO
 	}
 	
-	public void abrirArchivo() {
-		//TODO
-	}
-	
-	public void crearArchivo() {
-		//TODO
-	}
-	
-	public void cargarDatos() {
-		//TODO
-	}
-	
-	public void guardarDatos() {
-		//TODO
-	}
-	
 }

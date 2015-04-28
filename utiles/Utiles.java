@@ -2,7 +2,7 @@ package utiles;
 
 public class Utiles {
 	
-	public static String Normaliza_String(String S){
+	public static String NormalizaString(String S){
 		if (S.isEmpty()) return S;
 		S = S.toLowerCase();
 		Character c = S.charAt(0);

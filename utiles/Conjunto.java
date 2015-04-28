@@ -23,6 +23,13 @@ public class Conjunto<T extends ObjetoDominio> {
 		//esEvento = false; TODO
 	}
 	
+	public Conjunto(Conjunto<T> C){
+		this.type = C.type;
+		conjunto = new TreeMap<String, T>(C.conjunto);
+		hasIntegerKey = C.hasIntegerKey;
+		//esEvento = C.esEvento; TODO
+	}
+	
 	public Class<T> getValueType(){
 		return type;
 	}
@@ -113,6 +120,50 @@ public class Conjunto<T extends ObjetoDominio> {
 	
 	public void remove(Integer idObjeto) {
 		if (hasIntegerKey) conjunto.remove(idObjeto.toString());
+	}
+	
+	public static <U extends ObjetoDominio> Conjunto<U> union(Conjunto<U> C1, Conjunto<U> C2) {
+		Set<U> S1 = C1.getAll();
+		Set<U> S2 = C2.getAll();
+		Set<U> S = new TreeSet<U>();
+		Iterator<U> it = S1.iterator();
+		while (it.hasNext()) S.add(it.next());
+		it = S2.iterator();
+		while (it.hasNext()) S.add(it.next());
+		Class<U> tipo = C1.type;
+		Conjunto<U> C = new Conjunto<U>(tipo);
+		C.addAll(S);
+		return C;
+	}
+	
+	public static <U extends ObjetoDominio> Conjunto<U> intersection(Conjunto<U> C1, Conjunto<U> C2) {
+		Set<U> S1 = C1.getAll();
+		Set<U> S2 = C2.getAll();
+		Set<U> S = new TreeSet<U>();
+		Iterator<U> it = S1.iterator();
+		while (it.hasNext()) {
+			U aux = it.next();
+			if (S2.contains(aux)) S.add(aux);
+		}
+		Class<U> tipo = C1.type;
+		Conjunto<U> C = new Conjunto<U>(tipo);
+		C.addAll(S);
+		return C;
+	}
+	
+	public static <U extends ObjetoDominio> Conjunto<U> difference(Conjunto<U> C1, Conjunto<U> C2) {
+		Set<U> S1 = C1.getAll();
+		Set<U> S2 = C2.getAll();
+		Set<U> S = new TreeSet<U>();
+		Iterator<U> it = S1.iterator();
+		while (it.hasNext()) {
+			U aux = it.next();
+			if (!S2.contains(aux)) S.add(aux);
+		}
+		Class<U> tipo = C1.type;
+		Conjunto<U> C = new Conjunto<U>(tipo);
+		C.addAll(S);
+		return C;
 	}
 	
 }
