@@ -30,10 +30,10 @@ public class GrafLouvain extends Graf {
 	
 	/**
 	 * Creadora per còpia a partir d'un GrafLouvain.
-	 * @param G GrafLouvain que es copiarà.
+	 * @param g GrafLouvain que es copiarà.
 	 */
-	public GrafLouvain(GrafLouvain G) {
-		super(G);
+	public GrafLouvain(Graf g) {
+		super(g);
 	}
 	
 	/**

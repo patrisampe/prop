@@ -8,6 +8,9 @@ import java.util.TreeMap;
 
 import time.DateInterval;
 import dominio.*;
+import dominio.algoritmos.Graf;
+import dominio.algoritmos.GrafLouvain;
+import dominio.algoritmos.Louvain;
 
 public abstract class ControladorDominioBusqueda {
 	
@@ -56,6 +59,15 @@ public abstract class ControladorDominioBusqueda {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	protected Graf construirGrafo(Set<String> idDiputados,
+			Map<String, Integer> importancias,
+			Map<String, Set<String>> tiposYeventos,
+			Map<String, Set<String>> votacionesSimp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 
 }
