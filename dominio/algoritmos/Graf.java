@@ -100,10 +100,10 @@ public class Graf {
 		}
 		Matriu.remove(Posicio);
 		Diccionari.remove(id);
-		for (Integer i = Posicio+1; i < Size; ++i) {
-			String iString = DiccionariInvers.get(i);
-			Diccionari.put(iString,i-1);
-			DiccionariInvers.put(i-1, iString);
+		for (Integer i = Size-2; i > Posicio; --i) {//TODO Corregir errores
+			String iString = DiccionariInvers.get(i+1);
+			Diccionari.put(iString,i);
+			DiccionariInvers.put(i, iString);
 		}
 		
 		DiccionariInvers.remove(Size-1);

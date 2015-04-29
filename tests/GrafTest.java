@@ -116,7 +116,7 @@ public class GrafTest {
 	}
 	
 	@Test
-	public void testRemoveNode() {
+	public void testRemoveNode2() {
 		HashSet<String> hs = new HashSet<String>();
 		hs.add("Maria");
 		hs.add("Silla");
@@ -129,8 +129,29 @@ public class GrafTest {
 		assertEquals(hs, G.getNodes());
 		G.addAresta("Maria", "Ana", 5.55);
 		G.removeNode("Pepe");
-		assertTrue(G.existeixAresta("Maria", "Ana"));
+		assertEquals(5.55, G.getPes("Maria", "Ana"), 0.0001);
 		
+	}
+	
+	@Test
+	public void testRemoveNode1() {
+		HashSet<String> hs = new HashSet<String>();
+		hs.add("Maria");
+		hs.add("Silla");
+		hs.add("Pepe");
+		hs.add("Jose");
+		hs.add("Ana");
+		Graf G = new Graf(hs);
+		G.removeNode("Pepe");
+		G.addAresta("Maria", "Ana", 5.55);
+		assertEquals(5.55, G.getPes("Maria", "Ana"), 0.0001);
+		assertTrue(G.removeNode("Silla"));
+		assertEquals(5.55, G.getPes("Maria", "Ana"), 0.0001);
+		assertFalse(G.removeNode("Silla"));
+		assertEquals(5.55, G.getPes("Maria", "Ana"), 0.0001);
+		assertTrue(G.addNode("Silla"));
+		assertTrue(G.existeixNode("Silla"));
+		assertEquals(5.55, G.getPes("Maria", "Ana"), 0.0001);
 	}
 	
 	
