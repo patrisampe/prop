@@ -48,12 +48,18 @@ public abstract class ControladorDominioBusqueda {
 	protected Set<String> prepararDiputados(DateInterval Periodo) {
 		Integer legislaturaInicio = cLeg.getID(Periodo.getInici());
 		Integer legislaturaFin = cLeg.getID(Periodo.getFi());
+		return prepararDiputados(legislaturaInicio, legislaturaFin);
+	}
+	
+	private Set<String> prepararDiputados(Integer legislaturaInicio,
+			Integer legislaturaFin) {
 		Set<String> res = new HashSet<String>();
 		for (Integer i = legislaturaInicio; i <= legislaturaFin; ++i) {
 			 res.addAll(cLeg.getDiputados(i));
 		}
 		return res;
 	}
+
 	
 	protected Map<String, Set<String>> prepararVotaciones(DateInterval periodo) {
 		// TODO Auto-generated method stub
