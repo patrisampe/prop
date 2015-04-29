@@ -96,11 +96,11 @@ public class Graf {
 		Integer Posicio = Diccionari.get(id);
 		Integer Size = Matriu.size();
 		for (Integer i = 0; i < Size; ++i){
-			Matriu.get(i).remove(Posicio);
+			Matriu.get(i).remove((int) Posicio);
 		}
-		Matriu.remove(Posicio);
+		Matriu.remove((int) Posicio);
 		Diccionari.remove(id);
-		for (Integer i = Size-2; i > Posicio; --i) {//TODO Corregir errores
+		for (Integer i = Posicio; i < Size-1; ++i) {//TODO Corregir errores
 			String iString = DiccionariInvers.get(i+1);
 			Diccionari.put(iString,i);
 			DiccionariInvers.put(i, iString);

@@ -20,7 +20,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param Periodo Periodo inclusivo de tiempo.
 	 * @param ImportanciaModificada Modificaciones en la importáncia predefinida de los Eventos.
 	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
-	 */
+	 */ 
 	public Set<GrupoAfin> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada) {
 		Set<String> idDiputados = prepararDiputados(Periodo);
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
