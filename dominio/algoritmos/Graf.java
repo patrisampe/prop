@@ -70,7 +70,7 @@ public class Graf {
 	public Boolean addNode(String id) {
 		if (existeixNode(id)) return false;
 		Integer Posicio = Matriu.size();
-		Matriu.add(new Vector<Double>(Posicio-1));
+		Matriu.add(new Vector<Double>(Posicio+1));
 		
 		//Nova fila al final inicialitzada a 0.0
 		for(Integer i = 0; i < Matriu.size()-1; ++i){
@@ -194,7 +194,7 @@ public class Graf {
 		Integer Posicio = Diccionari.get(id);
 		Integer N = Matriu.size();
 		for(Integer j = 0; j < N; ++j) {
-			if (Matriu.get(Posicio).get(j) >= 0.0) Cjt.add(DiccionariInvers.get(j));
+			if (Matriu.get(Posicio).get(j) > 0.0) Cjt.add(DiccionariInvers.get(j));
 		}
 		return Cjt;
 	}
