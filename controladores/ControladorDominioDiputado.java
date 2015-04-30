@@ -21,7 +21,7 @@ public class ControladorDominioDiputado {
 	}
 	
 	public static ControladorDominioDiputado getInstance() {
-	      if(instance == null) {
+	      if (instance == null) {
 	         instance = new ControladorDominioDiputado();
 	      }
 	      return instance;
@@ -40,13 +40,13 @@ public class ControladorDominioDiputado {
 	}
 	
 	public void addDiputado(String nombreDiputado, String nombrePartido, String nombreEstado, Date FechaDeNacimiento) {
-		if (!existsDiputado(nombreDiputado)) {
-			Diputado D = new Diputado(nombreDiputado, nombrePartido, nombreEstado, FechaDeNacimiento);
-			conjuntoDiputados.add(nombreDiputado, D);
-		}
-		else {
+		if (existsDiputado(nombreDiputado)) {
 			error.setCodiError(4);
 			error.setClauExterna(nombreDiputado);
+		}
+		else {
+			Diputado D = new Diputado(nombreDiputado, nombrePartido, nombreEstado, FechaDeNacimiento);
+			conjuntoDiputados.add(nombreDiputado, D);
 		}
 	}
 
@@ -81,55 +81,55 @@ public class ControladorDominioDiputado {
 	}
 		
 	public void setPartidoPolitico(String nombreDiputado, String nombrePartido) {
-		if (existsDiputado(nombreDiputado)) conjuntoDiputados.get(nombreDiputado).setPartidoPolitico(nombrePartido);
-		else {
+		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 		}
+		else conjuntoDiputados.get(nombreDiputado).setPartidoPolitico(nombrePartido);
 	}
 
 	public void setEstado(String nombreDiputado, String nombreEstado) {
-		if (existsDiputado(nombreDiputado)) conjuntoDiputados.get(nombreDiputado).setEstado(nombreEstado);
-		else {
+		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 		}
+		else conjuntoDiputados.get(nombreDiputado).setEstado(nombreEstado);
 	}
 	
 	public void setFechaDeNacimiento(String nombreDiputado, Date FechaDeNacimiento) {
-		if (existsDiputado(nombreDiputado)) conjuntoDiputados.get(nombreDiputado).setFechaNacimiento(FechaDeNacimiento);
-		else {
+		if (!existsDiputado(nombreDiputado)){
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 		}
+		else conjuntoDiputados.get(nombreDiputado).setFechaNacimiento(FechaDeNacimiento);
 	}
 
 	public String getPartidoPolitico(String nombreDiputado) {
-		if (existsDiputado(nombreDiputado)) return conjuntoDiputados.get(nombreDiputado).getPartidoPolitico();
-		else {
+		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 			return "";
 		}
+		else return conjuntoDiputados.get(nombreDiputado).getPartidoPolitico();
 	}
 	
 	public String getEstado(String nombreDiputado) {
-		if (existsDiputado(nombreDiputado)) return conjuntoDiputados.get(nombreDiputado).getEstado();
-		else {
+		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 			return "";
 		}
+		else return conjuntoDiputados.get(nombreDiputado).getEstado(); 
 	}
 
 	
 	public Date getFechaDeNacimiento(String nombreDiputado) {
-		if (existsDiputado(nombreDiputado)) return conjuntoDiputados.get(nombreDiputado).getFechaDeNacimiento();
-		else {
+		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 			return Date.NULL;
 		}
+		else return conjuntoDiputados.get(nombreDiputado).getFechaDeNacimiento();
 	}
 
 	public void addLegistura(String nombreDiputado, Integer identificadorLegislatura) {

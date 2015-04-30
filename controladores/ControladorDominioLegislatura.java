@@ -17,10 +17,11 @@ public class ControladorDominioLegislatura {
 	
 	protected ControladorDominioLegislatura(){
 		conjuntoLegislaturas = new Conjunto<Legislatura>(Legislatura.class);
+		error = new CodiError();
 	}
 	
 	public static ControladorDominioLegislatura getInstance() {
-	      if(instance == null) {
+	      if (instance == null) {
 	         instance = new ControladorDominioLegislatura();
 	      }
 	      return instance;
@@ -38,7 +39,7 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.getAll();
 	}
 	
-	public Integer getID(Date FechaContenida) {
+	public Integer getID(Date FechaContenida) { //TODO: revisar
 		Set<Legislatura> S = conjuntoLegislaturas.getAll();
 		if (S.isEmpty()) return -1;
 		Iterator<Legislatura> it = S.iterator();
@@ -55,7 +56,7 @@ public class ControladorDominioLegislatura {
 		return -1;
 	}
 
-	public Integer getIDLast() {
+	public Integer getIDLast() { //TODO: revisar
 		Set<Legislatura> S = conjuntoLegislaturas.getAll();
 		if (S.isEmpty()) return -1;
 		Iterator<Legislatura> it = S.iterator();
@@ -69,13 +70,33 @@ public class ControladorDominioLegislatura {
 
 	
 	public void addLegislatura(Integer identificadorLegislatura, Date FechaInicio, Date FechaFinal) {
-		Legislatura L = new Legislatura(identificadorLegislatura, FechaInicio, FechaFinal);
-		conjuntoLegislaturas.add(identificadorLegislatura, L);
+		if (existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(16);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else {
+			Legislatura L = new Legislatura(identificadorLegislatura, FechaInicio, FechaFinal);
+			conjuntoLegislaturas.add(identificadorLegislatura, L);			
+		}
 	}
 
 	public void addLegislatura(Integer identificadorLegislatura, Date FechaInicio) {
-		Legislatura L = new Legislatura(identificadorLegislatura, FechaInicio);
-		conjuntoLegislaturas.add(identificadorLegislatura, L);
+		if (existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(16);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else {
+			Integer id = getIDLast();
+			if (id != -1){
+				error.setCodiError(16);
+				error.setClauExterna(identificadorLegislatura);
+				error.addClauExterna(id);
+			}
+			else {
+				Legislatura L = new Legislatura(identificadorLegislatura, FechaInicio);
+				conjuntoLegislaturas.add(identificadorLegislatura, L);
+			}
+		} 
 	}
 	
 	public Boolean existsLegislatura(Integer identificadorLegislatura) {
@@ -83,38 +104,95 @@ public class ControladorDominioLegislatura {
 	}
 
 	public void removeLegislatura(Integer identificadorLegislatura) {
-		conjuntoLegislaturas.remove(identificadorLegislatura);
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else {
+			conjuntoLegislaturas.remove(identificadorLegislatura);
+			//TODO: Falta decidir si s'ha d'esborrar algo més
+		}
 	}
 	
-	public void setFechaInicio(Integer identificadorLegislatura, Date FechaInicio) {
-		conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(FechaInicio);
+	public void setFechaInicio(Integer identificadorLegislatura, Date FechaInicio) { //TODO: Coherencia amb altres dates
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(FechaInicio);
 	}
 	
-	public void setFechaFinal(Integer identificadorLegislatura, Date FechaFin) {
-		conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(FechaFin);
+	public void setFechaFinal(Integer identificadorLegislatura, Date FechaFin) { //TODO: Coherencia amb altres dates
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(FechaFin);
 	}
 	
 	public Date getFechaInicio(Integer identificadorLegislatura) {
-		return conjuntoLegislaturas.get(identificadorLegislatura).getFechaInicio();
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+			return Date.NULL;
+		}
+		else return conjuntoLegislaturas.get(identificadorLegislatura).getFechaInicio();
 	}
 	
 	public Date getFechaFinal(Integer identificadorLegislatura) {
-		return conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal();
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+			return Date.NULL;
+		}
+		else if (!hasFechaFinal(identificadorLegislatura)) {
+			error.setCodiError(19);
+			error.setClauExterna(identificadorLegislatura);
+			return Date.NULL;
+		}
+		else return conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal();
 	}
 
 	public Boolean hasFechaFinal(Integer identificadorLegislatura) {
-		return conjuntoLegislaturas.get(identificadorLegislatura).hasFechaFinal();
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+			return false;
+		}
+		else return conjuntoLegislaturas.get(identificadorLegislatura).hasFechaFinal();
 	}
 
 	public void removeFechaFinal(Integer identificadorLegislatura) {
-		conjuntoLegislaturas.get(identificadorLegislatura).removeFechaFinal();
+		if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else if (!hasFechaFinal(identificadorLegislatura)) {
+			error.setCodiError(19);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else conjuntoLegislaturas.get(identificadorLegislatura).removeFechaFinal();
 	}
 	
 	public void addDiputado(Integer identificadorLegislatura, String nombreDiputado) {
-		conjuntoLegislaturas.get(identificadorLegislatura).addDiputado(nombreDiputado);
+		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
+		if (!CDD.existsDiputado(nombreDiputado)) {
+			error.setCodiError(3);
+			error.setClauExterna(nombreDiputado);
+		}
+		else if (!existsLegislatura(identificadorLegislatura)) {
+			error.setCodiError(17);
+			error.setClauExterna(identificadorLegislatura);
+		}
+		else if (existsDiputado(identificadorLegislatura, nombreDiputado)) {
+			error.setCodiError(20);
+			error.setClauExterna(identificadorLegislatura);
+			error.addClauExterna(nombreDiputado);
+		}
+		else conjuntoLegislaturas.get(identificadorLegislatura).addDiputado(nombreDiputado);
 	}
 	
-	public void setDiputados(Integer identificadorLegislatura, Set<String> diputados) {
+	public void setDiputados(Integer identificadorLegislatura, Set<String> diputados) { //TODO: vaig per aqui
 		conjuntoLegislaturas.get(identificadorLegislatura).setDiputados(diputados);
 	}
 	
