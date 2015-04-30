@@ -41,7 +41,8 @@ public class ControladorDominioDiputado {
 	}
 	
 	public void removeAll() {
-		conjuntoDiputados.removeAll(); //TODO
+		conjuntoDiputados.removeAll();
+		//TODO
 	}
 	
 	public void addDiputado(String nombreDiputado, String nombrePartido, String nombreEstado, Date FechaDeNacimiento) {
@@ -60,11 +61,20 @@ public class ControladorDominioDiputado {
 	}
 	
 	public void removeDiputado(String nombreDiputado) {
-		if (existsDiputado(nombreDiputado)) conjuntoDiputados.remove(nombreDiputado);
-		else {
+		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.setClauExterna(nombreDiputado);
 		}
+		else {
+			conjuntoDiputados.remove(nombreDiputado);
+			//GrupoAfin
+			//Evento
+			//Votacion
+			//Legislatura
+			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
+			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
+		}
+		//TODO
 	}
 		
 	public void setPartidoPolitico(String nombreDiputado, String nombrePartido) {
