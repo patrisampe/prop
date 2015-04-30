@@ -61,9 +61,18 @@ public class ControladorDominioDiputado {
 		}
 		else {
 			conjuntoDiputados.remove(nombreDiputado);
-			//GrupoAfin
-			//Evento
-			//Votacion
+			/*GrupoAfin
+ 			ControladorDominioGrupoAfin CDGA = ControladorDominioGrupoAfin.getInstance();
+			CDGA.removeDiputado(nombreDiputado);
+			*/
+			/*Evento
+ 			ControladorDominioEvento CDE = ControladorDominioEvento.getInstance();
+			CDE.removeDiputado(nombreDiputado);
+			 */
+			/*Votacion
+ 			ControladorDominioVotacion CDV = ControladorDominioVotacion.getInstance();
+			CDV.removeDiputado(nombreDiputado);
+			*/
 			//Legislatura
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);

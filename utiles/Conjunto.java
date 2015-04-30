@@ -46,6 +46,10 @@ public class Conjunto<T extends ObjetoDominio> {
 		return conjunto.isEmpty();
 	}
 	
+	public void clear() {
+		conjunto.clear();
+	}
+	
 	public void addAll(Set<T> S){
 		if (!S.isEmpty()) {
 			Iterator<T> it = S.iterator();
@@ -79,10 +83,6 @@ public class Conjunto<T extends ObjetoDominio> {
 	public Set<String> getStringKeys() {
 		if (hasIntegerKey) return new TreeSet<String>();
 		return conjunto.keySet();
-	}
-	
-	public void clear() {
-		conjunto.clear();
 	}
 	
 	public void add(String nombreObjeto, T objeto) {

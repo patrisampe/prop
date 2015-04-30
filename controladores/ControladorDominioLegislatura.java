@@ -82,7 +82,6 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.exists(identificadorLegislatura);
 	}
 
-	
 	public void removeLegislatura(Integer identificadorLegislatura) {
 		conjuntoLegislaturas.remove(identificadorLegislatura);
 	}

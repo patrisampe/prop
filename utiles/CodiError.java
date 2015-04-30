@@ -36,7 +36,7 @@ public class CodiError {
         /*
 		USAGE: (CE: objecte de la classe CodiError)
 			CE.setCodiError(10); //El diputado D ya existe en la legislatura L
-			CE.addClauExterna(D.getNombre()); //D->"Pepito"
+			CE.setClauExterna(D.getNombre()); //D->"Pepito"
 			CE.addClauExterna(L.getID().toString()); //L->42
 			CE.getMensajeError() //El diputado Pepito ya existe en la legislatura 42.
         */
