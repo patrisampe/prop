@@ -11,7 +11,6 @@ public class CodiError {
 	private Vector<String> clauExterna;
 	
 	private static final Map<Integer, String> mensajesError = CreateMap();
-
 	
 	private static Map<Integer, String> CreateMap() {
 		Map<Integer, String> Diccionario = new HashMap<Integer, String>();

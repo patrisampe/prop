@@ -38,10 +38,6 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.getAll();
 	}
 	
-	public void removeAll() {
-		conjuntoLegislaturas.removeAll();
-	}
-	
 	public Integer getID(Date FechaContenida) {
 		Set<Legislatura> S = conjuntoLegislaturas.getAll();
 		if (S.isEmpty()) return -1;

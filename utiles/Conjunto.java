@@ -48,7 +48,6 @@ public class Conjunto<T extends ObjetoDominio> {
 	
 	public void addAll(Set<T> S){
 		if (!S.isEmpty()) {
-			conjunto.clear();
 			Iterator<T> it = S.iterator();
 			while (it.hasNext()) {
 				T elemento = it.next();
@@ -82,7 +81,7 @@ public class Conjunto<T extends ObjetoDominio> {
 		return conjunto.keySet();
 	}
 	
-	public void removeAll() {
+	public void clear() {
 		conjunto.clear();
 	}
 	

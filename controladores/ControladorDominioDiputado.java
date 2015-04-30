@@ -32,19 +32,11 @@ public class ControladorDominioDiputado {
 	}
 	
 	public void addAll(Set<Diputado> diputados){
-		removeAll();
 		conjuntoDiputados.addAll(diputados);
 	}
 	
 	public Set<Diputado> getAll() {
 		return conjuntoDiputados.getAll();
-	}
-	
-	public void removeAll() {
-		conjuntoDiputados.removeAll();
-		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
-		CDL.removeAll();
-		//TODO
 	}
 	
 	public void addDiputado(String nombreDiputado, String nombrePartido, String nombreEstado, Date FechaDeNacimiento) {
