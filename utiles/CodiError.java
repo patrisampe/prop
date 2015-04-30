@@ -28,9 +28,11 @@ public class CodiError {
 		Diccionario.put(10, "El diputado %1 ya existe en la legislatura %2.");
 		Diccionario.put(11, "El diputado %1 no existe en la legislatura %2.");
 		Diccionario.put(12, "La legislatura %1 ya existe en el diputado %2.");
-		Diccionario.put(12, "La legislatura %1 no existe en el diputado %2.");
+		Diccionario.put(13, "La legislatura %1 no existe en el diputado %2.");
 		Diccionario.put(14, "El tipo de evento %1 ya existe.");
 		Diccionario.put(15, "El tipo de evento %1 no existe.");
+		Diccionario.put(16, "La legislatura %1 ya existe.");
+		Diccionario.put(17, "La legislatura %1 no existe.");
         return Collections.unmodifiableMap(Diccionario);
         /*
 		USAGE: (CE: objecte de la classe CodiError)

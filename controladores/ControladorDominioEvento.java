@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 import utiles.Atributos_Evento;
 import utiles.Atributos_TipoEvento;
-import utiles.Error;
+import utiles.CodiError;
 import dominio.Tipo_de_Evento;
 import dominio.Evento;
 
@@ -22,13 +22,13 @@ public class ControladorDominioEvento {
 		Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
 	}
 	
-	public Error SetAtributosTipoEvento(String nombreTipoEvento, Atributos_TipoEvento atributos){
+	public CodiError SetAtributosTipoEvento(String nombreTipoEvento, Atributos_TipoEvento atributos){
 		Tipo_de_Evento original = Conjunto_tipos.get(nombreTipoEvento);
 		Tipo_de_Evento nuevo= new Tipo_de_Evento(nombreTipoEvento,original);
 		
 		Integer nuevaImportancia=atributos.getImportancia();
 		
-		if(!Tipo_de_Evento.es_validaImportancia(nuevaImportancia))return new Error(9,nombreTipoEvento);
+		if(!Tipo_de_Evento.es_validaImportancia(nuevaImportancia))return new CodiError(9,nombreTipoEvento);
 		nuevo.SetImportancia(nuevaImportancia);
 		
 		String[] aux2;
@@ -36,11 +36,11 @@ public class ControladorDominioEvento {
 		
 		
 		for(int i=0; i<aux2.length;++i){
-			if(!nuevo.Es_Evento(aux2[i])) return new Error(7,aux2[i]);
+			if(!nuevo.Es_Evento(aux2[i])) return new CodiError(7,aux2[i]);
 			nuevo.RemoveEvento(aux2[i]);
 		}
 		Conjunto_tipos.put(nombreTipoEvento, nuevo);
-		return new Error(0,nombreTipoEvento);
+		return new CodiError(0,nombreTipoEvento);
 	}
 	
 	public Atributos_TipoEvento GetAtributosTipoEvento(String nombreTipoEvento){
@@ -52,18 +52,18 @@ public class ControladorDominioEvento {
 		return new ArrayList<String>(Conjunto_tipos.keySet());
 	}
 	
-	public Error AddTipoEvento(String nombreTipoEvento, Integer importancia){
+	public CodiError AddTipoEvento(String nombreTipoEvento, Integer importancia){
 		
-		if(Conjunto_tipos.containsKey(nombreTipoEvento))return new Error(12,nombreTipoEvento);
+		if(Conjunto_tipos.containsKey(nombreTipoEvento))return new CodiError(12,nombreTipoEvento);
 		Tipo_de_Evento aux=new Tipo_de_Evento(nombreTipoEvento,importancia);
 		Conjunto_tipos.put(nombreTipoEvento, aux);
-		return new Error(0,nombreTipoEvento);
+		return new CodiError(0,nombreTipoEvento);
 	}
 	
-	public Error RemoveTipoEvento(String nombreTipoEvento){
-		if(!Conjunto_tipos.containsKey(nombreTipoEvento))return new Error(13,nombreTipoEvento);
+	public CodiError RemoveTipoEvento(String nombreTipoEvento){
+		if(!Conjunto_tipos.containsKey(nombreTipoEvento))return new CodiError(13,nombreTipoEvento);
 		Conjunto_tipos.remove(nombreTipoEvento);
-		return new Error(0,nombreTipoEvento);
+		return new CodiError(0,nombreTipoEvento);
 	}
 	
 
@@ -77,19 +77,19 @@ public class ControladorDominioEvento {
 	}
 	
 	
-	public Error AddEvento(String nombreTipoEvento, String nombreEvento, Atributos_Evento atributos){
+	public CodiError AddEvento(String nombreTipoEvento, String nombreEvento, Atributos_Evento atributos){
 		Tipo_de_Evento tp= Conjunto_tipos.get(nombreTipoEvento);
-		if(tp.Es_Evento(nombreEvento))return new Error(8,nombreEvento);
-		if(!atributos.getFecha().Es_valida()) return new Error(2,nombreEvento);
+		if(tp.Es_Evento(nombreEvento))return new CodiError(8,nombreEvento);
+		if(!atributos.getFecha().Es_valida()) return new CodiError(2,nombreEvento);
 		Evento event = new Evento(nombreEvento,atributos.getFecha());
 		tp.AddEvento(event);
-		return new Error(0,nombreTipoEvento);
+		return new CodiError(0,nombreTipoEvento);
 	}
 
-	public Error SetAtributosEvento(String nombreTipoEvento, String nombreEvento, Atributos_Evento atributos){
+	public CodiError SetAtributosEvento(String nombreTipoEvento, String nombreEvento, Atributos_Evento atributos){
 		
 		
-		if(!atributos.getFecha().Es_valida())return new Error(2,nombreEvento);
+		if(!atributos.getFecha().Es_valida())return new CodiError(2,nombreEvento);
 		Tipo_de_Evento original= Conjunto_tipos.get(nombreTipoEvento);
 		Evento eoriginal=original.GetEvento(nombreEvento);
 		Evento enuevo= new Evento(eoriginal.GetNombre(),eoriginal);
@@ -102,18 +102,18 @@ public class ControladorDominioEvento {
 			if(mapEntry.getValue())
 			{
 				//insertamos evento
-				if(enuevo.Es_participante(mapEntry.getKey()))return new Error(15,mapEntry.getKey());
+				if(enuevo.Es_participante(mapEntry.getKey()))return new CodiError(15,mapEntry.getKey());
 				enuevo.AddDiputado(mapEntry.getKey());
 			}
 			else
 			{
 				//borramos evento
-				if(!enuevo.Es_participante(mapEntry.getKey()))return new Error(14,mapEntry.getKey());
+				if(!enuevo.Es_participante(mapEntry.getKey()))return new CodiError(14,mapEntry.getKey());
 				enuevo.RemoveDiputado(mapEntry.getKey());
 			}
 		}
 		original.AddEvento(enuevo);//remplazamos el evento que ya habia
-		return new Error(0,nombreTipoEvento);
+		return new CodiError(0,nombreTipoEvento);
 	}
 
 	public Atributos_Evento GetAtributosEvento(String nombreTipoEvento, String nombreEvento){

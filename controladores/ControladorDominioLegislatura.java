@@ -5,12 +5,13 @@ import java.util.Set;
 
 import time.Date;
 import time.DateInterval;
+import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Legislatura;
 
 public class ControladorDominioLegislatura {
 	
-	//private CodiError errors; TODO
+	private CodiError error;
 	private Conjunto<Legislatura> conjuntoLegislaturas;
 	private static ControladorDominioLegislatura instance = null;
 	
@@ -114,7 +115,7 @@ public class ControladorDominioLegislatura {
 		conjuntoLegislaturas.get(identificadorLegislatura).removeFechaFinal();
 	}
 	
-	public void addDiputados(Integer identificadorLegislatura, String nombreDiputado) {
+	public void addDiputado(Integer identificadorLegislatura, String nombreDiputado) {
 		conjuntoLegislaturas.get(identificadorLegislatura).addDiputado(nombreDiputado);
 	}
 	
@@ -137,15 +138,29 @@ public class ControladorDominioLegislatura {
 	
 	public void removeDiputados(Integer identificadorLegislatura) {
 		conjuntoLegislaturas.get(identificadorLegislatura).removeDiputados();
+		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
+		CDD.removeLegislaturaFromDiputados(identificadorLegislatura);
+
 	}
+	
+	//Elimina el diputat indicat de totes les legislatures
+	public void removeDiputadoFromLegislaturas(String nombreDiputado) {
+		Iterator<Legislatura> it = conjuntoLegislaturas.getAll().iterator();
+		while (it.hasNext()) {
+			Integer identificadorLegislatura = it.next().getID();
+			if (existsDiputado(identificadorLegislatura, nombreDiputado))
+				removeDiputado(identificadorLegislatura, nombreDiputado);
+		}
+	}	
+	
 	
 	public Boolean hasCodiError() {
-		return false; //TODO
+		return (error.getCodiError() != 0);
 	}
 	
 	
-	public Integer getCodiError() {
-		return 0; //TODO
+	public CodiError getCodiError() {
+		return error;
 	}
 
 }
