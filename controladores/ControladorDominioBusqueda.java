@@ -70,8 +70,29 @@ public abstract class ControladorDominioBusqueda {
 			Map<String, Integer> importancias,
 			Map<String, Set<String>> tiposYeventos,
 			Map<String, Set<String>> votacionesSimp) {
-		// TODO Auto-generated method stub
-		return null;
+		HashSet<String>	Nodos = new HashSet<String>(idDiputados);
+		Graf G = new Graf(Nodos);
+		for (String tipoDeEvento : tiposYeventos.keySet()) {
+			Integer importancia = importancias.get(tipoDeEvento);
+			for (String evento : tiposYeventos.get(tipoDeEvento)) {
+				interrelacionar(G, cEv.getDiputados(evento), importancia);
+			}
+		}
+		for (Set<String> votacion : votacionesSimp.values()) {
+			interrelacionar(G, votacion, 5.0);
+		}
+		
+		return G;
+	}
+
+
+	private void interrelacionar(Graf g, Set<String> diputados, Double d) {
+		for (String diputado1: diputados) {
+			for (String diputado2: diputados) {
+				if(g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, d/2+g.getPes(diputado1, diputado2));
+				else g.addAresta(diputado1, diputado2, d/2);
+			}
+		}
 	}
 	
 	

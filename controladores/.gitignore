@@ -1,3 +1,5 @@
 /ControladorDominioDiputado.class
 /ControladorDominioEvento.class
 /ControladorPersistenciaDiputado.class
+/ControladorDominioBusqueda*.class
+/Controlador*.class
