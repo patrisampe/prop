@@ -42,6 +42,8 @@ public class ControladorDominioDiputado {
 	
 	public void removeAll() {
 		conjuntoDiputados.removeAll();
+		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
+		CDL.removeAll();
 		//TODO
 	}
 	
@@ -238,7 +240,6 @@ public class ControladorDominioDiputado {
 	public Boolean hasCodiError() {
 		return (error.getCodiError() != 0);
 	}
-	
 	
 	public CodiError getCodiError() {
 		return error;

@@ -153,12 +153,10 @@ public class ControladorDominioLegislatura {
 		}
 	}	
 	
-	
 	public Boolean hasCodiError() {
 		return (error.getCodiError() != 0);
 	}
-	
-	
+
 	public CodiError getCodiError() {
 		return error;
 	}
