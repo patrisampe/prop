@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-
 import time.DateInterval;
 
 
@@ -21,13 +20,14 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	protected Set<GrupoAfin> gruposAfines;
 	//Creadors
 	
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo, Set<GrupoAfin> gruposAfines) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
 		this.intervalo = new DateInterval(intervalo);
+		this.gruposAfines = new TreeSet<GrupoAfin>(gruposAfines);
 	}
 	
 	public ResultadoDeBusqueda(ResultadoDeBusqueda R) {
@@ -37,6 +37,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.importancia = new TreeMap<String,Integer>(R.importancia);
 		this.modificado = new Boolean(R.modificado);
 		this.intervalo = new DateInterval(R.intervalo);
+		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
 	}
 	
 	//Consultors
@@ -50,6 +51,13 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	
 	public Set<GrupoAfin> getGruposAfines() {
 		return new TreeSet<GrupoAfin>(this.gruposAfines);
+	}
+	
+	public Set<Set<String>> getResultado() {
+		Set<Set<String>> listaResultado = new TreeSet<Set<String>>();
+		for (GrupoAfin grup:gruposAfines)
+			listaResultado.add(grup.getDiputados());
+		return listaResultado;
 	}
 	
 	public Integer getIndiceAfinidad() {
@@ -67,6 +75,8 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	public Boolean esModificado() {
 		return this.modificado;
 	}
+	
+	public abstract String getTipoResultado();
 	
 	public Integer getImportancia(String nombreTipoEvento) {
 		return this.importancia.get(nombreTipoEvento);
