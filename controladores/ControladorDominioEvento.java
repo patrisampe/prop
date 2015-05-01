@@ -2,7 +2,6 @@ package controladores;
 
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import utiles.CodiError;
 import utiles.Conjunto;
@@ -84,17 +83,17 @@ public class ControladorDominioEvento {
 	   }
 	   
 	   public Set<String> getEventos(String nombreTipoEvento){
-		   if(comprovacionTP(nombreTipoEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getEventos();
+		   if(comprovacionTP(nombreTipoEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getNombreEventos();
 		   return new TreeSet<String>();
 	   }
 	   
 	   public Set<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
 		   Set<String> result=new TreeSet<String>();
 		   if(comprovacionTP(nombreTipoEvento)){
-			   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
-			   DateInterval inter= new DateInterval(dataInici,dataFi);
-			   for (Entry<String, Evento> elem : aux.entrySet()){
-					if(inter.contains(elem.getValue().getFecha()))result.add(elem.getKey());
+			   Set<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventos();
+			   DateInterval inter= new DateInterval(dataInici,dataFi);		   
+			   for (Evento elem : aux) {
+				   if(inter.contains(elem.getFecha()))result.add(elem.getNombre());
 			   }
 		   }
 		   return result;
@@ -102,10 +101,13 @@ public class ControladorDominioEvento {
 	   
 	   public void removeDiputado(String nombreDiputado){
 				if(esDiputado(nombreDiputado)){
-					 for (Entry<String, TipoEvento> elem : conjuntoTipoEvento.entrySet()){
-						  Conjunto<Evento> aux= elem.getValue().getEventosmap();
-						   for (Entry<String, Evento> elem2 : aux.entrySet()){
-							   if(elem2.getValue().esParticipante(nombreDiputado))elem2.getValue().removeDiputado(nombreDiputado);
+					
+					Set<TipoEvento> tp= conjuntoTipoEvento.getAll();
+					 for (TipoEvento tpelem : tp){
+						 
+						  Set<Evento> ev= tpelem.getEventos();
+						   for (Evento evelem : ev){
+							   if(evelem.esParticipante(nombreDiputado))evelem.removeDiputado(nombreDiputado);
 						   }
 					   }
 				}

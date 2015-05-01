@@ -35,8 +35,8 @@ public class ControladorDominioVotacion {
 	 }
 	
 	 public void removeDiputado(String nombreDiputado){
-		 for (Entry<String, Votacion> elem : conjuntoVotacion.entrySet()){
-			 if(elem.getValue().esVotante(nombreDiputado))elem.getValue().removeVoto(nombreDiputado);
+		 for (Votacion elem : conjuntoVotacion.getAll()){
+			 if(elem.esVotante(nombreDiputado))elem.removeVoto(nombreDiputado);
 		 }
 	 }
 	 
@@ -172,8 +172,9 @@ public class ControladorDominioVotacion {
 		public Set<String> getVotaciones(Date dataInici, Date dataFi){
 			Set<String>result=new TreeSet<String>();
 			   DateInterval inter= new DateInterval(dataInici,dataFi);
-			   for (Entry<String, Votacion> elem : conjuntoVotacion.entrySet()){
-					if(inter.contains(elem.getValue().getFecha()))result.add(elem.getKey());
+			   
+			   for (Votacion elem : conjuntoVotacion.getAll()){
+					if(inter.contains(elem.getFecha()))result.add(elem.getNombre());
 			   }
 			return result;
 		}
