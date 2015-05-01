@@ -50,13 +50,13 @@ public class ControladorDominioEvento {
 		   return conjuntoTipoEvento.getStringKeys();
 	   }
 	   
-	   public Set<String> getEventos(String nombreTipoEvento){
+	   public List<String> getEventos(String nombreTipoEvento){
 		   return conjuntoTipoEvento.get(nombreTipoEvento).getEventos();
 		   
 	   }
 	   
-	   public Set<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
-		   Set<String> result=new TreeSet<String>();
+	   public List<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
+		   List<String> result=new ArrayList<String>();
 		   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
 		   for (Entry<String, Evento> elem : aux.entrySet()){
 			   Date act=elem.getValue().getFecha();

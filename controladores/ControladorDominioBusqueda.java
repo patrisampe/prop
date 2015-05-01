@@ -51,11 +51,11 @@ public abstract class ControladorDominioBusqueda {
 		return prepararDiputados(legislaturaInicio, legislaturaFin);
 	}
 	
-	private Set<String> prepararDiputados(Integer legislaturaInicio,
+	protected Set<String> prepararDiputados(Integer legislaturaInicio,
 			Integer legislaturaFin) {
 		Set<String> res = new HashSet<String>();
 		for (Integer i = legislaturaInicio; i <= legislaturaFin; ++i) {
-			 res.addAll(cLeg.getDiputados(i));
+			 if(cLeg.existsLegislatura(i)) res.addAll(cLeg.getDiputados(i));
 		}
 		return res;
 	}
@@ -74,6 +74,21 @@ public abstract class ControladorDominioBusqueda {
 		return null;
 	}
 	
+	protected HashSet<HashSet<String>> ejecutar(Graf g, TipoAlgoritmo algoritmo,
+			Integer porcentaje) {
+		HashSet<HashSet<String>> hs = new HashSet<HashSet<String>>();
+		if (algoritmo == TipoAlgoritmo.CliquePercolation) {
+			hs = Clique.executa(g,porcentaje);
+		}
+		else if (algoritmo == TipoAlgoritmo.GirvanNewmann) {
+			hs = Newman.executa((new GrafNewman(g),porcentaje);
+		}
+		else if (algoritmo == TipoAlgoritmo.Louvain) {
+			GrafLouvain gl = new GrafLouvain(g);
+			hs = Louvain.executa(new GrafLouvain(g), porcentaje);
+		}
+		return hs;
+	}
 	
 
 }

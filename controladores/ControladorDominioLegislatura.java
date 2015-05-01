@@ -44,7 +44,7 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.getStringKeys();
 	}
 	
-	public Integer getID(Date FechaContenida) { //TODO: revisar
+	public Integer getID(Date FechaContenida) {
 		Set<Legislatura> S = conjuntoLegislaturas.getAll();
 		if (S.isEmpty()) return -1;
 		Iterator<Legislatura> it = S.iterator();
@@ -54,14 +54,12 @@ public class ControladorDominioLegislatura {
 				DateInterval DI = new DateInterval(L.getFechaInicio(), L.getFechaFinal());
 				if (DI.contains(FechaContenida)) return L.getID();
 			}
-			else {
-				if (L.getFechaInicio().compareTo(FechaContenida) >= 0) return L.getID();
-			}
+			else if (L.getFechaInicio().compareTo(FechaContenida) >= 0) return L.getID();
 		}
 		return -1;
 	}
 
-	public Integer getIDLast() { //TODO: revisar
+	public Integer getIDLast() {
 		Set<Legislatura> S = conjuntoLegislaturas.getAll();
 		if (S.isEmpty()) return -1;
 		Iterator<Legislatura> it = S.iterator();
@@ -73,8 +71,14 @@ public class ControladorDominioLegislatura {
 		return max;
 	}
 
-	public DateInterval limits(Integer identificadorLegislatura) { //TODO: fer
-		
+	public DateInterval limits(Integer identificadorLegislatura) {
+		Integer idA = identificadorLegislatura - 1;
+		Integer idP = identificadorLegislatura + 1;
+		while (!existsLegislatura(idA) && idA >= 0) --idA;
+		if (idP != getIDLast()) while (!existsLegislatura(idP)) ++idP;
+		Date inici = (idA == -1 ? Date.NULL : conjuntoLegislaturas.get(idA).getFechaFinal());
+		Date fi = (idP == getIDLast() ? Date.NULL : conjuntoLegislaturas.get(idA).getFechaFinal());
+		return new DateInterval(inici, fi);
 	}
 	
 	public void addLegislatura(Integer identificadorLegislatura, Date FechaInicio, Date FechaFinal) {
@@ -320,25 +324,6 @@ public class ControladorDominioLegislatura {
 
 	public CodiError getCodiError() {
 		return error;
-	}
-	
-	
-	public void foo(){
-		Iterator<Legislatura> it = conjuntoLegislaturas.getAll().iterator();
-		while (it.hasNext()){
-			//Codi...
-			Legislatura L = it.next();
-			//Codi...
-		}
-	}
-	
-	public void foo2(){
-		Iterator<Integer> it = conjuntoLegislaturas.getIntegerKeys().iterator();
-		while (it.hasNext()){
-			//Codi...
-			Legislatura L = conjuntoLegislaturas.get(it.next());
-			//Codi...
-		}
 	}
 
 }
