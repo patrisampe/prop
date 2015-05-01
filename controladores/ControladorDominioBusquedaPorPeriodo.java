@@ -26,9 +26,9 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	public Set<GrupoAfinPorPeriodo> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(Periodo);
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
-		Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); //En el esquema pone list
-		Map<String, Set<String> > votacionesSimp = prepararVotaciones(Periodo); //Divide las votaciones en conjuntos de diputados que votan lo mismo.
-		
+		Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
+		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInici())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFi())));
+		Map<String, Set<String> > votacionesSimp = prepararVotaciones(PeriodoVotaciones); //TODO el periodo no es este, sino el de las legislaturas
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
 		
 		return ejecutarYretornar(G,Algoritmo,porcentaje);
