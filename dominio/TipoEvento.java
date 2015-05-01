@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 
-public class TipoEvento {
+public class TipoEvento extends ObjetoDominio {
 	private String nombre;
 	private Integer importancia;
 	private Map<String,Evento> conjuntoEventos;
