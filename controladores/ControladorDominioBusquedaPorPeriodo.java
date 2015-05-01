@@ -8,7 +8,12 @@ import time.*;
 import dominio.*;
 import dominio.algoritmos.*;
 
-
+/**
+ * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
+ * Este controlador genera la información necesaria para crear Resultados de Búsqueda por Periodo.
+ * @author Yoel Cabo
+ *
+ */
 public class ControladorDominioBusquedaPorPeriodo extends
 		ControladorDominioBusqueda {
 	
@@ -19,6 +24,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param Algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param Periodo Periodo inclusivo de tiempo.
 	 * @param ImportanciaModificada Modificaciones en la importáncia predefinida de los Eventos.
+	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
 	 */ 
 	public Set<GrupoAfinPorPeriodo> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
