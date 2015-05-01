@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import java.util.Iterator;
+
 import time.DateInterval;
 
 
@@ -18,7 +20,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	private Boolean modificado;
 	private DateInterval intervalo;
 	protected Set<GrupoAfin> gruposAfines;
-	//Creadors
+	//Creadores
 	
 	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo, Set<GrupoAfin> gruposAfines) {
 		this.nombre = new String(nombre);
@@ -40,13 +42,63 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
 	}
 	
-	//Consultors
-	public String getNombre() {
-		return this.nombre;
-	}
-	
+	//Modificadores
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public Boolean setImportancia(String nombreTipoEvento, Integer importancia) {
+		this.importancia.put(nombreTipoEvento,importancia);
+		return true;
+	}
+	
+	public void removeDiputado(String nombre) {
+		for (GrupoAfin grup:gruposAfines) {
+			grup.removeDiputado(nombre);
+			if (grup.esVacio()) eliminarGrupo(grup.getID());
+		}
+	}
+	
+	public void insertarDiputado(String nombre, Integer ID) {
+		Iterator<GrupoAfin> it = gruposAfines.iterator();
+		Boolean found = false;
+		while(it.hasNext() && !found) {
+			GrupoAfin grup = it.next();
+			if (grup.getID().equals(ID)) {
+				grup.addDiputado(nombre);
+				found = true;
+			}
+		}
+	}
+	
+	public void eliminarDiputado(String nombre, Integer ID) {
+		Iterator<GrupoAfin> it = gruposAfines.iterator();
+		Boolean found = false;
+		while(it.hasNext() && !found) {
+			GrupoAfin grup = it.next();
+			if (grup.getID().equals(ID)) {
+				grup.removeDiputado(nombre);
+				found = true;
+			}
+		}
+	}
+
+	public void moverDiputado(String nombre, Integer desdeID, Integer hastaID) {
+		insertarDiputado(nombre, hastaID);
+		eliminarDiputado(nombre, desdeID);
+	}
+	
+	public void addGrupo(GrupoAfin nuevoGrupo) {
+		gruposAfines.add(nuevoGrupo);
+	}
+	
+	public void eliminarGrupo(Integer ID) {
+		gruposAfines.remove(ID);
+	}
+
+//Consultores
+	public String getNombre() {
+		return this.nombre;
 	}
 	
 	public Set<GrupoAfin> getGruposAfines() {
@@ -76,14 +128,11 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		return this.modificado;
 	}
 	
-	public abstract String getTipoResultado();
-	
 	public Integer getImportancia(String nombreTipoEvento) {
 		return this.importancia.get(nombreTipoEvento);
 	}
 	
-	public Boolean setImportancia(String nombreTipoEvento, Integer importancia) {
-		this.importancia.put(nombreTipoEvento,importancia);
-		return true;
-	}
+	public abstract String getTipoResultado();
+	public abstract String getDiputadoRelevante();
+	
 }
