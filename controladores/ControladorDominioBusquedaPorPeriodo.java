@@ -1,16 +1,20 @@
 package controladores;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import time.*;
+import utiles.Conjunto;
 import dominio.*;
 import dominio.algoritmos.*;
 
-
+/**
+ * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
+ * Este controlador genera la información necesaria para crear Resultados de Búsqueda por Periodo.
+ * @author Yoel Cabo
+ *
+ */
 public class ControladorDominioBusquedaPorPeriodo extends
 		ControladorDominioBusqueda {
 	
@@ -21,9 +25,10 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param Algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param Periodo Periodo inclusivo de tiempo.
 	 * @param ImportanciaModificada Modificaciones en la importáncia predefinida de los Eventos.
+	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
 	 */ 
-	public Set<GrupoAfinPorPeriodo> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
+	public Conjunto<GrupoAfinPorPeriodo> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(Periodo);
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
 		Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
@@ -34,17 +39,17 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		return ejecutarYretornar(G,Algoritmo,porcentaje);
 	}
 
-	private Set<GrupoAfinPorPeriodo> ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
+	private Conjunto<GrupoAfinPorPeriodo> ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
 		HashSet<HashSet<String> > hs = ejecutar(g,algoritmo,porcentaje);
 		
-		Set<GrupoAfinPorPeriodo> s = new HashSet<GrupoAfinPorPeriodo>();
+		Conjunto<GrupoAfinPorPeriodo> s = new Conjunto<GrupoAfinPorPeriodo>(GrupoAfinPorPeriodo.class);
 		Integer idgrupo = 1;
 		for (Set<String> Comunidad : hs) {
 			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo(idgrupo++);
 			for (String Diputado : Comunidad) {
 				ga.addDiputado(Diputado);
 			}
-			s.add(ga);
+			s.add(idgrupo,ga);
 		}
 		return s;
 	}

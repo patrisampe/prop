@@ -16,6 +16,7 @@ import dominio.algoritmos.Newman;
 
 /**
  * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
+ * Este tipo de controlador depende directamente del Controlador de Resultados De Búsqueda.
  * @author Yoel Cabo
  *
  */
@@ -26,6 +27,9 @@ public abstract class ControladorDominioBusqueda {
 	protected ControladorDominioEvento cEv;
 	protected ControladorDominioVotacion cVot;
 	
+	/**
+	 * Creadora por defecto.
+	 */
 	public ControladorDominioBusqueda() {
 		cDip = ControladorDominioDiputado.getInstance();
 		cLeg = ControladorDominioLegislatura.getInstance();
