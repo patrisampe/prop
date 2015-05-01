@@ -32,12 +32,12 @@ public class TipoEvento extends ObjetoDominio {
 		return nombre;
 	}
 	
-	public Set<String> getEventos(){
+	public Set<String> getNombreEventos(){
 		return conjuntoEventos.getStringKeys();
 	}
 	
-	public Conjunto<Evento> getEventosmap(){
-		return conjuntoEventos;
+	public Set<Evento> getEventos(){
+		return conjuntoEventos.getAll();
 	}
 	
 	public Integer getImportancia(){

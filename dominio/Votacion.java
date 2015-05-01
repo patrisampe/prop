@@ -1,9 +1,9 @@
 package dominio;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map;
-import java.util.LinkedHashMap;
 import time.*;
 
 public class Votacion extends ObjetoDominio {
@@ -19,14 +19,14 @@ public class Votacion extends ObjetoDominio {
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.importancia = importancia;
-		votos =new LinkedHashMap<String,TipoVoto>();
+		votos =new TreeMap<String,TipoVoto>();
 	}
 	
 	public Votacion(String nombre,Votacion vot) {
 		this.nombre = nombre;
 		fecha = vot.fecha;
 		importancia = vot.importancia;
-		votos =new LinkedHashMap<String,TipoVoto>(vot.votos);
+		votos =new TreeMap<String,TipoVoto>(vot.votos);
 	}
 	
 	

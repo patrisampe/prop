@@ -10,7 +10,6 @@ import time.Date;
 import time.DateInterval;
 import utiles.CodiError;
 import utiles.Conjunto;
-import dominio.Evento;
 import dominio.TipoVoto;
 import dominio.Votacion;
 
@@ -27,6 +26,7 @@ public class ControladorDominioVotacion {
 		   conjuntoVotacion=  new Conjunto<Votacion>(Votacion.class);
 	   }
 	   
+
 	 public static ControladorDominioVotacion getInstance() {
 	      if(instance == null) {
 	         instance = new ControladorDominioVotacion();  
@@ -35,27 +35,38 @@ public class ControladorDominioVotacion {
 	 }
 	
 	 public void removeDiputado(String nombreDiputado){
-		 for (Entry<String, Votacion> elem : conjuntoVotacion.entrySet()){
-			 if(elem.getValue().esVotante(nombreDiputado))elem.getValue().removeVoto(nombreDiputado);
+		 for (Votacion elem : conjuntoVotacion.getAll()){
+			 if(elem.esVotante(nombreDiputado))elem.removeVoto(nombreDiputado);
 		 }
 	 }
+	 
+	 private Boolean comprovaExsitenciaVotacion(String nombreVotacion){
+		 if(conjuntoVotacion.exists(nombreVotacion))return true;
+		 else if(!hasError){
+				   hasError=true;
+				   error.setClauExterna(nombreVotacion);
+				   error.setCodiError(22);
+			}
+		 return false;
+	 }
+	 
+		private Boolean esDiputado(String nombreDiputado){
+			ControladorDominioDiputado CDD=new ControladorDominioDiputado();
+			if(CDD.existsDiputado(nombreDiputado))return true;
+			else if(!hasError){
+				   hasError=true;
+				   error.setClauExterna(nombreDiputado);
+				   error.setCodiError(3);
+			}
+			 return false;
+		}
 	
 	 public void setFechaVotacion(String nombreVotacion, Date fecha){
-		if(conjuntoVotacion.exists(nombreVotacion))conjuntoVotacion.get(nombreVotacion).setFecha(fecha);
-		else{
-			   hasError=true;
-			   error.setClauExterna(nombreVotacion);
-			   error.setCodiError(22);
-		}
+		if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.get(nombreVotacion).setFecha(fecha);
 	  }
 	
 	  public void setImportanciaVotacion(String nombreVotacion,Integer importancia){
-		if(conjuntoVotacion.exists(nombreVotacion))conjuntoVotacion.get(nombreVotacion).setImportancia(importancia);
-		else{
-			   hasError=true;
-			   error.setClauExterna(nombreVotacion);
-			   error.setCodiError(22);
-		 }
+		  if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.get(nombreVotacion).setImportancia(importancia);
 	  }
 	
 	
@@ -69,60 +80,35 @@ public class ControladorDominioVotacion {
 		
 		public Date getFechaVotacion(String nombreVotacion){
 			
-			if(conjuntoVotacion.exists(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getFecha();
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-				   return Date.NULL;
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getFecha();
+			return Date.NULL;
 		}
 		
 		public Integer getImportanciaVotacion(String nombreVotacion){
 			
-			if(conjuntoVotacion.exists(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getImportancia();
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-				   return -1;
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getImportancia();
+			return -1;
 		}
 		
 		public Set<String> getDiputadosVotacion(String nombreVotacion){
 			
-			if(conjuntoVotacion.exists(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getDiputados();
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-				   return new TreeSet<String>();
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getDiputados();
+			return new TreeSet<String>();
 		}	
 		public Set<String> getDiputadosVotacion(String nombreVotacion, TipoVoto voto){
 			Set<String> result= new TreeSet<String>();
-			if(conjuntoVotacion.exists(nombreVotacion)){
+			if(comprovaExsitenciaVotacion(nombreVotacion)){
 				Map<String,TipoVoto> aux=conjuntoVotacion.get(nombreVotacion).getVotos();
 				   for (Entry<String, TipoVoto> elem : aux.entrySet()){
 					  if(elem.getValue()==voto)result.add(elem.getKey());
 				   }
 			}
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-			 }
 			return result;
 		}
 		
 		public Boolean esVotanteEnVotacion(String nombreVotacion, String nombreDiputado){
-			if(conjuntoVotacion.exists(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado);
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-				   return false;
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion) & esDiputado(nombreDiputado) & conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado))return conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado);
+			return false;
 		}
 		
 		public Set<String> getVotaciones(){
@@ -130,12 +116,7 @@ public class ControladorDominioVotacion {
 		}
 		
 		public void removeVotacion(String nombreVotacion){
-			if(conjuntoVotacion.exists(nombreVotacion))conjuntoVotacion.remove(nombreVotacion);
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.remove(nombreVotacion);
 		}
 		
 		public void addVotacion(String nombreVotacion, Integer Importancia, Date fecha){
@@ -152,82 +133,48 @@ public class ControladorDominioVotacion {
 		}
 		
 		public Boolean esVotacion(String nombreVotacion){
-			
-			if(conjuntoVotacion.exists(nombreVotacion))return conjuntoVotacion.exists(nombreVotacion);
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-				   return false;
-			 }
-			
+			return conjuntoVotacion.exists(nombreVotacion);
 		}
 		
 		public Map<String,TipoVoto> getVotos(String nombreVotacion){
-			if(conjuntoVotacion.exists(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getVotos();
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-				   return new TreeMap<String,TipoVoto>();
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getVotos();
+			return new TreeMap<String,TipoVoto>();
 		}
 		
 		public TipoVoto getVotoDiputado(String nombreVotacion, String nombreDiputado){
-			if(conjuntoVotacion.exists(nombreVotacion)){
-				if(conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado)){
-					return conjuntoVotacion.get(nombreVotacion).getVoto(nombreDiputado);
-				}
-				else{
+				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado))return conjuntoVotacion.get(nombreVotacion).getVoto(nombreDiputado);
+				else if(!hasError){
 					hasError=true;
 					error.setClauExterna(nombreVotacion);
 					error.setCodiError(24);
 				}
-			}
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-			 }
 			return TipoVoto.ABSTENCION;
 			
 		}
 		
 		public void setAddVoto(String nombreVotacion, String nombreDiputado, TipoVoto voto){
-			if(conjuntoVotacion.exists(nombreVotacion)){
-					conjuntoVotacion.get(nombreVotacion).addSetVoto(nombreDiputado, voto);
-			}
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-			 }
+			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado))conjuntoVotacion.get(nombreVotacion).addSetVoto(nombreDiputado, voto);
 		}
 	   
 		public void removeVotoDiputado(String nombreVotacion, String nombreDiputado){
-			if(conjuntoVotacion.exists(nombreVotacion)){
-				if(conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado)){
+			if(comprovaExsitenciaVotacion(nombreVotacion)){
+				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado)){
 					conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
 				}
-				else{
+				else if(!hasError){
 					hasError=true;
 					error.setClauExterna(nombreVotacion);
 					error.setCodiError(24);
 				}
 			}
-			else{
-				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
-				   error.setCodiError(22);
-			 }
-			
 		}
 		
 		public Set<String> getVotaciones(Date dataInici, Date dataFi){
 			Set<String>result=new TreeSet<String>();
 			   DateInterval inter= new DateInterval(dataInici,dataFi);
-			   for (Entry<String, Votacion> elem : conjuntoVotacion.entrySet()){
-					if(inter.contains(elem.getValue().getFecha()))result.add(elem.getKey());
+			   
+			   for (Votacion elem : conjuntoVotacion.getAll()){
+					if(inter.contains(elem.getFecha()))result.add(elem.getNombre());
 			   }
 			return result;
 		}
