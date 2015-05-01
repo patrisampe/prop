@@ -2,7 +2,6 @@ package utiles;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -150,12 +149,6 @@ public class Conjunto<T extends ObjetoDominio> {
 		C.addAll(S);
 		return C;
 	}
-	
-	public Set<Entry<String,T>> entrySet(){
-		return conjunto.entrySet();
-		
-	}
-	
 	
 	public static <U extends ObjetoDominio> Conjunto<U> difference(Conjunto<U> C1, Conjunto<U> C2) {
 		Set<U> S1 = C1.getAll();
