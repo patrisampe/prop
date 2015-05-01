@@ -98,10 +98,16 @@ public abstract class ControladorDominioBusqueda {
 		return G;
 	}
 	
-	private void interrelacionar(Graf g, Set<String> diputadosEvento,
+	protected void interrelacionar(Graf g, Set<String> diputadosRelacionados,
 			Double peso) {
-		
-		// TODO Auto-generated method stub
+		for (String diputado1 : diputadosRelacionados) {
+			for (String diputado2 : diputadosRelacionados) {
+				if (g.existeixNode(diputado1) && g.addNode(diputado2)) {
+					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
+					else g.addAresta(diputado1, diputado2, peso/2);
+				}
+			}
+		}
 		
 	}
 
