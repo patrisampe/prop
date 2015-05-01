@@ -230,9 +230,9 @@ public class ControladorDominioEvento {
 					   error.setClauExterna(nombreDiputado);
 					   error.addClauExterna(nombreEvento);
 					   error.addClauExterna(nombreTipoEvento);
-					   error.setCodiError(7);
+					   error.setCodiError(6);
 				   }
-				   conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).addDiputado(nombreDiputado);
+				   else conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).addDiputado(nombreDiputado);
 			   }
 			   else{
 				   hasError=true;
@@ -246,16 +246,36 @@ public class ControladorDominioEvento {
 			   error.setClauExterna(nombreTipoEvento);
 			   error.setCodiError(15);
 		   }
-		   return new TreeSet<String>();
 	   }
 	   
+	   public void removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento)){
+				   if(conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado)){
+					   conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);
+				   }
+				   else{
+					   hasError=true;
+					   error.setClauExterna(nombreDiputado);
+					   error.addClauExterna(nombreEvento);
+					   error.addClauExterna(nombreTipoEvento);
+					   error.setCodiError(5);
+				   }
+			   }
+			   else{
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(7);
+			   } 
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+	   }	   
 	   
 }
-	   	/*
-
-	+ addDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado):void
-	+ removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado):void
-	+ removeDiputado(String nombreDIputado):void
-	    */
 	
 
