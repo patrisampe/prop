@@ -50,13 +50,13 @@ public class ControladorDominioEvento {
 		   return conjuntoTipoEvento.getStringKeys();
 	   }
 	   
-	   public List<String> getEventos(String nombreTipoEvento){
+	   public Set<String> getEventos(String nombreTipoEvento){
 		   return conjuntoTipoEvento.get(nombreTipoEvento).getEventos();
 		   
 	   }
 	   
-	   public List<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
-		   List<String> result=new ArrayList<String>();
+	   public Set<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
+		   Set<String> result=new TreeSet<String>();
 		   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
 		   for (Entry<String, Evento> elem : aux.entrySet()){
 			   Date act=elem.getValue().getFecha();
@@ -81,23 +81,178 @@ public class ControladorDominioEvento {
 	   
 	   public void addTipoEvento(String nombreTipoEvento, Integer importancia){
 		   TipoEvento aux=new TipoEvento(nombreTipoEvento,importancia);
-		   conjuntoTipoEvento.add(nombreTipoEvento, aux);
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(14);
+		   }
+		   else conjuntoTipoEvento.add(nombreTipoEvento, aux);
 	   }
 	   
-	  
+	   public void removeTipoEvento(String nombreTipoEvento){
+		   
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   conjuntoTipoEvento.remove(nombreTipoEvento);
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   } 
+	   }
+
+	   public Boolean getHasError() {
+		  return hasError;
+	   }
+	   
+	   
+	   public CodiError getError(){
+		   return error;
+	   }
+
+	   public Boolean esTipoEvento(String nombreTipoEvento){
+		   return conjuntoTipoEvento.exists(nombreTipoEvento);
+	   }
+	   
+	   public void addEvento(String nombreTipoEvento, String nombreEvento, Date fecha, Set<String> Diputados){
+		   Evento aux=new Evento(nombreEvento,fecha,Diputados);
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento)){
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(8);
+			   }
+			   else conjuntoTipoEvento.get(nombreTipoEvento).addEvento(aux);
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+			  
+	   }
+	   
+	   public void removeEvento(String nombreTipoEvento, String nombreEvento){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento))
+				   	conjuntoTipoEvento.get(nombreTipoEvento).removeEvento(nombreEvento);
+			   else{
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(7);
+			   } 
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+		   
+		   
+	   }
+	   
+	   public Boolean esEvento(String nombreTipoEvento, String nombreEvento){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   return conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento);
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+			   return false;
+		   }
+	   }
+	   
+	   public void setFechaEvento(String nombreTipoEvento, String nombreEvento, Date fecha){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento))
+				   	conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).setFecha(fecha);
+			   else{
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(7);
+			   } 
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+		   
+	   }
+	   
+	   public Date getFechaEvento(String nombreTipoEvento, String nombreEvento){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento))
+				   	return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).getFecha();
+			   else{
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(7);
+			   } 
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+		   return Date.NULL;
+	   }
+	   
+	   public Set<String> getDiputadosEvento(String nombreTipoEvento, String nombreEvento){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento))
+				   	return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).getdiputados();
+			   else{
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(7);
+			   } 
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+		   return new TreeSet<String>();
+	   }
+	   
+	   public void addDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento)){
+				   if(conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado)){
+					   hasError=true;
+					   error.setClauExterna(nombreDiputado);
+					   error.addClauExterna(nombreEvento);
+					   error.addClauExterna(nombreTipoEvento);
+					   error.setCodiError(7);
+				   }
+				   conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).addDiputado(nombreDiputado);
+			   }
+			   else{
+				   hasError=true;
+				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreTipoEvento);
+				   error.setCodiError(7);
+			   } 
+		   }
+		   else{
+			   hasError=true;
+			   error.setClauExterna(nombreTipoEvento);
+			   error.setCodiError(15);
+		   }
+		   return new TreeSet<String>();
+	   }
+	   
 	   
 }
 	   	/*
-	+ addTipoEvento(String nombreTipoEvento, Integer importancia): void
-	+ removeTipoEvento(String nombreTipoEvento): void
-	+ esTipoEvento(String nombreTipoEvento): Boolean
 
-	+ addEvento(String nombreTipoEvento, String nombreEvento, Date fecha, Set<String> Diputados):void
-	+ removeEvento(String nombreTipoEvento, String nombreEvento):void
-	+ esEvento(String nombreTipoEvento, String nombreEvento):Boolean
-	+ setFechaEvento(String nombreTipoEvento, String nombreEvento, Date fecha): void
-	+ getFechaEvento(String nombreTipoEvento, String nombreEvento): Date
-	+ getDiputadosEvento(String nombreTipoEvento, String nombreEvento): Set<String>
 	+ addDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado):void
 	+ removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado):void
 	+ removeDiputado(String nombreDIputado):void
