@@ -154,7 +154,7 @@ public class Louvain {
 		G = new GrafLouvain(Gr);
 		init(Gr); 
 		while(Comunidades.size() > 1) {
-			while(IncrementModularity()); //TODO
+			while(IncrementModularity()); 
 			agregaGraf();
 		}
 		return retorna(percentatge);
