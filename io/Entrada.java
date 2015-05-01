@@ -29,7 +29,7 @@ public interface Entrada {
 	public Integer[] ReadInteger(int n);
 
 	public Double[] ReadDouble(int n);
-	
+	public String[] ReadString(int n);
 	public Boolean[] ReadBoolean(int n);
 
 	public Long[] ReadLong(int n);

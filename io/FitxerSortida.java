@@ -39,7 +39,7 @@ public class FitxerSortida implements Sortida {
 	
 	public void Write(String s){
     	try {
-			BW.write(s);
+			BW.write(String.format("%s%n", s));
 		} catch (IOException e) {
 			System.out.println("Error en l'escriptura.");
 		}
@@ -148,6 +148,17 @@ public class FitxerSortida implements Sortida {
 		}
 	}
 
+	public void Write(int n, String[] a){
+		for (int i = 0; i < n; ++i){
+			try {
+				if (i != n-1) BW.write(a[i] + ", ");
+				else BW.write(a[i].toString() + System.lineSeparator());
+			} catch (IOException e){
+				System.out.println("Error en l'escriptura.");
+			}
+		}
+	}
+	
 	public void Write(int n, Long[] a){
 		for (int i = 0; i < n; ++i){
 			try {

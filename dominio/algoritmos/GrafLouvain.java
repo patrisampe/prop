@@ -13,13 +13,13 @@ public class GrafLouvain extends Graf {
 		return sum;
 	}
 	
-	private Double sumaColumna(Integer j) {
+	/*private Double sumaColumna(Integer j) {
 		Double sum = 0.0;
 		for (Integer i = 0; i < Matriu.get(0).size(); ++i) {
 			sum += Matriu.get(i).get(j);
 		}
 		return sum;
-	}
+	}*/
 
 	/**
 	 * Creadora per defecte.
