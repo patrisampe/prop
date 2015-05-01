@@ -4,7 +4,7 @@ import java.util.TreeSet;
 
 import time.*;
 
-public class Evento {
+public class Evento extends ObjetoDominio{
 	private String nombre;
 	private Date fecha;
 	
@@ -16,6 +16,14 @@ public class Evento {
 		fecha=Fecha;
 		diputados=new TreeSet<String>();
 	}
+	
+	public Evento(String Nombre, Date Fecha, Set<String> Diputados){
+		 //Pre: Fecha valida y Nombre no existente
+		nombre=Nombre;
+		fecha=Fecha;
+		diputados=new TreeSet<String>(Diputados);
+	}
+	
 	
 	public Evento(String Nombre, Evento E){
 		//Pre: Fecha valida y Nombre no existente

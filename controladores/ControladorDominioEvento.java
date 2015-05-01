@@ -33,7 +33,14 @@ public class ControladorDominioEvento {
 	   
 	   public void setImportanciaTipoEvento(String nombreTipoEvento, Integer Importancia){
 		   
-		   if(TipoEvento.esValidaImportancia(Importancia))conjuntoTipoEvento.get(nombreTipoEvento).setImportancia(Importancia);
+		   if(TipoEvento.esValidaImportancia(Importancia)){
+			   if(conjuntoTipoEvento.exists(nombreTipoEvento))conjuntoTipoEvento.get(nombreTipoEvento).setImportancia(Importancia);
+			   else{
+				   hasError=true;
+				   error.setCodiError(15);
+				   error.setClauExterna(nombreTipoEvento);
+			   }
+		   }
 		   else{
 			   hasError=true;
 			   error.setCodiError(9);
@@ -43,7 +50,14 @@ public class ControladorDominioEvento {
 	   }
 	   
 	   public Integer getImportanciaTipoEvento(String nombreTipoEvento){
-		  return conjuntoTipoEvento.get(nombreTipoEvento).getImportancia();
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getImportancia();
+		   else{
+			   hasError=true;
+			   error.setCodiError(15);
+			   error.setClauExterna(nombreTipoEvento);
+			   return -1;
+		   } 
+
 	   }
 	   
 	   public Set<String> getTipoEvento(){
@@ -51,17 +65,31 @@ public class ControladorDominioEvento {
 	   }
 	   
 	   public Set<String> getEventos(String nombreTipoEvento){
-		   return conjuntoTipoEvento.get(nombreTipoEvento).getEventos();
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getEventos();
+		   else{
+			   hasError=true;
+			   error.setCodiError(15);
+			   error.setClauExterna(nombreTipoEvento);
+			   return new TreeSet<String>();
+		   }
 		   
 	   }
 	   
 	   public Set<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
 		   Set<String> result=new TreeSet<String>();
-		   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
-		   for (Entry<String, Evento> elem : aux.entrySet()){
-			   Date act=elem.getValue().getFecha();
-				if(act.compareTo(dataInici)!=-1 & act.compareTo(dataFi)!=1)result.add(elem.getKey());
-		 }
+		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
+			   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
+			   for (Entry<String, Evento> elem : aux.entrySet()){
+				   Date act=elem.getValue().getFecha();
+					if(act.compareTo(dataInici)!=-1 & act.compareTo(dataFi)!=1)result.add(elem.getKey());
+			   }
+		   }
+		   else{
+			   hasError=true;
+			   error.setCodiError(15);
+			   error.setClauExterna(nombreTipoEvento);
+		   }
+		   
 		   return result;
 	   }
 	   

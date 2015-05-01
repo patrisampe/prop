@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import time.*;
 
-public class Votacion {
+public class Votacion extends ObjetoDominio {
 
 	private String nombre;
 	private Date fecha;
@@ -84,7 +84,7 @@ public class Votacion {
 		return votos.containsKey(nombreDiputado);
 	}
 
-	public void setAddVoto(String nombreDiputado, TipoVoto voto){
+	public void addSetVoto(String nombreDiputado, TipoVoto voto){
 		votos.put(nombreDiputado, voto);
 	}
 	

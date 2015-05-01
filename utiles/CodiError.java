@@ -36,6 +36,10 @@ public class CodiError {
 		Diccionario.put(19, "La legislatura %1 no tiene fecha final.");
 		Diccionario.put(20, "El diputado %1 ya existe en la legislatura %2.");
 		Diccionario.put(21, "El diputado %1 no existe en la legislatura %2.");
+		Diccionario.put(22, "La votacion %1 no existe");
+		Diccionario.put(23, "La votacion %1 ya existe");
+		Diccionario.put(24, "El Diputado %1 no ha votado en la votacion %2");
+
         return Collections.unmodifiableMap(Diccionario);
         /*
 		USAGE: (CE: objecte de la classe CodiError)
