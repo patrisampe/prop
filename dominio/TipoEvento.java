@@ -1,14 +1,14 @@
 package dominio;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Set;
+
+
+import utiles.Conjunto;
 
 
 public class TipoEvento extends ObjetoDominio {
 	private String nombre;
 	private Integer importancia;
-	private Map<String,Evento> conjuntoEventos;
+	private Conjunto<Evento> conjuntoEventos;
 	
 	//private static Map<String, Tipo_de_Evento> Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
 	//public static final Tipo_de_Evento NULL = new Tipo_de_Evento("NULL", 0);
@@ -19,21 +19,25 @@ public class TipoEvento extends ObjetoDominio {
 		//Pre: importancia ha de ser valida
 		nombre=Nombre;
 		importancia=Importancia;
-		conjuntoEventos=new TreeMap<String, Evento>();
+		conjuntoEventos=new Conjunto<Evento>(Evento.class);
 	}
 	
 	public TipoEvento(String Nombre, TipoEvento TP){
 		//Pre: importancia ha de ser valida
 		nombre=Nombre;
 		importancia=TP.importancia;
-		conjuntoEventos=new TreeMap<String, Evento>(TP.conjuntoEventos);
+		conjuntoEventos=new Conjunto<Evento>(TP.conjuntoEventos);
 	}
 	public String getNombre() {
 		return nombre;
 	}
 	
-	public List<String> getEventos(){
-		return new ArrayList<String>(conjuntoEventos.keySet());
+	public Set<String> getEventos(){
+		return conjuntoEventos.getStringKeys();
+	}
+	
+	public Conjunto<Evento> getEventosmap(){
+		return conjuntoEventos;
 	}
 	
 	public Integer getImportancia(){
@@ -50,7 +54,7 @@ public class TipoEvento extends ObjetoDominio {
 	}
 
 	public Boolean esEvento(String nombreEvento){
-		return conjuntoEventos.containsKey(nombreEvento);
+		return conjuntoEventos.exists(nombreEvento);
 	}
 	
 	public Evento getEvento(String nombreEvento){
@@ -64,6 +68,6 @@ public class TipoEvento extends ObjetoDominio {
 	}
 	public void addEvento(Evento nuevoEvento){
 		//Pre: El evento no puede existir en ese tipo
-		conjuntoEventos.put(nuevoEvento.getNombre(), nuevoEvento);
+		conjuntoEventos.add(nuevoEvento.getNombre(), nuevoEvento);
 	}
 }
