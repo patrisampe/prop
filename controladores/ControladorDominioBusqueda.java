@@ -14,6 +14,11 @@ import dominio.algoritmos.GrafNewman;
 import dominio.algoritmos.Louvain;
 import dominio.algoritmos.Newman;
 
+/**
+ * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
+ * @author Yoel Cabo
+ *
+ */
 public abstract class ControladorDominioBusqueda {
 	
 	protected ControladorDominioDiputado cDip;
