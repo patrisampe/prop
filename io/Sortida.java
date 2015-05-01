@@ -24,6 +24,8 @@ public interface Sortida {
 	
 	public void Write(int n, Integer[] a);
 	
+	public void Write(int n, String[] a);
+	
 	public void Write(int n, Double[] a);
 	
 	public void Write(int n, Boolean[] a);

@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import time.Date;
 
+import io.ConsolaEntrada;
 import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
@@ -13,11 +14,8 @@ import io.Sortida;
 import dominio.Evento;
 public class EventoDriver {
 
-	/**
-	 * @param args
-	 */
 	
-	public Evento llegirEvento(Entrada EF){
+	public Evento llegirEvento(Entrada EF, Sortida SF){
 		
 		    String nomEvento = EF.ReadString();
 		    Integer Day=EF.ReadInteger();
@@ -56,10 +54,9 @@ public class EventoDriver {
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
 		for(int i=0;i<end;++i){
-			SF.Write(dip[i]);
-			SF.Write(" ");
-			SF.Write(e.esParticipante(dip[i]));
+			SF.Write(dip[i]+","+e.esParticipante(dip[i]));
 		}
+		SF.Write(" ");
 	}
 	
 	public void escriureEvento(Sortida SF, Evento e){
@@ -69,18 +66,21 @@ public class EventoDriver {
 		SF.Write(e.getFecha().getYear());
 		int mida=e.getdiputados().size();
 		SF.Write(mida, e.getdiputados().toArray(new String[mida]));
-		SF.Write(" /n");
+		SF.Write(" ");
 	}
 	
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		Entrada EF = new FitxerEntrada(args[0]);
-		Sortida SF = new FitxerSortida(args[1]);
+		Entrada EC = new ConsolaEntrada();
+		String Input = EC.ReadString();
+		Entrada EF = new FitxerEntrada(Input);
+		String Output = EC.ReadString();
+		Sortida SF = new FitxerSortida(Output);
 		EventoDriver DE= new EventoDriver();
-		Evento e=DE.llegirEvento(EF);
+		Evento e=DE.llegirEvento(EF,SF);
+		
 		int end=EF.ReadInt();
 		for(int i=0;i<end;++i){
 			DE.escriureEvento(SF, e);
@@ -92,6 +92,9 @@ public class EventoDriver {
 			DE.escriureEvento(SF, e);
 			DE.esParticipante(EF,e,SF);
 		}
+		EF.close();
+		SF.close();
+		
 		
 	}
 

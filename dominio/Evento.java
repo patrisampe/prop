@@ -9,18 +9,18 @@ public class Evento extends ObjetoDominio{
 	private Date fecha;
 	
 	private Set <String> diputados;
-	
+	/*
 	public Evento(String Nombre, Date Fecha){
 		 //Pre: Fecha valida y Nombre no existente
 		nombre=Nombre;
 		fecha=Fecha;
 		diputados=new TreeSet<String>();
 	}
-	
-	public Evento(String Nombre, Date Fecha, Set<String> Diputados){
+	*/
+	public Evento(String Nombre, Date data, Set<String> Diputados){
 		 //Pre: Fecha valida y Nombre no existente
 		nombre=Nombre;
-		fecha=Fecha;
+		fecha=data;
 		diputados=new TreeSet<String>(Diputados);
 	}
 	

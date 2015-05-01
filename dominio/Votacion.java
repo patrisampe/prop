@@ -93,4 +93,5 @@ public class Votacion extends ObjetoDominio {
 	}
 	
 	
+	
 }

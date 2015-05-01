@@ -59,7 +59,7 @@ public class Date{
 	}
 	
 	public Integer getYear(){
-		return Day;
+		return Year;
 	}
 	
 	public Boolean esValida(){

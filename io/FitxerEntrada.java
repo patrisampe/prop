@@ -103,6 +103,15 @@ public class FitxerEntrada implements Entrada {
 		}
     	return out;
 	}
+	
+	public String[] ReadString(int n){
+		String[] out = new String[n];
+		for (int i = 0; i < n; ++i){
+			if (sc.hasNext()) out[i] = sc.next();
+		}
+    	return out;
+	}
+	
 
 	public Long[] ReadLong(int n){
 		Long[] out = new Long[n];
@@ -111,5 +120,6 @@ public class FitxerEntrada implements Entrada {
 		}
     	return out;
 	}
+	
 
 }
