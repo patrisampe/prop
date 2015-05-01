@@ -88,8 +88,8 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		eliminarDiputado(nombre, desdeID);
 	}
 	
-	public Integer addGrupo(Set<GrupoAfin> nuevoGrupo) {
-		return 3;
+	public void addGrupo(GrupoAfin nuevoGrupo) {
+		gruposAfines.add(nuevoGrupo);
 	}
 	
 	public void eliminarGrupo(Integer ID) {
