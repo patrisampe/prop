@@ -9,6 +9,7 @@ import utiles.Conjunto;
 import dominio.Evento;
 import dominio.TipoEvento;
 import time.Date;
+import time.DateInterval;
 
 
 public class ControladorDominioEvento {
@@ -79,9 +80,9 @@ public class ControladorDominioEvento {
 		   Set<String> result=new TreeSet<String>();
 		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
 			   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
+			   DateInterval inter= new DateInterval(dataInici,dataFi);
 			   for (Entry<String, Evento> elem : aux.entrySet()){
-				   Date act=elem.getValue().getFecha();
-					if(act.compareTo(dataInici)!=-1 & act.compareTo(dataFi)!=1)result.add(elem.getKey());
+					if(inter.contains(elem.getValue().getFecha()))result.add(elem.getKey());
 			   }
 		   }
 		   else{

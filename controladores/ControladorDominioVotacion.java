@@ -7,8 +7,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import time.Date;
+import time.DateInterval;
 import utiles.CodiError;
 import utiles.Conjunto;
+import dominio.Evento;
 import dominio.TipoVoto;
 import dominio.Votacion;
 
@@ -219,6 +221,15 @@ public class ControladorDominioVotacion {
 				   error.setCodiError(22);
 			 }
 			
+		}
+		
+		public Set<String> getVotaciones(Date dataInici, Date dataFi){
+			Set<String>result=new TreeSet<String>();
+			   DateInterval inter= new DateInterval(dataInici,dataFi);
+			   for (Entry<String, Evento> elem : conjuntoVotacion.entrySet()){
+					if(inter.contains(elem.getValue().getFecha()))result.add(elem.getKey());
+			   }
+			return result;
 		}
 		
 }
