@@ -19,9 +19,9 @@ public class Date{
 		this.Month = Month;
 		this.Year = Year;
 		if (!esValida()){
-			this.Day = 0;
-			this.Month = 0;
-			this.Year = 0;
+			this.Day = -1;
+			this.Month = -1;
+			this.Year = -1;
 		}
 	}
 	
