@@ -13,7 +13,6 @@ public class Conjunto<T extends ObjetoDominio> {
 	private Map<String, T> conjunto;
 	private final Boolean hasIntegerKey;
     private final Class<T> type;
-	//private final Boolean esEvento; TODO
 	
 	public Conjunto(Class<T> type){
 		this.type = type;
@@ -21,14 +20,12 @@ public class Conjunto<T extends ObjetoDominio> {
 		hasIntegerKey = (type.equals(Legislatura.class)
 					  || type.equals(GrupoAfinPorDiputado.class)
 					  || type.equals(GrupoAfinPorPeriodo.class));
-		//esEvento = false; TODO
 	}
 	
 	public Conjunto(Conjunto<T> C){
 		this.type = C.type;
 		conjunto = new TreeMap<String, T>(C.conjunto);
 		hasIntegerKey = C.hasIntegerKey;
-		//esEvento = C.esEvento; TODO
 	}
 	
 	public Class<T> getValueType(){
@@ -84,6 +81,10 @@ public class Conjunto<T extends ObjetoDominio> {
 	public Set<String> getStringKeys() {
 		if (hasIntegerKey) return new TreeSet<String>();
 		return conjunto.keySet();
+	}
+	
+	public Set<Entry<String,T>> entrySet(){
+		return conjunto.entrySet();
 	}
 	
 	public void add(String nombreObjeto, T objeto) {
@@ -150,12 +151,6 @@ public class Conjunto<T extends ObjetoDominio> {
 		C.addAll(S);
 		return C;
 	}
-	
-	public Set<Entry<String,T>> entrySet(){
-		return conjunto.entrySet();
-		
-	}
-	
 	
 	public static <U extends ObjetoDominio> Conjunto<U> difference(Conjunto<U> C1, Conjunto<U> C2) {
 		Set<U> S1 = C1.getAll();
