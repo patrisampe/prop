@@ -32,26 +32,16 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
 		
-		return ejecutar(G,Algoritmo,porcentaje);
+		return ejecutarYretornar(G,Algoritmo,porcentaje);
 	}
 
-	protected Set<GrupoAfinPorPeriodo> ejecutar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
-		HashSet<HashSet<String> > hs = new HashSet<HashSet<String>>();
-		if (algoritmo == TipoAlgoritmo.CliquePercolation) {
-			hs = Clique.executa(g,porcentaje);
-		}
-		else if (algoritmo == TipoAlgoritmo.GirvanNewmann) {
-			hs = Newman.executa((new GrafNewman(g),porcentaje);
-		}
-		else if (algoritmo == TipoAlgoritmo.Louvain) {
-			GrafLouvain gl = new GrafLouvain(g);
-			hs = Louvain.executa(new GrafLouvain(g), porcentaje);
-		}
+	protected Set<GrupoAfinPorPeriodo> ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
+		HashSet<HashSet<String> > hs = ejecutar(g,algoritmo,porcentaje);
 		
-		Set<GrupoAfin> s = new HashSet<GrupoAfin>();
-		
+		Set<GrupoAfinPorPeriodo> s = new HashSet<GrupoAfinPorPeriodo>();
+		Integer idgrupo = 1;
 		for (Set<String> Comunidad : hs) {
-			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo();
+			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo(idgrupo++);
 			for (String Diputado : Comunidad) {
 				ga.addDiputado(Diputado);
 			}
@@ -59,7 +49,6 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		}
 		return s;
 	}
-	
 
 
 }
