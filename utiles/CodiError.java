@@ -16,14 +16,14 @@ public class CodiError {
 		Map<Integer, String> Diccionario = new HashMap<Integer, String>();
 		Diccionario.put(0, "No hay error.");
 		Diccionario.put(1, "Dato en blanco.");
-		Diccionario.put(2, "Fecha no v·lida.");
+		Diccionario.put(2, "Fecha no v√°lida.");
 		Diccionario.put(3, "El diputado %1 no existe.");
 		Diccionario.put(4, "El diputado %1 ya existe.");
-		Diccionario.put(5, "El diputado %1 no existe en el evento %2.");
-		Diccionario.put(6, "El diputado %1 ya existe en el evento %2.");
-		Diccionario.put(7, "El evento %1 no existe.");
-		Diccionario.put(8, "El evento %1 ya existe.");
-		Diccionario.put(9, "El evento %1 no tiene una importancia valida (1<=I<=5).");
+		Diccionario.put(5, "El diputado %1 no existe en el evento %2 en el tipo de evento %3.");
+		Diccionario.put(6, "El diputado %1 ya existe en el evento %2 en el tipo de evento %3.");
+		Diccionario.put(7, "El evento %1 no existe en el tipo de evento %2.");
+		Diccionario.put(8, "El evento %1 ya existe en el tipo de evento %2.");
+		Diccionario.put(9, "El TipoEvento %1 no tiene una importancia valida (1<=I<=5).");
 		Diccionario.put(10, "El diputado %1 ya existe en la legislatura %2.");
 		Diccionario.put(11, "El diputado %1 no existe en la legislatura %2.");
 		Diccionario.put(12, "La legislatura %1 ya existe en el diputado %2.");
@@ -36,8 +36,6 @@ public class CodiError {
 		Diccionario.put(19, "La legislatura %1 no tiene fecha final.");
 		Diccionario.put(20, "El diputado %1 ya existe en la legislatura %2.");
 		Diccionario.put(21, "El diputado %1 no existe en la legislatura %2.");
-		Diccionario.put(22, "La legislatura %1 no puede contener la fecha %2, ya que pertenece a la legislatura %3.");
-		Diccionario.put(23, "La legislatura %1 no puede contener la fecha %2, ya que se produce solapamiento entre legislaturas.");
         return Collections.unmodifiableMap(Diccionario);
         /*
 		USAGE: (CE: objecte de la classe CodiError)
