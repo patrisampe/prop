@@ -138,7 +138,7 @@ public class ControladorDominioVotacion {
 			 }
 		}
 		
-		public void adddVotacion(String nombreVotacion, Integer Importancia, Date fecha){
+		public void addVotacion(String nombreVotacion, Integer Importancia, Date fecha){
 			if(conjuntoVotacion.exists(nombreVotacion)){
 				hasError=true;
 				error.setClauExterna(nombreVotacion);
@@ -226,7 +226,7 @@ public class ControladorDominioVotacion {
 		public Set<String> getVotaciones(Date dataInici, Date dataFi){
 			Set<String>result=new TreeSet<String>();
 			   DateInterval inter= new DateInterval(dataInici,dataFi);
-			   for (Entry<String, Evento> elem : conjuntoVotacion.entrySet()){
+			   for (Entry<String, Votacion> elem : conjuntoVotacion.entrySet()){
 					if(inter.contains(elem.getValue().getFecha()))result.add(elem.getKey());
 			   }
 			return result;
