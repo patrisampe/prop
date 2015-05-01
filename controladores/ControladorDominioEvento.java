@@ -1,8 +1,5 @@
 package controladores;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Map.Entry;
@@ -11,7 +8,6 @@ import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Evento;
 import dominio.TipoEvento;
-import dominio.TipoVoto;
 import time.Date;
 
 
@@ -31,12 +27,18 @@ public class ControladorDominioEvento {
 	      if(instance == null) {
 	         instance = new ControladorDominioEvento();  
 	      }
-	      
 	      return instance;
 	   }
 	   
 	   
 	   public void setImportanciaTipoEvento(String nombreTipoEvento, Integer Importancia){
+		   
+		   if(TipoEvento.esValidaImportancia(Importancia))conjuntoTipoEvento.get(nombreTipoEvento).setImportancia(Importancia);
+		   else{
+			   hasError=true;
+			   error.setCodiError(9);
+			   error.setClauExterna(nombreTipoEvento);
+		   }
 		   
 	   }
 	   
@@ -72,9 +74,20 @@ public class ControladorDominioEvento {
 			   }
 		   }
 	   }
+	  
+	   public void netejaError(){
+		   hasError=false;
+	   }
 	   
+	   public void addTipoEvento(String nombreTipoEvento, Integer importancia){
+		   TipoEvento aux=new TipoEvento(nombreTipoEvento,importancia);
+		   conjuntoTipoEvento.add(nombreTipoEvento, aux);
+	   }
+	   
+	  
+	   
+}
 	   	/*
-	+ setImportanciaTipoEvento(String nombreTipoEvento, Integer Importancia): void
 	+ addTipoEvento(String nombreTipoEvento, Integer importancia): void
 	+ removeTipoEvento(String nombreTipoEvento): void
 	+ esTipoEvento(String nombreTipoEvento): Boolean
@@ -90,4 +103,4 @@ public class ControladorDominioEvento {
 	+ removeDiputado(String nombreDIputado):void
 	    */
 	
-}
+
