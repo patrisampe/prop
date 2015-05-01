@@ -40,8 +40,8 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.getAll();
 	}
 	
-	public Set<String> getIDs() {
-		return conjuntoLegislaturas.getStringKeys();
+	public Set<Integer> getIDs() {
+		return conjuntoLegislaturas.getIntegerKeys();
 	}
 	
 	public Integer getID(Date FechaContenida) {
