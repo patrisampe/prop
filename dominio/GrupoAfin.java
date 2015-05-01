@@ -12,8 +12,12 @@ public abstract class GrupoAfin extends ObjetoDominio {
 		diputados = new TreeSet<String>();
 	}
 	
-	public Boolean addDiputado(String Diputado) {
-		return diputados.add(Diputado);
+	public void addDiputado(String Diputado) {
+		diputados.add(Diputado);
+	}
+	
+	public void removeDiputado(String Diputado) {
+		diputados.remove(Diputado);
 	}
 	
 	public Integer getID() {
@@ -28,8 +32,8 @@ public abstract class GrupoAfin extends ObjetoDominio {
 		return diputados.contains(Diputado);
 	}
 	
-	public Boolean removeDiputado(String Diputado) {
-		return diputados.remove(Diputado);
+	public Boolean esVacio() {
+		return diputados.isEmpty();
 	}
 	
 }

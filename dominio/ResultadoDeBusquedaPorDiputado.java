@@ -25,5 +25,10 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	public String getTipoResultado() {
 		return "Búsqueda por diputado";
 	}
+
+	@Override
+	public String getDiputadoRelevante() {
+		return diputadoRelevante;
+	}
 	
 }
