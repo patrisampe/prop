@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
 import time.*;
+import utiles.Conjunto;
 import dominio.GrupoAfinPorDiputado;
 import dominio.TipoAlgoritmo;
 import dominio.algoritmos.Graf;
@@ -30,9 +32,9 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * @param DiputadoRelevante Diputado cuya evolución buscamos.
 	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
 	 */
-	public Set<GrupoAfinPorDiputado> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
+	public Conjunto<GrupoAfinPorDiputado> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
-		Set<GrupoAfinPorDiputado> s = new HashSet<GrupoAfinPorDiputado>();
+		 Conjunto<GrupoAfinPorDiputado> s = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			Integer legislaturaInicial = It.next();
@@ -46,7 +48,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInici(), Periodo.getFi());
 			ejecutar(G,ga,Algoritmo, porcentaje, DiputadoRelevante);
-			s.add(ga);
+			s.add(idgrupo,ga);
 		}
 		
 		return s;
