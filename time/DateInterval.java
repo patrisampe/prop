@@ -36,11 +36,15 @@ public class DateInterval {
 	}
 	
 	public Boolean contains(Date D) {
-		return (Inici.compareTo(D) >= 0 && Fi.compareTo(D) <= 0);
+		return ((Inici.compareTo(D) >= 0 && Fi.compareTo(D) <= 0) ||
+				(Inici.compareTo(D) >= 0 && Fi.esNull()) ||
+				(Inici.esNull() && Fi.compareTo(D) <= 0));
 	}
 	
 	public Boolean contains(DateInterval DI) {
-		return (contains(DI.Inici) && contains(DI.Fi));
+		return ((contains(DI.Inici) && contains(DI.Fi)) ||
+				(contains(DI.Inici) && DI.Fi.esNull()) || 
+				(DI.Inici.esNull() && contains(DI.Fi)));
 	}
 	
 	public Boolean intersects(DateInterval DI) {
