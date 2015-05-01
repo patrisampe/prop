@@ -4,11 +4,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import time.Date;
-import time.DateInterval;
+import time.*;
 import dominio.GrupoAfinPorDiputado;
-import dominio.Legislatura;
 import dominio.TipoAlgoritmo;
 import dominio.algoritmos.Graf;
 
@@ -30,7 +27,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			Integer legislaturaInicial = It.next();
-			Integer legislaturaFinal;
+			Integer legislaturaFinal = null;
 			if(Lapso == 1) legislaturaFinal = legislaturaInicial;
 			else for (Integer i = 1; i < Lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
 			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
