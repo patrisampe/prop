@@ -2,11 +2,16 @@ package controladores;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import utiles.CodiError;
 import utiles.Conjunto;
+import dominio.Evento;
 import dominio.TipoEvento;
+import dominio.TipoVoto;
 import time.Date;
 
 
@@ -49,21 +54,30 @@ public class ControladorDominioEvento {
 	   }
 	   
 	   public List<String> getEventos(String nombreTipoEvento, Date dataInici, Date dataFi){
-		   List<String> a=new ArrayList<String>();
-		   
-		   
-		   
-		   return a;
-		   
+		   List<String> result=new ArrayList<String>();
+		   Conjunto<Evento> aux= conjuntoTipoEvento.get(nombreTipoEvento).getEventosmap();
+		   for (Entry<String, Evento> elem : aux.entrySet()){
+			   Date act=elem.getValue().getFecha();
+				if(act.compareTo(dataInici)!=-1 & act.compareTo(dataFi)!=1)result.add(elem.getKey());
+		 }
+		   return result;
 	   }
 	   
-	   /*
-
+	   public void removeDiputado(String nombreDiputado){
+		  
+		   for (Entry<String, TipoEvento> elem : conjuntoTipoEvento.entrySet()){
+			  Conjunto<Evento> aux= elem.getValue().getEventosmap();
+			   for (Entry<String, Evento> elem2 : aux.entrySet()){
+				   if(elem2.getValue().esParticipante(nombreDiputado))elem2.getValue().removeDiputado(nombreDiputado);
+			   }
+		   }
+	   }
+	   
+	   	/*
 	+ setImportanciaTipoEvento(String nombreTipoEvento, Integer Importancia): void
 	+ addTipoEvento(String nombreTipoEvento, Integer importancia): void
 	+ removeTipoEvento(String nombreTipoEvento): void
 	+ esTipoEvento(String nombreTipoEvento): Boolean
-	+ getEventos(String nombreTipoEvento, Date dataInici, Date dataFi): List<String>
 
 	+ addEvento(String nombreTipoEvento, String nombreEvento, Date fecha, Set<String> Diputados):void
 	+ removeEvento(String nombreTipoEvento, String nombreEvento):void
@@ -74,7 +88,6 @@ public class ControladorDominioEvento {
 	+ addDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado):void
 	+ removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado):void
 	+ removeDiputado(String nombreDIputado):void
-
-*/
+	    */
 	
 }
