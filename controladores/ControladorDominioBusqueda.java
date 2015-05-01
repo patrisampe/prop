@@ -1,17 +1,24 @@
 package controladores;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import time.DateInterval;
 import dominio.*;
+import dominio.algoritmos.Clique;
 import dominio.algoritmos.Graf;
 import dominio.algoritmos.GrafLouvain;
+import dominio.algoritmos.GrafNewman;
 import dominio.algoritmos.Louvain;
+import dominio.algoritmos.Newman;
 
+/**
+ * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
+ * @author Yoel Cabo
+ *
+ */
 public abstract class ControladorDominioBusqueda {
 	
 	protected ControladorDominioDiputado cDip;
@@ -31,10 +38,10 @@ public abstract class ControladorDominioBusqueda {
 			Map<String, Integer> importanciaModificada) {
 		Map<String, Integer> res = new TreeMap<String,Integer>(); 
 		res.putAll(importanciaModificada);
-		List<String> tipoEventos = cEv.GetTipoEventos(); //Suponiendo que no se cambie a Set
+		Set<String> tipoEventos = cEv.getTipoEvento(); //Suponiendo que no se cambie a Set
 		for (String tipoEvento : tipoEventos) {
 			if (!res.containsKey(tipoEvento)) {
-				res.put(tipoEvento, cEv.getImportancia(tipoEvento)); //Suponiendo que se implemente con este nombre
+				res.put(tipoEvento, cEv.getImportanciaTipoEvento(tipoEvento)); //Suponiendo que se implemente con este nombre
 			}
 		}
 		return res;
@@ -81,7 +88,7 @@ public abstract class ControladorDominioBusqueda {
 			hs = Clique.executa(g,porcentaje);
 		}
 		else if (algoritmo == TipoAlgoritmo.GirvanNewmann) {
-			hs = Newman.executa((new GrafNewman(g),porcentaje);
+			hs = Newman.executa(new GrafNewman(g),porcentaje);
 		}
 		else if (algoritmo == TipoAlgoritmo.Louvain) {
 			GrafLouvain gl = new GrafLouvain(g);

@@ -8,9 +8,8 @@ import java.util.TreeMap;
 
 import time.*;
 import dominio.*;
-import dominio.algoritmos.Graf;
-import dominio.algoritmos.GrafLouvain;
-import dominio.algoritmos.Louvain;
+import dominio.algoritmos.*;
+
 
 public class ControladorDominioBusquedaPorPeriodo extends
 		ControladorDominioBusqueda {
@@ -35,7 +34,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		return ejecutarYretornar(G,Algoritmo,porcentaje);
 	}
 
-	protected Set<GrupoAfinPorPeriodo> ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
+	private Set<GrupoAfinPorPeriodo> ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
 		HashSet<HashSet<String> > hs = ejecutar(g,algoritmo,porcentaje);
 		
 		Set<GrupoAfinPorPeriodo> s = new HashSet<GrupoAfinPorPeriodo>();
