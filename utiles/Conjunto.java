@@ -151,7 +151,7 @@ public class Conjunto<T extends ObjetoDominio> {
 		return C;
 	}
 	
-	public Set<Entry<String,T>> entryConjuntos(){
+	public Set<Entry<String,T>> entrySet(){
 		return conjunto.entrySet();
 		
 	}
