@@ -21,5 +21,10 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	public String getTipoResultado() {
 		return "Búsqueda por periodo";
 	}
+
+	@Override
+	public String getDiputadoRelevante() {
+		return "";
+	}
 	
 }
