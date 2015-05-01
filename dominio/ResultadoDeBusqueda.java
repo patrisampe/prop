@@ -132,7 +132,10 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		return this.importancia.get(nombreTipoEvento);
 	}
 	
+	public String getDiputadoRelevante() {
+		return "";
+	}
+	
 	public abstract String getTipoResultado();
-	public abstract String getDiputadoRelevante();
 	
 }

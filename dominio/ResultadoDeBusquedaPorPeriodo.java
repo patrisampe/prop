@@ -22,9 +22,4 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 		return "Búsqueda por periodo";
 	}
 
-	@Override
-	public String getDiputadoRelevante() {
-		return "";
-	}
-	
 }
