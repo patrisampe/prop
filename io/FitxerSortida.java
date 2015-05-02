@@ -6,9 +6,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Salida por fichero que permite escribir cualquier tipo de dato basico.
+ * @author David Moran
+ */
 public class FitxerSortida implements Sortida {
+	
+	/**
+	 * Buffer utilizado para la escritura por fichero.
+	 */
 	private BufferedWriter BW;
 
+	/**
+	 * Crea una nueva salida mediante fichero.
+	 * @param FileName - ruta del fichero de salida.
+	 */
 	public FitxerSortida(String FileName){
 		File F = new File(FileName);
 		try {

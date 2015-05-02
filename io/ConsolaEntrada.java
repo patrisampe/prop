@@ -5,9 +5,20 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Entrada por consola que permite leer cualquier tipo de dato basico.
+ * @author David Moran
+ */
 public class ConsolaEntrada implements Entrada {
+	
+	/**
+	 * Scanner utilizado para la lectura por consola.
+	 */
 	private Scanner sc;
 
+	/**
+	 * Crea una nueva entrada mediante la consola.
+	 */
 	public ConsolaEntrada(){
 		 sc = new Scanner(System.in);
 	}

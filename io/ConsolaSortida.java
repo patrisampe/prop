@@ -2,8 +2,15 @@ package io;
 
 import java.util.Set;
 
+/**
+ * Salida por consola que permite escribir cualquier tipo de dato basico.
+ * @author David Moran
+ */
 public class ConsolaSortida implements Sortida {
 	
+	/**
+	 * Crea una nueva salida mediante la consola.
+	 */
 	public ConsolaSortida(){
 	}
 	
@@ -26,8 +33,8 @@ public class ConsolaSortida implements Sortida {
     	System.out.println(n.toString());
 	}
 	
-	public void Write(Double a){
-    	System.out.println(a.toString());
+	public void Write(Double d){
+    	System.out.println(d.toString());
 	}
 	
 	public void Write(Boolean b){

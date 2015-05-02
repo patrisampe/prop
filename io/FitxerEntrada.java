@@ -8,9 +8,21 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
+/**
+ * Entrada por fichero que permite leer cualquier tipo de dato basico.
+ * @author David Moran
+ */
 public class FitxerEntrada implements Entrada {
+	
+	/**
+	 * Scanner utilizado para la lectura por fichero.
+	 */
 	private Scanner sc;
 
+	/**
+	 * Crea una nueva entrada mediante fichero.
+	 * @param FileName - ruta del fichero de entrada.
+	 */
 	public FitxerEntrada(String FileName){
 		File F = new File(FileName);
 		try {
