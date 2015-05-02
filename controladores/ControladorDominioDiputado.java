@@ -1,6 +1,5 @@
 package controladores;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -159,9 +158,7 @@ public class ControladorDominioDiputado {
 			error.setClauExterna(nombreDiputado);
 		}
 		else {
-			Iterator<Integer> it = legislaturas.iterator();
-			while (it.hasNext()) {
-				Integer identificadorLegislatura = it.next();
+			for (Integer identificadorLegislatura:legislaturas) {
 				if (!CDL.existsLegislatura(identificadorLegislatura)) {
 					error.setCodiError(17);
 					error.setClauExterna(identificadorLegislatura);
@@ -232,9 +229,8 @@ public class ControladorDominioDiputado {
 	
 	//Elimina la legislatura indicada de tots els diputats
 	public void removeLegislaturaFromDiputados(Integer identificadorLegislatura) {
-		Iterator<Diputado> it = conjuntoDiputados.getAll().iterator();
-		while (it.hasNext()) {
-			String nombreDiputado = it.next().getNombre();
+		for (Diputado D:conjuntoDiputados.getAll()) {
+			String nombreDiputado = D.getNombre();
 			if (existsLegistura(nombreDiputado, identificadorLegislatura))
 				removeLegistura(nombreDiputado, identificadorLegislatura);
 		}

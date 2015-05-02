@@ -1,6 +1,5 @@
 package controladores;
 
-import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -45,11 +44,7 @@ public class ControladorDominioLegislatura {
 	}
 	
 	public Integer getID(Date FechaContenida) {
-		Set<Legislatura> S = conjuntoLegislaturas.getAll();
-		if (S.isEmpty()) return -1;
-		Iterator<Legislatura> it = S.iterator();
-		while (it.hasNext()) {
-			Legislatura L = it.next();
+		for (Legislatura L:conjuntoLegislaturas.getAll()) {
 			if (L.hasFechaFinal()) {
 				DateInterval DI = new DateInterval(L.getFechaInicio(), L.getFechaFinal());
 				if (DI.contains(FechaContenida)) return L.getID();
@@ -60,12 +55,9 @@ public class ControladorDominioLegislatura {
 	}
 
 	public Integer getIDLast() {
-		Set<Legislatura> S = conjuntoLegislaturas.getAll();
-		if (S.isEmpty()) return -1;
-		Iterator<Legislatura> it = S.iterator();
-		Integer max = it.next().getID();
-		while (it.hasNext()) {
-			Integer t = it.next().getID();
+		Integer max = -1;
+		for (Legislatura L:conjuntoLegislaturas.getAll()) {
+			Integer t = L.getID();
 			if (t > max) max = t;
 		}
 		return max;
@@ -236,9 +228,7 @@ public class ControladorDominioLegislatura {
 			error.setClauExterna(identificadorLegislatura);
 		}
 		else {
-			Iterator<String> it = diputados.iterator();
-			while (it.hasNext()) {
-				String nombreDiputado = it.next();
+			for (String nombreDiputado:diputados) {
 				if (!CDD.existsDiputado(nombreDiputado)) {
 					error.setCodiError(3);
 					error.setClauExterna(nombreDiputado);
@@ -310,9 +300,8 @@ public class ControladorDominioLegislatura {
 	
 	//Elimina el diputat indicat de totes les legislatures
 	public void removeDiputadoFromLegislaturas(String nombreDiputado) {
-		Iterator<Legislatura> it = conjuntoLegislaturas.getAll().iterator();
-		while (it.hasNext()) {
-			Integer identificadorLegislatura = it.next().getID();
+		for (Legislatura L:conjuntoLegislaturas.getAll()) {
+			Integer identificadorLegislatura = L.getID();
 			if (existsDiputado(identificadorLegislatura, nombreDiputado))
 				removeDiputado(identificadorLegislatura, nombreDiputado);
 		}
