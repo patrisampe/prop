@@ -40,7 +40,7 @@ public class CodiError {
 		Diccionario.put(23, "La votacion %1 ya existe");
 		Diccionario.put(24, "El Diputado %1 no ha votado en la votacion %2");
 		Diccionario.put(25, "En la votacion %1 el diputado %2 esta de baja");
-
+		Diccionario.put(26, "El diputado %1 no se puede borrar de la votacion %2, ya que aun esta activo en esa legislatura");
 		
         return Collections.unmodifiableMap(Diccionario);
         /*
