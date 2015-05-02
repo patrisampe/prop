@@ -1,0 +1,13 @@
+1
+4
+6 Pepe
+6 Maria
+6 Miguel
+6 Sara
+4
+8 Maria
+9 Pepe Maria 3
+9 Miguel Sara 6
+13 Maria Pepe
+13 Sara Miguel
+-1
