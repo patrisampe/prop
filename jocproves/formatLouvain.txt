@@ -1,0 +1,4 @@
+Format:
+Dos enters v, a seguits de v Nodes i a Arestes.
+On una Aresta és una tupla de Node,Node,Pes. (String,String,Double)
+Un enter indicant el percentatge de dispersió.

@@ -7,7 +7,7 @@
 4
 8 Maria
 9 Pepe Maria 3
-9 Miguel Sara 6
+9 Miguel Sara 6,0
 13 Maria Pepe
 13 Sara Miguel
 -1
