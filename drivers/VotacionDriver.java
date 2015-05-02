@@ -1,9 +1,8 @@
 package drivers;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
-
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import time.Date;
 
 import io.ConsolaEntrada;
@@ -12,6 +11,7 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
+import dominio.TipoVoto;
 import dominio.Votacion;
 
 public class VotacionDriver {
@@ -25,9 +25,17 @@ public class VotacionDriver {
 		    Integer Year=EF.ReadInteger();
 		    Date Data=new Date(Day,Month,Year);
 		    Integer imp= EF.ReadInteger();
-			
-			return new Votacion(nomVotacion,Data,imp);
+
+			int end=EF.ReadInt();
+			String dip[]=EF.ReadString(end);
+			String[] vot= EF.ReadString(end);
+			Map<String,TipoVoto> votos=new TreeMap<String, TipoVoto>();
+			for(int i=0;i<end;++i){
+				votos.put(dip[i], TipoVoto.valueOf(vot[i]));
+			}
+			return new Votacion(nomVotacion,Data,imp,votos);
 	}
+	
 	public void setFecha(Entrada EF,Votacion v){
 		
 	    Integer Day=EF.ReadInteger();
@@ -41,31 +49,69 @@ public class VotacionDriver {
 		Integer nuevaimp=EF.ReadInteger();
 		v.setImportancia(nuevaimp);
 	}
-	public void removeDiputados(Entrada EF,Evento e){
+	public void removeVoto(Entrada EF,Votacion v){
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
-		for(int i=0;i<end;++i)e.removeDiputado(dip[i]);
+		for(int i=0;i<end;++i)v.removeVoto(dip[i]);
 	}
 	
-	public void esParticipante(Entrada EF,Evento e, Sortida SF){
+	public void esVotante(Entrada EF,Votacion v, Sortida SF){
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
 		for(int i=0;i<end;++i){
-			SF.Write(dip[i]+","+e.esParticipante(dip[i]));
+			SF.Write(dip[i]+","+v.esVotante(dip[i]));
 		}
 		SF.Write(" ");
 		
 	}
 	
-	public void escriureEvento(Sortida SF, Evento e){
-		SF.Write(e.getNombre());
-		SF.Write(e.getFecha().getDay());
-		SF.Write(e.getFecha().getMonth());
-		SF.Write(e.getFecha().getYear());
-		int mida=e.getdiputados().size();
-		SF.Write(mida, e.getdiputados().toArray(new String[mida]));
+	public void getVotos(Entrada EF,Votacion v, Sortida SF){
+		
+		int end=EF.ReadInt();
+		String dip[]=EF.ReadString(end);
+		for(int i=0;i<end;++i){
+			SF.Write(dip[i]+","+v.getVoto(dip[i]));
+		}
+		SF.Write(" ");
+		
+	}
+	
+	public void setVotos(Entrada EF,Votacion v, Sortida SF){
+		
+		int end=EF.ReadInt();
+		String dip[]=EF.ReadString(end);
+		String[] vot= EF.ReadString(end);
+		for(int i=0;i<end;++i){
+			v.setVoto(dip[i], TipoVoto.valueOf(vot[i]));
+		}
+		SF.Write(" ");
+		
+	}
+	
+	public void escriureVotacion(Sortida SF, Votacion v){
+		SF.Write(v.getNombre());
+		SF.Write(v.getFecha().getDay());
+		SF.Write(v.getFecha().getMonth());
+		SF.Write(v.getFecha().getYear());
+		int mida=v.getDiputados().size();
+		SF.Write("Diputados de la votacion");
+		SF.Write(mida, v.getDiputados().toArray(new String[mida]));
+		SF.Write("Diputados que votan ABSTENCION");
+		SF.Write(mida, v.getDiputados(TipoVoto.ABSTENCION).toArray(new String[mida]));
+		SF.Write("Diputados que votan A_FAVOR");
+		SF.Write(mida, v.getDiputados(TipoVoto.A_FAVOR).toArray(new String[mida]));
+		SF.Write("Diputados que votan AUSENCIA");
+		SF.Write(mida, v.getDiputados(TipoVoto.AUSENCIA).toArray(new String[mida]));
+		SF.Write("Diputados que votan EN_CONTRA");
+		SF.Write(mida, v.getDiputados(TipoVoto.EN_CONTRA).toArray(new String[mida]));
+		SF.Write("Diputados y votos");
+		Map<String,TipoVoto> a= v.getVotos();	
+		for (Entry<String, TipoVoto> entry : a.entrySet()){
+			SF.Write("Diputado "+entry.getKey()+" voto "+entry.getValue());
+		}
+		
 		SF.Write(" ");
 	}
 	
@@ -78,36 +124,42 @@ public class VotacionDriver {
 		Entrada EF = new FitxerEntrada(Input);
 		String Output = EC.ReadString();
 		Sortida SF = new FitxerSortida(Output);
-		EventoDriver DE= new EventoDriver();
+		VotacionDriver DV= new VotacionDriver();
 		Sortida SC = new ConsolaSortida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
-		Evento e= DE.llegirEvento(EF,SC);
+		Votacion v= DV.llegirVotacion(EF);
 		int a= EF.ReadInt();
 		while(a!=-1){
 			switch(a) {
 			 case 1: 
-				 DE.esParticipante(EF, e, SF);
+				 DV.esVotante(EF, v, SF);
 			     break;
 			 case 2: 
-				 DE.escriureEvento(SF,e);
+				 DV.escriureVotacion(SF,v);
 			     break;
 			 case 3: 
-			     DE.addDiputados(EF, e);
+			     DV.setFecha(EF, v);
 			     break;
 			 case 4: 
-			     DE.setFecha(EF, e);
+			     DV.setImportancia(EF, v);
 			     break;
 			 case 5:
 				 String newName = EF.ReadString();
-				 Evento aux= new Evento(newName,e);
-				 DE.escriureEvento(SF, aux);
+				 Votacion aux= new Votacion(newName,v);
+				 DV.escriureVotacion(SF, aux);
 				 break;
 			 case 6: 
-			     DE.removeDiputados(EF, e);
+			     DV.setVotos(EF, v, SF);
 			     break;
 			 case 7:
-				 Evento aux2 = DE.llegirEvento(EF,SC);
-				 DE.escriureEvento(SF, aux2);
+				 Votacion aux2 = DV.llegirVotacion(EF);
+				 DV.escriureVotacion(SF, aux2);
+				 break;
+			 case 8: 
+			     DV.getVotos(EF, v, SF);
+			     break;
+			 case 9:
+				 DV.removeVoto(EF, v);
 				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");

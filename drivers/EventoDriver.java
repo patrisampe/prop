@@ -16,7 +16,7 @@ import dominio.Evento;
 public class EventoDriver {
 
 	
-	public Evento llegirEvento(Entrada EF, Sortida SC){
+	public Evento llegirEvento(Entrada EF){
 		
 		    String nomEvento = EF.ReadString();
 		    Integer Day=EF.ReadInteger();
@@ -84,7 +84,7 @@ public class EventoDriver {
 		EventoDriver DE= new EventoDriver();
 		Sortida SC = new ConsolaSortida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
-		Evento e= DE.llegirEvento(EF,SC);
+		Evento e= DE.llegirEvento(EF);
 		int a= EF.ReadInt();
 		while(a!=-1){
 			switch(a) {
@@ -109,7 +109,7 @@ public class EventoDriver {
 			     DE.removeDiputados(EF, e);
 			     break;
 			 case 7:
-				 Evento aux2 = DE.llegirEvento(EF,SC);
+				 Evento aux2 = DE.llegirEvento(EF);
 				 DE.escriureEvento(SF, aux2);
 				 break;
 			 default: 
