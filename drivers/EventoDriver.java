@@ -16,13 +16,14 @@ import dominio.Evento;
 public class EventoDriver {
 
 	
-	public Evento llegirEvento(Entrada EF){
+	public Evento llegirEvento(Entrada EF, Sortida SC){
 		
 		    String nomEvento = EF.ReadString();
 		    Integer Day=EF.ReadInteger();
 		    Integer Month=EF.ReadInteger();
 		    Integer Year=EF.ReadInteger();
 		    Date Data=new Date(Day,Month,Year);
+		    
 			int end=EF.ReadInt();
 			String dip[]=EF.ReadString(end);
 			Set<String>dipu=new TreeSet<String> (Arrays.asList(dip));
@@ -58,6 +59,7 @@ public class EventoDriver {
 			SF.Write(dip[i]+","+e.esParticipante(dip[i]));
 		}
 		SF.Write(" ");
+		
 	}
 	
 	public void escriureEvento(Sortida SF, Evento e){
@@ -81,72 +83,43 @@ public class EventoDriver {
 		Sortida SF = new FitxerSortida(Output);
 		EventoDriver DE= new EventoDriver();
 		Sortida SC = new ConsolaSortida();
-		SC.Write("Recorda: Nomes hi ha 2 eventos.");
-		SC.Write("Recorda: El primer que fem es inicialitzar els 2.");
-		Evento e= DE.llegirEvento(EF);
-		Evento d= DE.llegirEvento(EF);
-		int a= EC.ReadInteger();
-		
+		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
+		Evento e= DE.llegirEvento(EF,SC);
+		int a= EF.ReadInt();
 		while(a!=-1){
-			String nombre=EC.ReadString();
-			Evento aux, aux2;
-			if(e.getNombre().equals(nombre)){
-				aux=e;
-				aux2=d;
-			}
-			else{
-				aux= d;
-				aux2=e;
-			}
-			
 			switch(a) {
 			 case 1: 
-				 DE.esParticipante(EF, aux, SF);
+				 DE.esParticipante(EF, e, SF);
 			     break;
 			 case 2: 
-				 DE.escriureEvento(SF,aux);
+				 DE.escriureEvento(SF,e);
 			     break;
 			 case 3: 
-			     DE.addDiputados(EF, aux);
+			     DE.addDiputados(EF, e);
 			     break;
 			 case 4: 
-			     DE.setFecha(EF, aux);
+			     DE.setFecha(EF, e);
 			     break;
 			 case 5:
 				 String newName = EF.ReadString();
-				 aux= new Evento(newName,aux2);
+				 Evento aux= new Evento(newName,e);
+				 DE.escriureEvento(SF, aux);
+				 break;
 			 case 6: 
-			     DE.removeDiputados(EF, aux);
+			     DE.removeDiputados(EF, e);
 			     break;
 			 case 7:
-				 aux = DE.llegirEvento(EF);
+				 Evento aux2 = DE.llegirEvento(EF,SC);
+				 DE.escriureEvento(SF, aux2);
 				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;
 			 }
+			a=EF.ReadInt();
 		}
-		
-		
-		/*
-		Evento e=DE.llegirEvento(EF,SF);
-		
-		int end=EF.ReadInt();
-		for(int i=0;i<end;++i){
-			DE.escriureEvento(SF, e);
-			DE.setFecha(EF,e);
-			DE.addDiputados(EF,e);
-			DE.escriureEvento(SF, e);
-			DE.esParticipante(EF,e,SF);
-			DE.removeDiputados(EF,e);
-			DE.escriureEvento(SF, e);
-			DE.esParticipante(EF,e,SF);
-		}
-		*/
 		EF.close();
 		SF.close();
-		
-		
 	}
 
 }
