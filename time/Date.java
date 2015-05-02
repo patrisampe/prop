@@ -4,16 +4,41 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Fecha basada en el calendario gregoriano.
+ * @author David Moran
+ */
 public class Date{
 
-	// Atributs
+	/**
+	 * Dia de la fecha.
+	 */
 	private Integer Day;
+	/**
+	 * Mes de la fecha.
+	 */
 	private Integer Month;
+	/**
+	 * "Year" de la fecha.
+	 */
 	private Integer Year;
+	
+	/**
+	 * Diccionario de traduccion de mes(Numero) a mes(Palabra).
+	 */
 	private static final Map<Integer, String> Meses = CreateMap();
+	
+	/**
+	 * Instancia nula de la classe Date.
+	 */
 	public static final Date NULL = new Date(-1, -1, -1);
 	
-	// Constructores
+	/**
+	 * Crea una nueva fecha.
+	 * @param Day - Dia.
+	 * @param Month - Mes.
+	 * @param Year - "Year".
+	 */
 	public Date(Integer Day, Integer Month, Integer Year){
 		this.Day = Day;
 		this.Month = Month;
@@ -25,12 +50,20 @@ public class Date{
 		}
 	}
 	
+	/**
+	 * Crea una nueva fecha, copia de D.
+	 * @param D - Data a copiar.
+	 */
 	public Date(Date D){
 			this.Day = D.Day;
 			this.Month = D.Month;
 			this.Year = D.Year;
 	}
 	
+	/**
+	 * Crea el diccionario de traduccion de meses.
+	 * @return El diccionario de traduccion de meses.
+	 */
 	private static final Map<Integer, String> CreateMap() {
 		Map<Integer, String> Diccionario = new HashMap<Integer, String>();
 		Diccionario.put(1, "Enero");
@@ -48,20 +81,36 @@ public class Date{
         return Collections.unmodifiableMap(Diccionario);
 	}
 
-	
-	// Consultores
+	/**
+	 * Consulta el dia.
+	 * @return El dia.
+	 */
 	public Integer getDay(){
 		return Day;
 	}
 
+	/**
+	 * Consulta el mes.
+	 * @return El mes.
+	 */
 	public Integer getMonth(){
 		return Month;
 	}
 	
+	/**
+	 * Consulta el "Year".
+	 * @return El "Year".
+	 */
 	public Integer getYear(){
 		return Year;
 	}
 	
+	/**
+	 * Comprueba si la fecha es valida.
+	 * @return <i>true</i> si la fecha es valida segun el calendario gregoriano.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean esValida(){
 		if (Day > 31 || Day < 1) return false;
 		if (Month > 12 || Month < 1) return false;
@@ -74,10 +123,22 @@ public class Date{
 		return true;
 	}
 	
+	/**
+	 * Comprueba si la fecha es nula.
+	 * @return <i>true</i> si la fecha es nula.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean esNull(){
 		return equals(NULL);
 	}
 	
+	/**
+	 * Comprueba si el "Year" es bisiesto.
+	 * @return <i>true</i> si es bisiesto.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public static Boolean esBisiesto(Integer Year){
 		if (Year%4 != 0) return false;
 		if (Year%100 != 0) return true;
@@ -85,6 +146,10 @@ public class Date{
 		return false;
 	}
 
+	/**
+	 * Transforma la fecha a un String.
+	 * @return La fecha, en formato String numerico.
+	 */
 	public String toString(){
 		String out = "";
 		if (Day < 10) out += "0";
@@ -97,6 +162,10 @@ public class Date{
 		return out;
 	}
 	
+	/**
+	 * Transforma la fecha a un String.
+	 * @return La fecha, en formato String con el nombre del mes.
+	 */
 	public String toNamedString(){
 		String out = "";
 		if (Day < 10) out += "0";
@@ -108,10 +177,24 @@ public class Date{
 		return out;
 	}
 	
+	/**
+	 * Compara dos fechas.
+	 * @param D - Fecha a comparar.
+	 * @return <i>true</i> si las fechas son iguales.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean equals(Date D){
 		return (Day == D.Day && Month == D.Month && Year == D.Year);
 	}
 
+	/**
+	 * Compara dos fechas.
+	 * @param S - String con la fecha a comparar.
+	 * @return <i>true</i> si las fechas son iguales.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean equals(String S){
 		String D = S.substring(0, 2);
 		String M = S.substring(3, 5);
@@ -121,6 +204,15 @@ public class Date{
 				&& Year == Integer.parseInt(Y));
 	}
 	
+	/**
+	 * Compara dos fechas.
+	 * @param D - Fecha a comparar.
+	 * @return <b>-1</b> si la fecha es anterior a D.
+	 * <br>
+	 * <b>0</b> si las fechas son iguales.
+	 * <br>
+	 * <b>1</b> si la fecha es posterior a D.
+	 */
 	public Integer compareTo(Date D){
 		if (Year > D.Year) return 1;
 		if (Year < D.Year) return -1;
@@ -131,8 +223,11 @@ public class Date{
 		return 0;
 	}
 	
-	// Modificadores
- 	public Boolean setDay(Integer Day){
+	/**
+	 * Modifica el dia.
+	 * @param Day - nuevo dia.
+	 */
+	public Boolean setDay(Integer Day){
 		Integer temp = this.Day;
 		this.Day = Day;
 		if (esValida()) return true;
@@ -142,6 +237,10 @@ public class Date{
 		}
 	}
 	
+	/**
+	 * Modifica el mes.
+	 * @param Day - nuevo mes.
+	 */
 	public Boolean setMonth(Integer Month){
 		Integer temp = this.Month;
 		this.Month = Month;
@@ -152,6 +251,10 @@ public class Date{
 		}
 	}
 	
+	/**
+	 * Modifica el "year".
+	 * @param Year - nuevo "year".
+	 */
 	public Boolean setYear(Integer Year){
 		Integer temp = this.Year;
 		this.Year = Year;
@@ -162,6 +265,10 @@ public class Date{
 		}
 	}
 
+	/**
+	 * Incrementa la fecha en un dia.
+	 * @return Nueva fecha.
+	 */
 	public Date incremento(){
 		++Day;
 		if (Day > 31) {
@@ -192,6 +299,11 @@ public class Date{
 		return this;
 	}
 	
+	/**
+	 * Incrementa la fecha <i>n</i> dias.
+	 * @param n - numero de dias a incrementar.
+	 * @return Nueva fecha.
+	 */
 	public Date incremento(Integer n){
 		for (int i = 0; i < n; ++i){
 			incremento();
@@ -199,6 +311,11 @@ public class Date{
 		return this;
 	}
 	
+	/**
+	 * Incrementa la fecha tantos dias como la longitud del intervalo.
+	 * @param DI - Intervalo de fechas con la longitud a avanzar.
+	 * @return Nueva fecha.
+	 */
 	public Date incremento(DateInterval DI){
 		int n = DI.days();
 		for (int i = 0; i < n; ++i){
@@ -207,6 +324,11 @@ public class Date{
 		return this;
 	}
 	
+	/**
+	 * Convierte un string a una fecha valida.
+	 * @param S - String con la fecha.
+	 * @return Fecha contenida en S.
+	 */
 	public static Date stringToDate(String S){
 		String D = S.substring(0, 2);
 		String M = S.substring(3, 5);
