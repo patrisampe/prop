@@ -38,6 +38,7 @@ public class Votacion extends ObjetoDominio {
 	}
 	/**
 	 * @return the fecha
+	 * 
 	 */
 	public Date getFecha() {
 		return fecha;
@@ -84,7 +85,7 @@ public class Votacion extends ObjetoDominio {
 		return votos.containsKey(nombreDiputado);
 	}
 
-	public void addSetVoto(String nombreDiputado, TipoVoto voto){
+	public void setVoto(String nombreDiputado, TipoVoto voto){
 		votos.put(nombreDiputado, voto);
 	}
 	
