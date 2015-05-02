@@ -69,24 +69,24 @@ public class GrafDriver { //No està gens fet, però s'intenta
 				 else SF.Write("El node no existeix");
 			     break;
 			 case 9:
-				 if(!GD.addAresta(EF.ReadString(), EF.ReadString(), EF.ReadDouble())) SF.Write("Ja existeix una aresta entre aquests nodes");
+				 if(!GD.addAresta(EF.ReadString(), EF.ReadString(), EF.ReadDouble())) SF.Write("No es pot afegir l'aresta.");
 				 break;
 			 case 10:
-				 if(!GD.removeAresta(EF.ReadString(), EF.ReadString())) SF.Write("No existeix cap aresta entre aquests nodes");
+				 if(!GD.removeAresta(EF.ReadString(), EF.ReadString())) SF.Write("No es pot eliminar l'aresta.");
 				 break;
 			 case 11:
 				 if(GD.existeixAresta(EF.ReadString(), EF.ReadString())) SF.Write("L'aresta existeix.");
 				 else SF.Write("No existeix cap aresta entre aquests nodes");
 				 break;
 			 case 12:
-				 if(!GD.setPes(EF.ReadString(), EF.ReadString(), EF.ReadDouble())) SF.Write("No existeix cap aresta entre aquests nodes");
+				 if(!GD.setPes(EF.ReadString(), EF.ReadString(), EF.ReadDouble())) SF.Write("No es pot modificar l'aresta.");
 				 break;
 			 case 13:
-				 SF.Write("Peso de la aresta:");
+				 SF.Write("Pes de l'aresta:");
 				 SF.Write(GD.getPes(EF.ReadString(), EF.ReadString()));
 				 break;
 			 case 14:
-				 SF.Write("Peso de la aresta:");
+				 SF.Write("Nodes Adjacents:");
 				 SF.Write(GD.getAdjacents(EF.ReadString()));
 				 break;
 			 default: 

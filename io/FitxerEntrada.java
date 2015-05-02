@@ -134,7 +134,3 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 }
-
-	
-
-}
