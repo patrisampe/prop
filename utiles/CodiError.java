@@ -58,6 +58,10 @@ public class CodiError {
 		codiError = 0;
 		clauExterna = new Vector<String>();
 	}
+	public void netejaCodiError(){
+		codiError=0;
+		clauExterna = new Vector<String>();
+	}
 	
 	public CodiError(CodiError CE) {
 		codiError = CE.codiError;
