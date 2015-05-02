@@ -1,7 +1,5 @@
 package io;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.Set;
 
 public class ConsolaSortida implements Sortida {
@@ -88,10 +86,11 @@ public class ConsolaSortida implements Sortida {
 	}
 	
 	public void Write(Set<String> set) {
-		for (Iterator<String> it = set.iterator(); it.hasNext();){
-			String toPrint = it.next();
-			if(it.hasNext()) System.out.print(toPrint + ", ");
-			else	System.out.print(toPrint + System.lineSeparator());
+		Integer count = 0;
+		for (String toPrint:set){
+			if(count != set.size()-1) System.out.print(toPrint + ", ");
+			else System.out.print(toPrint + System.lineSeparator());
+			++count;
 		}
 	}
 	

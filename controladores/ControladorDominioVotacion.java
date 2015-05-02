@@ -53,7 +53,7 @@ public class ControladorDominioVotacion {
 	 }
 	 
 		private Boolean esDiputado(String nombreDiputado){
-			ControladorDominioDiputado CDD=new ControladorDominioDiputado();
+			ControladorDominioDiputado CDD=ControladorDominioDiputado.getInstance();
 			if(CDD.existsDiputado(nombreDiputado))return true;
 			else if(!hasError){
 				   hasError=true;
@@ -128,7 +128,7 @@ public class ControladorDominioVotacion {
 				error.setCodiError(23);
 			}
 			else{
-				ControladorDominioLegislatura CDL= new ControladorDominioLegislatura();
+				ControladorDominioLegislatura CDL= ControladorDominioLegislatura.getInstance();
 				Integer leg=CDL.getID(fecha);
 				Set<String> dip=CDL.getDiputados(leg);
 				Map<String,TipoVoto> votosnew=new TreeMap<String,TipoVoto>();
@@ -178,13 +178,20 @@ public class ControladorDominioVotacion {
 		}
 		
 		public void setAddVoto(String nombreVotacion, String nombreDiputado, TipoVoto voto){
-			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado))conjuntoVotacion.get(nombreVotacion).addSetVoto(nombreDiputado, voto);
+			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado))conjuntoVotacion.get(nombreVotacion).setVoto(nombreDiputado, voto);
 		}
 	   
 		public void removeVotoDiputado(String nombreVotacion, String nombreDiputado){
 			if(comprovaExsitenciaVotacion(nombreVotacion)){
 				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado)){
-					conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
+					ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
+					Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
+					if(CDL.existsDiputado(leg, nombreDiputado)){
+							hasError=true;
+							error.setClauExterna(nombreVotacion);
+							error.setCodiError(26);
+					}
+					else conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
 				}
 				else if(!hasError){
 					hasError=true;

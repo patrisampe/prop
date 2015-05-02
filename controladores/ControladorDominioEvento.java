@@ -41,7 +41,7 @@ public class ControladorDominioEvento {
 		   return false;
 	   }
 		private Boolean esDiputado(String nombreDiputado){
-			ControladorDominioDiputado CDD=new ControladorDominioDiputado();
+			ControladorDominioDiputado CDD=ControladorDominioDiputado.getInstance();
 			if(CDD.existsDiputado(nombreDiputado))return true;
 			else if(!hasError){
 				   hasError=true;
