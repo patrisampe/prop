@@ -1,9 +1,6 @@
 package io;
 
-import java.util.HashSet;
 import java.util.Set;
-
-import dominio.algoritmos.Graf;
 
 public interface Sortida {
 		
