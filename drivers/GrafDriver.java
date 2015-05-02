@@ -1,11 +1,92 @@
 package drivers;
 
+import io.ConsolaEntrada;
+import io.ConsolaSortida;
+import io.Entrada;
+import io.FitxerEntrada;
+import io.FitxerSortida;
+import io.Sortida;
+
 import java.util.HashSet;
 
+import dominio.Evento;
 import dominio.algoritmos.Graf;
 
 public class GrafDriver { //No està gens fet, però s'intenta
-	Graf G;
+	private Graf G;
+	
+	public GrafDriver() {
+
+	}
+	
+	public static void main (String args[]) {
+		Entrada EC = new ConsolaEntrada();
+		String Input = EC.ReadString();
+		Entrada EF = new FitxerEntrada(Input);
+		String Output = EC.ReadString();
+		Sortida SF = new FitxerSortida(Output);
+		GrafDriver GD = new GrafDriver();
+		Sortida SC = new ConsolaSortida();
+		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
+		int a= EF.ReadInt();
+		while(a!=-1) {
+			switch(a) {
+			 case 1: 
+				 GD.createGraf();
+			     break;
+			 case 2: 
+				 GD.createGraf(EF.ReadSetString());
+			     break;
+			 case 3: 
+				 Graf G2 = EF.ReadGraf();
+				 GD.createGraf(G2);
+			     break;
+			 case 4: 
+				 SF.Write("Size del Grafo:");
+				 SF.Write(GD.size());
+			     break;
+			 case 5:
+				 SF.Write("Nodos del Grafo:");
+				 SF.Write(GD.getNodes());
+				 break;
+			 case 6: 
+				 if(!GD.addNode(EF.ReadString())) SF.Write("El nodo ya existe");
+			     break;
+			 case 8:
+				 if(!GD.removeNode(EF.ReadString())) SF.Write("El nodo no existe");
+			     break;
+			 case 9:
+				 if(GD.existeixNode(EF.ReadString())) SF.Write("El nodo existe");
+				 else SF.Write("El nodo no existe");
+			     break;
+			 case 10:
+				 if(!GD.addAresta(EF.ReadString(), EF.ReadString(), EF.ReadDouble())) SF.Write("Ja existeix una aresta entre aquests nodes");
+				 break;
+			 case 11:
+				 if(!GD.removeAresta(EF.ReadString(), EF.ReadString())) SF.Write("No existeix cap aresta entre aquests nodes");
+				 break;
+			 case 12:
+				 if(GD.existeixAresta(EF.ReadString(), EF.ReadString())) SF.Write("L'aresta existeix.");
+				 else SF.Write("No existeix cap aresta entre aquests nodes");
+				 break;
+			 case 13:
+				 if(!GD.setPes(EF.ReadString(), EF.ReadString(), EF.ReadDouble())) SF.Write("No existeix cap aresta entre aquests nodes");
+				 break;
+			 case 14:
+				 SF.Write("Peso de la aresta:");
+				 SF.Write(GD.getPes(EF.ReadString(), EF.ReadString()));
+				 break;
+			 case 15:
+				 SF.Write("Peso de la aresta:");
+				 SF.Write(GD.getAdjacents(EF.ReadString()));
+				 break;
+			 default: 
+			    SF.Write(" numero no correcto. Para cerrar -1 ");
+			     break;
+			 }
+			a=EF.ReadInt();
+		}
+	}
 	private void createGraf() {
 		G = new Graf();
 	}
@@ -19,48 +100,48 @@ public class GrafDriver { //No està gens fet, però s'intenta
 		this.G = new Graf(G);
 	}
 	
-	private void size() {
-		System.out.println(G.size());
+	private Integer size() {
+		return G.size();
 	}
 	
-	private void getNodes() {
-		System.out.print(G.getNodes());
+	private HashSet<String> getNodes() {
+		return G.getNodes();
 	}
 	
-	private void addNode(String id) {
-		System.out.print(G.addNode(id));
+	private Boolean addNode(String id) {
+		return G.addNode(id);
 	}
 	
-	private void removeNode(String id) {
-		System.out.print(G.removeNode(id));
+	private Boolean removeNode(String id) {
+		return G.removeNode(id);
 	}
 	
-	private void existeixNode(String id) {
-		System.out.print(G.existeixNode(id));
+	private Boolean existeixNode(String id) {
+		return G.existeixNode(id);
 	}
 	
-	private void addAresta(String a, String b, Double Pes) {
-		System.out.print(G.addAresta(a, b, Pes));
+	private Boolean addAresta(String a, String b, Double Pes) {
+		return G.addAresta(a, b, Pes);
 	}
 	
-	private void removeAresta(String a, String b) {
-		System.out.print(G.removeAresta(a, b));
+	private Boolean removeAresta(String a, String b) {
+		return G.removeAresta(a, b);
 	}
 	
-	private void existeixAresta(String a, String b) {
-		System.out.print(G.existeixAresta(a, b));
+	private Boolean existeixAresta(String a, String b) {
+		return G.existeixAresta(a, b);
 	}
 	
-	private void setPes(String a, String b, Double Pes) {
-		System.out.print(G.setPes(a,b,Pes));
+	private Boolean setPes(String a, String b, Double Pes) {
+		return G.setPes(a,b,Pes);
 	}
 	
-	private void getPes(String a, String b) {
-		System.out.print(G.getPes(a,b));
+	private Double getPes(String a, String b) {
+		return G.getPes(a,b);
 	}
 	
-	private void getAdjacents(String id) {
-		System.out.print(G.getAdjacents(id));
+	private HashSet<String> getAdjacents(String id) {
+		return G.getAdjacents(id);
 	}
 
 }
