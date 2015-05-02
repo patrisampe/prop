@@ -1,10 +1,8 @@
 package io;
 
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-
-import dominio.algoritmos.Graf;
+import java.util.TreeSet;
 
 public class ConsolaEntrada implements Entrada {
 	private Scanner sc;
@@ -117,7 +115,7 @@ public class ConsolaEntrada implements Entrada {
     	return out;
 	}
 	public Set<String> ReadSetString(int n){
-		Set<String> out = new HashSet<String>();
+		Set<String> out = new TreeSet<String>();
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out.add(sc.next());
 		}

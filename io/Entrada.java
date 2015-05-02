@@ -1,9 +1,6 @@
 package io;
 
-import java.util.HashSet;
 import java.util.Set;
-
-import dominio.algoritmos.Graf;
 
 public interface Entrada {
 
@@ -34,7 +31,9 @@ public interface Entrada {
 	public Integer[] ReadInteger(int n);
 
 	public Double[] ReadDouble(int n);
+	
 	public String[] ReadString(int n);
+	
 	public Boolean[] ReadBoolean(int n);
 
 	public Long[] ReadLong(int n);

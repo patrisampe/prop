@@ -2,11 +2,10 @@ package io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
-import dominio.algoritmos.Graf;
 
 public class FitxerEntrada implements Entrada {
 	private Scanner sc;
@@ -116,7 +115,6 @@ public class FitxerEntrada implements Entrada {
     	return out;
 	}
 	
-
 	public Long[] ReadLong(int n){
 		Long[] out = new Long[n];
 		for (int i = 0; i < n; ++i){
@@ -126,7 +124,7 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 	public Set<String> ReadSetString(int n){
-		Set<String> out = new HashSet<String>();
+		Set<String> out = new TreeSet<String>();
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out.add(sc.next());
 		}
