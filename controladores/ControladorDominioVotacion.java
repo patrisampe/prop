@@ -24,6 +24,7 @@ public class ControladorDominioVotacion {
 	 protected ControladorDominioVotacion() {
 	      // Exists only to defeat instantiation.
 		   conjuntoVotacion=  new Conjunto<Votacion>(Votacion.class);
+		   error = new CodiError();
 	   }
 	   
 

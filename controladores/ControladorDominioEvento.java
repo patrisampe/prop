@@ -21,6 +21,7 @@ public class ControladorDominioEvento {
 	   protected ControladorDominioEvento() {
 	      // Exists only to defeat instantiation.
 		   conjuntoTipoEvento=  new Conjunto<TipoEvento>(TipoEvento.class);
+		   error = new CodiError();
 	   }
 	   
 	   public static ControladorDominioEvento getInstance() {
