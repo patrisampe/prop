@@ -17,8 +17,8 @@ public class GrafLouvainDriver { //No està gens fet, però s'intenta
 	private GrafLouvain G;
 	
 	
-	public static Graf ReadGraf(Entrada eF, int v, int a) {
-		Graf out = new Graf();
+	public static GrafLouvain ReadGraf(Entrada eF, int v, int a) {
+		GrafLouvain out = new GrafLouvain();
 		for (int i = 0; i < v; ++i) {
 			out.addNode(eF.ReadString());
 		}

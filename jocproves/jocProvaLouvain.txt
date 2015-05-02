@@ -1,0 +1,111 @@
+24 1
+Yoel
+Toni
+Anabel
+Jesus
+Roser
+Anna
+Marisa
+Ricard
+Martin
+Gerard
+Genis
+Naiara
+Bernat
+Roger
+Clara
+Eric
+David
+Patricia
+Eduard
+Miguel
+Pablo 
+Marc
+Dani 
+Josep
+
+Roger Clara 9.0
+Roger Eric 4.6
+Clara Eric 4.7
+David Patricia 4.9
+David Eduard 0.5
+David Miguel 3.5
+Patricia Eduard 0.5
+Patricia Miguel 3.5
+Eduard Miguel 4.9
+Pablo Marc 5.0
+Pablo Dani 5.0
+Pablo Josep 5.0
+Marc Dani 5.0
+Marc Josep 5.0
+Dani Josep 8.0
+Naiara Bernat 6.0
+Naiara Roger 4.7
+Naiara Clara 4.6
+Naiara Eric 6.0
+Bernat Clara 5.0
+Bernat Eric 6.3
+Bernat Roger 4.8
+Bernat Eduard 1.6
+Genis Naiara 1.0
+Gerard Genis 3.7
+Gerard Pablo 0.5
+Gerard Marc 0.5
+Gerard Dani 0.5
+Gerard Josep 0.5
+Martin Gerard 4.3
+Martin Genis 6.0
+Martin Pablo 0.5
+Martin Marc 0.5
+Martin Dani 0.5
+Martin Josep 0.5
+Ricard Pablo 0.5
+Jesus Roser 6.9
+Jesus Anna 4.0
+Jesus Marisa 3.3
+Jesus Genis 1.0
+Jesus Martin 1.0
+Roser Anna 8.0
+Roser Genis 1.5
+Roser Martin 1.0
+Ricard Martin 5.0
+Ricard Gerard 4.5
+Ricard Genis 4.0
+Ricard Marc 2.8
+Ricard Dani 2.0
+Ricard Josep 2.0
+Anabel Jesus 3.0
+Anabel Marisa 6.0
+Anabel Naiara 4.0
+Anabel Bernat 2.0
+Anabel Pablo 1.0
+Toni Anabel 7.5
+Toni Marisa 5.3
+Toni Naiara 3.3
+Toni Gerard 1.0
+Toni Genis 0.5
+Toni Bernat 1.0
+Yoel Toni 8.0
+Yoel Anabel 7.0
+Yoel Jesús 7.0
+Yoel Roser 4.1
+Yoel Anna 4.0
+Yoel Marisa 5.0
+Yoel Ricard 4.0
+Yoel Martin 4.0
+Yoel Gerard 5.0
+Yoel Genis 5.5
+Yoel Naiara 9.0
+Yoel Bernat 5.6
+Yoel Roger 5.6
+Yoel Clara 3.9
+Yoel Eric 5.3
+Yoel David 3.8
+Yoel Patricia 3.8
+Yoel Eduard 4.0
+Yoel Miguel 3.9
+Yoel Pablo 5.3
+Yoel Marc 4.7
+Yoel Dani 4.8
+Yoel Josep 4.8
+80

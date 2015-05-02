@@ -8,17 +8,37 @@ import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Legislatura;
 
+/**
+ * Controlador de dominio para la gestion tanto en conjunto como individualmente de las legislaturas.
+ * @author David Moran
+ */
 public class ControladorDominioLegislatura {
 	
+	/**
+	 * Codigo de error del ultimo metodo ejecutado.
+	 */
 	private CodiError error;
+	/**
+	 * Conjunto de legislaturas almacenadas en el sistema.
+	 */
 	private Conjunto<Legislatura> conjuntoLegislaturas;
+	/**
+	 * Instancia <i>singletone</i> de la clase.
+	 */
 	private static ControladorDominioLegislatura instance = null;
 	
+	/**
+	 * Crea una nuevo controlador de dominio de legislaturas.
+	 */
 	protected ControladorDominioLegislatura(){
 		conjuntoLegislaturas = new Conjunto<Legislatura>(Legislatura.class);
 		error = new CodiError();
 	}
 	
+	/**
+	 * Crea una nueva instancia de la classe.
+	 * @return Nueva instancia del <i>singletone</i> de la clase.
+	 */
 	public static ControladorDominioLegislatura getInstance() {
 	      if (instance == null) {
 	         instance = new ControladorDominioLegislatura();
@@ -26,33 +46,58 @@ public class ControladorDominioLegislatura {
 	      return instance;
 	}
 	
+	/**
+	 * Consulta el numero de legislaturas existentes en el sistema.
+	 * @return Numero de legislaturas del sistema.
+	 */
 	public Integer numeroLegislaturas(){
 		return conjuntoLegislaturas.size();
 	}
 	
+	/**
+	 * Añade al sistema un conjunto de legislaturas.
+	 * @param legislaturas - conjunto de legislaturas que se desa añadir al sistema.
+	 */
 	public void addAll(Set<Legislatura> legislaturas){
 		conjuntoLegislaturas.addAll(legislaturas);
 	}
 	
+	/**
+	 * Consulta las legislaturas existentes en el sistema.
+	 * @return Conjunto de legislaturas del sistema.
+	 */
 	public Set<Legislatura> getAll() {
 		return conjuntoLegislaturas.getAll();
 	}
 	
+	/**
+	 * Consulta los identificadores de las legislaturas existentes en el sistema.
+	 * @return Conjunto de identificadores de legislaturas del sistema.
+	 */
 	public Set<Integer> getIDs() {
 		return conjuntoLegislaturas.getIntegerKeys();
 	}
 	
-	public Integer getID(Date FechaContenida) {
+	/**
+	 * Consulta el identificador de la legislatura que contiene una fecha concreta.
+	 * @param fechaContenida - Fecha de la cual se desea obtener su legislatura.
+	 * @return Identificador de la legislatura que contiene la fecha concreta.
+	 */
+	public Integer getID(Date fechaContenida) {
 		for (Legislatura L:conjuntoLegislaturas.getAll()) {
 			if (L.hasFechaFinal()) {
 				DateInterval DI = new DateInterval(L.getFechaInicio(), L.getFechaFinal());
-				if (DI.contains(FechaContenida)) return L.getID();
+				if (DI.contains(fechaContenida)) return L.getID();
 			}
-			else if (L.getFechaInicio().compareTo(FechaContenida) >= 0) return L.getID();
+			else if (L.getFechaInicio().compareTo(fechaContenida) >= 0) return L.getID();
 		}
 		return -1;
 	}
 
+	/**
+	 * Consulta el identificador de la legislatura que contiene el mayor ID (la legislatura mas actual).
+	 * @return Identificador de la legislatura mas actual del sistema.
+	 */
 	public Integer getIDLast() {
 		Integer max = -1;
 		for (Legislatura L:conjuntoLegislaturas.getAll()) {
@@ -62,7 +107,12 @@ public class ControladorDominioLegislatura {
 		return max;
 	}
 
-	public DateInterval limits(Integer identificadorLegislatura) {
+	/**
+	 * Consulta los limites en que se pueden modificar las fechas de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura deseada.
+	 * @return Intervalo de fechas en los que se puede modificar la legislatura.
+	 */
+	private DateInterval limits(Integer identificadorLegislatura) {
 		Integer idA = identificadorLegislatura - 1;
 		Integer idP = identificadorLegislatura + 1;
 		while (!existsLegislatura(idA) && idA >= 0) --idA;
@@ -72,92 +122,182 @@ public class ControladorDominioLegislatura {
 		return new DateInterval(inici, fi);
 	}
 	
-	public void addLegislatura(Integer identificadorLegislatura, Date FechaInicio, Date FechaFinal) {
+	/**
+	 * Añade al sistema una legislatura a partir de sus datos.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param fechaInicio - Fecha de inicio de la legislatura.
+	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
+	 */
+	public void addLegislatura(Integer identificadorLegislatura, Date fechaInicio, Date fechaFinal) {
 		if (existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(16);
 			error.setClauExterna(identificadorLegislatura);
 		}
+		else if (fechaInicio.compareTo(fechaFinal) > 0){
+			error.setCodiError(26);
+			error.setClauExterna(fechaInicio.toString());
+			error.addClauExterna(fechaFinal.toString());
+		}
 		else {
-			Legislatura L = new Legislatura(identificadorLegislatura, FechaInicio, FechaFinal);
-			conjuntoLegislaturas.add(identificadorLegislatura, L);			
+			Integer idData = getID(fechaInicio);
+			if (idData != -1 && idData != identificadorLegislatura){
+				error.setCodiError(27);
+				error.setClauExterna(identificadorLegislatura);
+				error.addClauExterna(fechaInicio.toString());
+				error.addClauExterna(idData);
+			}
+			else if (idData == -1 && !limits(identificadorLegislatura).contains(fechaInicio)) {
+				error.setCodiError(28);
+				error.setClauExterna(identificadorLegislatura);
+				error.addClauExterna(fechaInicio.toString());
+			}
+			else {
+				idData = getID(fechaFinal);
+				if (idData != -1 && idData != identificadorLegislatura){
+					error.setCodiError(27);
+					error.setClauExterna(identificadorLegislatura);
+					error.addClauExterna(fechaFinal.toString());
+					error.addClauExterna(idData);
+				}
+				else if (idData == -1 && !limits(identificadorLegislatura).contains(fechaFinal)) {
+					error.setCodiError(28);
+					error.setClauExterna(identificadorLegislatura);
+					error.addClauExterna(fechaFinal.toString());
+				}
+				else {
+					Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio, fechaFinal);
+					conjuntoLegislaturas.add(identificadorLegislatura, L);				
+				}
+			}
 		}
 	}
 
-	public void addLegislatura(Integer identificadorLegislatura, Date FechaInicio) {
+	
+	/**
+	 * Añade al sistema una legislatura a partir de sus datos.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param fechaInicio - Fecha de inicio de la legislatura.
+	 */
+	public void addLegislatura(Integer identificadorLegislatura, Date fechaInicio) {
 		if (existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(16);
 			error.setClauExterna(identificadorLegislatura);
 		}
 		else {
-			Integer id = getIDLast();
-			if (id != -1){
-				error.setCodiError(16);
+			Integer idL = getIDLast();
+			Integer idC = getID(fechaInicio);
+			if (idL != -1){
+				error.setCodiError(18);
 				error.setClauExterna(identificadorLegislatura);
-				error.addClauExterna(id);
+				error.addClauExterna(idL);
+			}
+			else if (idC != -1) {
+				error.setCodiError(27);
+				error.setClauExterna(identificadorLegislatura);
+				error.setClauExterna(fechaInicio.toString());
+				error.addClauExterna(idC);
 			}
 			else {
-				Legislatura L = new Legislatura(identificadorLegislatura, FechaInicio);
+				Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio);
 				conjuntoLegislaturas.add(identificadorLegislatura, L);
 			}
 		} 
 	}
 	
+	/**
+	 * Consulta si existe una legislatura determinada en el sistema.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @return <i>true</i> si la legislatura indicada existe en el sistema.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean existsLegislatura(Integer identificadorLegislatura) {
 		return conjuntoLegislaturas.exists(identificadorLegislatura);
 	}
 
+	/**
+	 * Elimina del sistema la legislatura indicada.
+	 * <p>
+	 * Este metodo tiene efectos colaterales en todas las estructuras del sistema que contengan informacion acerca de la legislatura indicada.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 */
 	public void removeLegislatura(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.setClauExterna(identificadorLegislatura);
 		}
-		else {
-			conjuntoLegislaturas.remove(identificadorLegislatura);
-		}
+		else conjuntoLegislaturas.remove(identificadorLegislatura);
 	}
 	
-	public void setFechaInicio(Integer identificadorLegislatura, Date FechaInicio) {
+	/**
+	 * Modifica la fecha de inicio de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param fechaInicio - Fecha de inicio de la legislatura.
+	 */
+	public void setFechaInicio(Integer identificadorLegislatura, Date fechaInicio) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.setClauExterna(identificadorLegislatura);
 		}
+		else if (fechaInicio.compareTo(conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal()) > 0){
+			error.setCodiError(26);
+			error.setClauExterna(fechaInicio.toString());
+			error.addClauExterna(conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal().toString());
+		}
 		else {
-			Integer idData = getID(FechaInicio);
+			Integer idData = getID(fechaInicio);
 			if (idData != -1 && idData != identificadorLegislatura){
-				error.setCodiError(22);
+				error.setCodiError(27);
 				error.setClauExterna(identificadorLegislatura);
-				error.addClauExterna(FechaInicio.toString());
+				error.addClauExterna(fechaInicio.toString());
+				error.addClauExterna(idData);
 			}
-			else if (idData == -1 && limits(identificadorLegislatura).contains(FechaInicio)) {
-				error.setCodiError(23);
+			else if (idData == -1 && !limits(identificadorLegislatura).contains(fechaInicio)) {
+				error.setCodiError(28);
 				error.setClauExterna(identificadorLegislatura);
-				error.addClauExterna(FechaInicio.toString());
+				error.addClauExterna(fechaInicio.toString());
 			}
-			else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(FechaInicio);
+			else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(fechaInicio);
 		}
 	}
 	
-	public void setFechaFinal(Integer identificadorLegislatura, Date FechaFin) {
+	/**
+	 * Modifica la fecha de finalizacion de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
+	 */
+	public void setFechaFinal(Integer identificadorLegislatura, Date fechaFinal) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.setClauExterna(identificadorLegislatura);
 		}
+		else if (conjuntoLegislaturas.get(identificadorLegislatura).getFechaInicio().compareTo(fechaFinal) > 0){
+			error.setCodiError(26);
+			error.setClauExterna(conjuntoLegislaturas.get(identificadorLegislatura).getFechaInicio().toString());
+			error.addClauExterna(fechaFinal.toString());
+		}
 		else {
-			Integer idData = getID(FechaFin);
+			Integer idData = getID(fechaFinal);
 			if (idData != -1 && idData != identificadorLegislatura){
-				error.setCodiError(22);
+				error.setCodiError(27);
 				error.setClauExterna(identificadorLegislatura);
-				error.addClauExterna(FechaFin.toString());
+				error.addClauExterna(fechaFinal.toString());
+				error.addClauExterna(idData);
 			}
-			else if (idData == -1 && limits(identificadorLegislatura).contains(FechaFin)) {
-				error.setCodiError(23);
+			else if (idData == -1 && !limits(identificadorLegislatura).contains(fechaFinal)) {
+				error.setCodiError(28);
 				error.setClauExterna(identificadorLegislatura);
-				error.addClauExterna(FechaFin.toString());
+				error.addClauExterna(fechaFinal.toString());
 			}
-			else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(FechaFin);
+			else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(fechaFinal);
 		}
 	}
 	
+	/**
+	 * Consulta la fecha de inicio de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @return Fecha de inicio de la legislatura.
+	 */
 	public Date getFechaInicio(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -167,6 +307,11 @@ public class ControladorDominioLegislatura {
 		else return conjuntoLegislaturas.get(identificadorLegislatura).getFechaInicio();
 	}
 	
+	/**
+	 * Consulta la fecha finalizacion de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @return Fecha de finalizacion de la legislatura.
+	 */
 	public Date getFechaFinal(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -181,6 +326,13 @@ public class ControladorDominioLegislatura {
 		else return conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal();
 	}
 
+	/**
+	 * Consulta si existe finalizacion de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @return <i>true</i> si la legislatura indicada tiene fecha de finalizacion.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean hasFechaFinal(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -190,6 +342,11 @@ public class ControladorDominioLegislatura {
 		else return conjuntoLegislaturas.get(identificadorLegislatura).hasFechaFinal();
 	}
 
+	
+	/**
+	 * Elimina la fecha de finalizacion de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 */
 	public void removeFechaFinal(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -199,9 +356,24 @@ public class ControladorDominioLegislatura {
 			error.setCodiError(19);
 			error.setClauExterna(identificadorLegislatura);
 		}
-		else conjuntoLegislaturas.get(identificadorLegislatura).removeFechaFinal();
+		else {
+			Integer id = getIDLast();
+			if (id != identificadorLegislatura) {
+				error.setCodiError(29);
+				error.setClauExterna(identificadorLegislatura);
+				error.addClauExterna(id);
+			}
+			else conjuntoLegislaturas.get(identificadorLegislatura).removeFechaFinal();
+		}
 	}
 	
+	/**
+	 * Añade un diputado a la lista de diputados activos de una legislatura.
+	 * <p>
+	 * Este metodo garantiza que la legislatura sera añadida (si no lo ha sido ya) en la lista de legislaturas activas del diputado.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param nombreDiputado - Nombre del diputado.
+	 */
 	public void addDiputado(Integer identificadorLegislatura, String nombreDiputado) {
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		if (!CDD.existsDiputado(nombreDiputado)) {
@@ -224,6 +396,14 @@ public class ControladorDominioLegislatura {
 		}
 	}
 	
+	
+	/**
+	 * Establece un conjunto de diputados como lista de diputados activos de una legislatura.
+	 * <p>
+	 * Este metodo garantiza que la legislatura sera añadida (si no lo ha sido ya) en las listas de legislaturas activas de los diputados.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param diputados - Conjunto de identificadores de diputados.
+	 */
 	public void setDiputados(Integer identificadorLegislatura, Set<String> diputados) {
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		if (!existsLegislatura(identificadorLegislatura)) {
@@ -249,6 +429,11 @@ public class ControladorDominioLegislatura {
 
 	}
 	
+	/**
+	 * Consulta la lista de diputados activos en una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @return Conjunto de nombres de los diputados activos en la legislatura.
+	 */
 	public Set<String> getDiputados(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -258,6 +443,14 @@ public class ControladorDominioLegislatura {
 		else return conjuntoLegislaturas.get(identificadorLegislatura).getDiputados();
 	}
 
+	/**
+	 * Consulta si un diputado pertenece a la lista de diputados activos de una legislatura.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+ 	 * @param nombreDiputado - Nombre del diputado.
+	 * @return <i>true</i> si el diputado es activo en la legislatura.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean existsDiputado(Integer identificadorLegislatura, String nombreDiputado) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -267,6 +460,13 @@ public class ControladorDominioLegislatura {
 		else return conjuntoLegislaturas.get(identificadorLegislatura).hasDiputado(nombreDiputado);
 	}
 	
+	/**
+	 * Elimina un diputado de la lista de diputados activos de una legislatura.
+	 * <p>
+	 * Este metodo garantiza que la legislatura sera eliminada (si no lo ha sido ya) de la lista de legislaturas activas del diputado.
+	 * @param identificadorLegislatura - Identificador de la legislatura.
+	 * @param nombreDiputado - Nombre del diputado.
+	 */
 	public void removeDiputado(Integer identificadorLegislatura, String nombreDiputado) {
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		if (!CDD.existsDiputado(nombreDiputado)) {
@@ -289,6 +489,12 @@ public class ControladorDominioLegislatura {
 			}
 	}
 	
+	/**
+	 * Elimina todos los diputados de la lista de diputados activos de una legislatura.
+	 * <p>
+	 * Este metodo garantiza que todas las legislaturas seran eliminadas (si no lo ha sido ya) de las listas de legislaturas activas de todos los diputados.
+ 	 * @param identificadorLegislatura - Identificador de la legislatura.
+ 	 */
 	public void removeDiputados(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -301,19 +507,33 @@ public class ControladorDominioLegislatura {
 		}
 	}
 	
-	//Elimina el diputat indicat de totes les legislatures
-	public void removeDiputadoFromLegislaturas(String nombreDiputado) {
+	/**
+	 * Elimina un diputado de las listas de diputados activos de todas las legislaturas.
+	 * <p>
+	 * Este metodo garantiza que todas las legislaturas seran eliminadas (si no lo han sido ya) de la listas de legislaturas activas del diputado.
+	 * @param nombreDiputado - Nombre del diputado.
+	 */	public void removeDiputadoFromLegislaturas(String nombreDiputado) {
 		for (Legislatura L:conjuntoLegislaturas.getAll()) {
 			Integer identificadorLegislatura = L.getID();
 			if (existsDiputado(identificadorLegislatura, nombreDiputado))
 				removeDiputado(identificadorLegislatura, nombreDiputado);
 		}
 	}	
-	
+
+	/**
+	 * Consulta si se ha producido algun error en el ultimo metodo utilizado.
+	 * @return <i>true</i> si se ha producido algun error.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean hasCodiError() {
 		return (error.getCodiError() != 0);
 	}
 
+	/**
+	 * Consulta el error que se ha producido en el ultimo metodo utilizado.
+	 * @return Codigo de error del ultimo metodo.
+	 */
 	public CodiError getCodiError() {
 		return error;
 	}
