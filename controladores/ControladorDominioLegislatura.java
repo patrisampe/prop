@@ -3,8 +3,7 @@ package controladores;
 import java.util.Set;
 import java.util.TreeSet;
 
-import time.Date;
-import time.DateInterval;
+import time.*;
 import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Legislatura;

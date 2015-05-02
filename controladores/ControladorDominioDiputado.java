@@ -3,7 +3,7 @@ package controladores;
 import java.util.Set;
 import java.util.TreeSet;
 
-import time.Date;
+import time.*;
 import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Diputado;
@@ -70,11 +70,8 @@ public class ControladorDominioDiputado {
 			*/
  			ControladorDominioEvento CDE = ControladorDominioEvento.getInstance();
 			CDE.removeDiputado(nombreDiputado);
-			/*Votacion
  			ControladorDominioVotacion CDV = ControladorDominioVotacion.getInstance();
 			CDV.removeDiputado(nombreDiputado);
-			*/
-			//Legislatura
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
 		}
