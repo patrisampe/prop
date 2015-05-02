@@ -187,11 +187,9 @@ public class ControladorDominioVotacion {
 					ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
 					Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
 					if(CDL.existsDiputado(leg, nombreDiputado)){
-						if(!hasError){
 							hasError=true;
 							error.setClauExterna(nombreVotacion);
 							error.setCodiError(26);
-						}
 					}
 					else conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
 				}
