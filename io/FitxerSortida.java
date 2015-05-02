@@ -4,6 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
+
+import dominio.algoritmos.Graf;
 
 public class FitxerSortida implements Sortida {
 	private BufferedWriter BW;
@@ -169,6 +173,19 @@ public class FitxerSortida implements Sortida {
 			}
 		}
 	}
+	
+	public void Write(Set<String> set) {
+		for (Iterator<String> it = set.iterator(); it.hasNext();){
+			try {
+				String toPrint = it.next();
+				if(it.hasNext()) BW.write(toPrint + ", ");
+				else	BW.write(toPrint + System.lineSeparator());
+			} catch (IOException e){
+				System.out.println("Error en l'escriptura.");
+			}
+		}
+	}
+	
 	
 }
 

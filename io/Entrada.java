@@ -39,8 +39,6 @@ public interface Entrada {
 
 	public Long[] ReadLong(int n);
 
-	public Set<String> ReadSetString(int readInt);
-
-	public Graf ReadGraf(int v, int a);
-
+	public Set<String> ReadSetString(int n);
+	
 }

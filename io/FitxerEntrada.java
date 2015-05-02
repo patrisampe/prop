@@ -133,24 +133,6 @@ public class FitxerEntrada implements Entrada {
     	return out;
 	}
 	
-	public Graf ReadGraf(int v, int a) {
-		Graf out = new Graf();
-		for (int i = 0; i < v; ++i) {
-			if (sc.hasNext()) out.addNode(sc.next());
-		}
-		for (int i = 0; i < a; ++i) {
-			String Node1 = null;
-			String Node2 = null;
-			Double Pes = null;
-			if (sc.hasNext()) Node1 = sc.next();
-			if (sc.hasNext()) Node2 = sc.next();
-			if (sc.hasNextDouble()) Pes = sc.nextDouble();
-			out.addAresta(Node1, Node2, Pes);
-		}
-		return out;
-		
-	}
-	
 }
 
 	

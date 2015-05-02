@@ -1,5 +1,10 @@
 package io;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import dominio.algoritmos.Graf;
+
 public interface Sortida {
 		
 	public void close();
@@ -31,5 +36,7 @@ public interface Sortida {
 	public void Write(int n, Boolean[] a);
 
 	public void Write(int n, Long[] a);
-	
+
+	public void Write(Set<String> set);
+		
 }

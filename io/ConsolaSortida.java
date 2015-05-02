@@ -1,5 +1,9 @@
 package io;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
+
 public class ConsolaSortida implements Sortida {
 	
 	public ConsolaSortida(){
@@ -82,4 +86,17 @@ public class ConsolaSortida implements Sortida {
 			else System.out.println(a[i].toString());
 		}
 	}
+	
+	public void Write(Set<String> set) {
+		for (Iterator<String> it = set.iterator(); it.hasNext();){
+			try {
+				String toPrint = it.next();
+				if(it.hasNext()) BW.write(toPrint + ", ");
+				else	BW.write(toPrint + System.lineSeparator());
+			} catch (IOException e){
+				System.out.println("Error en l'escriptura.");
+			}
+		}
+	}
+	
 }
