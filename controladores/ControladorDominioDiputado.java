@@ -119,15 +119,15 @@ public class ControladorDominioDiputado {
 			error.setClauExterna(nombreDiputado);
 		}
 		else {
-			conjuntoDiputados.remove(nombreDiputado);
+			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
+			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
  			ControladorDominioResultado CDR = ControladorDominioResultado.getInstance();
 			CDR.removeDiputado(nombreDiputado);
  			ControladorDominioEvento CDE = ControladorDominioEvento.getInstance();
 			CDE.removeDiputado(nombreDiputado);
  			ControladorDominioVotacion CDV = ControladorDominioVotacion.getInstance();
 			CDV.removeDiputado(nombreDiputado);
-			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
-			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
+			conjuntoDiputados.remove(nombreDiputado);
 		}
 	}
 	
