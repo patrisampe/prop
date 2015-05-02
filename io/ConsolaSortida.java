@@ -89,13 +89,9 @@ public class ConsolaSortida implements Sortida {
 	
 	public void Write(Set<String> set) {
 		for (Iterator<String> it = set.iterator(); it.hasNext();){
-			try {
-				String toPrint = it.next();
-				if(it.hasNext()) BW.write(toPrint + ", ");
-				else	BW.write(toPrint + System.lineSeparator());
-			} catch (IOException e){
-				System.out.println("Error en l'escriptura.");
-			}
+			String toPrint = it.next();
+			if(it.hasNext()) System.out.print(toPrint + ", ");
+			else	System.out.print(toPrint + System.lineSeparator());
 		}
 	}
 	
