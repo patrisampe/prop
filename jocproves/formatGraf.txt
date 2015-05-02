@@ -1,0 +1,45 @@
+Comanda 1:
+	Inicialitza el Graf amb la creadora per defecte.
+Comanda 2: 
+	Inicialitza el Graf a partir d'un conjunt de Nodes.
+	Format: Un enter n seguit de n nodes.
+Comanda 3: 
+	Inicialitza el Graf a partir d'un altre graf.
+	Format: Dos enters v, a seguits de v Nodes i a Arestes.
+			On una Aresta és una tupla de Node,Node,Pes. (String,String,Double)
+Comanda 4:
+	Escriu per pantalla el número de nodes del Graf.
+Comanda 5:
+	Escriu per pantalla tots els nodes del Graf separats per comes.
+Comanda 6:
+	Afegeix un node al graf.
+	Format: Un String.
+	Si el node ja existeix escriu: "El node ja existeix"	     
+Comanda 7:
+	Elimina un node del graf.
+	Format: Un String.
+	Si el node no existeix escriu: "El node no existeix"
+Comanda 8:
+	Comprova si existeix un node en el Graf: "El node existeix" / "El node no existeix"
+Comanda 9:
+	Afegeix una aresta al graf. 
+	Format: String String Double.
+	Si hi ha algún error ho notifica.
+Comanda 10:
+	Elimina una aresta del graf.
+	Format: String String.
+	Si hi ha algún error ho notifica.
+Comanda 11:
+	Comprova si existeix una aresta.
+	Format: String String
+Comanda 12:
+	Modifica el pes d'una aresta.
+	Format String String Double
+	Si hi ha algún error ho notifica.
+Comanda 13:
+	Escriu per pantalla el pes de una aresta solicitada.
+	Format: String Strings
+	Si hi ha algún error ho notifica.
+Comanda 14:
+	Escriu per pantalla tots els nodes adjacents a un node donat.
+	Format: String
