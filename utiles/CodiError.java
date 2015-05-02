@@ -49,13 +49,6 @@ public class CodiError {
 		Diccionario.put(32, "Ya existe un resultado de búsqueda con nombre %1");
 		Diccionario.put(33, "No existe el grupo afín %1 en el resultado de búsqueda %2");
         return Collections.unmodifiableMap(Diccionario);
-        /*
-		USAGE: (CE: objecte de la classe CodiError)
-			CE.setCodiError(10); //El diputado D ya existe en la legislatura L
-			CE.setClauExterna(D.getNombre()); //D->"Pepito"
-			CE.addClauExterna(L.getID().toString()); //L->42
-			CE.getMensajeError() //El diputado Pepito ya existe en la legislatura 42.
-        */
 	}
 	/**
 	 * Crear un codi Error
@@ -108,6 +101,16 @@ public class CodiError {
 	public void addClauExterna(Vector<String> clauExterna) {
 		for (Integer i = 0; i < clauExterna.size(); ++i) {
 			this.clauExterna.add(clauExterna.elementAt(i));
+		}
+	}
+	
+	/**
+	 * Inserta unas nuevas Claves Externa(que son Integer)
+	 * @param clauExterna
+	 */
+	public void addClauExternaInteger(Vector<Integer> clauExterna) {
+		for (Integer i = 0; i < clauExterna.size(); ++i) {
+			this.clauExterna.add(clauExterna.elementAt(i).toString());
 		}
 	}
     /**

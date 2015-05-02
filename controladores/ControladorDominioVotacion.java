@@ -48,7 +48,7 @@ public class ControladorDominioVotacion {
 		 if(conjuntoVotacion.exists(nombreVotacion))return true;
 		 else if(!hasError){
 				   hasError=true;
-				   error.setClauExterna(nombreVotacion);
+				   error.addClauExterna(nombreVotacion);
 				   error.setCodiError(22);
 			}
 		 return false;
@@ -59,7 +59,7 @@ public class ControladorDominioVotacion {
 			if(CDD.existsDiputado(nombreDiputado))return true;
 			else if(!hasError){
 				   hasError=true;
-				   error.setClauExterna(nombreDiputado);
+				   error.addClauExterna(nombreDiputado);
 				   error.setCodiError(3);
 			}
 			 return false;
@@ -72,7 +72,7 @@ public class ControladorDominioVotacion {
 			if(CDL.existsDiputado(leg, nombreDiputado)){
 				if(!hasError){
 					hasError=true;
-					error.setClauExterna(nombreVotacion);
+					error.addClauExterna(nombreVotacion);
 					error.setCodiError(26);
 				}
 			}
@@ -112,7 +112,7 @@ public class ControladorDominioVotacion {
 			   else if(!hasError){
 				   hasError=true;
 				   error.setCodiError(9);
-				   error.setClauExterna(importancia.toString());
+				   error.addClauExterna(importancia.toString());
 			   }
 		   }
 			  
@@ -229,7 +229,7 @@ public class ControladorDominioVotacion {
 		public void addVotacion(String nombreVotacion, Date fecha,Integer imp, Map<String,TipoVoto> votos){
 			if(conjuntoVotacion.exists(nombreVotacion)){
 				hasError=true;
-				error.setClauExterna(nombreVotacion);
+				error.addClauExterna(nombreVotacion);
 				error.setCodiError(23);
 			}
 			else{
@@ -250,7 +250,7 @@ public class ControladorDominioVotacion {
 				}
 				if(votos.size()>0){
 					hasError=true;
-					error.setClauExterna(nombreVotacion);
+					error.addClauExterna(nombreVotacion);
 					Iterator<String> it = votos.keySet().iterator();
 					error.addClauExterna(it.next());
 					error.setCodiError(25);
@@ -295,7 +295,7 @@ public class ControladorDominioVotacion {
 				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado))return conjuntoVotacion.get(nombreVotacion).getVoto(nombreDiputado);
 				else if(!hasError){
 					hasError=true;
-					error.setClauExterna(nombreVotacion);
+					error.addClauExterna(nombreVotacion);
 					error.setCodiError(24);
 				}
 			return TipoVoto.ABSTENCION;
@@ -330,7 +330,7 @@ public class ControladorDominioVotacion {
 				}
 				else if(!hasError){
 					hasError=true;
-					error.setClauExterna(nombreVotacion);
+					error.addClauExterna(nombreVotacion);
 					error.setCodiError(24);
 				}
 			}
