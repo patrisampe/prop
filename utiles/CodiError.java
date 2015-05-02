@@ -44,6 +44,9 @@ public class CodiError {
 		Diccionario.put(27, "La legislatura %1 no puede contener la fecha %2, ya que pertenece a la legislatura %3.");
 		Diccionario.put(28, "La legislatura %1 no puede contener la fecha %2, ya que se produce solapamiento entre legislaturas.");
 		Diccionario.put(29, "No se puede eliminar la fecha de finalizacion de la legislatura %1 ya que ya existe una legislatura sin fecha final (%2).");
+		Diccionario.put(30, "El indice de afinidad debe ser un porcentaje (0-100)");
+		Diccionario.put(31, "No existe ningún resultado de búsqueda con nombre %1");
+		Diccionario.put(32, "Ya existe un resultado de búsqueda con nombre %1");
         return Collections.unmodifiableMap(Diccionario);
         /*
 		USAGE: (CE: objecte de la classe CodiError)

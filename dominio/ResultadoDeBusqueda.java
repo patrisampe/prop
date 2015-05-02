@@ -75,6 +75,10 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 
 	//Consultores
+	public Boolean existeGrupo(Integer ID) {
+		return gruposAfines.exists(ID);
+	}
+	
 	public String getNombre() {
 		return this.nombre;
 	}
