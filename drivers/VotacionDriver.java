@@ -126,7 +126,7 @@ public class VotacionDriver {
 		Sortida SF = new FitxerSortida(Output);
 		VotacionDriver DV= new VotacionDriver();
 		Sortida SC = new ConsolaSortida();
-		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
+		SC.Write("Recorda: Lo primero que hacemos es inicialitzar la votacion.");
 		Votacion v= DV.llegirVotacion(EF);
 		int a= EF.ReadInt();
 		while(a!=-1){

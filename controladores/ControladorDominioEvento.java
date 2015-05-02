@@ -204,6 +204,11 @@ public class ControladorDominioEvento {
 		   }
 	   }
 	   
+	   public Boolean esParticipanteEnEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
+		   if(comprovacionEvento(nombreTipoEvento,nombreEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado);
+		   else return false;
+	   }
+	   
 	   public void removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)){
 			   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);

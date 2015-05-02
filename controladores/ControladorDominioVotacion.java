@@ -36,11 +36,7 @@ public class ControladorDominioVotacion {
 	      return instance;
 	 }
 	
-	 public void removeDiputado(String nombreDiputado){
-		 for (Votacion elem : conjuntoVotacion.getAll()){
-			 if(elem.esVotante(nombreDiputado))elem.removeVoto(nombreDiputado);
-		 }
-	 }
+	 
 	 
 	 private Boolean comprovaExsitenciaVotacion(String nombreVotacion){
 		 if(conjuntoVotacion.exists(nombreVotacion))return true;
@@ -62,7 +58,25 @@ public class ControladorDominioVotacion {
 			}
 			 return false;
 		}
+		
 	
+		private Boolean DiputadoEnLegislatura(String nombreVotacion, String nombreDiputado){
+			ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
+			Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
+			if(CDL.existsDiputado(leg, nombreDiputado)){
+				if(!hasError){
+					hasError=true;
+					error.setClauExterna(nombreVotacion);
+					error.setCodiError(26);
+				}
+			}
+			
+		}
+		
+		public CodiError getError(){
+			   return error;
+		} }
+		
 	 public void setFechaVotacion(String nombreVotacion, Date fecha){
 		if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.get(nombreVotacion).setFecha(fecha);
 	  }
@@ -121,7 +135,7 @@ public class ControladorDominioVotacion {
 			if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.remove(nombreVotacion);
 		}
 		
-		public void addVotacion(String nombreVotacion, Integer Importancia, Date fecha, Map<String,TipoVoto> votos){
+		public void addVotacion(String nombreVotacion, Date fecha,Integer imp, Map<String,TipoVoto> votos){
 			if(conjuntoVotacion.exists(nombreVotacion)){
 				hasError=true;
 				error.setClauExterna(nombreVotacion);
@@ -151,7 +165,7 @@ public class ControladorDominioVotacion {
 					error.setCodiError(25);
 					return;
 				}
-				Votacion aux= new Votacion(nombreVotacion,fecha,Importancia,votosnew);
+				Votacion aux= new Votacion(nombreVotacion,fecha,imp,votosnew);
 				conjuntoVotacion.add(nombreVotacion, aux);
 			}
 			
@@ -210,5 +224,12 @@ public class ControladorDominioVotacion {
 			   }
 			return result;
 		}
+		public void removeDiputado(String nombreDiputado){
+			 if(esDiputado(nombreDiputado)){
+				 for (Votacion elem : conjuntoVotacion.getAll()){
+					 if(elem.esVotante(nombreDiputado))removeVotoDiputado(elem.getNombre(),nombreDiputado);
+				 }
+			 }
+		 }
 		
 }

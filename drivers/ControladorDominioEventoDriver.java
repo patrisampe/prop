@@ -166,6 +166,16 @@ public class ControladorDominioEventoDriver {
 		testError(EF,SF,CDE);
 	}
 	
+	public void testesParticipanteEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+		String nombredip=EF.ReadString();
+	    Boolean b=CDE.esParticipanteEnEvento(nombrete, nombreev, nombredip);
+		if(!testError(EF,SF,CDE)){
+			SF.Write(b);
+		}
+	}
+	
 	public void testescriureControlador(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
 		Set<String> diputados=CDE.getTipoEvento();
 		int mida=diputados.size();
@@ -243,7 +253,9 @@ public class ControladorDominioEventoDriver {
 				 ControladorDominioEvento CDE2=ControladorDominioEvento.getInstance();
 				 DCDE.testescriureControlador(EF, SF, CDE2);
 				 break;
-				 
+			 case 18:
+				 DCDE.testesParticipanteEvento(EF, SF, CDE);
+				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;
