@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import time.Date;
 
 import io.ConsolaEntrada;
+import io.ConsolaSortida;
 import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
@@ -15,7 +16,7 @@ import dominio.Evento;
 public class EventoDriver {
 
 	
-	public Evento llegirEvento(Entrada EF, Sortida SF){
+	public Evento llegirEvento(Entrada EF){
 		
 		    String nomEvento = EF.ReadString();
 		    Integer Day=EF.ReadInteger();
@@ -79,6 +80,55 @@ public class EventoDriver {
 		String Output = EC.ReadString();
 		Sortida SF = new FitxerSortida(Output);
 		EventoDriver DE= new EventoDriver();
+		Sortida SC = new ConsolaSortida();
+		SC.Write("Recorda: Nomes hi ha 2 eventos.");
+		SC.Write("Recorda: El primer que fem es inicialitzar els 2.");
+		Evento e= DE.llegirEvento(EF);
+		Evento d= DE.llegirEvento(EF);
+		int a= EC.ReadInteger();
+		
+		while(a!=-1){
+			String nombre=EC.ReadString();
+			Evento aux, aux2;
+			if(e.getNombre().equals(nombre)){
+				aux=e;
+				aux2=d;
+			}
+			else{
+				aux= d;
+				aux2=e;
+			}
+			
+			switch(a) {
+			 case 1: 
+				 DE.esParticipante(EF, aux, SF);
+			     break;
+			 case 2: 
+				 DE.escriureEvento(SF,aux);
+			     break;
+			 case 3: 
+			     DE.addDiputados(EF, aux);
+			     break;
+			 case 4: 
+			     DE.setFecha(EF, aux);
+			     break;
+			 case 5:
+				 String newName = EF.ReadString();
+				 aux= new Evento(newName,aux2);
+			 case 6: 
+			     DE.removeDiputados(EF, aux);
+			     break;
+			 case 7:
+				 aux = DE.llegirEvento(EF);
+				 break;
+			 default: 
+			    SF.Write(" numero no correcto. Para cerrar -1 ");
+			     break;
+			 }
+		}
+		
+		
+		/*
 		Evento e=DE.llegirEvento(EF,SF);
 		
 		int end=EF.ReadInt();
@@ -92,6 +142,7 @@ public class EventoDriver {
 			DE.escriureEvento(SF, e);
 			DE.esParticipante(EF,e,SF);
 		}
+		*/
 		EF.close();
 		SF.close();
 		
