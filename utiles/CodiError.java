@@ -57,77 +57,77 @@ public class CodiError {
 			CE.getMensajeError() //El diputado Pepito ya existe en la legislatura 42.
         */
 	}
-
+	/**
+	 * Crear un codi Error
+	 */
 	public CodiError() {
 		codiError = 0;
 		clauExterna = new Vector<String>();
 	}
+	/**
+	 * Et permet tornar a utilitzar el mateix codi error, ja que torna a incialitzar tots els camps
+	 */
 	public void netejaCodiError(){
 		codiError=0;
 		clauExterna = new Vector<String>();
 	}
-	
+	/**
+	 * Copia del CodiError CE
+	 * @param CE- CodiError que es vol copiar
+	 */
 	public CodiError(CodiError CE) {
 		codiError = CE.codiError;
 		clauExterna = CE.clauExterna;
 	}
-	
-	public CodiError(Integer codiError) {
-		this.codiError = codiError;
-		clauExterna = new Vector<String>();
-	}
-	
-	public CodiError(Integer codiError, String clauExterna) {
-		this.codiError = codiError;
-		this.clauExterna = new Vector<String>();
-		this.clauExterna.add(clauExterna);
-	}
-	
-	public CodiError(Integer codiError, Vector<String> clauExterna) {
-		this.codiError = codiError;
-		this.clauExterna = clauExterna;
-	}
+	/**
+	 * Devuelve las Claves Externas del Error
+	 * @return claves externas del Error
+	 */
 
 	public Vector<String> getClauExterna() {
 		return clauExterna;
 	}
-
-	public void setClauExterna(String clauExterna) {
-		this.clauExterna = new Vector<String>();
-		this.clauExterna.add(clauExterna);
-	}
-	
-	public void setClauExterna(Integer clauExterna) {
-		this.clauExterna = new Vector<String>();
-		this.clauExterna.add(clauExterna.toString());
-	}
-	
-	public void setClauExterna(Vector<String> clauExterna) {
-		this.clauExterna = clauExterna;
-	}
-
+	/**
+	 * Inserta una nueva Clave Externa(que es un String)
+	 * @param clauExterna
+	 */
 	public void addClauExterna(String clauExterna) {
 		this.clauExterna.add(clauExterna);
 	}
-	
+	/**
+	 * Inserta una nueva Clave Externa(que es un Integer)
+	 * @param clauExterna
+	 */
 	public void addClauExterna(Integer clauExterna) {
 		this.clauExterna.add(clauExterna.toString());
 	}
-	
+	/**
+	 * Inserta unas nuevas Claves Externa(que son String)
+	 * @param clauExterna
+	 */
 	public void addClauExterna(Vector<String> clauExterna) {
 		for (Integer i = 0; i < clauExterna.size(); ++i) {
 			this.clauExterna.add(clauExterna.elementAt(i));
 		}
 	}
-
+    /**
+     * Devuelve el codigo error
+     * @return codigo Error
+     */
 	public Integer getCodiError() {
 		return codiError;
 	}
-
+/**
+ * Modifica el codigo Error
+ * @param codiError
+ */
 	public void setCodiError(Integer codiError) {
 		this.codiError = codiError;
 	}
-	
+	/**
+	 * Devuelve el mensaje de error
+	 * @return mensaje de error 
+	 */
 	public String getMensajeError() {
 		String mensaje = mensajesError.get(codiError);
 		for (Integer i = 1; i <= clauExterna.size(); ++i) {
