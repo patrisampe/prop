@@ -55,8 +55,8 @@ public class ControladorDominioLegislatura {
 	}
 	
 	/**
-	 * Añade al sistema un conjunto de legislaturas.
-	 * @param legislaturas - conjunto de legislaturas que se desa añadir al sistema.
+	 * Introduce en el sistema un conjunto de legislaturas.
+	 * @param legislaturas - conjunto de legislaturas que se desa introducir al sistema.
 	 */
 	public void addAll(Set<Legislatura> legislaturas){
 		conjuntoLegislaturas.addAll(legislaturas);
@@ -123,7 +123,7 @@ public class ControladorDominioLegislatura {
 	}
 	
 	/**
-	 * Añade al sistema una legislatura a partir de sus datos.
+	 * Introduce en el sistema una legislatura a partir de sus datos.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
 	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
@@ -174,7 +174,7 @@ public class ControladorDominioLegislatura {
 
 	
 	/**
-	 * Añade al sistema una legislatura a partir de sus datos.
+	 * Introduce en el sistema una legislatura a partir de sus datos.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
 	 */
@@ -368,9 +368,9 @@ public class ControladorDominioLegislatura {
 	}
 	
 	/**
-	 * Añade un diputado a la lista de diputados activos de una legislatura.
+	 * Introduce un diputado en la lista de diputados activos de una legislatura.
 	 * <p>
-	 * Este metodo garantiza que la legislatura sera añadida (si no lo ha sido ya) en la lista de legislaturas activas del diputado.
+	 * Este metodo garantiza que la legislatura sera introducida (si no lo ha sido ya) en la lista de legislaturas activas del diputado.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
@@ -400,7 +400,7 @@ public class ControladorDominioLegislatura {
 	/**
 	 * Establece un conjunto de diputados como lista de diputados activos de una legislatura.
 	 * <p>
-	 * Este metodo garantiza que la legislatura sera añadida (si no lo ha sido ya) en las listas de legislaturas activas de los diputados.
+	 * Este metodo garantiza que la legislatura sera introducida (si no lo ha sido ya) en las listas de legislaturas activas de los diputados.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param diputados - Conjunto de identificadores de diputados.
 	 */
