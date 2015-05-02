@@ -9,9 +9,6 @@ public class TipoEvento extends ObjetoDominio {
 	private String nombre;
 	private Integer importancia;
 	private Conjunto<Evento> conjuntoEventos;
-	
-	//private static Map<String, Tipo_de_Evento> Conjunto_tipos = new TreeMap<String, Tipo_de_Evento>();
-	//public static final Tipo_de_Evento NULL = new Tipo_de_Evento("NULL", 0);
 	public static final Integer importancia_max=5;
 	public static final Integer importancia_min=1;
 
