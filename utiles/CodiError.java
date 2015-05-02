@@ -23,7 +23,7 @@ public class CodiError {
 		Diccionario.put(6, "El diputado %1 ya existe en el evento %2 en el tipo de evento %3.");
 		Diccionario.put(7, "El evento %1 no existe en el tipo de evento %2.");
 		Diccionario.put(8, "El evento %1 ya existe en el tipo de evento %2.");
-		Diccionario.put(9, "El TipoEvento %1 no tiene una importancia valida (1<=I<=5).");
+		Diccionario.put(9, "La importancia %1 no es una importancia valida (1<=I<=5).");
 		Diccionario.put(10, "El diputado %1 ya existe en la legislatura %2.");
 		Diccionario.put(11, "El diputado %1 no existe en la legislatura %2.");
 		Diccionario.put(12, "La legislatura %1 ya existe en el diputado %2.");

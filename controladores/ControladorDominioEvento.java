@@ -69,7 +69,7 @@ public class ControladorDominioEvento {
 			   else if(!hasError){
 				   hasError=true;
 				   error.setCodiError(9);
-				   error.setClauExterna(nombreTipoEvento);
+				   error.setClauExterna(Importancia.toString());
 			   }
 		   }
 	   }

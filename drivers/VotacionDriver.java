@@ -11,6 +11,7 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
+import dominio.TipoEvento;
 import dominio.TipoVoto;
 import dominio.Votacion;
 
@@ -90,6 +91,12 @@ public class VotacionDriver {
 		
 	}
 	
+	public void testEsValida(Entrada EF, Sortida SC){
+		
+		 Integer imp=EF.ReadInteger();
+		 SC.Write(Votacion.esValidaImportancia(imp));
+	}
+	
 	public void escriureVotacion(Sortida SF, Votacion v){
 		SF.Write(v.getNombre());
 		SF.Write(v.getFecha().getDay());
@@ -160,6 +167,9 @@ public class VotacionDriver {
 			     break;
 			 case 9:
 				 DV.removeVoto(EF, v);
+				 break;
+			 case 10:
+				 DV.testEsValida(EF, SC);
 				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");

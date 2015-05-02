@@ -23,7 +23,6 @@ public class Evento extends ObjetoDominio{
 	 * @param Diputados - Conjunto de Diputados que participan en el evento
 	 */
 	public Evento(String Nombre, Date data, Set<String> Diputados){
-		 //Pre: Fecha valida y Nombre no existente
 		nombre=Nombre;
 		fecha=data;
 		diputados=new TreeSet<String>(Diputados);
@@ -35,7 +34,6 @@ public class Evento extends ObjetoDominio{
 	 */
 	
 	public Evento(String Nombre, Evento E){
-		//Pre: Fecha valida y Nombre no existente
 		nombre=Nombre;
 		fecha=E.fecha;
 		diputados= new TreeSet<String>(E.diputados);
@@ -119,7 +117,6 @@ public class Evento extends ObjetoDominio{
 	 */
 	
 	public void removeDiputado(String nombreDiputado) {
-		//Pre: Diputado existe y ha participado en este evento
 		diputados.remove(nombreDiputado);
 	}
 	
