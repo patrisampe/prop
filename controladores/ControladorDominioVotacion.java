@@ -22,14 +22,21 @@ public class ControladorDominioVotacion {
 	private CodiError error;
 	private Boolean hasError;
 
-
+	/**
+	 * Crea un nuevo controlador de Dominio Evento
+	 * 
+	 */
 	 protected ControladorDominioVotacion() {
 	      // Exists only to defeat instantiation.
 		   conjuntoVotacion=  new Conjunto<Votacion>(Votacion.class);
 		   error = new CodiError();
+		   hasError=false;
 	   }
 	   
-
+	   /**
+	    * Crea una nueva instancia de la classe.
+	    * @return Nueva instancia del <i>singletone</i> de la clase.
+	    */
 	 public static ControladorDominioVotacion getInstance() {
 	      if(instance == null) {
 	         instance = new ControladorDominioVotacion();  
@@ -37,8 +44,6 @@ public class ControladorDominioVotacion {
 	      return instance;
 	 }
 	
-	 
-	 
 	 private Boolean comprovaExsitenciaVotacion(String nombreVotacion){
 		 if(conjuntoVotacion.exists(nombreVotacion))return true;
 		 else if(!hasError){
@@ -73,15 +78,34 @@ public class ControladorDominioVotacion {
 			}
 			
 		}
-		
+		   /**
+		    * Indica el error que se ha producido
+		    * Solo llamar si ha habido error
+		    * @return
+		    */
 		public CodiError getError(){
 			   return error;
 		}
 		
+		/**
+		 * Modifica la fecha de la Votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+	     * 1- nombreVotacion no es una Votacion
+		 * @param nombreVotacion
+		 * @param fecha
+		 * <dd><b>Precondition:</b><dd> data tiene de ser una Data valida
+		 */
 	 public void setFechaVotacion(String nombreVotacion, Date fecha){
 		if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.get(nombreVotacion).setFecha(fecha);
 	  }
-	
+	/**
+	 * Modifica la importancia
+	 * Causas por las que no se realiza la operacion y se captura el error:<br>
+	 * 1- nombreVotacion no es una Votacion <br>
+	 * 2- importancia no es una importancia valida
+	 * @param nombreVotacion
+	 * @param importancia
+	 */
 	  public void setImportanciaVotacion(String nombreVotacion,Integer importancia){
 		  if(comprovaExsitenciaVotacion(nombreVotacion)){
 			   if(Votacion.esValidaImportancia(importancia)) conjuntoVotacion.get(nombreVotacion).setImportancia(importancia);
@@ -94,32 +118,65 @@ public class ControladorDominioVotacion {
 			  
 	  }
 	
-	
+	  /**
+	   * Si ha habido un error antes, nos deja los campos correspondientes como sino<br>
+	   * Es necessario llamar esta funcion despues de usar cada funcion que capture un error.
+	   */
 	   public void netejaError(){
 		   hasError=false;
 	   }
-	   
+	   /**
+	    * Indica si ha habido Error
+	    * @return <i>true<i> si ha error, sino <i>false<i>
+	    */
 		public Boolean getHasError(){
 			return hasError;
 		}
-		
+		/**
+		 * Devuelve la fecha de la Votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion no es una Votacion <br>
+		 * @param nombreVotacion
+		 * @return fecha de la votacion. Si hay Error, Date.NULL
+		 */
 		public Date getFechaVotacion(String nombreVotacion){
 			
 			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getFecha();
 			return Date.NULL;
 		}
-		
+		/**
+		 * Devuelve importancia de la Votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion no es una Votacion <br>
+		 * @param nombreVotacion
+		 * @return importancia de la votacion. Si hay Error, -1
+		 */
 		public Integer getImportanciaVotacion(String nombreVotacion){
 			
 			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getImportancia();
 			return -1;
 		}
-		
+		/**
+		 * Devuelve los diputados que han votado en esa votacion 
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion no es una Votacion <br>
+		 * @param nombreVotacion
+		 * @return diputados que han votado en la votacion. Si hay Error, set vacio
+		 */
 		public Set<String> getDiputadosVotacion(String nombreVotacion){
 			
 			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getDiputados();
 			return new TreeSet<String>();
-		}	
+		}
+		
+		/**
+		 * Devuelve los diputados que han votado en esa votacion lo mismo, concretamente <b>voto</b>
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion no es una Votacion <br>
+		 * @param nombreVotacion
+		 * @param voto
+		 * @return diputados que han votado en la votacion. Si hay Error, set vacio
+		 */
 		public Set<String> getDiputadosVotacion(String nombreVotacion, TipoVoto voto){
 			Set<String> result= new TreeSet<String>();
 			if(comprovaExsitenciaVotacion(nombreVotacion)){
@@ -130,20 +187,45 @@ public class ControladorDominioVotacion {
 			}
 			return result;
 		}
-		
+		/**
+		 * Indica si un Diputado es Votante en esa Votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion no es una Votacion <br>
+		 * 2- nombreDiputado no es un Diputado <br>
+		 * @param nombreVotacion
+		 * @param nombreDiputdo
+		 * @return <i>true<i> si el diputado ha votado en esa Votacion, sino <i>false<i>
+		 */
 		public Boolean esVotanteEnVotacion(String nombreVotacion, String nombreDiputado){
-			if(comprovaExsitenciaVotacion(nombreVotacion) & esDiputado(nombreDiputado) & conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado))return conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado);
+			if(comprovaExsitenciaVotacion(nombreVotacion) & esDiputado(nombreDiputado))return conjuntoVotacion.get(nombreVotacion).esVotante(nombreDiputado);
 			return false;
 		}
-		
+		/**
+		 * Devuelve el nombre de todas las votacions
+		 * @return nombre de todas las votaciones
+		 */
 		public Set<String> getVotaciones(){
 			return conjuntoVotacion.getStringKeys();
 		}
-		
+		/**
+		 * Elimina la votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion no es una Votacion <br>
+		 * @param nombreVotacion
+		 */
 		public void removeVotacion(String nombreVotacion){
 			if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.remove(nombreVotacion);
 		}
-		
+		/**
+		 * Inserta una votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion es una Votacion <br>
+		 * 2- hay como mínimo un diputado que no esta activo en la fecha de la Votacion
+		 * @param nombreVotacion
+		 * @param fecha
+		 * @param imp
+		 * @param votos
+		 */
 		public void addVotacion(String nombreVotacion, Date fecha,Integer imp, Map<String,TipoVoto> votos){
 			if(conjuntoVotacion.exists(nombreVotacion)){
 				hasError=true;
@@ -179,16 +261,36 @@ public class ControladorDominioVotacion {
 			}
 			
 		}
-		
+		/**
+		 * Indica si es una Votacion
+		 * @param nombreVotacion
+		 * @return <i>true</i> si es una votacion, sino <i>false</i>
+		 */
 		public Boolean esVotacion(String nombreVotacion){
 			return conjuntoVotacion.exists(nombreVotacion);
 		}
 		
+		/**
+		 * Devuelve las parejas diputado-lo que ha votado, de todos los diputados que han votado en este evento
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion es una Votacion <br>
+		 * @param nombreVotacion
+		 * @return devuelve un map con los diputados y su voto, si ha habido error el map esta vacio
+		 */
 		public Map<String,TipoVoto> getVotos(String nombreVotacion){
 			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getVotos();
 			return new TreeMap<String,TipoVoto>();
 		}
-		
+		/**
+		 * Devuelve que ha votado el diputado nombreDiputado en la Votacion nombreVotacion
+		 * * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion es una Votacion <br>
+		 * 2- nombreDiputado no existe
+		 * 3- nombreDiputado no es votante
+		 * @param nombreVotacion
+		 * @param nombreDiputado
+		 * @return el voto del diputado en esa votacion, si ha habido error ABSTENCION
+		 */
 		public TipoVoto getVotoDiputado(String nombreVotacion, String nombreDiputado){
 				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado))return conjuntoVotacion.get(nombreVotacion).getVoto(nombreDiputado);
 				else if(!hasError){
@@ -199,11 +301,28 @@ public class ControladorDominioVotacion {
 			return TipoVoto.ABSTENCION;
 			
 		}
-		
+		/**
+		 * Inserta o modifica un vot, es decir, una pareja: Diputado y lo que ha votado en esa votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion es una Votacion <br>
+		 * 2- nombreDiputado no es un Diputado <br>
+		 * 3- nombreDiputado no es un Diputaado activo durante la realizacion de la votacion <br>
+		 * @param nombreVotacion
+		 * @param nombreDiputado
+		 * @param voto - lo que ha votado el Diputado con nombreDiputado
+		 */
 		public void setAddVoto(String nombreVotacion, String nombreDiputado, TipoVoto voto){
-			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado) && DiputadoEnLegislatura(nombreVotacion,nombreDiputado))conjuntoVotacion.get(nombreVotacion).setVoto(nombreDiputado, voto);
+			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado) && DiputadoEnLegislatura(nombreVotacion,nombreDiputado))conjuntoVotacion.get(nombreVotacion).setaddVoto(nombreDiputado, voto);
 		}
-	   
+	   /**
+	    * Elimina el diputado de la votacion, y en consequencia su voto
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+		* 1- nombreVotacion es una Votacion <br>
+		* 2- nombreDiputado no ha votado en esta votacion
+		* 3- nombreDiputado esta activo durante la votacion
+	    * @param nombreVotacion
+	    * @param nombreDiputado
+	    */
 		public void removeVotoDiputado(String nombreVotacion, String nombreDiputado){
 			if(comprovaExsitenciaVotacion(nombreVotacion)){
 				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado)){
@@ -216,7 +335,13 @@ public class ControladorDominioVotacion {
 				}
 			}
 		}
-		
+		/**
+		 * Devuelve las votacions que se han realizado durante un periodo de tiempo
+		 *  <dd><b>Precondition:</b> dataInici<=dataFi
+		 * @param dataInici
+		 * @param dataFi
+		 * @return devuelve el nombre de la votacions que se han realizado durante dicho periodo
+		 */
 		public Set<String> getVotaciones(Date dataInici, Date dataFi){
 			Set<String>result=new TreeSet<String>();
 			   DateInterval inter= new DateInterval(dataInici,dataFi);
@@ -226,10 +351,20 @@ public class ControladorDominioVotacion {
 			   }
 			return result;
 		}
+		/**
+		 * Elimina el diputado de todas las votaciones
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreDiputado no es un Diputado <br>
+		 * @param nombreDiputado
+		 */
 		public void removeDiputado(String nombreDiputado){
 			 if(esDiputado(nombreDiputado)){
 				 for (Votacion elem : conjuntoVotacion.getAll()){
-					 if(elem.esVotante(nombreDiputado) && DiputadoEnLegislatura(elem.getNombre(),nombreDiputado))elem.removeVoto(nombreDiputado);
+					 if(elem.esVotante(nombreDiputado)){
+						ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
+						Integer leg=CDL.getID(elem.getFecha());
+						if(CDL.existsDiputado(leg, nombreDiputado))elem.removeVoto(nombreDiputado);
+					 }
 				 }
 			 }
 		 }

@@ -190,7 +190,9 @@ public class ControladorDominioEvento {
 	   }
 	   /**
 	    * Se incorpora un nuevo TipoEvento. <br>
-	    * Si el nombreTipoEvento ya existia o la importancia no es valida se captura excepcion y no se incorpora al Conjunto.
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- El nombreTipoEvento ya existia <br>
+	    * 2- La importancia no es valida <br>
 	    * @param nombreTipoEvento
 	    * @param importancia
 	    */
@@ -213,8 +215,9 @@ public class ControladorDominioEvento {
 	   }
 	   /**
 	    * Elimina el TipoEvento con nombre nombreTipoEvento
-	    * Si no existe el TipoEvento, no se puede eliminar y se captura el Error.
-	    * @param nombreTipoEvento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    *  @param nombreTipoEvento
 	    */
 	   public void removeTipoEvento(String nombreTipoEvento){
 		   
@@ -249,7 +252,10 @@ public class ControladorDominioEvento {
 	   
 	   /**
 	    * Inserta un nuevo Evento al TipoEvento nombreTipoEvento <br>
-	    * Si el nombreTipoEvento no es un TipoEvento, si el Evento ya existe en ese TipoEvento o si alguno de los diputados no existe, el Evento no se inserta y se captura el error.
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * 3- Alguno de los Diputados no existe
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param fecha
@@ -276,7 +282,9 @@ public class ControladorDominioEvento {
 	   }
 	   /**
 	    * Elimina el Evento de ese Tipo Evento
-	    * Si el TipoEvento no existe o el Evento no existe en ese Tipo Evento, no se elimina el Evento y se captura el error.
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    */
@@ -285,7 +293,9 @@ public class ControladorDominioEvento {
 	   }
 	   /**
 	    * Indica si es un Evento del Tipo Evento<br>
-	    * Si no existe ese TipoEvento se devuelve <i>false<i> y se caputra el error.
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @return <i>true<i> si es un Evento de este Tipo, sino, false
@@ -297,27 +307,59 @@ public class ControladorDominioEvento {
 		   return false;
 	   }
 	   /**
-	    * 
+	    * Modifica la fecha de un Evento de un Tipo de Evento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param fecha
+	    * <dd><b>Precondition:</b><dd> data tiene de ser una Data valida
 	    */
 	   public void setFechaEvento(String nombreTipoEvento, String nombreEvento, Date fecha){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).setFecha(fecha);
 	   }
-	   
+	   /**
+	    * Retorna la data de un Evento de un TipoEvento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * @param nombreTipoEvento
+	    * @param nombreEvento
+	    * @return Data del Evento y si hay error, una data NULL
+	    */
 	   public Date getFechaEvento(String nombreTipoEvento, String nombreEvento){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).getFecha();
 		   return Date.NULL;
 	   }
-	   
+	   /**
+	    * Devuelve los diputados de un Evento de un tipo de Evento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * @param nombreTipoEvento
+	    * @param nombreEvento
+	    * @return devuelve los diputados de ese Evento, sino existe, esta vacio
+	    */
 	   public Set<String> getDiputadosEvento(String nombreTipoEvento, String nombreEvento){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).getdiputados();
 		   return new TreeSet<String>();
 	   }
-	   
+	   /**
+	    * Inserta un Diputado al Evento de un Tipo Evento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento
+	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * 3- nombreDiputado no es un Diputado
+	    * 4- Diputado ya ha participado en ese Evento
+	    * 
+	    * @param nombreTipoEvento
+	    * @param nombreEvento
+	    * @param nombreDiputado
+	    */
 	   public void addDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)){
+			   if(esDiputado(nombreDiputado)){
 				   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).addDiputado(nombreDiputado);
 				   else if(!hasError){
 					   hasError=true;
@@ -326,14 +368,35 @@ public class ControladorDominioEvento {
 					   error.addClauExterna(nombreTipoEvento);
 					   error.setCodiError(6);
 				   }
+			   }
 		   }
 	   }
 	   
+	   /**
+	    * Indica si un Diputado ha participado en un evento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento <br>
+	    * 2- nombreEvento no es un Evento de ese TipoEvento <br>
+	    * 3- nombreDiputado no es un Diputado
+	    * @param nombreTipoEvento
+	    * @param nombreEvento
+	    * @param nombreDiputado
+	    * @return <i>true si ha participado en ese Evento, sino, <i>false<i>
+	    */
 	   public Boolean esParticipanteEnEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
-		   if(comprovacionEvento(nombreTipoEvento,nombreEvento))return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado);
+		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)&& esDiputado(nombreDiputado))return conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado);
 		   else return false;
 	   }
-	   
+	   /**
+	    * Elimina el Diputado de un evento de un TipoEvento
+	    * Causas por las que no se realiza la operacion y se captura el error:<br>
+	    * 1- nombreTipoEvento no es un TipoEvento <br>
+	    * 2- nombreEvento no es un Evento de ese TipoEvento <br>
+	    * 3- nombreDiputado no ha participado en ese Evento
+	    * @param nombreTipoEvento
+	    * @param nombreEvento
+	    * @param nombreDiputado
+	    */
 	   public void removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)){
 			   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);
