@@ -10,11 +10,12 @@ import dominio.Diputado;
 
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los diputados.
+ * @author David Moran
  */
 public class ControladorDominioDiputado {
 	
 	/**
-	 * Codigo de error del último método ejecutado.
+	 * Codigo de error del ultimo metodo ejecutado.
 	 */
 	private CodiError error;
 	/**
@@ -36,7 +37,7 @@ public class ControladorDominioDiputado {
 	
 	/**
 	 * Crea una nueva instancia de la classe.
-	 * @return Nueva instáncia del <i>singletone</i> de la clase.
+	 * @return Nueva instancia del <i>singletone</i> de la clase.
 	 */
 	public static ControladorDominioDiputado getInstance() {
 	      if (instance == null) {
@@ -47,7 +48,7 @@ public class ControladorDominioDiputado {
 	
 	/**
 	 * Consulta el numero de diputados existentes en el sistema.
-	 * @return Número de diputados del sistema.
+	 * @return Numero de diputados del sistema.
 	 */
 	public Integer numeroDiputados(){
 		return conjuntoDiputados.size();
@@ -80,9 +81,9 @@ public class ControladorDominioDiputado {
 	/**
 	 * Añade al sistema un diputado a partir de sus datos.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @param nombrePartido - Nombre del partido político al que pertenece el diputado.
-	 * @param nombreEstado - Nombre del estado al que representa el diputado
-	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado
+	 * @param nombrePartido - Nombre del partido politico al que pertenece el diputado.
+	 * @param nombreEstado - Nombre del estado al que representa el diputado.
+	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
 	public void addDiputado(String nombreDiputado, String nombrePartido, String nombreEstado, Date fechaDeNacimiento) {
 		if (existsDiputado(nombreDiputado)) {
@@ -109,7 +110,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Elimina del sistema al diputado indicado.
 	 * <p>
-	 * Éste método tiene efectos colaterales en todas las estructuras del sistema que contengan información acerca del diputado indicado.
+	 * Este metodo tiene efectos colaterales en todas las estructuras del sistema que contengan informacion acerca del diputado indicado.
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeDiputado(String nombreDiputado) {
@@ -119,8 +120,8 @@ public class ControladorDominioDiputado {
 		}
 		else {
 			conjuntoDiputados.remove(nombreDiputado);
- 			//ControladorDominioResultado CDR = ControladorDominioResultado.getInstance();
-			//CDR.removeDiputado(nombreDiputado);
+ 			ControladorDominioResultado CDR = ControladorDominioResultado.getInstance();
+			CDR.removeDiputado(nombreDiputado);
  			ControladorDominioEvento CDE = ControladorDominioEvento.getInstance();
 			CDE.removeDiputado(nombreDiputado);
  			ControladorDominioVotacion CDV = ControladorDominioVotacion.getInstance();
@@ -128,13 +129,12 @@ public class ControladorDominioDiputado {
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
 		}
-		//TODO: Falten completar les crides a eliminar
 	}
 	
 	/**
-	 * Modifica el partido político de un diputado.
+	 * Modifica el partido politico de un diputado.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @param nombrePartido - Nombre del partido político al que pertenece el diputado.
+	 * @param nombrePartido - Nombre del partido politico al que pertenece el diputado.
 	 */
 	public void setPartidoPolitico(String nombreDiputado, String nombrePartido) {
 		if (!existsDiputado(nombreDiputado)) {
@@ -147,7 +147,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Modifica el estado al que representa un diputado.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @param nombreEstado - Nombre del estado al que representa el diputado
+	 * @param nombreEstado - Nombre del estado al que representa el diputado.
 	 */
 	public void setEstado(String nombreDiputado, String nombreEstado) {
 		if (!existsDiputado(nombreDiputado)) {
@@ -160,7 +160,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Modifica la fecha de nacimiento de un diputado.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado
+	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
 	public void setFechaDeNacimiento(String nombreDiputado, Date FechaDeNacimiento) {
 		if (!existsDiputado(nombreDiputado)){
@@ -171,9 +171,9 @@ public class ControladorDominioDiputado {
 	}
 
 	/**
-	 * Consulta el partido político de un diputado.
+	 * Consulta el partido politico de un diputado.
  	 * @param nombreDiputado - Nombre del diputado.
-	 * @return Nombre del partido político al que pertenece el diputado.
+	 * @return Nombre del partido politico al que pertenece el diputado.
 	 */
 	public String getPartidoPolitico(String nombreDiputado) {
 		if (!existsDiputado(nombreDiputado)) {
@@ -187,7 +187,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Consulta el estado al que representa un diputado.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @return Nombre del estado al que representa el diputado
+	 * @return Nombre del estado al que representa el diputado.
 	 */
 	public String getEstado(String nombreDiputado) {
 		if (!existsDiputado(nombreDiputado)) {
@@ -201,7 +201,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Consulta la fecha de nacimiento de un diputado.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @return Fecha de nacimiento del diputado
+	 * @return Fecha de nacimiento del diputado.
 	 */
 	public Date getFechaDeNacimiento(String nombreDiputado) {
 		if (!existsDiputado(nombreDiputado)) {
@@ -215,7 +215,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Añade una legislatura a la lista de leguslaturas activas de un diputado.
 	 * <p>
-	 * Éste método garantiza que el diputado será añadido (si no lo ha sido ya) en la lista de diputados activos de la legislatura.
+	 * Este metodo garantiza que el diputado sera añadido (si no lo ha sido ya) en la lista de diputados activos de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
@@ -244,7 +244,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Establece un conjunto de legislaturas como lista de leguslaturas activas de un diputado.
 	 * <p>
-	 * Éste método garantiza que el diputado será añadido (si no lo ha sido ya) en las listas de diputados activos de las legislaturas.
+	 * Este metodo garantiza que el diputado sera añadido (si no lo ha sido ya) en las listas de diputados activos de las legislaturas.
 	 * @param nombreDiputado - Nombre del diputado.
 	 * @param legislaturas - Conjunto de identificadores de legislaturas.
 	 */
@@ -289,6 +289,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Consulta si una legislatura pertenece a la lista de leguslaturas activas de un diputado.
 	 * @param nombreDiputado - Nombre del diputado.
+ 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 * @return <i>true</i> si el diputado es activo en la legislatura.
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
@@ -305,7 +306,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Elimina una legislatura de la lista de leguslaturas activas de un diputado.
 	 * <p>
-	 * Éste método garantiza que el diputado será eliminado (si no lo ha sido ya) de la lista de diputados activos de la legislatura.
+	 * Este metodo garantiza que el diputado sera eliminado (si no lo ha sido ya) de la lista de diputados activos de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
@@ -332,11 +333,10 @@ public class ControladorDominioDiputado {
 	}
 	
 	/**
-	 * Elimina todas legislaturas de la lista de leguslaturas activas de un diputado.
+	 * Elimina todas las legislaturas de la lista de leguslaturas activas de un diputado.
 	 * <p>
-	 * Éste método garantiza que todos el diputado será eliminado (si no lo ha sido ya) de las listas de diputados activos de todas las legislaturas.
+	 * Este metodo garantiza que todos el diputado sera eliminado (si no lo ha sido ya) de las listas de diputados activos de todas las legislaturas.
 	 * @param nombreDiputado - Nombre del diputado.
-	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
 	public void removeLegisturas(String nombreDiputado) {
 		if (!existsDiputado(nombreDiputado)) {
@@ -353,8 +353,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Elimina una legislatura de las listas de leguslaturas activas de todos los diputados.
 	 * <p>
-	 * Éste método garantiza que todos los diputados serán eliminados (si no lo han sido ya) de la listas de diputados activos de la legislatura.
-	 * @param nombreDiputado - Nombre del diputado.
+	 * Este metodo garantiza que todos los diputados seran eliminados (si no lo han sido ya) de la listas de diputados activos de la legislatura.
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
 	public void removeLegislaturaFromDiputados(Integer identificadorLegislatura) {
@@ -366,7 +365,7 @@ public class ControladorDominioDiputado {
 	}	
 	
 	/**
-	 * Consulta si se ha producido algun error en el último método utilizado.
+	 * Consulta si se ha producido algun error en el ultimo metodo utilizado.
 	 * @return <i>true</i> si se ha producido algun error.
 	 * <br>
  	 * <i>false</i> en cualquier otro caso.
@@ -376,8 +375,8 @@ public class ControladorDominioDiputado {
 	}
 	
 	/**
-	 * Consulta el error que se ha producido en el último método utilizado.
-	 * @return Codigo de error del último método.
+	 * Consulta el error que se ha producido en el ultimo metodo utilizado.
+	 * @return Codigo de error del ultimo metodo.
 	 */
 	public CodiError getCodiError() {
 		return error;

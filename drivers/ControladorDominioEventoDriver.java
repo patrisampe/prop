@@ -1,5 +1,9 @@
 package drivers;
 
+import java.util.Set;
+
+import time.Date;
+import controladores.ControladorDominioEvento;
 import io.ConsolaEntrada;
 import io.ConsolaSortida;
 import io.Entrada;
@@ -10,8 +14,163 @@ import dominio.Evento;
 
 public class ControladorDominioEventoDriver {
 
+	public Boolean testError(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		if(CDE.getHasError()){
+			SF.Write("ERROR");
+			SF.Write(CDE.getError().getMensajeError());
+			CDE.netejaError();
+			return true;
+		}
+		return false;
+	}
 	
+	public void testaddTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		
+		String nombre=EF.ReadString();
+		Integer imp=EF.ReadInteger();
+		CDE.addTipoEvento(nombre, imp);
+		testError(EF,SF,CDE);
+	}
+	public void testsetImportanciaTipoEvento(Entrada EF,Sortida SF, ControladorDominioEvento CDE){
+		
+		String nombre=EF.ReadString();
+		Integer imp=EF.ReadInteger();
+		CDE.setImportanciaTipoEvento(nombre, imp);
+		testError(EF,SF,CDE);
+	}
 	
+	public void testgetImportanciaTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		
+		String nombre=EF.ReadString();
+		Integer imp=CDE.getImportanciaTipoEvento(nombre);
+		if(!testError(EF,SF,CDE)){
+			SF.Write(imp);
+		}
+	}
+	
+	public void testgetEventos(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		
+		String nombre=EF.ReadString();
+		Set<String> ev=CDE.getEventos(nombre);
+		if(!testError(EF,SF,CDE)){
+			int mida=ev.size();
+			SF.Write(mida, ev.toArray(new String[mida]));
+			SF.Write(" ");
+		}
+	}
+	public void testgetEventosData(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		
+		String nombre=EF.ReadString();
+	    Integer Day=EF.ReadInteger();
+	    Integer Month=EF.ReadInteger();
+	    Integer Year=EF.ReadInteger();
+	    Date Data=new Date(Day,Month,Year);
+	    Integer Day1=EF.ReadInteger();
+	    Integer Month1=EF.ReadInteger();
+	    Integer Year1=EF.ReadInteger();
+	    Date Data1=new Date(Day1,Month1,Year1);
+		Set<String> ev=CDE.getEventos(nombre, Data, Data1);
+		if(!testError(EF,SF,CDE)){
+			int mida=ev.size();
+			SF.Write(mida, ev.toArray(new String[mida]));
+			SF.Write(" ");
+		}
+	}
+	
+	public void testremoveDiputado(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombredip=EF.ReadString();
+		CDE.removeDiputado(nombredip);
+		testError(EF,SF,CDE);
+	}
+	
+	public void testremoveTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		CDE.removeTipoEvento(nombrete);
+		testError(EF,SF,CDE);
+	}
+	
+	public void testesTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		SF.Write(CDE.esTipoEvento(nombrete));
+	}
+	
+	public void testaddEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		EventoDriver ED=new EventoDriver();
+		Evento e=ED.llegirEvento(EF);
+		CDE.addEvento(nombrete, e.getNombre(), e.getFecha(), e.getdiputados());
+		testError(EF,SF,CDE);
+	}
+	
+	public void testremoveEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+		CDE.removeEvento(nombrete, nombreev);
+		testError(EF,SF,CDE);
+	}
+	
+	public void testesEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+		Boolean b=CDE.esEvento(nombrete, nombreev);
+		if(!testError(EF,SF,CDE)){
+			SF.Write(b);
+		}
+	}
+	
+	public void testsetFechaEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+		Integer Day=EF.ReadInteger();
+	    Integer Month=EF.ReadInteger();
+	    Integer Year=EF.ReadInteger();
+	    Date Data=new Date(Day,Month,Year);
+	    CDE.setFechaEvento(nombrete, nombreev, Data);
+		testError(EF,SF,CDE);
+	}
+	
+	public void testgetFechaEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+	    Date Data=CDE.getFechaEvento(nombrete, nombreev);
+		if(!testError(EF,SF,CDE)){
+			SF.Write(Data.getDay());
+			SF.Write(Data.getMonth());
+			SF.Write(Data.getYear());
+		}
+	}
+	
+	public void testgetDiputadosEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+	    Set<String> diputados=CDE.getDiputadosEvento(nombrete, nombreev);
+		if(!testError(EF,SF,CDE)){
+			int mida=diputados.size();
+			SF.Write(mida,diputados.toArray(new String[mida]));
+		}
+	}
+	
+	public void testaddDiputadosEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+		String nombredip=EF.ReadString();
+	    CDE.addDiputadoEvento(nombrete, nombreev, nombredip);
+		testError(EF,SF,CDE);
+	}
+	
+	public void testremoveDiputadosEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		String nombrete=EF.ReadString();
+		String nombreev=EF.ReadString();
+		String nombredip=EF.ReadString();
+	    CDE.removeDiputadoEvento(nombrete, nombreev, nombredip);
+		testError(EF,SF,CDE);
+	}
+	
+	public void testescriureControlador(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+		Set<String> diputados=CDE.getTipoEvento();
+		int mida=diputados.size();
+		SF.Write(mida,diputados.toArray(new String[mida]));
+	}
 	
 	
 	/**
@@ -25,37 +184,66 @@ public class ControladorDominioEventoDriver {
 		Entrada EF = new FitxerEntrada(Input);
 		String Output = EC.ReadString();
 		Sortida SF = new FitxerSortida(Output);
-		EventoDriver DE= new EventoDriver();
+		ControladorDominioEventoDriver DCDE= new ControladorDominioEventoDriver();
 		Sortida SC = new ConsolaSortida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
-		Evento e= DE.llegirEvento(EF);
+		ControladorDominioEvento CDE=ControladorDominioEvento.getInstance();
 		int a= EF.ReadInt();
 		while(a!=-1){
 			switch(a) {
 			 case 1: 
-				 DE.esParticipante(EF, e, SF);
+				 DCDE.testaddTipoEvento(EF, SF, CDE);
 			     break;
 			 case 2: 
-				 DE.escriureEvento(SF,e);
+				 DCDE.testsetImportanciaTipoEvento(EF, SF, CDE);
 			     break;
 			 case 3: 
-			     DE.addDiputados(EF, e);
+			     DCDE.testgetImportanciaTipoEvento(EF, SF, CDE);
 			     break;
 			 case 4: 
-			     DE.setFecha(EF, e);
+			     DCDE.testgetEventos(EF, SF, CDE);
 			     break;
 			 case 5:
-				 String newName = EF.ReadString();
-				 Evento aux= new Evento(newName,e);
-				 DE.escriureEvento(SF, aux);
+				 DCDE.testgetEventosData(EF, SF, CDE);
 				 break;
 			 case 6: 
-			     DE.removeDiputados(EF, e);
+			     DCDE.testremoveDiputado(EF, SF, CDE);
 			     break;
 			 case 7:
-				 Evento aux2 = DE.llegirEvento(EF);
-				 DE.escriureEvento(SF, aux2);
+				 DCDE.testremoveTipoEvento(EF, SF, CDE);
 				 break;
+			 case 8:
+				 DCDE.testaddEvento(EF, SF, CDE);
+				 break;
+			 case 9: 
+			     DCDE.testremoveEvento(EF, SF, CDE);
+			     break;
+			 case 10:
+				 DCDE.testesEvento(EF, SF, CDE);
+				 break;
+			 case 11: 
+			     DCDE.testsetFechaEvento(EF, SF, CDE);
+			     break;
+			 case 12:
+				 DCDE.testgetFechaEvento(EF, SF, CDE);
+				 break;
+			 case 13:
+				 DCDE.testgetDiputadosEvento(EF, SF, CDE);
+				 break;
+			 case 14:
+				 DCDE.testaddDiputadosEvento(EF, SF, CDE);
+				 break;
+			 case 15: 
+			     DCDE.testremoveDiputadosEvento(EF, SF, CDE);
+			     break;
+			 case 16:
+				 DCDE.testescriureControlador(EF, SF, CDE);
+				 break;
+			 case 17:
+				 ControladorDominioEvento CDE2=ControladorDominioEvento.getInstance();
+				 DCDE.testescriureControlador(EF, SF, CDE2);
+				 break;
+				 
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;
@@ -65,6 +253,6 @@ public class ControladorDominioEventoDriver {
 		EF.close();
 		SF.close();
 	}
-	}
+
 
 }
