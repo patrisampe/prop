@@ -8,17 +8,36 @@ import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Diputado;
 
+/**
+ * Controlador de dominio para la gestion tanto en conjunto como individualmente de los diputados.
+ */
 public class ControladorDominioDiputado {
 	
+	/**
+	 * Codigo de error del último método ejecutado.
+	 */
 	private CodiError error;
+	/**
+	 * Conjunto de diputados almacenados en el sistema.
+	 */
 	private Conjunto<Diputado> conjuntoDiputados;
+	/**
+	 * Instancia <i>singletone</i> de la clase.
+	 */
 	private static ControladorDominioDiputado instance = null;
 	
+	/**
+	 * Crea una nuevo controlador de dominio de diputados.
+	 */
 	protected ControladorDominioDiputado(){
 		conjuntoDiputados = new Conjunto<Diputado>(Diputado.class);
 		error = new CodiError();
 	}
 	
+	/**
+	 * Crea una nueva instancia de la classe.
+	 * @return Nueva instáncia del <i>singletone</i> de la clase.
+	 */
 	public static ControladorDominioDiputado getInstance() {
 	      if (instance == null) {
 	         instance = new ControladorDominioDiputado();
