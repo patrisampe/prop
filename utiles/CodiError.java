@@ -16,7 +16,7 @@ public class CodiError {
 		Map<Integer, String> Diccionario = new HashMap<Integer, String>();
 		Diccionario.put(0, "No hay error.");
 		Diccionario.put(1, "Dato en blanco.");
-		Diccionario.put(2, "Fecha no válida.");
+		Diccionario.put(2, "Fecha no valida.");
 		Diccionario.put(3, "El diputado %1 no existe.");
 		Diccionario.put(4, "El diputado %1 ya existe.");
 		Diccionario.put(5, "El diputado %1 no existe en el evento %2 en el tipo de evento %3.");
@@ -40,8 +40,10 @@ public class CodiError {
 		Diccionario.put(23, "La votacion %1 ya existe");
 		Diccionario.put(24, "El Diputado %1 no ha votado en la votacion %2");
 		Diccionario.put(25, "En la votacion %1 el diputado %2 esta de baja");
-		Diccionario.put(26, "El diputado %1 no se puede borrar de la votacion %2, ya que aun esta activo en esa legislatura");
-		
+		Diccionario.put(26, "La fecha de inicio (%1) es posterior a la fecha final (%2)");
+		Diccionario.put(27, "La legislatura %1 no puede contener la fecha %2, ya que pertenece a la legislatura %3.");
+		Diccionario.put(28, "La legislatura %1 no puede contener la fecha %2, ya que se produce solapamiento entre legislaturas.");
+		Diccionario.put(29, "No se puede eliminar la fecha de finalizacion de la legislatura %1 ya que ya existe una legislatura sin fecha final (%2).");
         return Collections.unmodifiableMap(Diccionario);
         /*
 		USAGE: (CE: objecte de la classe CodiError)
