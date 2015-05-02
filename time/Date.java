@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Fecha basada en el calendario gregoriano.
+ * @author David Moran
+ */
 public class Date{
 
 	// Atributs
