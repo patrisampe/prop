@@ -2,7 +2,6 @@ package utiles;
 
 import java.util.Iterator;
 import java.util.Map;
-//import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -82,11 +81,7 @@ public class Conjunto<T extends ObjetoDominio> {
 		if (hasIntegerKey) return new TreeSet<String>();
 		return conjunto.keySet();
 	}
-	/*
-	public Set<Entry<String,T>> entrySet(){
-		return conjunto.entrySet();
-	}
-	*/
+
 	public void add(String nombreObjeto, T objeto) {
 		if (!hasIntegerKey) conjunto.put(nombreObjeto, objeto);
 	}
