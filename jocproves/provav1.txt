@@ -1,0 +1,40 @@
+Monica,true
+Pau,true
+Joana,false
+ 
+Conferencia1
+2
+4
+1995
+Monica, Pau
+ 
+Conferencia1
+2
+4
+1995
+Cris, Monica, Patri, Pau
+ 
+Conferencia1
+15
+10
+1999
+Cris, Monica, Patri, Pau
+ 
+Conferencianova
+15
+10
+1999
+Cris, Monica, Patri, Pau
+ 
+Conferencia1
+15
+10
+1999
+Cris, Monica, Pau
+ 
+Conferenciacreada
+12
+4
+2000
+Leonor, Nicolas
+ 
