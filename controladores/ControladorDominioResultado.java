@@ -1,9 +1,10 @@
 package controladores;
 
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import dominio.GrupoAfin;
+import java.util.Map;
+
+import dominio.GrupoAfinPorDiputado;
+import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
 import dominio.ResultadoDeBusquedaPorPeriodo;
 import dominio.ResultadoDeBusquedaPorDiputado;
@@ -27,12 +28,15 @@ public class ControladorDominioResultado {
 	
 	//Modificadores
 	public void nuevoResultadoPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo/*, Criterio criterio*/) {
-		Set<GrupoAfin> resultado = new HashSet<GrupoAfin>(); // Llamada a ControladorDeBusqueda.NuevaBusqueda()
+		ControladorDominioBusquedaPorPeriodo controlDomBus = new ControladorDominioBusquedaPorPeriodo();
+		Conjunto<GrupoAfinPorPeriodo> resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, periodo, importancia, indiceAfinidad);
 		ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado);
 	}
 
-	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval lapsoDeTiempo, String diputadoRelevante/*, Criterio criterio*/) {
-		Set<GrupoAfin> resultado = new HashSet<GrupoAfin>(); // Llamada a ControladorDeBusqueda.NuevaBusqueda() 
+	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante/*, Criterio criterio*/) {
+		ControladorDominioBusquedaPorDiputado controlDomBus = new ControladorDominioBusquedaPorDiputado();
+		Conjunto<GrupoAfinPorDiputado> resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, lapsoDeTiempo, importancia, indiceAfinidad, diputadoRelevante);
+		
 		ultimoResultado = new ResultadoDeBusquedaPorDiputado("Provisional", indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante);
 	}
 	
@@ -62,6 +66,18 @@ public class ControladorDominioResultado {
 		}
 	}
 	
+	public void addDiputado(String nombreResultado, String nombreDiputado, Integer ID) {
+		conjuntoResultados.get(nombreResultado).addDiputado(nombreDiputado, ID);
+	}
+	
+	public void removeDiputado(String nombreResultado, String nombreDiputado, Integer ID) {
+		conjuntoResultados.get(nombreResultado).removeDiputado(nombreDiputado, ID);
+	}
+	
+	public void moveDiputado(String nombreResultado, String nombreDiputado, Integer desdeID, Integer hastaID) {
+		conjuntoResultados.get(nombreResultado).moveDiputado(nombreDiputado, desdeID, hastaID);
+	}
+	
 	//Consultores
 	public Boolean existeResultado(String nombre) {
 		return conjuntoResultados.exists(nombre);
@@ -88,7 +104,7 @@ public class ControladorDominioResultado {
 	}
 	
 	public String getPeriodo(String nombre) {
-		return conjuntoResultados.get(nombre).getIntervalo().toString();
+		return conjuntoResultados.get(nombre).getPeriodo().toString();
 	}
 	
 	public Set<Set<String>> getResultado(String nombre) {
