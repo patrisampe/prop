@@ -94,25 +94,6 @@ public class CodiError {
 	public void addClauExterna(Integer clauExterna) {
 		this.clauExterna.add(clauExterna.toString());
 	}
-	/**
-	 * Inserta unas nuevas Claves Externa(que son String)
-	 * @param clauExterna
-	 */
-	public void addClauExterna(Vector<String> clauExterna) {
-		for (Integer i = 0; i < clauExterna.size(); ++i) {
-			this.clauExterna.add(clauExterna.elementAt(i));
-		}
-	}
-	
-	/**
-	 * Inserta unas nuevas Claves Externa(que son Integer)
-	 * @param clauExterna
-	 */
-	public void addClauExternaInteger(Vector<Integer> clauExterna) {
-		for (Integer i = 0; i < clauExterna.size(); ++i) {
-			this.clauExterna.add(clauExterna.elementAt(i).toString());
-		}
-	}
     /**
      * Devuelve el codigo error
      * @return codigo Error

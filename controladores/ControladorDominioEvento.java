@@ -53,7 +53,7 @@ public class ControladorDominioEvento {
 		   else if(!hasError){
 			   hasError=true;
 			   error.setCodiError(15);
-			   error.setClauExterna(nombreTipoEvento);
+			   error.addClauExterna(nombreTipoEvento);
 		   }
 		   return false;
 	   }
@@ -68,7 +68,7 @@ public class ControladorDominioEvento {
 			if(CDD.existsDiputado(nombreDiputado))return true;
 			else if(!hasError){
 				   hasError=true;
-				   error.setClauExterna(nombreDiputado);
+				   error.addClauExterna(nombreDiputado);
 				   error.setCodiError(3);
 			}
 			 return false;
@@ -86,7 +86,7 @@ public class ControladorDominioEvento {
 			if(comprovacionTP(nombreTipoEvento) && conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento))return true;
 			else if(!hasError){
 			   hasError=true;
-			   error.setClauExterna(nombreEvento);
+			   error.addClauExterna(nombreEvento);
 			   error.addClauExterna(nombreTipoEvento);
 			   error.setCodiError(7);
 		     } 
@@ -107,7 +107,7 @@ public class ControladorDominioEvento {
 			   else if(!hasError){
 				   hasError=true;
 				   error.setCodiError(9);
-				   error.setClauExterna(Importancia.toString());
+				   error.addClauExterna(Importancia.toString());
 			   }
 		   }
 	   }
@@ -200,7 +200,7 @@ public class ControladorDominioEvento {
 		   
 		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
 			   hasError=true;
-			   error.setClauExterna(nombreTipoEvento);
+			   error.addClauExterna(nombreTipoEvento);
 			   error.setCodiError(14);
 		   }
 		   else if(TipoEvento.esValidaImportancia(importancia)){ 
@@ -210,7 +210,7 @@ public class ControladorDominioEvento {
 		   else{
 			   hasError=true;
 			   error.setCodiError(9);
-			   error.setClauExterna(importancia.toString());
+			   error.addClauExterna(importancia.toString());
 		   }
 	   }
 	   /**
@@ -266,7 +266,7 @@ public class ControladorDominioEvento {
 		   if(comprovacionTP(nombreTipoEvento)){
 			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento)){
 				   hasError=true;
-				   error.setClauExterna(nombreEvento);
+				   error.addClauExterna(nombreEvento);
 				   error.addClauExterna(nombreTipoEvento);
 				   error.setCodiError(8);
 			   }
@@ -363,7 +363,7 @@ public class ControladorDominioEvento {
 				   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).addDiputado(nombreDiputado);
 				   else if(!hasError){
 					   hasError=true;
-					   error.setClauExterna(nombreDiputado);
+					   error.addClauExterna(nombreDiputado);
 					   error.addClauExterna(nombreEvento);
 					   error.addClauExterna(nombreTipoEvento);
 					   error.setCodiError(6);
@@ -402,7 +402,7 @@ public class ControladorDominioEvento {
 			   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);
 			   else if(!hasError){
 					   hasError=true;
-					   error.setClauExterna(nombreDiputado);
+					   error.addClauExterna(nombreDiputado);
 					   error.addClauExterna(nombreEvento);
 					   error.addClauExterna(nombreTipoEvento);
 					   error.setCodiError(5);
