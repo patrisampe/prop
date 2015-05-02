@@ -15,11 +15,11 @@ public class Votacion extends ObjetoDominio {
 	
 	
 	
-	public Votacion(String nombre, Date fecha, Integer importancia) {
+	public Votacion(String nombre, Date fecha, Integer importancia, Map<String,TipoVoto> nvotos) {
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.importancia = importancia;
-		votos =new TreeMap<String,TipoVoto>();
+		votos =new TreeMap<String,TipoVoto>(nvotos);
 	}
 	
 	public Votacion(String nombre,Votacion vot) {
