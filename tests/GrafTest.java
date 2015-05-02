@@ -36,6 +36,7 @@ public class GrafTest {
 		assertTrue(G.addNode("Maria"));
 		assertTrue(G.existeixNode("Pepe"));
 		assertTrue(G.existeixNode("Maria"));
+		assertEquals((Integer) 2, G.size());
 	}
 	
 	@Test

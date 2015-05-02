@@ -1,0 +1,9 @@
+Size del Graf:
+0
+Size del Graf:
+4
+El node existeix
+Pes de l'aresta:
+3.0
+Pes de l'aresta:
+6.0

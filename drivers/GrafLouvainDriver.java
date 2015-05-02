@@ -3,15 +3,18 @@ package drivers;
 import io.*;
 
 import java.util.HashSet;
+import java.util.Iterator;
+
 import dominio.algoritmos.Graf;
+import dominio.algoritmos.GrafLouvain;
 
 /**
  * 
  * @author Yoel Cabo
  *
  */
-public class GrafDriver { //No està gens fet, però s'intenta
-	private Graf G;
+public class GrafLouvainDriver { //No està gens fet, però s'intenta
+	private GrafLouvain G;
 	
 	
 	public static Graf ReadGraf(Entrada eF, int v, int a) {
@@ -26,7 +29,7 @@ public class GrafDriver { //No està gens fet, però s'intenta
 		
 	}
 	
-	public GrafDriver() {
+	public GrafLouvainDriver() {
 
 	}
 	
@@ -36,7 +39,7 @@ public class GrafDriver { //No està gens fet, però s'intenta
 		Entrada EF = new FitxerEntrada(Input);
 		String Output = EC.ReadString();
 		Sortida SF = new FitxerSortida(Output);
-		GrafDriver GD = new GrafDriver();
+		GrafLouvainDriver GD = new GrafLouvainDriver();
 		int a= EF.ReadInt();
 		while(a!=-1) {
 			switch(a) {
@@ -47,7 +50,7 @@ public class GrafDriver { //No està gens fet, però s'intenta
 				 GD.createGraf((HashSet<String>) EF.ReadSetString(EF.ReadInt()));
 			     break;
 			 case 3: 
-				 Graf G2 = ReadGraf(EF, EF.ReadInt(), EF.ReadInt());
+				 GrafLouvain G2 = (GrafLouvain) ReadGraf(EF, EF.ReadInt(), EF.ReadInt());
 				 GD.createGraf(G2);
 			     break;
 			 case 4: 
@@ -89,8 +92,36 @@ public class GrafDriver { //No està gens fet, però s'intenta
 				 SF.Write("Nodes Adjacents:");
 				 SF.Write(GD.getAdjacents(EF.ReadString()));
 				 break;
+			 case 15:
+				 SF.Write("Suma total de Pesos del Graf:");
+				 SF.Write(GD.sumaPesos());
+				 break;
+			 case 16:
+				 SF.Write("Suma total de Pesos del Graf interns de la comunitat:");
+				 SF.Write(GD.sumaPesos((HashSet<String>) EF.ReadSetString(EF.ReadInt())));
+				 break;
+			 case 17:
+				 SF.Write("Suma total de les arestes Adjacents al node:");
+				 SF.Write(GD.sumaPesosAdjacents(EF.ReadString()));
+				 break;
+			 case 18:
+				 SF.Write("Suma total de les arestes entre el node i la comunitat:");
+				 SF.Write(GD.sumaPesosAdjacents(EF.ReadString(), (HashSet<String>) EF.ReadSetString(EF.ReadInt())));
+				 break;
+			 case 19:
+				 SF.Write("Suma total de les arestes entre les dues comunitat:");
+				 SF.Write(GD.sumaPesosAdjacents( (HashSet<String>) EF.ReadSetString(EF.ReadInt()), (HashSet<String>) EF.ReadSetString(EF.ReadInt())));
+				 break;
+			 case 20:
+				 SF.Write("Suma total de les arestes adjacents a nodes de la comunitat (les internes apareixen duplicades):");
+				 SF.Write(GD.sumaPesosAdjacentsInclusiva((HashSet<String>) EF.ReadSetString(EF.ReadInt())));
+				 break;
+			 case 21:
+				 SF.Write("Suma total de les arestes adjacents a nodes de la comunitat, sense incloure les internes:");
+				 SF.Write(GD.sumaPesosAdjacentsExclusiva((HashSet<String>) EF.ReadSetString(EF.ReadInt())));
+				 break;
 			 default: 
-			    SF.Write(" numero no correcto. Para cerrar -1 ");
+			    SF.Write(" Comanda incorrecta. Per a tancar -1 ");
 			     break;
 			 }
 			a=EF.ReadInt();
@@ -99,16 +130,16 @@ public class GrafDriver { //No està gens fet, però s'intenta
 		SF.close();
 	}
 	private void createGraf() {
-		G = new Graf();
+		G = new GrafLouvain();
 	}
 	
 	private void createGraf(HashSet<String> NodesInicials) {
-		G = new Graf(NodesInicials);
+		G = new GrafLouvain(NodesInicials);
 	}
 	
 
-	private void createGraf(Graf G) {
-		this.G = new Graf(G);
+	private void createGraf(GrafLouvain G) {
+		this.G = new GrafLouvain(G);
 	}
 	
 	private Integer size() {
@@ -153,6 +184,34 @@ public class GrafDriver { //No està gens fet, però s'intenta
 	
 	private HashSet<String> getAdjacents(String id) {
 		return G.getAdjacents(id);
+	}
+	
+	public Double sumaPesos() {
+		return G.sumaPesos();
+	}
+	
+	public Double sumaPesos(HashSet<String> Comunitat) {
+		return G.sumaPesos(Comunitat);
+	}
+	
+	public Double sumaPesosAdjacents(String id) {
+		return G.sumaPesosAdjacents(id);
+	}
+	
+	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {
+		return G.sumaPesosAdjacents(id, Comunitat);
+	}
+	
+	public Double sumaPesosAdjacents(HashSet<String> C1, HashSet<String> C2) {
+		return G.sumaPesosAdjacents(C1, C2);
+	}
+	
+	public Double sumaPesosAdjacentsInclusiva(HashSet<String> Comunitat) {
+		return G.sumaPesosAdjacentsInclusiva(Comunitat);
+	}
+
+	public Double sumaPesosAdjacentsExclusiva(HashSet<String> Comunitat) { 
+		return G.sumaPesosAdjacentsExclusiva(Comunitat);
 	}
 
 }
