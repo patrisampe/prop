@@ -9,14 +9,14 @@ public class Evento extends ObjetoDominio{
 	private Date fecha;
 	
 	private Set <String> diputados;
-	/*
-	public Evento(String Nombre, Date Fecha){
-		 //Pre: Fecha valida y Nombre no existente
-		nombre=Nombre;
-		fecha=Fecha;
-		diputados=new TreeSet<String>();
-	}
-	*/
+	
+	/**
+	 * Crea un nuevo Evento
+	 * @param Gr Graf sobre el que s'executar� l'algorisme.
+	 * @param percentatge 
+	 * @return Conjunt de Comunitats resultant de l'execuci�.
+	 */
+	
 	public Evento(String Nombre, Date data, Set<String> Diputados){
 		 //Pre: Fecha valida y Nombre no existente
 		nombre=Nombre;

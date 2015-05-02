@@ -1,5 +1,6 @@
 package controladores;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -120,14 +121,37 @@ public class ControladorDominioVotacion {
 			if(comprovaExsitenciaVotacion(nombreVotacion))conjuntoVotacion.remove(nombreVotacion);
 		}
 		
-		public void addVotacion(String nombreVotacion, Integer Importancia, Date fecha){
+		public void addVotacion(String nombreVotacion, Integer Importancia, Date fecha, Map<String,TipoVoto> votos){
 			if(conjuntoVotacion.exists(nombreVotacion)){
 				hasError=true;
 				error.setClauExterna(nombreVotacion);
 				error.setCodiError(23);
 			}
 			else{
-				Votacion aux= new Votacion(nombreVotacion,fecha,Importancia);
+				ControladorDominioLegislatura CDL= new ControladorDominioLegislatura();
+				Integer leg=CDL.getID(fecha);
+				Set<String> dip=CDL.getDiputados(leg);
+				Map<String,TipoVoto> votosnew=new TreeMap<String,TipoVoto>();
+				for(String elem :dip){
+					if(esDiputado(elem)){
+						TipoVoto nouvot=TipoVoto.ABSTENCION;
+						if(votos.containsKey(dip)){
+						 nouvot=votos.get(elem);
+						 votos.remove(elem);
+						}
+						votosnew.put(elem, nouvot);
+					}
+					else return;
+				}
+				if(votos.size()>0){
+					hasError=true;
+					error.setClauExterna(nombreVotacion);
+					Iterator<String> it = votos.keySet().iterator();
+					error.addClauExterna(it.next());
+					error.setCodiError(25);
+					return;
+				}
+				Votacion aux= new Votacion(nombreVotacion,fecha,Importancia,votosnew);
 				conjuntoVotacion.add(nombreVotacion, aux);
 			}
 			

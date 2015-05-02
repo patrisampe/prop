@@ -217,7 +217,11 @@ public class ControladorDominioLegislatura {
 			error.setClauExterna(identificadorLegislatura);
 			error.addClauExterna(nombreDiputado);
 		}
-		else conjuntoLegislaturas.get(identificadorLegislatura).addDiputado(nombreDiputado);
+		else {
+			conjuntoLegislaturas.get(identificadorLegislatura).addDiputado(nombreDiputado);
+			if (!CDD.existsLegistura(nombreDiputado, identificadorLegislatura))
+				CDD.addLegistura(nombreDiputado, identificadorLegislatura);
+		}
 	}
 	
 	public void setDiputados(Integer identificadorLegislatura, Set<String> diputados) {
