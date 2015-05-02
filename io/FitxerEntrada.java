@@ -11,6 +11,7 @@ import java.util.TreeSet;
 /**
  * Entrada por fichero que permite leer cualquier tipo de dato basico.
  * @author David Moran
+ * @version 03/05/2015 01:02
  */
 public class FitxerEntrada implements Entrada {
 	

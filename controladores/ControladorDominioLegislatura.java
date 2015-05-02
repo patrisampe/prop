@@ -11,6 +11,7 @@ import dominio.Legislatura;
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de las legislaturas.
  * @author David Moran
+ * @version 03/05/2015 01:02
  */
 public class ControladorDominioLegislatura {
 	

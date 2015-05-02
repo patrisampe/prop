@@ -11,6 +11,7 @@ import dominio.Diputado;
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los diputados.
  * @author David Moran
+ * @version 03/05/2015 01:02
  */
 public class ControladorDominioDiputado {
 	
