@@ -1,30 +1,28 @@
 package dominio;
 
-import java.util.TreeSet;
 import java.util.Map;
-import java.util.Set;
-
 import time.DateInterval;
+import utiles.Conjunto;
 
 public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, Set<GrupoAfin> gruposAfines) {
-		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, periodo, gruposAfines);
+	private DateInterval periodo;
+	
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, Conjunto<GrupoAfinPorPeriodo> gruposAfines) {
+		super(nombre, indiceAfinidad, algoritmo, importancia, modificado);
+		this.gruposAfines = new Conjunto<GrupoAfin>(GrupoAfin.class);
+		for (GrupoAfinPorPeriodo grup:gruposAfines.getAll())
+			this.gruposAfines.add(grup.getID(), grup);
+		this.periodo = new DateInterval(periodo);
 	}
 	
-	public ResultadoDeBusquedaPorPeriodo(ResultadoDeBusquedaPorPeriodo R) {
-		super(R);
-		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
-	}
-
-	@Override
+		@Override
 	public String getTipoResultado() {
 		return "Búsqueda por periodo";
 	}
 
-	@Override
-	public String getDiputadoRelevante() {
-		return "";
+	public String getPeriodo() {
+		return periodo.toString();
 	}
 	
 }

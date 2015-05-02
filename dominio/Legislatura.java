@@ -159,7 +159,7 @@ public class Legislatura extends ObjetoDominio{
 	}
 	
 	/**
-	 * Añade el diputado a la lista de diputados activos de la legislatura.
+	 * Introduce el diputado en la lista de diputados activos de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void addDiputado(String nombreDiputado) {

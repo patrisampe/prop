@@ -5,10 +5,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import java.util.Iterator;
-
-import time.DateInterval;
-
+import utiles.Conjunto;
 
 public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	
@@ -18,18 +15,15 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	private TipoAlgoritmo algoritmo;
 	private Map<String, Integer> importancia;
 	private Boolean modificado;
-	private DateInterval intervalo;
-	protected Set<GrupoAfin> gruposAfines;
+	protected Conjunto<GrupoAfin> gruposAfines;
 	//Creadores
 	
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval intervalo, Set<GrupoAfin> gruposAfines) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
-		this.intervalo = new DateInterval(intervalo);
-		this.gruposAfines = new TreeSet<GrupoAfin>(gruposAfines);
 	}
 	
 	public ResultadoDeBusqueda(ResultadoDeBusqueda R) {
@@ -38,8 +32,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.algoritmo = R.algoritmo;
 		this.importancia = new TreeMap<String,Integer>(R.importancia);
 		this.modificado = new Boolean(R.modificado);
-		this.intervalo = new DateInterval(R.intervalo);
-		this.gruposAfines = new TreeSet<GrupoAfin>(R.gruposAfines);
 	}
 	
 	//Modificadores
@@ -53,63 +45,38 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	public void removeDiputado(String nombre) {
-		for (GrupoAfin grup:gruposAfines) {
+		for (GrupoAfin grup:gruposAfines.getAll()) {
 			grup.removeDiputado(nombre);
 			if (grup.esVacio()) eliminarGrupo(grup.getID());
 		}
 	}
 	
-	public void insertarDiputado(String nombre, Integer ID) {
-		Iterator<GrupoAfin> it = gruposAfines.iterator();
-		Boolean found = false;
-		while(it.hasNext() && !found) {
-			GrupoAfin grup = it.next();
-			if (grup.getID().equals(ID)) {
-				grup.addDiputado(nombre);
-				found = true;
-			}
-		}
+	public void addDiputado(String nombre, Integer ID) {
+		gruposAfines.get(ID).addDiputado(nombre);
 	}
 	
-	public void eliminarDiputado(String nombre, Integer ID) {
-		Iterator<GrupoAfin> it = gruposAfines.iterator();
-		Boolean found = false;
-		while(it.hasNext() && !found) {
-			GrupoAfin grup = it.next();
-			if (grup.getID().equals(ID)) {
-				grup.removeDiputado(nombre);
-				found = true;
-			}
-		}
+	public void removeDiputado(String nombre, Integer ID) {
+		gruposAfines.get(ID).removeDiputado(nombre);
+		if (gruposAfines.get(ID).esVacio())
+			gruposAfines.remove(ID);
 	}
 
-	public void moverDiputado(String nombre, Integer desdeID, Integer hastaID) {
-		insertarDiputado(nombre, hastaID);
-		eliminarDiputado(nombre, desdeID);
+	public void moveDiputado(String nombre, Integer desdeID, Integer hastaID) {
+		addDiputado(nombre, hastaID);
+		removeDiputado(nombre, desdeID);
 	}
 	
-	public void addGrupo(GrupoAfin nuevoGrupo) {
-		gruposAfines.add(nuevoGrupo);
+	public void addGrupo(GrupoAfinPorPeriodo nuevoGrupo) {
+		gruposAfines.add(nuevoGrupo.getID(), nuevoGrupo);
 	}
 	
 	public void eliminarGrupo(Integer ID) {
 		gruposAfines.remove(ID);
 	}
 
-//Consultores
+	//Consultores
 	public String getNombre() {
 		return this.nombre;
-	}
-	
-	public Set<GrupoAfin> getGruposAfines() {
-		return new TreeSet<GrupoAfin>(this.gruposAfines);
-	}
-	
-	public Set<Set<String>> getResultado() {
-		Set<Set<String>> listaResultado = new TreeSet<Set<String>>();
-		for (GrupoAfin grup:gruposAfines)
-			listaResultado.add(grup.getDiputados());
-		return listaResultado;
 	}
 	
 	public Integer getIndiceAfinidad() {
@@ -120,10 +87,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		return this.algoritmo;
 	}
 	
-	public DateInterval getIntervalo() {
-		return this.intervalo;
-	}
-	
 	public Boolean esModificado() {
 		return this.modificado;
 	}
@@ -132,7 +95,25 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		return this.importancia.get(nombreTipoEvento);
 	}
 	
+	public String getDiputadoRelevante() {
+		return "";
+	}
+	
+	public String getPeriodo() {
+		return "";
+	}
+	
+	public Conjunto<GrupoAfin> getGruposAfines() {
+		return new Conjunto<GrupoAfin>(this.gruposAfines);
+	}
+	
+	public Set<Set<String>> getResultado() {
+		Set<Set<String>> listaResultado = new TreeSet<Set<String>>();
+		for (GrupoAfin grup:gruposAfines.getAll())
+			listaResultado.add(grup.getDiputados());
+		return listaResultado;
+	}
+	
 	public abstract String getTipoResultado();
-	public abstract String getDiputadoRelevante();
 	
 }

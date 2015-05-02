@@ -55,8 +55,8 @@ public class ControladorDominioDiputado {
 	}
 	
 	/**
-	 * Añade al sistema un conjunto de diputados.
-	 * @param diputados - conjunto de diputados que se desa añadir al sistema.
+	 *  Introduce en el sistema un conjunto de diputados.
+	 * @param diputados - conjunto de diputados que se desa introducir al sistema.
 	 */
 	public void addAll(Set<Diputado> diputados){
 		conjuntoDiputados.addAll(diputados);
@@ -79,7 +79,7 @@ public class ControladorDominioDiputado {
 	}
 	
 	/**
-	 * Añade al sistema un diputado a partir de sus datos.
+	 *  Introduce en el sistema un diputado a partir de sus datos.
 	 * @param nombreDiputado - Nombre del diputado.
 	 * @param nombrePartido - Nombre del partido politico al que pertenece el diputado.
 	 * @param nombreEstado - Nombre del estado al que representa el diputado.
@@ -213,9 +213,9 @@ public class ControladorDominioDiputado {
 	}
 
 	/**
-	 * Añade una legislatura a la lista de leguslaturas activas de un diputado.
+	 * Introduce una legislatura en la lista de leguslaturas activas de un diputado.
 	 * <p>
-	 * Este metodo garantiza que el diputado sera añadido (si no lo ha sido ya) en la lista de diputados activos de la legislatura.
+	 * Este metodo garantiza que el diputado sera introducido (si no lo ha sido ya) en la lista de diputados activos de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
@@ -244,7 +244,7 @@ public class ControladorDominioDiputado {
 	/**
 	 * Establece un conjunto de legislaturas como lista de leguslaturas activas de un diputado.
 	 * <p>
-	 * Este metodo garantiza que el diputado sera añadido (si no lo ha sido ya) en las listas de diputados activos de las legislaturas.
+	 * Este metodo garantiza que el diputado sera introducido (si no lo ha sido ya) en las listas de diputados activos de las legislaturas.
 	 * @param nombreDiputado - Nombre del diputado.
 	 * @param legislaturas - Conjunto de identificadores de legislaturas.
 	 */

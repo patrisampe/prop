@@ -154,7 +154,7 @@ public class Diputado extends ObjetoDominio {
 	}
 	
 	/**
-	 * Añade la legislatura a la lista de legislaturas activas del diputado.
+	 * Introduce la legislatura en la lista de legislaturas activas del diputado.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
 	public void addLegistura(Integer identificadorLegislatura) {
