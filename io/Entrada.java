@@ -1,5 +1,10 @@
 package io;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import dominio.algoritmos.Graf;
+
 public interface Entrada {
 
 	public void close();
@@ -33,5 +38,9 @@ public interface Entrada {
 	public Boolean[] ReadBoolean(int n);
 
 	public Long[] ReadLong(int n);
+
+	public Set<String> ReadSetString(int readInt);
+
+	public Graf ReadGraf(int v, int a);
 
 }

@@ -10,6 +10,7 @@ import io.Sortida;
 import java.util.HashSet;
 
 import dominio.Evento;
+import dominio.ResultadoDeBusquedaPorDiputado;
 import dominio.algoritmos.Graf;
 
 public class GrafDriver { //No està gens fet, però s'intenta
@@ -35,10 +36,10 @@ public class GrafDriver { //No està gens fet, però s'intenta
 				 GD.createGraf();
 			     break;
 			 case 2: 
-				 GD.createGraf(EF.ReadSetString());
+				 GD.createGraf((HashSet<String>) EF.ReadSetString(EF.ReadInt()));
 			     break;
 			 case 3: 
-				 Graf G2 = EF.ReadGraf();
+				 Graf G2 = EF.ReadGraf(EF.ReadInt(), EF.ReadInt());
 				 GD.createGraf(G2);
 			     break;
 			 case 4: 
