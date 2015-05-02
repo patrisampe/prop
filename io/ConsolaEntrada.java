@@ -1,5 +1,6 @@
 package io;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -48,7 +49,13 @@ public class ConsolaEntrada implements Entrada {
 	}
 	
 	public Double ReadDouble(){
-    	return sc.nextDouble();
+		try {
+			return sc.nextDouble();
+		} catch (InputMismatchException e) {
+			String S = sc.next();
+			S.replace('.', ',');
+			return Double.parseDouble(S);
+		}
 	}
 	
 	public Boolean ReadBoolean(){
@@ -86,7 +93,13 @@ public class ConsolaEntrada implements Entrada {
 	public Double[] ReadDouble(int n){
 		Double[] out = new Double[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextDouble()) out[i] = sc.nextDouble();
+			try {
+				if (sc.hasNextDouble()) out[i] = sc.nextDouble();
+			} catch (InputMismatchException e) {
+				String S = sc.next();
+				S.replace('.', ',');
+				out[i] = Double.parseDouble(S);
+			}
 		}
     	return out;
 	}
