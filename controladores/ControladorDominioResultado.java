@@ -33,44 +33,50 @@ public class ControladorDominioResultado {
 		return instancia;
 	}
 	
+	private Boolean nombreResultadoDisponible(String nombre) {
+		if (conjuntoResultados.exists(nombre)) {
+			hasError = true;
+			error = new CodiError(32);
+			error.setClauExterna(nombre);
+			return false;
+		}
+		hasError = false;
+		return true;
+	}
+	
 	private Boolean existeDiputado(String nombre) {
 		ControladorDominioDiputado controladorD = ControladorDominioDiputado.getInstance();
 		if (controladorD.existsDiputado(nombre)) {
+			hasError = true;
 			error = new CodiError(3);
 			error.setClauExterna(nombre);
 			return true;
 		}
+		hasError = false;
 		return false;
 	}
 	
-	private Boolean nombreResultadoDisponible(String nombre) {
-		if (conjuntoResultados.exists(nombre)) {
+	private Boolean existeNombreResultado(String nombre) {
+		if (!conjuntoResultados.exists(nombre)) {
 			hasError = true;
 			error = new CodiError(31);
 			error.setClauExterna(nombre);
 			return false;
 		}
+		hasError = false;
 		return true;
 	}
 	
-	private Boolean existeNombreResultado(String nombre) {
-		if (conjuntoResultados.exists(nombre)) {
+	private Boolean existeGrupoAfin(String nombreResultado, Integer ID) {
+		if (!conjuntoResultados.get(nombreResultado).existeGrupo(ID)) {
 			hasError = true;
-			error = new CodiError(32);
-			error.setClauExterna(nombre);
-			return true;
+			error = new CodiError(31);
+			error.setClauExterna(ID);
+			error.addClauExterna(nombreResultado);
+			return false;
 		}
-		return false;
-	}
-	
-	private Boolean existeNombreResultado(String nombre, Integer ID) {
-		if (conjuntoResultados.get(nombre).existeGrupo(ID)) {
-			hasError = true;
-			error = new CodiError(32);
-			error.setClauExterna(nombre);
-			return true;
-		}
-		return false;
+		hasError = false;
+		return true;
 	}
 	
 	//Modificadores
@@ -132,16 +138,18 @@ public class ControladorDominioResultado {
 	}
 	
 	public void addDiputado(String nombreResultado, String nombreDiputado, Integer ID) {
-		if (existeNombreResultado(nombreResultado) && existeDiputado(nombreDiputado) && existeGrupoAfin(ID))
-		conjuntoResultados.get(nombreResultado).addDiputado(nombreDiputado, ID);
+		if (existeNombreResultado(nombreResultado) && existeDiputado(nombreDiputado) && existeGrupoAfin(nombreResultado, ID))
+			conjuntoResultados.get(nombreResultado).addDiputado(nombreDiputado, ID);
 	}
 	
 	public void removeDiputado(String nombreResultado, String nombreDiputado, Integer ID) {
-		conjuntoResultados.get(nombreResultado).removeDiputado(nombreDiputado, ID);
+		if (existeNombreResultado(nombreResultado) && existeDiputado(nombreDiputado) && existeGrupoAfin(nombreResultado, ID))
+			conjuntoResultados.get(nombreResultado).removeDiputado(nombreDiputado, ID);
 	}
 	
 	public void moveDiputado(String nombreResultado, String nombreDiputado, Integer desdeID, Integer hastaID) {
-		conjuntoResultados.get(nombreResultado).moveDiputado(nombreDiputado, desdeID, hastaID);
+		if (existeNombreResultado(nombreResultado) && existeDiputado(nombreDiputado) && existeGrupoAfin(nombreResultado, ID))
+			conjuntoResultados.get(nombreResultado).moveDiputado(nombreDiputado, desdeID, hastaID);
 	}
 	
 	//Consultores
@@ -154,27 +162,47 @@ public class ControladorDominioResultado {
 	}
 	
 	public String getTipoDeResultado(String nombre) {
-		return conjuntoResultados.get(nombre).getTipoResultado();	
+		if (existeNombreResultado(nombre))
+			return conjuntoResultados.get(nombre).getTipoResultado();
+		else return null;
 	}
 	
 	public Boolean haSidoModificado(String nombre) {
-		return conjuntoResultados.get(nombre).esModificado();
+		if (existeNombreResultado(nombre))
+			return conjuntoResultados.get(nombre).esModificado();
+		else return null;
 	}
 	
 	public String getIndiceAfinidad(String nombre) {
-		return conjuntoResultados.get(nombre).getIndiceAfinidad().toString();
+		if (existeNombreResultado(nombre))
+			return conjuntoResultados.get(nombre).getIndiceAfinidad().toString();
+		else return null;
 	}
 	
 	public String getTipoAlgoritmo(String nombre) {
-		return conjuntoResultados.get(nombre).getAlgoritmo().toString();
+		if (existeNombreResultado(nombre))
+			return conjuntoResultados.get(nombre).getAlgoritmo().toString();
+		else return null;
 	}
 	
 	public String getPeriodo(String nombre) {
-		return conjuntoResultados.get(nombre).getPeriodo().toString();
+		if (existeNombreResultado(nombre))
+			return conjuntoResultados.get(nombre).getPeriodo().toString();
+		else return null;
 	}
 	
 	public Set<Set<String>> getResultado(String nombre) {
-		return conjuntoResultados.get(nombre).getResultado();
+		if (existeNombreResultado(nombre))
+			return conjuntoResultados.get(nombre).getResultado();
+		else return null;
+	}
+	
+	public Boolean getHasError() {
+		return hasError;
+	}
+	   
+	public CodiError getError(){
+		return error;
 	}
 	
 }

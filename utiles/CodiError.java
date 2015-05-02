@@ -47,6 +47,7 @@ public class CodiError {
 		Diccionario.put(30, "El indice de afinidad debe ser un porcentaje (0-100)");
 		Diccionario.put(31, "No existe ningún resultado de búsqueda con nombre %1");
 		Diccionario.put(32, "Ya existe un resultado de búsqueda con nombre %1");
+		Diccionario.put(33, "No existe el grupo afín %1 en el resultado de búsqueda %2");
         return Collections.unmodifiableMap(Diccionario);
         /*
 		USAGE: (CE: objecte de la classe CodiError)
