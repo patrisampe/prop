@@ -343,4 +343,17 @@ public class Date{
 		return ANS;
 	}
 	
+	/**
+	 * Calcula la fecha mediana entre dos fechas dadas.
+	 * @param D1 - Primera fecha.
+	 * @param D2 - Segunda fecha
+	 * @return Fecha situada en la mediana entre D1 y D2.
+	 */
+	public static Date mediana(Date D1, Date D2) {
+		if (D1.compareTo(D2) > 0) return Date.mediana(D2, D1);
+		DateInterval DI = new DateInterval(D1, D2);
+		Integer dias = DI.days()/2;
+		return (new Date(D1)).incremento(dias);
+	}
+	
 }
