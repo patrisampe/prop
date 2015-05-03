@@ -58,6 +58,14 @@ public class CodiError {
 		clauExterna = new Vector<String>();
 	}
 	/**
+	 * Crear un CodiError con codiError=numError
+	 * @param numError
+	 */
+	public CodiError(Integer numError) {
+		codiError = numError;
+		clauExterna = new Vector<String>();
+	}
+	/**
 	 * Et permet tornar a utilitzar el mateix codi error, ja que torna a incialitzar tots els camps
 	 */
 	public void netejaCodiError(){
