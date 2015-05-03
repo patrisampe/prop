@@ -1,6 +1,5 @@
 package utiles;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -100,17 +99,9 @@ public class Conjunto<T extends ObjetoDominio> {
 	 * @param S - Set que contiene todos los elementos a introducir.
 	 */
 	public void addAll(Set<T> S){
-		if (!S.isEmpty()) {
-			Iterator<T> it = S.iterator();
-			while (it.hasNext()) {
-				T elemento = it.next();
-				if (!hasIntegerKey){ //String
-					conjunto.put(elemento.getNombre(), elemento);
-				}
-				else { //Integer
-					conjunto.put(elemento.getID().toString(), elemento);				
-				}
-			}
+		for (T elemento:S) {
+			if (!hasIntegerKey) conjunto.put(elemento.getNombre(), elemento);
+			else conjunto.put(elemento.getID().toString(), elemento);				
 		}
 	}
 	
@@ -120,8 +111,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	 */
 	public Set<T> getAll() {
 		Set<T> S = new TreeSet<T>();
-		Iterator<String> it = conjunto.keySet().iterator();
-		while (it.hasNext()) S.add(conjunto.get(it.next()));
+		for (String clave:conjunto.keySet()) S.add(conjunto.get(clave));
 		return S;
 	}
 	
@@ -132,8 +122,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	public Set<Integer> getIntegerKeys() {
 		if (!hasIntegerKey) return new TreeSet<Integer>();
 		Set<Integer> S = new TreeSet<Integer>();
-		Iterator<String> it = conjunto.keySet().iterator();
-		while (it.hasNext()) S.add(Integer.parseInt(it.next()));			
+		for (String clave:conjunto.keySet()) S.add(Integer.parseInt(clave));			
 		return S;
 	}
 	
@@ -171,7 +160,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	 */
 	public T get(String nombreObjeto) {
 		if (!hasIntegerKey) return conjunto.get(nombreObjeto);
-		return null;
+		else return null;
 	}
 	
 	/**
@@ -181,7 +170,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	 */
 	public T get(Integer idObjeto) {
 		if (hasIntegerKey) return conjunto.get(idObjeto.toString());
-		return null;
+		else return null;
 	}
 	
 	/**
@@ -193,7 +182,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	 */
 	public Boolean exists(String nombreObjeto) {
 		if (!hasIntegerKey) return conjunto.containsKey(nombreObjeto);
-		return false;
+		else return false;
 	}
 	
 	/**
@@ -205,7 +194,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	 */
 	public Boolean exists(Integer idObjeto) {
 		if (hasIntegerKey) return conjunto.containsKey(idObjeto.toString());
-		return false;
+		else return false;
 	}
 	
 	
@@ -233,13 +222,9 @@ public class Conjunto<T extends ObjetoDominio> {
 	 * @return Conjunto resultante de la union (C1_u_C2).
 	 */
 	public static <U extends ObjetoDominio> Conjunto<U> union(Conjunto<U> C1, Conjunto<U> C2) {
-		Set<U> S1 = C1.getAll();
-		Set<U> S2 = C2.getAll();
 		Set<U> S = new TreeSet<U>();
-		Iterator<U> it = S1.iterator();
-		while (it.hasNext()) S.add(it.next());
-		it = S2.iterator();
-		while (it.hasNext()) S.add(it.next());
+		for (U elemento:C1.getAll()) S.add(elemento);
+		for (U elemento:C2.getAll()) S.add(elemento);
 		Class<U> tipo = C1.type;
 		Conjunto<U> C = new Conjunto<U>(tipo);
 		C.addAll(S);
@@ -253,13 +238,12 @@ public class Conjunto<T extends ObjetoDominio> {
 	 * @return Conjunto resultante de la interseccion (C1_n_C2).
 	 */
 	public static <U extends ObjetoDominio> Conjunto<U> intersection(Conjunto<U> C1, Conjunto<U> C2) {
-		Set<U> S1 = C1.getAll();
-		Set<U> S2 = C2.getAll();
-		Set<U> S = new TreeSet<U>();
-		Iterator<U> it = S1.iterator();
-		while (it.hasNext()) {
-			U aux = it.next();
-			if (S2.contains(aux)) S.add(aux);
+		Set<U> S = new TreeSet<U>();		
+		for (U elemento:C1.getAll()) {
+			if (C2.getAll().contains(elemento)) S.add(elemento);
+		}
+		for (U elemento:C2.getAll()) {
+			if (C1.getAll().contains(elemento)) S.add(elemento);
 		}
 		Class<U> tipo = C1.type;
 		Conjunto<U> C = new Conjunto<U>(tipo);
@@ -274,13 +258,9 @@ public class Conjunto<T extends ObjetoDominio> {
 	 * @return Conjunto resultante de la diferencia (C1 - C2).
 	 */
 	public static <U extends ObjetoDominio> Conjunto<U> difference(Conjunto<U> C1, Conjunto<U> C2) {
-		Set<U> S1 = C1.getAll();
-		Set<U> S2 = C2.getAll();
-		Set<U> S = new TreeSet<U>();
-		Iterator<U> it = S1.iterator();
-		while (it.hasNext()) {
-			U aux = it.next();
-			if (!S2.contains(aux)) S.add(aux);
+		Set<U> S = new TreeSet<U>();		
+		for (U elemento:C1.getAll()) {
+			if (!C2.getAll().contains(elemento)) S.add(elemento);
 		}
 		Class<U> tipo = C1.type;
 		Conjunto<U> C = new Conjunto<U>(tipo);
