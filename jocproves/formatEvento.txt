@@ -1,0 +1,20 @@
+Comando 1: 
+	  Escribe los diputados de un evento
+	  Formato: 1 Integer=x, x String(nombreDiputados)
+Comando 2:
+	  Escribe los eventos por pantalla
+Comando 3:
+	  Inserta diputados al evento
+	  Formato: 1 Integer=x, x String(nombreDiputados)
+Comando 4:
+	  Modifica la data del evento
+	  Formato: 3 Integer
+Comando 5:
+	  Crea un nuevo evento copia del original y lo escribe en el fichero
+	  Formato: 1 String
+Comando 6:
+	  Elimina diputados del evento
+	  Formato: 1 Integer=x, x String(nombreDiputados)
+Comando 7:
+	  Crea un nuevo evento y lo escribe ne el fichero
+	  String, 3 Integer, 1 Integer=x, x String(nombres de Diputados)
