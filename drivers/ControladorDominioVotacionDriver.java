@@ -2,9 +2,11 @@ package drivers;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import time.Date;
+import controladores.ControladorDominioDiputado;
 import controladores.ControladorDominioVotacion;
 import io.ConsolaEntrada;
 import io.ConsolaSortida;
@@ -12,6 +14,7 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
+import dominio.Diputado;
 import dominio.TipoVoto;
 import dominio.Votacion;
 /**
@@ -272,6 +275,13 @@ public class ControladorDominioVotacionDriver {
 				 DCDV.testescriureControlador(EF, SF, CDV);
 				 break;
 			 case 19:
+				 ControladorDominioDiputado CDD=ControladorDominioDiputado.getInstance();				 
+				 Integer n = EF.ReadInteger();
+			     Set<Diputado> S1 = new TreeSet<Diputado>();
+				 for (Integer i = 0; i < n; ++i) S1.add(ControladorDominioDiputadoDriver.diputado(EF));
+			     CDD.addAll(S1);
+			     break;
+			 case 20:
 				 
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");

@@ -9,8 +9,18 @@ import dominio.Diputado;
 import dominio.Legislatura;
 import io.*;
 
+/**
+ * Driver para la clase Conjunto.
+ * @author David Moran
+ * @version 03/05/2015 01:02
+ */
 public class ConjuntoDriver {
 	
+	/**
+	 * Lector de diputados.
+	 * @param E - Interficie de entrada.
+	 * @return Diputado leido por la entrada.
+	 */
 	public static Diputado diputado(Entrada E){
 		String nombre = E.ReadString();
 		String partidoPolitico = E.ReadString();
@@ -19,6 +29,11 @@ public class ConjuntoDriver {
 		return new Diputado(nombre, partidoPolitico, estado, fechaDeNacimiento);
 	}
 	
+	/**
+	 * Lector de legislaturas.
+	 * @param E - Interficie de entrada.
+	 * @return Legislatura leida por la entrada.
+	 */
 	public static Legislatura legislatura(Entrada E){
 		Integer identificador = E.ReadInteger();
 		Date fechaInicio = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());

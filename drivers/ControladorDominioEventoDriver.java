@@ -1,8 +1,10 @@
 package drivers;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 import time.Date;
+import controladores.ControladorDominioDiputado;
 import controladores.ControladorDominioEvento;
 import io.ConsolaEntrada;
 import io.ConsolaSortida;
@@ -10,6 +12,7 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
+import dominio.Diputado;
 import dominio.Evento;
 /**
  * 
@@ -25,6 +28,7 @@ public class ControladorDominioEventoDriver {
 			CDE.netejaError();
 			return true;
 		}
+		else SF.Write("OK");
 		return false;
 	}
 	
@@ -204,6 +208,7 @@ public class ControladorDominioEventoDriver {
 		ControladorDominioEvento CDE=ControladorDominioEvento.getInstance();
 		int a= EF.ReadInt();
 		while(a!=-1){
+			SF.Write(a);
 			switch(a) {
 			 case 1: 
 				 DCDE.testaddTipoEvento(EF, SF, CDE);
@@ -261,7 +266,12 @@ public class ControladorDominioEventoDriver {
 				 DCDE.testesParticipanteEvento(EF, SF, CDE);
 				 break;
 			 case 19:
-				 //añade diputados
+				 ControladorDominioDiputado CDD=ControladorDominioDiputado.getInstance();				 
+				 Integer n = EF.ReadInteger();
+			     Set<Diputado> S1 = new TreeSet<Diputado>();
+				 for (Integer i = 0; i < n; ++i) S1.add(ControladorDominioDiputadoDriver.diputado(EF));
+			     CDD.addAll(S1);
+			     break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;

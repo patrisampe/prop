@@ -1,0 +1,198 @@
+1
+OK
+1
+OK
+19
+8
+OK
+8
+ERROR
+El evento Conferencia1 ya existe en el tipo de evento Conferencias.
+8
+ERROR
+El diputado Sergi no existe.
+8
+OK
+8
+OK
+8
+OK
+8
+ERROR
+El evento Conferencia3 ya existe en el tipo de evento Conferencias.
+8
+ERROR
+El tipo de evento EventoRadio no existe.
+2
+ERROR
+El tipo de evento EventoRadio no existe.
+2
+OK
+3
+OK
+3
+4
+ERROR
+El tipo de evento EventoRadio no existe.
+4
+OK
+ 
+4
+OK
+Conferencia1, Conferencia2, Conferencia3, Conferencia4
+ 
+5
+OK
+ 
+5
+OK
+ 
+5
+OK
+ 
+5
+ERROR
+El tipo de evento EventoRadio no existe.
+13
+OK
+Dani, Patricia
+13
+OK
+Dani, Patricia
+13
+OK
+Cristina, Dani
+13
+OK
+Clara, Patricia
+6
+OK
+6
+ERROR
+El diputado Juan no existe.
+6
+OK
+13
+OK
+Dani
+13
+OK
+Dani
+13
+OK
+Cristina, Dani
+13
+OK
+Clara
+7
+ERROR
+El tipo de evento EventoRadio no existe.
+16
+ActosBeneficos, Conferencias
+7
+OK
+16
+Conferencias
+9
+ERROR
+El tipo de evento ActosBeneficos no existe.
+9
+ERROR
+El evento Conferencia8 no existe en el tipo de evento Conferencias.
+9
+OK
+10
+OK
+false
+10
+OK
+true
+11
+ERROR
+El tipo de evento ActosBeneficos no existe.
+11
+ERROR
+El evento Conferencia1 no existe en el tipo de evento Conferencias.
+11
+OK
+12
+OK
+2
+10
+1995
+12
+ERROR
+El evento Conferencia1 no existe en el tipo de evento Conferencias.
+12
+ERROR
+El tipo de evento ActosBeneficos no existe.
+5
+OK
+ 
+13
+OK
+Dani
+13
+ERROR
+El evento Conferencia1 no existe en el tipo de evento Conferencias.
+13
+ERROR
+El tipo de evento ActosBeneficos no existe.
+14
+ERROR
+El tipo de evento ActosBeneficos no existe.
+14
+ERROR
+El evento Conferencia1 no existe en el tipo de evento Conferencias.
+13
+OK
+Dani
+14
+ERROR
+El diputado Juan no existe.
+14
+OK
+14
+ERROR
+El diputado Dani ya existe en el evento Conferencia2 en el tipo de evento Conferencias.
+14
+OK
+13
+OK
+Cristina, Dani, Patricia
+15
+ERROR
+El tipo de evento ActosBeneficos no existe.
+15
+ERROR
+El evento Conferencia1 no existe en el tipo de evento Conferencias.
+15
+ERROR
+El diputado Juan no existe en el evento Conferencia2 en el tipo de evento Conferencias.
+15
+ERROR
+El diputado Monica no existe en el evento Conferencia2 en el tipo de evento Conferencias.
+15
+OK
+16
+Conferencias
+17
+Conferencias
+18
+ERROR
+El tipo de evento ActosBeneficos no existe.
+18
+ERROR
+El evento Conferencia1 no existe en el tipo de evento Conferencias.
+18
+ERROR
+El diputado Juan no existe.
+18
+OK
+false
+18
+OK
+false
+18
+OK
+true
