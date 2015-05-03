@@ -43,6 +43,7 @@ Conferencia1, Conferencia2, Conferencia3, Conferencia4
  
 5
 OK
+Conferencia2, Conferencia3
  
 5
 OK
@@ -128,6 +129,7 @@ ERROR
 El tipo de evento ActosBeneficos no existe.
 5
 OK
+Conferencia3
  
 13
 OK

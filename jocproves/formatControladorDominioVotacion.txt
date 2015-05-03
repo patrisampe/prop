@@ -52,4 +52,11 @@ Comando 17:
 Comando 18:
 	Escribe el controlador en el fichero
 Comando 19:
-	Añade diputado 
+	Añade diputados al Conjunto de Diputados
+	Formato:1 Integer= x. Par cada x (3 String, 3 Integer)
+Comando 20:
+	Añade diputados al Conjunto de Diputados
+	Formato:1 Integer= x. Par cada x (1 Integer, 3 Integer, 3 Integer)
+Comando 21:
+	Añade las legislaturas a diputados
+	Formato: 1 String, 1 Integer
