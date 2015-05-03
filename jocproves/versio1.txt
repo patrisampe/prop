@@ -1,0 +1,35 @@
+Conferencias
+3
+ 
+Conferencias
+2
+ 
+Conferencia1
+2
+10
+1995
+Monica, Patri
+ 
+Conferencia2
+2
+11
+2005
+Cristina, Juana
+ 
+Conferencia3
+4
+10
+2015
+ 
+Conferencias
+2
+Conferencia1, Conferencia2, Conferencia3
+ 
+true
+false
+true
+false
+ActoBenefico
+2
+Conferencia1, Conferencia2, Conferencia3
+ 

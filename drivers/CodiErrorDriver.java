@@ -6,7 +6,6 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
-import dominio.Evento;
 import utiles.CodiError;
 
 public class CodiErrorDriver{
@@ -14,6 +13,13 @@ public class CodiErrorDriver{
 	/**
 	 * @param args
 	 */
+	public void escriureCodiError(Sortida SF,CodiError ce){
+		
+	   int mida= ce.getClauExterna().size();
+	   SF.Write(mida, ce.getClauExterna().toArray(new String[mida]));
+	   SF.Write(ce.getCodiError());
+	   SF.Write(ce.getMensajeError());
+	}
 	
 	
 	public static void main(String[] args) {
@@ -25,20 +31,46 @@ public class CodiErrorDriver{
 		Sortida SF = new FitxerSortida(Output);
 		CodiErrorDriver DCE= new CodiErrorDriver();
 		Sortida SC = new ConsolaSortida();
-		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
+		SC.Write("Recorda: El primer que fem es inicialitzar l'error.");
 		CodiError ce=new CodiError();
 		int a= EF.ReadInt();
 		while(a!=-1){
 			switch(a) {
 			 case 1: 
-				 DE.esParticipante(EF, e, SF);
+				 ce.netejaCodiError();
 			     break;
 			 case 2: 
-				 DE.escriureEvento(SF,e);
+				 CodiError aux= new CodiError(ce);
+				 DCE.escriureCodiError(SF, aux);
 			     break;
-
+			 case 3:
+				 Integer newCodi = EF.ReadInteger();
+				 CodiError auxi= new CodiError(newCodi);
+				 DCE.escriureCodiError(SF, auxi);
+				 break;
+			 case 4:
+				 Integer noucodi= EF.ReadInteger();
+				 ce.setCodiError(noucodi);
+				 break;
+			 case 5:
+				 Integer clauex=EF.ReadInteger();
+				 ce.addClauExterna(clauex);
+				 break;
+			 case 6:
+				 String clauexs=EF.ReadString();
+				 ce.addClauExterna(clauexs);
+				 break;
+			 case 7:
+				 DCE.escriureCodiError(SF,ce);
+				 break;
+			 default: 
+				    SF.Write(" numero no correcto. Para cerrar -1 ");
+				     break;
+				 }
+				a=EF.ReadInt();
 			}
+			EF.close();
+			SF.close();
 		}
-	}
 }
 

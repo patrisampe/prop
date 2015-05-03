@@ -1,0 +1,20 @@
+Comanda 1: 
+	  Limpia el codigo Eror
+Comanda 2:
+	  Te crea un nuevo codigo error copia del que ya tenia y te lo escribe por pantalla
+Comanda 3: 
+	  Te crea un nuevo CodigoError con un codigo error que te passa el usuario y te lo escribe por pantalla
+	  Formato: 1 integer(sera el codigoError de ese codigoError)
+Comanda 4:
+	  Te canvia el campo codiError
+	  Formato: 1 Integer
+Comando 5:
+	   Te añade una nueva Clave externa Integer
+	  Formato: 1 Integer
+
+Comando 6:
+	  Te añade una nueva Clave externa String
+	  Formato: 1 String
+Comando 7:
+	  Te escribe el Codigo Error, el mensaje, sus claves externas y su codigo
+
