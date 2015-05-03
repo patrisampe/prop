@@ -471,7 +471,7 @@ public class ControladorDominioLegislatura {
 			error.addClauExterna(identificadorLegislatura);
 			return false;
 		}
-		else return conjuntoLegislaturas.get(identificadorLegislatura).hasDiputado(nombreDiputado);
+		else return conjuntoLegislaturas.get(identificadorLegislatura).esActivo(nombreDiputado);
 	}
 	
 	/**
