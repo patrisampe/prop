@@ -168,20 +168,17 @@ public class Louvain {
 	 * @param percentatge 
 	 * @return Conjunt de Comunitats resultant de l'execució.
 	 */
-	public static HashSet< HashSet<String> > executa(Sortida sC, GrafLouvain Gr, Integer percentatge) {
+	public static HashSet< HashSet<String> > executa(GrafLouvain Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);
 		init(Gr); 
 		boolean modificacion = true;
 		while(Comunidades.size() > 1 && modificacion) {
-			G.print(sC);
 			modificacion = false;
-			sC.Write("Incrementando Modularidad..");
 			while(IncrementModularity()) modificacion = true; 
-			sC.Write("Agregando grafo");
 			agregaGraf();
 			
 		}
-		G.print(sC);
+		//G.print(sC);
 		return retorna(percentatge);
 		
 	}

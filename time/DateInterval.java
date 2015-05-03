@@ -2,8 +2,8 @@ package time;
 
 /**
  * Intervalo de tiempo entre dos fechas.
- * @author David Moran
- * @version 03/05/2015 01:02
+ * @author Yoel Cabo
+ * @version 04/05/2015 01:02
  */
 public class DateInterval {
 	

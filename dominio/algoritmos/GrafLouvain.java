@@ -148,7 +148,7 @@ public class GrafLouvain extends Graf {
 		return sumaPesosAdjacentsInclusiva(Comunitat) - sumaPesos(Comunitat);
 	}
 
-	public void print(Sortida sC) {
+	/*public void print(Sortida sC) {
 		sC.Write("Nodes");
 		for (String Node : Diccionari.keySet()) sC.Write(Node);
 		for (Integer i = 0; i < Matriu.size();++i) {
@@ -157,7 +157,7 @@ public class GrafLouvain extends Graf {
 
 			}
 		}
-	}
+	}*/
 	
 	
 	
