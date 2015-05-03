@@ -4,15 +4,30 @@ import time.Date;
 import dominio.Legislatura;
 import io.*;
 
+/**
+ * Driver para la clase Legislatura.
+ * @author David Moran
+ * @version 03/05/2015 01:02
+ */
 public class LegislaturaDriver {
 	
+	/**
+	 * Lector de legislaturas.
+	 * @param E - Interficie de entrada.
+	 * @return Legislatura leida por la entrada.
+	 */
 	public static Legislatura legislatura(Entrada E){
 		Integer identificador = E.ReadInteger();
 		Date fechaInicio = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());
 		Date fechaFinal = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());
 		return new Legislatura(identificador, fechaInicio, fechaFinal);
 	}
-	
+
+	/**
+	 * Lector de legislaturas sin fecha de finalizacion.
+	 * @param E - Interficie de entrada.
+	 * @return Legislatura leida por la entrada.
+	 */
 	public static Legislatura legislaturaSinFin(Entrada E){
 		Integer identificador = E.ReadInteger();
 		Date fechaInicio = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());

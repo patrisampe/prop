@@ -7,8 +7,18 @@ import time.Date;
 import dominio.Diputado;
 import io.*;
 
+/**
+ * Driver para la clase Diputado.
+ * @author David Moran
+ * @version 03/05/2015 01:02
+ */
 public class DiputadoDriver {
 	
+	/**
+	 * Lector de diputados.
+	 * @param E - Interficie de entrada.
+	 * @return Diputado leido por la entrada.
+	 */
 	public static Diputado diputado(Entrada E){
 		String nombre = E.ReadString();
 		String partidoPolitico = E.ReadString();

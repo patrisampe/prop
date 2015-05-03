@@ -12,7 +12,7 @@ import utiles.Conjunto;
 public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	
 	/**
-	 * Nombre del resultado(identificador).
+	 * Intervalo de tiempo en el que se ha realizado la busqueda.
 	 */
 	private DateInterval periodo;
 	
