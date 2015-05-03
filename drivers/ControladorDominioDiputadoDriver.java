@@ -12,7 +12,7 @@ import io.*;
 /**
  * Driver para el controlador de dominio de diputados.
  * @author David Moran
- * @version 03/05/2015 01:02
+ * @version 04/05/2015 01:00
  */
 public class ControladorDominioDiputadoDriver {
 	

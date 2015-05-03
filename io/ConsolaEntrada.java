@@ -8,7 +8,7 @@ import java.util.TreeSet;
 /**
  * Entrada por consola que permite leer cualquier tipo de dato basico.
  * @author David Moran
- * @version 03/05/2015 01:02
+ * @version 04/05/2015 01:00
  */
 public class ConsolaEntrada implements Entrada {
 	

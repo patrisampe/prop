@@ -3,6 +3,7 @@ package dominio;
 /**
  * Objeto generico del dominio de datos.
  * @author David Moran
+ * @version 04/05/2015 01:00
  */
 public class ObjetoDominio implements Comparable<ObjetoDominio> {
 	
