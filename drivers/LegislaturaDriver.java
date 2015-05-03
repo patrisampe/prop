@@ -61,20 +61,20 @@ public class LegislaturaDriver {
 			S.Write("1: Insertar una nueva legislatura(por atributos).");
 			S.Write("2: Insertar una nueva legislatura sin fin(por atributos).");
 			S.Write("3: Insertar una nueva legislatura(por copia).");
-			S.Write("4: Consulta el identificador de la legislatura.");
-			S.Write("5: Consulta la fecha de inicio de la legislatura.");
-			S.Write("6: Comprueba si la legislatura tiene fecha de finalizacion.");
-			S.Write("7: Consulta la fecha de finalizacion de la legislatura.");
-			S.Write("8: Consulta los diputados activos de la legislatura.");
-			S.Write("9: Comprueba si el la legislatura tiene el diputado activo.");
-			S.Write("10: Comprueba si la legislatura es una legislatura nula.");
-			S.Write("11: Modifica la fecha de inicio de la legislatura.");
-			S.Write("12: Modifica la fecha de finalizacion de la legislatura.");
-			S.Write("13: Elimina la fecha de finalizacion de la legislatura.");
-			S.Write("14: Inserta un nuevo diputado en la legislatura.");
-			S.Write("15: Establece los n diputados de la legislatura.");
-			S.Write("16: Elimina un diputado de la legislatura.");
-			S.Write("17: Elimina todos los diputados de la legislatura.");
+			S.Write("4: Consultar el identificador de la legislatura.");
+			S.Write("5: Consultar la fecha de inicio de la legislatura.");
+			S.Write("6: Comprobar si la legislatura tiene fecha de finalizacion.");
+			S.Write("7: Consultar la fecha de finalizacion de la legislatura.");
+			S.Write("8: Consultar los diputados activos de la legislatura.");
+			S.Write("9: Comprobar si el la legislatura tiene el diputado activo.");
+			S.Write("10: Comprobar si la legislatura es una legislatura nula.");
+			S.Write("11: Modificar la fecha de inicio de la legislatura.");
+			S.Write("12: Modificar la fecha de finalizacion de la legislatura.");
+			S.Write("13: Eliminar la fecha de finalizacion de la legislatura.");
+			S.Write("14: Insertar un nuevo diputado en la legislatura.");
+			S.Write("15: Establecer los n diputados de la legislatura.");
+			S.Write("16: Eliminar un diputado de la legislatura.");
+			S.Write("17: Eliminar todos los diputados de la legislatura.");
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
