@@ -3,6 +3,7 @@ package controladores;
 import java.util.Set;
 import java.util.Map;
 
+import dominio.Criterio;
 import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
@@ -70,7 +71,7 @@ public class ControladorDominioResultado {
 		if (conjuntoResultados.exists(nombre)) {
 			hasError = true;
 			error = new CodiError(32);
-			error.setClauExterna(nombre);
+			error.addClauExterna(nombre);
 			return false;
 		}
 		hasError = false;
@@ -89,7 +90,7 @@ public class ControladorDominioResultado {
 		if (controladorD.existsDiputado(nombre)) {
 			hasError = true;
 			error = new CodiError(3);
-			error.setClauExterna(nombre);
+			error.addClauExterna(nombre);
 			return true;
 		}
 		hasError = false;
@@ -107,7 +108,7 @@ public class ControladorDominioResultado {
 		if (!conjuntoResultados.exists(nombre)) {
 			hasError = true;
 			error = new CodiError(31);
-			error.setClauExterna(nombre);
+			error.addClauExterna(nombre);
 			return false;
 		}
 		hasError = false;
@@ -126,8 +127,24 @@ public class ControladorDominioResultado {
 		if (!conjuntoResultados.get(nombreResultado).existeGrupo(ID)) {
 			hasError = true;
 			error = new CodiError(31);
-			error.setClauExterna(ID);
+			error.addClauExterna(ID);
 			error.addClauExterna(nombreResultado);
+			return false;
+		}
+		hasError = false;
+		return true;
+	}
+	
+	/**
+	 * Comprueba si la ultima busqueda realizada es correcta.
+	 * @return <i>true</i> si ultima busqueda es correcta.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso..
+	 */
+	private Boolean ultimaBusquedaCorrecta() {
+		if (ultimoResultado == null) {
+			hasError = true;
+			error = new CodiError(35);
 			return false;
 		}
 		hasError = false;
@@ -141,14 +158,21 @@ public class ControladorDominioResultado {
 	 * @param importancia - Importancia de todos los eventos del sistema.
 	 * @param periodo - Intervalo entre dos fechas a tener en cuenta en la busqueda.
 	 */
-	public void nuevoResultadoPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo/*, Criterio criterio*/) {
+	public void nuevoResultadoPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Criterio criterio) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) { 
 			hasError = true;
 			error = new CodiError(30);
 		}
 		else {
 			ControladorDominioBusquedaPorPeriodo controlDomBus = new ControladorDominioBusquedaPorPeriodo();
-			Conjunto<GrupoAfinPorPeriodo> resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, periodo, importancia, indiceAfinidad);
+			Conjunto<GrupoAfinPorPeriodo> resultado;
+			switch (criterio.hashCode()) {
+				case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, periodo, importancia, indiceAfinidad);break;
+				case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, periodo, indiceAfinidad);break;
+				case 2:		resultado = controlDomBus.NuevaBusquedaPartidoPolitico(algoritmo, periodo, indiceAfinidad);break;
+				case 3:		resultado = controlDomBus.NuevaBusquedaNombresParecidos(algoritmo, periodo, indiceAfinidad);break;
+				default:	resultado = null; break;
+			}
 			ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado);
 		}
 	}
@@ -161,14 +185,25 @@ public class ControladorDominioResultado {
 	 * @param lapsoDeTiempo - Cantidad de tiempo a tener en cuenta en la busqueda.
 	 * @param diputadoRelevante - Diputado en torno al cual se desean encontrar comunidades.
 	 */
-	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante/*, Criterio criterio*/) {
+	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Criterio criterio) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) {
 			hasError = true;
 			error = new CodiError(30);
 		}
+		else if (lapsoDeTiempo < 1) {
+			hasError = true;
+			error = new CodiError(34);
+		}
 		else if (existeDiputado(diputadoRelevante)) {
 			ControladorDominioBusquedaPorDiputado controlDomBus = new ControladorDominioBusquedaPorDiputado();
-			Conjunto<GrupoAfinPorDiputado> resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, lapsoDeTiempo, importancia, indiceAfinidad, diputadoRelevante);
+			Conjunto<GrupoAfinPorDiputado> resultado;
+			switch (criterio.hashCode()) {
+			case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, lapsoDeTiempo, importancia, indiceAfinidad, diputadoRelevante); break;
+			case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
+			case 2:		resultado = controlDomBus.NuevaBusquedaPartidoPolitico(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
+			case 3:		resultado = controlDomBus.NuevaBusquedaNombresParecidos(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
+			default:	resultado = null; break;
+			}
 			ultimoResultado = new ResultadoDeBusquedaPorDiputado("Provisional", indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante);
 		}
 	}
@@ -178,7 +213,7 @@ public class ControladorDominioResultado {
 	 * @param nombre - Nombre con el cual se registra el resultado.
 	 */
 	public void registraUltimoResultado(String nombre) {
-		if (nombreResultadoDisponible(nombre)) {
+		if (nombreResultadoDisponible(nombre) && ultimaBusquedaCorrecta()) {
 			ultimoResultado.setNombre(nombre);
 			conjuntoResultados.add(nombre, ultimoResultado);
 		}
