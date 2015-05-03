@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import time.Date;
 import controladores.ControladorDominioDiputado;
+import controladores.ControladorDominioLegislatura;
 import controladores.ControladorDominioVotacion;
 import io.ConsolaEntrada;
 import io.ConsolaSortida;
@@ -15,6 +16,7 @@ import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
 import dominio.Diputado;
+import dominio.Legislatura;
 import dominio.TipoVoto;
 import dominio.Votacion;
 /**
@@ -42,6 +44,7 @@ public class ControladorDominioVotacionDriver {
 		if(CDV.getHasError()){
 			SF.Write("ERROR");
 			SF.Write(CDV.getError().getMensajeError());
+			SF.Write(CDV.getError().getCodiError());
 			CDV.netejaError();
 			return true;
 		}
@@ -155,7 +158,9 @@ public class ControladorDominioVotacionDriver {
 	public void testaddVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
 		VotacionDriver ED=new VotacionDriver();
 		Votacion e=ED.llegirVotacion(EF);
-		CDV.addVotacion(e.getNombre(), e.getFecha(), e.getImportancia(),e.getVotos());
+		Integer aux=CDV.addVotacion(e.getNombre(), e.getFecha(), e.getImportancia(),e.getVotos());
+		SF.Write("LEGISLATURA");
+		SF.Write(aux);
 		testError(EF,SF,CDV);
 	}
 	
@@ -282,7 +287,18 @@ public class ControladorDominioVotacionDriver {
 			     CDD.addAll(S1);
 			     break;
 			 case 20:
-				 
+				 ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();				 
+				 Integer n1 = EF.ReadInteger();
+			     Set<Legislatura> leg = new TreeSet<Legislatura>();
+				 for (Integer i = 0; i < n1; ++i) leg.add(ControladorDominioDiputadoDriver.legislatura(EF));
+			     CDL.addAll(leg);
+			     break;
+			 case 21:
+				 ControladorDominioDiputado CDD1=ControladorDominioDiputado.getInstance();
+				 String dip=EF.ReadString();
+				 Integer l=EF.ReadInteger();
+				 CDD1.addLegistura(dip,l);
+				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;

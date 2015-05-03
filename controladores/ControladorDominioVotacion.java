@@ -211,7 +211,7 @@ public class ControladorDominioVotacion {
 		 * @param imp
 		 * @param votos
 		 */
-		public void addVotacion(String nombreVotacion, Date fecha,Integer imp, Map<String,TipoVoto> votos){
+		public Integer addVotacion(String nombreVotacion, Date fecha,Integer imp, Map<String,TipoVoto> votos){
 			if(conjuntoVotacion.exists(nombreVotacion)){
 				hasError=true;
 				error.addClauExterna(nombreVotacion);
@@ -220,18 +220,22 @@ public class ControladorDominioVotacion {
 			else{
 				ControladorDominioLegislatura CDL= ControladorDominioLegislatura.getInstance();
 				Integer leg=CDL.getID(fecha);
+				return leg;
+			}
+			return -1;
+				/*
 				Set<String> dip=CDL.getDiputados(leg);
 				Map<String,TipoVoto> votosnew=new TreeMap<String,TipoVoto>();
 				for(String elem :dip){
 					if(esDiputado(elem)){
 						TipoVoto nouvot=TipoVoto.ABSTENCION;
-						if(votos.containsKey(dip)){
+						if(votos.containsKey(elem)){
 						 nouvot=votos.get(elem);
 						 votos.remove(elem);
 						}
 						votosnew.put(elem, nouvot);
 					}
-					else return;
+					//else return;
 				}
 				if(votos.size()>0){
 					hasError=true;
@@ -239,11 +243,12 @@ public class ControladorDominioVotacion {
 					Iterator<String> it = votos.keySet().iterator();
 					error.addClauExterna(it.next());
 					error.setCodiError(25);
-					return;
+					//return;
 				}
 				Votacion aux= new Votacion(nombreVotacion,fecha,imp,votosnew);
 				conjuntoVotacion.add(nombreVotacion, aux);
 			}
+			*/
 			
 		}
 		/**
