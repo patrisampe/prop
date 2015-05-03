@@ -1,0 +1,37 @@
+Destacar el voto, no lo indicamos con palabras sino con numero:
+1:A_FAVOR;
+2:ABSTENCION;
+3:AUSENCIA;
+4:EN_CONTRA;
+
+Comanda 1: 
+	  Indica para cada diputado si es votante o no de esa votacion
+	  Formato:1 Integer=x, x Strings (nombres de Diputados)
+Comanda 2:
+	Escribe la votacion en un fichero
+Comanda 3: 
+	  Actualiza la data
+	  Formato: 3 Integer
+Comanda 4:
+	  Actualitza importancia
+	  Formato: 1 Integer
+Comando 5:
+	  Crear una nueva Votacion copia de la que ya teniamos y la imprime por pantalla
+	  Formato: 1 String
+
+Comando 6:
+	  Actualiza e inserta los votos
+	  Formato: 1 Integer=x,x String(diputados que han votados), x Integer(lo que ha votado cada diputado en orden)
+Comando 7:
+	Crear una nueva votacion y la escribe
+	Formato: 1 String, 3 Integer(data), 1 Integer(importancia), 1 Integer(numero diputados que han votado)=x, 
+	x string(nombre diputados), x Integer(lo que ha votado cada diputado)
+comando 8:
+	Nos dice lo que ha votado cada diputado
+	Formato: 1 integer=x,x String(nombre diputado)
+Comando 9:
+	Elimina los votos de los diputado, y los diputado de esa votacion
+	Formato:1 integer=x,x String(nombre diputado)
+Comando 10:
+	Nos dice si la importancia es valida
+	Formato: 1 integer2
