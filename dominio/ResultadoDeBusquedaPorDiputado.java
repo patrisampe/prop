@@ -11,17 +11,17 @@ import utiles.Conjunto;
 public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	
 	/**
-	 * Nombre del resultado(identificador).
+	 * El nombre del diputado sobre el que se ha realizado la busqueda.
 	 */
 	private String diputadoRelevante;
 	
 	/**
-	 * Nombre del resultado(identificador).
+	 * Indica el multiplicador aplicado a legislatura para realizar la busqueda.
 	 */
 	private Integer lapsoDeTiempo;
 	
 	/**
-	 * Crea una instancia de la clase resultado de busqueda.
+	 * Crea una instancia de la clase resultado de busqueda por diputado.
 	 * @param nombre - Nombre del resultado.
 	 * @param indiceAfinidad - Indice de afinidad utilizado para obtener el resultado.
 	 * @param algoritmo - Algoritmo utilizado para obtener el resultado.

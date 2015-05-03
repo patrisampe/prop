@@ -73,9 +73,8 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param nombreTipoEvento - Nombre del evento que adquiere una importancia temporal.
 	 * @param importancia - Grado de importancia que adquiere el evento.
 	 */
-	public Boolean setImportancia(String nombreTipoEvento, Integer importancia) {
+	public void setImportancia(String nombreTipoEvento, Integer importancia) {
 		this.importancia.put(nombreTipoEvento,importancia);
-		return true;
 	}
 	
 	/**

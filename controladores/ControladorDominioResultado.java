@@ -380,7 +380,7 @@ public class ControladorDominioResultado {
 	 * <br>
 	 * <i>false</i> en cualquier otro caso..
 	 */
-	public Boolean getHasError() {
+	public Boolean hasError() {
 		return hasError;
 	}
 	
