@@ -86,7 +86,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	
 	/**
 	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
-	 * usando solamente el el parecido en los nombres de los diputados.
+	 * usando solamente el parecido en los nombres de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param periodo Periodo inclusivo de tiempo.
