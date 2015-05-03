@@ -3,10 +3,8 @@ package drivers;
 import io.*;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
-import dominio.algoritmos.Graf;
-import dominio.algoritmos.GrafLouvain;
+import dominio.algoritmos.*;
 
 /**
  * 
