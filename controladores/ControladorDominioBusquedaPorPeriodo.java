@@ -32,7 +32,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		Set<String> idDiputados = prepararDiputados(Periodo);
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
 		Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
-		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInici())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFi())));
+		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInicio())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFin())));
 		Map<String, Set<String> > votacionesSimp = prepararVotaciones(PeriodoVotaciones); 
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
 		

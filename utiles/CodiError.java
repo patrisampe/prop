@@ -48,6 +48,8 @@ public class CodiError {
 		Diccionario.put(31, "No existe ningún resultado de búsqueda con nombre %1");
 		Diccionario.put(32, "Ya existe un resultado de búsqueda con nombre %1");
 		Diccionario.put(33, "No existe el grupo afín %1 en el resultado de búsqueda %2");
+		Diccionario.put(34, "No se puede hacer una búsqueda cada %1 legislaturas");
+		Diccionario.put(35, "No se ha realizado ninguna búsqueda");
         return Collections.unmodifiableMap(Diccionario);
 	}
 	/**
