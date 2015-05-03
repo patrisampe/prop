@@ -1,7 +1,7 @@
 package dominio;
 
 public enum TipoVoto {
-	AUSENCIA, ABSTENCION, EN_CONTRA, A_FAVOR;
+	AUSENCIA,ABSTENCION,EN_CONTRA,A_FAVOR;
 }
 
 

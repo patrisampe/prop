@@ -15,10 +15,14 @@ public class CodiErrorDriver{
 	 */
 	public void escriureCodiError(Sortida SF,CodiError ce){
 		
+	  
+	   SF.Write("ESCRIU CodiError");
+	   SF.Write(" ");
+	   SF.Write(ce.getMensajeError());
 	   int mida= ce.getClauExterna().size();
 	   SF.Write(mida, ce.getClauExterna().toArray(new String[mida]));
 	   SF.Write(ce.getCodiError());
-	   SF.Write(ce.getMensajeError());
+	   SF.Write("  ");
 	}
 	
 	
@@ -63,6 +67,15 @@ public class CodiErrorDriver{
 			 case 7:
 				 DCE.escriureCodiError(SF,ce);
 				 break;
+			 case 8:
+				 int mida= ce.getClauExterna().size();
+				   SF.Write(mida, ce.getClauExterna().toArray(new String[mida]));
+				   break;
+			 case 9:
+				 SF.Write(ce.getCodiError());
+				 break;
+			 case 10:
+				 SF.Write(ce.getMensajeError());
 			 default: 
 				    SF.Write(" numero no correcto. Para cerrar -1 ");
 				     break;

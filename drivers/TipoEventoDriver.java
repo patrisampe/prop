@@ -9,7 +9,11 @@ import io.FitxerSortida;
 import io.Sortida;
 import dominio.Evento;
 import dominio.TipoEvento;
-
+/**
+ * 
+ * @author patricia
+ *
+ */
 public class TipoEventoDriver {
 
 	

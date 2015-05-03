@@ -4,7 +4,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
+/**
+ * Classe que nos serive para capturar los errores
+ * @author Patricia Samepdro
+ * @version 1.0 Mayo 2015
+ */
 public class CodiError {
 
 	private Integer codiError;
@@ -50,6 +54,7 @@ public class CodiError {
 		Diccionario.put(33, "No existe el grupo afin %1 en el resultado de busqueda %2");
 		Diccionario.put(34, "No se puede hacer una busqueda cada %1 legislaturas");
 		Diccionario.put(35, "No se ha realizado ninguna busqueda");
+		Diccionario.put(36, "En la votacion %1 el diputado %2 no esta de baja");
         return Collections.unmodifiableMap(Diccionario);
 	}
 	/**
@@ -120,13 +125,16 @@ public class CodiError {
 	}
 	/**
 	 * Devuelve el mensaje de error
-	 * @return mensaje de error 
+	 * <dd><b>Preconditions:</b><dd> 
+	 * 1- No se puede llamar si hay mas claves Externas que %i
+	 * 2- Si hay menos claves externas que %i, despues no se podrans sustituir todos los %i y saldran en el mensaje.
+	 * @return mensaje de error con las claves externas incorporadas
 	 */
 	public String getMensajeError() {
 		String mensaje = mensajesError.get(codiError);
 		for (Integer i = 1; i <= clauExterna.size(); ++i) {
-			String aux = "%" + i;
-			mensaje.replaceFirst(aux, clauExterna.elementAt(i-1));
+			String aux = "%" + i;;
+			mensaje=mensaje.replaceFirst(aux, clauExterna.elementAt(i-1));
 		}
 		return mensaje;
 	}

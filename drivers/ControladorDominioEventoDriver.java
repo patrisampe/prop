@@ -11,7 +11,11 @@ import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
 import dominio.Evento;
-
+/**
+ * 
+ * @author patricia
+ *
+ */
 public class ControladorDominioEventoDriver {
 
 	public Boolean testError(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
@@ -256,6 +260,8 @@ public class ControladorDominioEventoDriver {
 			 case 18:
 				 DCDE.testesParticipanteEvento(EF, SF, CDE);
 				 break;
+			 case 19:
+				 //añade diputados
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;

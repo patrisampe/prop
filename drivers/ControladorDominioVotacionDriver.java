@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import time.Date;
-import controladores.ControladorDominioEvento;
 import controladores.ControladorDominioVotacion;
 import io.ConsolaEntrada;
 import io.ConsolaSortida;
@@ -15,9 +14,27 @@ import io.FitxerSortida;
 import io.Sortida;
 import dominio.TipoVoto;
 import dominio.Votacion;
-
+/**
+ * 
+ * @author patricia
+ *
+ */
 public class ControladorDominioVotacionDriver {
 
+	
+	private TipoVoto convert1(Integer n){
+		switch(n){
+			case 1:
+				return TipoVoto.A_FAVOR;
+			case 2:
+				return TipoVoto.ABSTENCION;
+			case 3:
+				return TipoVoto.AUSENCIA;
+			default:
+				return TipoVoto.EN_CONTRA;
+			}
+	}
+	
 	public Boolean testError(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
 		if(CDV.getHasError()){
 			SF.Write("ERROR");
@@ -80,8 +97,8 @@ public class ControladorDominioVotacionDriver {
 	public void testgetDipVotacionsTV(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
 		
 		String nombredip=EF.ReadString();
-		String tp=EF.ReadString();
-		Set<String> dip=CDV.getDiputadosVotacion(nombredip,TipoVoto.valueOf(tp));
+		Integer id=EF.ReadInteger();
+		Set<String> dip=CDV.getDiputadosVotacion(nombredip,convert1(id));
 		if(!testError(EF,SF,CDV)){
 			int mida=dip.size();
 			SF.Write(mida, dip.toArray(new String[mida]));
@@ -159,12 +176,11 @@ public class ControladorDominioVotacionDriver {
 	}
 	
 	
-	
 	public void testaddDiputadosVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
 		String nombrevotacion=EF.ReadString();
 		String nombreDiputado=EF.ReadString();
-		String tipovoto=EF.ReadString();
-	    CDV.setAddVoto(nombrevotacion, nombreDiputado, TipoVoto.valueOf(tipovoto));
+		Integer tipovoto=EF.ReadInteger();
+	    CDV.setAddVoto(nombrevotacion, nombreDiputado,convert1(tipovoto));
 		testError(EF,SF,CDV);
 	}
 	
@@ -252,6 +268,11 @@ public class ControladorDominioVotacionDriver {
 				 ControladorDominioVotacion CDV2=ControladorDominioVotacion.getInstance();
 				 DCDV.testescriureControlador(EF, SF, CDV2);
 				 break;
+			 case 18:
+				 DCDV.testescriureControlador(EF, SF, CDV);
+				 break;
+			 case 19:
+				 
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");
 			     break;

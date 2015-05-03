@@ -11,12 +11,28 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
-import dominio.TipoEvento;
 import dominio.TipoVoto;
 import dominio.Votacion;
-
+/**
+ * 
+ * @author patricia
+ *
+ */
 public class VotacionDriver {
 
+	private TipoVoto convert1(Integer n){
+		switch(n){
+			case 1:
+				return TipoVoto.A_FAVOR;
+			case 2:
+				return TipoVoto.ABSTENCION;
+			case 3:
+				return TipoVoto.AUSENCIA;
+			default:
+				return TipoVoto.EN_CONTRA;
+			}
+	}
+	
 	
 	public Votacion llegirVotacion(Entrada EF){
 		
@@ -29,10 +45,10 @@ public class VotacionDriver {
 
 			int end=EF.ReadInt();
 			String dip[]=EF.ReadString(end);
-			String[] vot= EF.ReadString(end);
+			Integer[] vot=EF.ReadInteger(end);
 			Map<String,TipoVoto> votos=new TreeMap<String, TipoVoto>();
 			for(int i=0;i<end;++i){
-				votos.put(dip[i], TipoVoto.valueOf(vot[i]));
+				votos.put(dip[i], convert1(vot[i]));
 			}
 			return new Votacion(nomVotacion,Data,imp,votos);
 	}
@@ -83,18 +99,18 @@ public class VotacionDriver {
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
-		String[] vot= EF.ReadString(end);
+		Integer[] vot= EF.ReadInteger(end);
 		for(int i=0;i<end;++i){
-			v.setVoto(dip[i], TipoVoto.valueOf(vot[i]));
+			v.setaddVoto(dip[i], convert1(vot[i]));
 		}
 		SF.Write(" ");
 		
 	}
 	
-	public void testEsValida(Entrada EF, Sortida SC){
+	public void testEsValida(Entrada EF, Sortida SF){
 		
 		 Integer imp=EF.ReadInteger();
-		 SC.Write(Votacion.esValidaImportancia(imp));
+		 SF.Write(Votacion.esValidaImportancia(imp));
 	}
 	
 	public void escriureVotacion(Sortida SF, Votacion v){
@@ -103,20 +119,21 @@ public class VotacionDriver {
 		SF.Write(v.getFecha().getMonth());
 		SF.Write(v.getFecha().getYear());
 		int mida=v.getDiputados().size();
+		SF.Write(v.getImportancia());
 		SF.Write("Diputados de la votacion");
 		SF.Write(mida, v.getDiputados().toArray(new String[mida]));
 		SF.Write("Diputados que votan ABSTENCION");
-		SF.Write(mida, v.getDiputados(TipoVoto.ABSTENCION).toArray(new String[mida]));
+		SF.Write(v.getDiputados(TipoVoto.ABSTENCION));
 		SF.Write("Diputados que votan A_FAVOR");
-		SF.Write(mida, v.getDiputados(TipoVoto.A_FAVOR).toArray(new String[mida]));
+		SF.Write(v.getDiputados(TipoVoto.A_FAVOR));
 		SF.Write("Diputados que votan AUSENCIA");
-		SF.Write(mida, v.getDiputados(TipoVoto.AUSENCIA).toArray(new String[mida]));
+		SF.Write(v.getDiputados(TipoVoto.AUSENCIA));
 		SF.Write("Diputados que votan EN_CONTRA");
-		SF.Write(mida, v.getDiputados(TipoVoto.EN_CONTRA).toArray(new String[mida]));
+		SF.Write(v.getDiputados(TipoVoto.EN_CONTRA));
 		SF.Write("Diputados y votos");
 		Map<String,TipoVoto> a= v.getVotos();	
 		for (Entry<String, TipoVoto> entry : a.entrySet()){
-			SF.Write("Diputado "+entry.getKey()+" voto "+entry.getValue());
+			SF.Write("Diputado "+entry.getKey()+" voto "+ entry.getValue());
 		}
 		
 		SF.Write(" ");
@@ -169,7 +186,7 @@ public class VotacionDriver {
 				 DV.removeVoto(EF, v);
 				 break;
 			 case 10:
-				 DV.testEsValida(EF, SC);
+				 DV.testEsValida(EF, SF);
 				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");

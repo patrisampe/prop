@@ -11,7 +11,6 @@ import time.Date;
 import time.DateInterval;
 import utiles.CodiError;
 import utiles.Conjunto;
-import dominio.TipoEvento;
 import dominio.TipoVoto;
 import dominio.Votacion;
 
@@ -63,20 +62,6 @@ public class ControladorDominioVotacion {
 				   error.setCodiError(3);
 			}
 			 return false;
-		}
-		
-	
-		private Boolean DiputadoEnLegislatura(String nombreVotacion, String nombreDiputado){
-			ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
-			Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
-			if(CDL.existsDiputado(leg, nombreDiputado)){
-				if(!hasError){
-					hasError=true;
-					error.addClauExterna(nombreVotacion);
-					error.setCodiError(26);
-				}
-			}
-			
 		}
 		   /**
 		    * Indica el error que se ha producido
@@ -312,7 +297,17 @@ public class ControladorDominioVotacion {
 		 * @param voto - lo que ha votado el Diputado con nombreDiputado
 		 */
 		public void setAddVoto(String nombreVotacion, String nombreDiputado, TipoVoto voto){
-			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado) && DiputadoEnLegislatura(nombreVotacion,nombreDiputado))conjuntoVotacion.get(nombreVotacion).setaddVoto(nombreDiputado, voto);
+			if(comprovaExsitenciaVotacion(nombreVotacion) && esDiputado(nombreDiputado)){
+				ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
+				Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
+				if(CDL.existsDiputado(leg, nombreDiputado))conjuntoVotacion.get(nombreVotacion).setaddVoto(nombreDiputado, voto);
+				else{
+						hasError=true;
+						error.addClauExterna(nombreDiputado);
+						error.addClauExterna(nombreVotacion);
+						error.setCodiError(25);
+					}
+			}
 		}
 	   /**
 	    * Elimina el diputado de la votacion, y en consequencia su voto
@@ -326,7 +321,14 @@ public class ControladorDominioVotacion {
 		public void removeVotoDiputado(String nombreVotacion, String nombreDiputado){
 			if(comprovaExsitenciaVotacion(nombreVotacion)){
 				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado)){
-					if(!DiputadoEnLegislatura(nombreVotacion,nombreDiputado)) conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
+							ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
+							Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
+							if(CDL.existsDiputado(leg, nombreDiputado)){
+								hasError=true;
+								error.addClauExterna(nombreVotacion);
+								error.setCodiError(36);
+							}
+							else conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
 				}
 				else if(!hasError){
 					hasError=true;
@@ -363,10 +365,10 @@ public class ControladorDominioVotacion {
 					 if(elem.esVotante(nombreDiputado)){
 						ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
 						Integer leg=CDL.getID(elem.getFecha());
-						if(CDL.existsDiputado(leg, nombreDiputado))elem.removeVoto(nombreDiputado);
+						if(!CDL.existsDiputado(leg, nombreDiputado))elem.removeVoto(nombreDiputado);
 					 }
 				 }
 			 }
-		 }
 		
+		}
 }
