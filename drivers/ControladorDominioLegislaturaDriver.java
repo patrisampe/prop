@@ -10,11 +10,12 @@ import dominio.Legislatura;
 import io.*;
 
 /**
- * Driver para el controlador de dominio de diputados.
+ * Driver para el controlador de dominio de legislaturas.
+ * TODO: falta implementar
  * @author David Moran
  * @version 03/05/2015 01:02
  */
-public class ControladorDominioDiputadoDriver {
+public class ControladorDominioLegislaturaDriver {
 	
 	/**
 	 * Lector de diputados.
