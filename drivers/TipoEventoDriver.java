@@ -80,7 +80,7 @@ public class TipoEventoDriver {
 		Sortida SF = new FitxerSortida(Output);
 		TipoEventoDriver DTE= new TipoEventoDriver();
 		Sortida SC = new ConsolaSortida();
-		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
+		SC.Write("Recorda: Lo primero que hacemos es inicializar tipo evento.");
 		TipoEvento te= DTE.llegirTipoEvento(EF);
 		int a= EF.ReadInt();
 		while(a!=-1){
