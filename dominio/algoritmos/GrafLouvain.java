@@ -1,7 +1,5 @@
 package dominio.algoritmos;
 
-import io.Sortida;
-
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -92,7 +90,7 @@ public class GrafLouvain extends Graf {
 	 * @param Comunitat Conjunt de Nodes.
 	 * @return Suma dels pesos de les Arestes entre el Node i la Comunitat. -1 si el node no existeix o la comunitat és buida.
 	 */
-	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {//Incompletee TODO?
+	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {
 		if (!existeixNode(id)) return -1.0;
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
