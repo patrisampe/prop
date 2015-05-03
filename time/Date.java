@@ -152,6 +152,7 @@ public class Date{
 	 * @return La fecha, en formato String numerico.
 	 */
 	public String toString(){
+		if (esNull()) return "NULL";
 		String out = "";
 		if (Day < 10) out += "0";
 		out += Day.toString();
@@ -168,6 +169,7 @@ public class Date{
 	 * @return La fecha, en formato String con el nombre del mes.
 	 */
 	public String toNamedString(){
+		if (esNull()) return "NULL";
 		String out = "";
 		if (Day < 10) out += "0";
 		out += Day.toString();
