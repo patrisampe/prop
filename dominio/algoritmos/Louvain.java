@@ -1,5 +1,7 @@
 package dominio.algoritmos;
 
+import io.Sortida;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -103,7 +105,7 @@ public class Louvain {
 			pesReflexiu = G.getPes(node, node);
 		}
 		Double grauNode = G.sumaPesosAdjacents(node);
-		Double res = (G.sumaPesosAdjacents(node, destino) - G.sumaPesosAdjacents(node, origen)+pesReflexiu); 
+		Double res = (G.sumaPesosAdjacents(node, destino) - G.sumaPesosAdjacents(node, origen)+pesReflexiu)*2; 
 		res -= (G.sumaPesosAdjacentsInclusiva(destino)-G.sumaPesosAdjacentsInclusiva(origen) + grauNode)*grauNode/m;
 		res /= 2*m;	
 		return res;
@@ -160,20 +162,25 @@ public class Louvain {
 	/**
 	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'aturés.
 	 * @param sC 
+	 * @param sC 
 	 * @param Gr Graf sobre el que s'executarà l'algorisme.
 	 * @param percentatge 
 	 * @return Conjunt de Comunitats resultant de l'execució.
 	 */
-	public static HashSet< HashSet<String> > executa(GrafLouvain Gr, Integer percentatge) {
+	public static HashSet< HashSet<String> > executa(Sortida sC, GrafLouvain Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);
 		init(Gr); 
 		boolean modificacion = true;
 		while(Comunidades.size() > 1 && modificacion) {
+			G.print(sC);
 			modificacion = false;
+			sC.Write("Incrementando Modularidad..");
 			while(IncrementModularity()) modificacion = true; 
+			sC.Write("Agregando grafo");
 			agregaGraf();
 			
 		}
+		G.print(sC);
 		return retorna(percentatge);
 		
 	}

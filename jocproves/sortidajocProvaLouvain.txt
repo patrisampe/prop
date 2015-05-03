@@ -1,14 +1,10 @@
 Comunidad 1:
 Jesus, Roser, Anna
 Comunidad 2:
-Genis, Gerard, Ricard, Martin
-Comunidad 3:
 Roger, Clara, Eric, Bernat, Naiara
+Comunidad 3:
+Genis, Gerard, Ricard, Patricia, David, Martin, Eduard, Miguel
 Comunidad 4:
-Toni, Anabel, Marisa
-Comunidad 5:
-Yoel
-Comunidad 6:
-Patricia, David, Eduard, Miguel
-Comunidad 7:
 Pablo, Marc, Dani, Josep
+Comunidad 5:
+Toni, Anabel, Yoel, Marisa

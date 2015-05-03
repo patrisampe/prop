@@ -1,0 +1,62 @@
+16 32
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+O
+P
+
+
+A C 50
+B D 50
+E G 50
+F H 50
+I J 50
+K L 50
+M N 50
+O P 50
+
+A B 50 
+C D 50
+
+E F 50
+G H 50
+
+I K 50
+J L 50
+
+M O 50
+N P 50
+
+A E 50
+C G 50
+B F 50
+D H 50
+
+I M 50
+K N 50
+J O 50
+L P 50
+
+A I 50
+B K 50
+C J 50
+D L 50
+E G 50
+H F 50
+G O 50
+H P 50
+
+20
+

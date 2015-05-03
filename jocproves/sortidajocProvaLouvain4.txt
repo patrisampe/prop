@@ -1,0 +1,8 @@
+Comunidad 1:
+C, D, J, L
+Comunidad 2:
+A, B, E, F
+Comunidad 3:
+P, G, H, O
+Comunidad 4:
+I, K, M, N
