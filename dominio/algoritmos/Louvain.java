@@ -74,7 +74,8 @@ public class Louvain {
 				HashSet<String> actual = getComunitat(Node);
 				HashSet<String> maxCom = actual;
 				Double max = 0.0;
-				for(HashSet<String> aTractar : Comunidades) {
+				for(String nodeAdjacent : G.getAdjacents(Node)) {
+					HashSet<String> aTractar = getComunitat(nodeAdjacent);
 					if (actual == aTractar) continue;
 					Double Inc = ModularityInc(Node, actual, aTractar);
 					//sC.Write(Inc);
