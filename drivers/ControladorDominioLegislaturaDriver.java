@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import time.Date;
+import controladores.ControladorDominioDiputado;
 import controladores.ControladorDominioLegislatura;
 import dominio.Diputado;
 import dominio.Legislatura;
@@ -45,6 +46,7 @@ public class ControladorDominioLegislaturaDriver {
 		Entrada E = new ConsolaEntrada();
 		Sortida S = new ConsolaSortida();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
+		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		Integer n;
 		Integer codi = 0;
 		while (codi != -1) {
@@ -74,6 +76,7 @@ public class ControladorDominioLegislaturaDriver {
 			S.Write("21: Eliminar un diputado de todas las legislaturas.");
 			S.Write("22: Consultar la legislatura a la que pertenece una fecha.");
 			S.Write("23: Consultar el identificador de la ultima legislatura.");
+			S.Write("24: Insertar un nuevo diputado en el sistema.");
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
@@ -196,6 +199,9 @@ public class ControladorDominioLegislaturaDriver {
 			break;
 			case 23:
 				S.Write(CDL.getIDLast());
+			break;
+			case 24:
+				CDD.addDiputado(E.ReadString(), E.ReadString(), E.ReadString(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
 			break;
 			default:
 				S.Write("Codigo incorrecto.");
