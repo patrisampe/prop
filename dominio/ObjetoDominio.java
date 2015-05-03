@@ -28,9 +28,13 @@ public class ObjetoDominio implements Comparable<ObjetoDominio> {
 		return -2;
 	}
 
+	/**
+	 * Consulta el identificador generico de un objeto del dominio.
+	 * @return Un <i>Integer</i> con valor -2.
+	 */
 	@Override
 	public int compareTo(ObjetoDominio o) {
-		if (getID() != -2) { //Clau externa -> String
+		if (getID() == -2) { //Clau externa -> String
 			return getNombre().compareTo(o.getNombre());
 		}
 		else {
