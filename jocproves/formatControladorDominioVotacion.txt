@@ -1,0 +1,55 @@
+Comanda 1: 
+	  Actualiza la importancia de una votacion
+	  Formato:1 String, 1 Integer
+Comanda 2:
+	Nos devuelve la importancia de una votacion
+	Formato: 1 string
+Comanda 3: 
+	  Actualiza la fecha de una votacion
+	  Formato: 1 String, 3 Intger(Data)
+Comanda 4:
+	  Devuelve la fecga de una votacion
+	  Formato: 1 string
+Comando 5:
+	  Devuelve los diputados de una votacion 
+	  Formato: 1 String
+Comando 6:
+	  Devuelve los diputados de una votacion que han votado lo mismo
+	  Formato: 1 String, 1 Integer(identifica el tipo de voto)
+Comando 7:
+	Nos indica si un diputado es votante o no
+	Formato: String, String
+comando 8:
+	Devuelve las votaciones que se han realizado entre dos datas
+	Formato: 3 Integer(Datainici), 3 Integer (DataFi)
+Comando 9:
+	Elimina el diputado de todas las votaciones
+	Formato: 1 String
+Comando 10:
+	Elimina la votacion
+	Formato: 1 String
+Comando 11:
+	Indica si es una votacion o no
+	Formato: 1 string
+Comando 12:
+	Inserta una votacion
+	Formato: 1 String, 3 Integer(data), 1 Integer(importancia), 1 Integer(numero diputados que han votado)=x, 
+	x string(nombre diputados), x Integer(lo que ha votado cada diputado)
+Comando 13:
+	Devuelve las parejas diputado-voto de la votacion
+	Formato: 1 string
+Comando 14:
+	Devuelve el voto de un diputado en una votacion
+	Formato: 2 String
+Comando 15:
+	Inserta un diputado en una Votacion
+	Formato 2 string, 1 Integer(que indica el voto del diputado en esa votacion)
+Comando 16:
+	Elimina un diputado de una votacion
+	Formato 2 string
+Comando 17:
+	Crear una nueva instancia del controlador Dominio Votacion y lo escrive por pantalla
+Comando 18:
+	Escribe el controlador en el fichero
+Comando 19:
+	Añade diputado 

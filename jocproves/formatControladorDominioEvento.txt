@@ -1,0 +1,53 @@
+Comanda 1: 
+	  Inserta un nuevo TipoEvento
+	  Formato:1 String, 1 Integer
+Comanda 2: 
+	  Actualiza la importancia de una TipoEvento
+	  Formato:1 String, 1 Integer
+Comanda 3:
+	Nos devuelve la importancia de una TipoEvento
+	Formato: 1 string
+Comanda 4:
+	  Devuelve los eventos de un Tipo Evento
+	  Formato: 1 string
+Comando 5:
+	  Devuelve los eventos que hay un intervalo de tiempo de un Tipo Evento
+	  Formato: 1 String, 3 Integer(Data), 3 Integer(Data)
+Comando 6:
+	  Elimina el diputado de todos los eventos de ese tipo
+	  Formato: 1 String, 1 String
+Comando 7:
+	Elimina el tipo Evento
+	Formato: String
+comando 8:
+	Inserta un evento al tipoEvento
+	Formato: 1 String,  un string, 3 integers (la data), 
+	1 integer(numero de diputados que tiene el evento),n nombre de diputados 
+Comando 9:
+	Elimina el evento de un TipoEvento
+	Formato: 1 String, 1 string
+Comando 10:
+	Nos dice si es un Evento de ese TipoEvento
+	Formato: 1 String, 1 String
+Comando 11:
+	Actualiza la fecha de un Evento de un TipoEvento
+	Formato: 1 string, 1 String, 3 Integer
+Comando 12:
+	Nos devuelve la fecha de un evento
+	Formato: 1 String,1 String
+Comando 13:
+	Devuelve los diputados de un evento
+	Formato: 1 string, 1 string
+Comando 14:
+	Inserta un diputado a un evento de un tipo evento
+	Formato: 3 String
+Comando 15:
+	Elimina un diputado de un evento de un tipo evento
+	Formato 3 string
+Comando 16:
+	Escribe el contenido del controlador en el fichero
+Comando 17:
+	Crear una nueva instancia del controlador Dominio Evento y lo escrive en el fichero
+Comando 18:
+	Nos indica si un diputado participa en un Evento
+	Formato: 3 String
