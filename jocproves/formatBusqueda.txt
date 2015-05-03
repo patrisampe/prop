@@ -1,0 +1,45 @@
+
+
+Comando 0:
+Por Periodo Standard
+Formato: String Integer Integer n seguido de n pares de  (String, Integer) Integer String (Algoritmo, Lapso, ImportanciaModificada, porcentaje, DiputadoRelevante)
+
+
+Comando 1:
+Por Diputado Standard
+Formato: String Fecha Fecha Integer n seguido de n pares de  (String, Integer) Integer (Algoritmo, FechaInicio, FechaFin, ImportanciaModificada, porcentaje)
+
+Comando 2:	
+Por Periodo Partido Político
+Formato: String Fecha Fecha Integer (Algoritmo, FechaInicio, FechaFin, Porcentaje)
+
+Comando 3:
+Por Diputado Partido Político
+Formato: String Integer Integer String (algoritmo, lapso, porcentaje, diputadoRelevante)
+
+Comando 4:
+Por Periodo Estado
+Formato: String Fecha Fecha Integer (Algoritmo, FechaInicio, FechaFin, Porcentaje)
+
+Comando 5:
+Por Diputado Estado
+Formato: String Integer Integer String (algoritmo, lapso, porcentaje, diputadoRelevante)
+
+Comando 6: 
+Por Periodo Nombres Parecidos
+Formato: String Fecha Fecha Integer (Algoritmo, FechaInicio, FechaFin, Porcentaje)
+
+Comando 7:
+Por Diputado Nombres Parecidos
+Formato: String Integer Integer String (algoritmo, lapso, porcentaje, diputadoRelevante)
+
+Comandon 8:
+Añade datos.
+Formato: Entero n seguido del número de objetos a añadir.
+Fecha = String con formato: dd/mm/aaaa
+ConjuntoDeStrings = Integer seguido de tantos strings como el valor del Integer
+4 posibilidades de formato para los objetos:
+DIPUTADO String String String String (nombreDiputado, nombrePartido, nombreEstado, fechaDeNacimiento)
+TIPOEVENTO String Integer (nombreTipoEvento, importancia)
+EVENTO String String String Fecha ConjuntoDeStrings (nombreTipoEvento, nombreEvento, fechaEvento, Diputados)
+LEGISLATURA Integer Fecha Fecha ConjuntoDeStrings (identificadorLegislatura, fechaInicio, fechaFinal, Diputados)
