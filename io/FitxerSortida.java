@@ -129,6 +129,17 @@ public class FitxerSortida implements Sortida {
 		}
 	}
 	
+	public void Write(int n, Character[] a) {
+		for (int i = 0; i < n; ++i){
+			try {
+				if (i != n-1) BW.write(a[i] + ", ");
+				else BW.write(a[i] + System.lineSeparator());
+			} catch (IOException e){
+				System.out.println("Error en l'escriptura.");
+			}
+		}
+	}
+	
 	public void Write(int n, Integer[] a){
 		for (int i = 0; i < n; ++i){
 			try {

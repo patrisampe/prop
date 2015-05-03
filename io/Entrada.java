@@ -83,6 +83,14 @@ public interface Entrada {
 	public int[] ReadInt(int n);
 	
 	/**
+	 * Lee <i>n</i> caracteres.
+	 * @param n - Numero de caracteres a leer.
+	 * @return Un array con los caracteres leidos, en orden.
+	 */
+	public Character[] ReadCharacter(int n);
+
+	
+	/**
 	 * Lee <i>n</i> enteros.
 	 * @param n - Numero de enteros a leer.
 	 * @return Un array con los enteros leidos, en orden.
