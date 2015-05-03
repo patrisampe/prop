@@ -26,17 +26,17 @@ public class DiputadoDriver {
 		Integer codi = -2;
 		while (codi < -1 || codi > 2) {
 			S.Write("Selecciona una operacion:");
-			S.Write("0: Insertar un nuevo diputado nulo.");
 			S.Write("-1: Finalizar la ejecucion.");
+			S.Write("0: Insertar un nuevo diputado nulo.");
 			S.Write("1: Insertar un nuevo diputado(por atributos).");
 			S.Write("2: Insertar un nuevo diputado(por copia).");
 			codi = E.ReadInteger();
 			switch (codi) {
-			case -2:
-				D = Diputado.NULL;
-			break;
 			case -1:
 				S.Write("Finalizando el driver...");
+			break;
+			case 0:
+				D = Diputado.NULL;
 			break;
 			case 1:
 				D = diputado(E);
@@ -52,27 +52,59 @@ public class DiputadoDriver {
 		}
 		while (codi != -1) {
 			S.Write("Selecciona una operacion:");
-			S.Write("-2: Insertar un nuevo diputado nulo.");
+			S.Write("-2: Modificar la configuracion I/O.");
 			S.Write("-1: Finalizar la ejecucion.");
 			S.Write("0: Insertar un nuevo diputado nulo.");
 			S.Write("1: Insertar un nuevo diputado(por atributos).");
 			S.Write("2: Insertar un nuevo diputado(por copia).");
-			S.Write("3: Consulta el nombre del diputado.");
-			S.Write("4: Consulta el partido politico del diputado.");
-			S.Write("5: Consulta el estado del diputado.");
-			S.Write("6: Consulta la fecha de nacimiento del diputado.");
-			S.Write("7: Consulta las legislaturas activas del diputado.");
-			S.Write("8: Comprueba si el diputado es activo en una legislatura.");
-			S.Write("9: Comprueba si el diputado es un diputado nulo.");
-			S.Write("10: Modifica el partido politico del diputado.");
-			S.Write("11: Modifica el estado del diputado.");
-			S.Write("12: Modifica la fecha de nacimiento del diputado.");
-			S.Write("13: Inserta una nueva legislatura en el diputado.");
-			S.Write("14: Establece las n legislaturas del diputado.");
-			S.Write("15: Elimina una legislatura del diputado.");
-			S.Write("16: Elimina todas las legislatura del diputado.");
+			S.Write("3: Consultar el nombre del diputado.");
+			S.Write("4: Consultar el partido politico del diputado.");
+			S.Write("5: Consultar el estado del diputado.");
+			S.Write("6: Consultar la fecha de nacimiento del diputado.");
+			S.Write("7: Consultar las legislaturas activas del diputado.");
+			S.Write("8: Comprobar si el diputado es activo en una legislatura.");
+			S.Write("9: Comprobar si el diputado es un diputado nulo.");
+			S.Write("10: Modificar el partido politico del diputado.");
+			S.Write("11: Modificar el estado del diputado.");
+			S.Write("12: Modificar la fecha de nacimiento del diputado.");
+			S.Write("13: Insertar una nueva legislatura en el diputado.");
+			S.Write("14: Establecer las n legislaturas del diputado.");
+			S.Write("15: Eliminar una legislatura del diputado.");
+			S.Write("16: Eliminar todas las legislatura del diputado.");
 			codi = E.ReadInteger();
 			switch (codi) {
+			case -2:
+				S.Write("Selecciona una opcion:");
+				S.Write("1: Utilizar la consola para entrada y salida");
+				S.Write("2: Utilizar la consola para entrada y un fichero para salida");
+				S.Write("3: Utilizar un fichero para entrada y la consola para salida");
+				S.Write("4: Utilizar un fichero para entrada y salida");
+				Integer io = E.ReadInteger();
+				String fIn = "";
+				String fOut = "";
+				switch(io) {
+				case 2:
+					fOut = E.ReadString();
+					E = new ConsolaEntrada();
+					S = new FitxerSortida(fOut);
+				break;
+				case 3:
+					fIn = E.ReadString();
+					E = new FitxerEntrada(fIn);
+					S = new ConsolaSortida();
+				break;
+				case 4:
+					fIn = E.ReadString();
+					fOut = E.ReadString();
+					E = new FitxerEntrada(fIn);
+					S = new FitxerSortida(fOut);
+				break;
+				default:
+					E = new ConsolaEntrada();
+					S = new ConsolaSortida();
+				break;
+				}
+			break;
 			case -1:
 				S.Write("Finalizando el driver...");
 			break;
