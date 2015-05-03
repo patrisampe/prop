@@ -7,7 +7,7 @@ import time.*;
 /**
  * Representante de un estado que ocupa un cargo publico en el senado.
  * @author David Moran
- * @version 03/05/2015 01:02
+ * @version 04/05/2015 01:00
  */
 public class Diputado extends ObjetoDominio {
 	

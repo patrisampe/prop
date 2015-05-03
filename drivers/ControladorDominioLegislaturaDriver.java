@@ -4,16 +4,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import time.Date;
-import controladores.ControladorDominioDiputado;
+import controladores.ControladorDominioLegislatura;
 import dominio.Diputado;
 import dominio.Legislatura;
 import io.*;
 
 /**
  * Driver para el controlador de dominio de legislaturas.
- * TODO: falta implementar
  * @author David Moran
- * @version 03/05/2015 01:02
+ * @version 04/05/2015 01:00
  */
 public class ControladorDominioLegislaturaDriver {
 	
@@ -45,33 +44,36 @@ public class ControladorDominioLegislaturaDriver {
 	public static void main(String[] args) {
 		Entrada E = new ConsolaEntrada();
 		Sortida S = new ConsolaSortida();
-		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
+		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		Integer n;
 		Integer codi = 0;
 		while (codi != -1) {
 			S.Write("Selecciona una operacion:");
 			S.Write("-2: Modificar la configuracion I/O.");
 			S.Write("-1: Finalizar la ejecucion.");
-			S.Write("1: Consultar el numero de diputados del sistema.");
-			S.Write("2: Insertar un conjunto de diputados.");
-			S.Write("3: Consultar el conjunto de diputados.");
-			S.Write("4: Consultar los nombres de los diputados.");
-			S.Write("5: Insertar un nuevo diputado.");
-			S.Write("6: Comprobar si un diputado existe.");
-			S.Write("7: Eliminar un diputado.");
-			S.Write("8: Modificar el partido politico de un diputado.");
-			S.Write("9: Modificar el estado de un diputado.");
-			S.Write("10: Modificar la fecha de nacimiento de un diputado.");
-			S.Write("11: Consultar el partido politico de un diputado.");
-			S.Write("12: Consulta el estado de un diputado.");
-			S.Write("13: Consulta la fecha de nacimiento de un diputado.");
-			S.Write("14: Insertar legislatura a un diputado.");
-			S.Write("15: Establecer el conjunto de legislaturas de un diputado.");
-			S.Write("16: Consultar el conjunto de legislaturas de un diputado.");
-			S.Write("17: Comprobar si el diputado es activo en la legislatura.");
-			S.Write("18: Eliminar una legislatura de un diputado.");
-			S.Write("19: Eliminar todas las legislaturas de un diputado.");
-			S.Write("20: Eliminar una legislatura de todos los diputados.");
+			S.Write("1: Consultar el numero de legislaturas del sistema.");
+			S.Write("2: Insertar un conjunto de legislaturas.");
+			S.Write("3: Consultar el conjunto de legislaturas.");
+			S.Write("4: Consultar los identificadores de las legislaturas.");
+			S.Write("5: Insertar una nueva legislatura.");
+			S.Write("6: Insertar una nueva legislatura sin fecha de finalizacion.");
+			S.Write("7: Comprobar si una legislatura existe.");
+			S.Write("8: Eliminar una legislatura.");
+			S.Write("9: Modificar la fecha de inicio de una legislatura.");
+			S.Write("10: Modificar la fecha de finalizacion de una legislatura.");
+			S.Write("11: Consultar la fecha de inicio de una legislatura.");
+			S.Write("12: Consultar la fecha de finalizacion de una legislatura.");
+			S.Write("13: Comprobar si la legislatura tiene fecha de finalizacion.");
+			S.Write("14: Eliminar la fecha de finalizacion de una legislatura.");
+			S.Write("15: Insertar diputado a una legislatura.");
+			S.Write("16: Establecer el conjunto de diputados de una legislatura.");
+			S.Write("17: Consultar el conjunto de diputados de una legislatura.");
+			S.Write("18: Comprobar si el diputado es activo en la legislatura.");
+			S.Write("19: Eliminar un diputado de una legislatura.");
+			S.Write("20: Eliminar todos los diputados de la legislatura.");
+			S.Write("21: Eliminar un diputado de todas las legislaturas.");
+			S.Write("22: Consultar la legislatura a la que pertenece una fecha.");
+			S.Write("23: Consultar el identificador de la ultima legislatura.");
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
@@ -110,85 +112,96 @@ public class ControladorDominioLegislaturaDriver {
 				S.Write("Finalizando el driver...");
 			break;
 			case 1:
-				S.Write(CDD.numeroDiputados());
+				S.Write(CDL.numeroLegislaturas());
 			break;
 			case 2:
 				n = E.ReadInteger();
-				Set<Diputado> S1 = new TreeSet<Diputado>();
-				for (Integer i = 0; i < n; ++i) S1.add(diputado(E));
-				CDD.addAll(S1);
+				Set<Legislatura> S1 = new TreeSet<Legislatura>();
+				for (Integer i = 0; i < n; ++i) S1.add(legislatura(E));
+				CDL.addAll(S1);
 			break;
 			case 3:
-				for (Diputado D:CDD.getAll()) {
-					String[] out = new String[4];
-					out[0] = D.getNombre();
-					out[1] = D.getPartidoPolitico();
-					out[2] = D.getEstado();
-					out[3] = D.getFechaDeNacimiento().toString();
-					S.Write(4, out);
+				for (Legislatura L:CDL.getAll()) {
+					String[] out = new String[3];
+					out[0] = L.getID().toString();
+					out[1] = L.getFechaInicio().toString();
+					out[2] = L.getFechaFinal().toString();
+					S.Write(3, out);
 				}
 			break;
 			case 4:
-				S.Write(CDD.getNombres());
+				Set<String> S2 = new TreeSet<String>();
+				for (Integer i:CDL.getIDs()){
+					S2.add(i.toString());
+				}
+				S.Write(S2);
 			break;
 			case 5:
-				CDD.addDiputado(E.ReadString(), E.ReadString(), E.ReadString(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
+				CDL.addLegislatura(E.ReadInteger(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
 			break;
 			case 6:
-				S.Write("El diputado" + (CDD.existsDiputado(E.ReadString())?" ":" no ") + "existe.");
+				CDL.addLegislatura(E.ReadInteger(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
 			break;
 			case 7:
-				CDD.removeDiputado(E.ReadString());
+				S.Write("La legislatura" + (CDL.existsLegislatura(E.ReadInteger())?" ":" no ") + "existe.");
 			break;
 			case 8:
-				CDD.setPartidoPolitico(E.ReadString(), E.ReadString());
+				CDL.removeLegislatura(E.ReadInteger());
 			break;
 			case 9:
-				CDD.setEstado(E.ReadString(), E.ReadString());
+				CDL.setFechaInicio(E.ReadInteger(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
 			break;
 			case 10:
-				CDD.setFechaDeNacimiento(E.ReadString(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
+				CDL.setFechaFinal(E.ReadInteger(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
 			break;
 			case 11:
-				S.Write(CDD.getPartidoPolitico(E.ReadString()));
+				S.Write(CDL.getFechaInicio(E.ReadInteger()).toString());
 			break;
 			case 12:
-				S.Write(CDD.getEstado(E.ReadString()));
+				S.Write(CDL.getFechaFinal(E.ReadInteger()).toString());
 			break;
 			case 13:
-				S.Write(CDD.getFechaDeNacimiento(E.ReadString()).toString());
+				S.Write("La legislatura" + (CDL.hasFechaFinal(E.ReadInteger())?" ":" no ") + "tiene fecha de finalizacion.");
 			break;
 			case 14:
-				CDD.addLegistura(E.ReadString(), E.ReadInteger());
+				CDL.removeFechaFinal(E.ReadInteger());
 			break;
 			case 15:
-				n = E.ReadInteger();
-				String nombreDiputado = E.ReadString();
-				Set<Integer> S2 = new TreeSet<Integer>();
-				for (Integer i = 0; i < n; ++i) S2.add(E.ReadInteger());
-				CDD.setLegisturas(nombreDiputado, S2);
+				CDL.addDiputado(E.ReadInteger(), E.ReadString());
 			break;
 			case 16:
-				Set<Integer> S3 = CDD.getLegislaturas(E.ReadString());
-				for (Integer i:S3) S.Write(i);
+				n = E.ReadInteger();
+				Integer idLegislatura = E.ReadInteger();
+				Set<String> S3 = E.ReadSetString(n);
+				CDL.setDiputados(idLegislatura, S3);
 			break;
 			case 17:
-				S.Write("El diputado" + (CDD.existsLegistura(E.ReadString(), E.ReadInteger())?" ":" no ") + "esta activo en esta legislatura.");
-			break;
+				Set<String> S4 = CDL.getDiputados(E.ReadInteger());
+				S.Write(S4);
+				break;
 			case 18:
-				CDD.removeLegistura(E.ReadString(), E.ReadInteger());
+				S.Write("El diputado" + (CDL.existsDiputado(E.ReadInteger(), E.ReadString())?" ":" no ") + "esta activo en esta legislatura.");
 			break;
 			case 19:
-				CDD.removeLegisturas(E.ReadString());
+				CDL.removeDiputado(E.ReadInteger(), E.ReadString());
 			break;
 			case 20:
-				CDD.removeLegislaturaFromDiputados(E.ReadInteger());
-			break;			
+				CDL.removeDiputados(E.ReadInteger());
+			break;
+			case 21:
+				CDL.removeDiputadoFromLegislaturas(E.ReadString());
+			break;
+			case 22:
+				S.Write(CDL.getID(new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger())));
+			break;
+			case 23:
+				S.Write(CDL.getIDLast());
+			break;
 			default:
 				S.Write("Codigo incorrecto.");
 			break;
 			}
-			if (CDD.hasCodiError()) S.Write(CDD.getCodiError().getMensajeError());
+			if (CDL.hasCodiError()) S.Write(CDL.getCodiError().getMensajeError());
 		}
 	}
 }

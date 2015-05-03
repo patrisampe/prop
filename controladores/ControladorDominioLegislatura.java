@@ -11,7 +11,7 @@ import dominio.Legislatura;
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de las legislaturas.
  * @author David Moran
- * @version 03/05/2015 01:02
+ * @version 04/05/2015 01:00
  */
 public class ControladorDominioLegislatura {
 	
@@ -79,7 +79,7 @@ public class ControladorDominioLegislatura {
 		return conjuntoLegislaturas.getIntegerKeys();
 	}
 	
-	/**
+	/** 
 	 * Consulta el identificador de la legislatura que contiene una fecha concreta.
 	 * @param fechaContenida - Fecha de la cual se desea obtener su legislatura.
 	 * @return Identificador de la legislatura que contiene la fecha concreta.
