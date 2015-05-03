@@ -1,0 +1,15 @@
+0
+No hay error.
+Maria
+0
+No hay error.
+Maria, 1
+0
+No hay error.
+Maria, 1
+10
+El diputado %1 ya existe en la legislatura %2.
+4
+El diputado %1 ya existe.
+0
+No hay error.

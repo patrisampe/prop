@@ -1,0 +1,30 @@
+Comanda 1:
+	Modifica la importancia del Tipo Evento
+	Format: Integer 
+Comanda 2: 
+	Inserta un nuevo evento
+	Format: un string, 3 integers (la data), 
+	1 integer(numero de diputados que tiene el evento),n nombre de diputados 
+Comanda 3: 
+	Nos indica si es valida o no la importancia
+	Format: 1 integer
+Comanda 4:
+	Nos indica si es un evento
+	format: 1 string
+Comanda 5:
+	Nos crea un nuevo tipo evento a partir de un nombre y nos lo escribe en pantalla
+	forma: 1 string
+Comanda 6:
+	Elimina un evento
+	Format: un string
+Comanda 7:
+	Nos crea un nuevo tipo evento y nos lo imprime por pantalla
+	Formato: 1 String, 1 Integer	     
+Comanda 8:
+	Nos imprime un evento por pantalla
+	format: 1 string
+Comanda 9:
+	Nos imprime por pantalla todos los eventos que tiene ese tipo
+Comanda 10:
+	Nos imprime por pantalla un tipo evento. 
+	Salida: String, Integer, nombre de todos los eventos que contiene.

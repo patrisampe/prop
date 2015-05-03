@@ -15,7 +15,7 @@ public class LouvainDriver {
 		Sortida SF = new FitxerSortida(Output);
 		Sortida SC = new ConsolaSortida();
 		SC.Write("Fitxers Oberts, procedim a l'execucio.");
-		HashSet<HashSet<String>> comunidades = Louvain.executa(GrafLouvainDriver.ReadGraf(EF, EF.ReadInt(), EF.ReadInt()), EF.ReadInt()); 
+		HashSet<HashSet<String>> comunidades = Louvain.executa(SC, GrafLouvainDriver.ReadGraf(EF, EF.ReadInt(), EF.ReadInt()), EF.ReadInt()); 
 		SC.Write("Execucio completada, procedim a imprimir les comunitats.");
 		Integer i = 1;
 		for(HashSet<String> comunidad : comunidades) {

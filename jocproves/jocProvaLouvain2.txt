@@ -1,0 +1,32 @@
+14 14
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+
+A B 50
+B C 50
+C D 50
+D E 50
+E F 50
+F G 50
+G H 50
+H I 50
+I J 50
+J K 50
+K L 50
+L M 50
+M N 50
+N A 50
+30

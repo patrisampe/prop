@@ -18,28 +18,28 @@ public class TipoEventoDriver {
 		Integer imp=EF.ReadInteger();
 		return new TipoEvento(nombre,imp);
 	}
-	public void setImportancia(Entrada EF,TipoEvento te){
+	public void testsetImportancia(Entrada EF,TipoEvento te){
 		
 	    Integer imp=EF.ReadInteger();
 	    te.setImportancia(imp);
 	}
 	
-	public void testEsValida(Entrada EF, Sortida SC){
+	public void testEsValida(Entrada EF, Sortida SF){
 		
 		 Integer imp=EF.ReadInteger();
-		 SC.Write(TipoEvento.esValidaImportancia(imp));
+		 SF.Write(TipoEvento.esValidaImportancia(imp));
 	}
-	public void esEvento(Entrada EF, Sortida SC, TipoEvento te){
+	public void testesEvento(Entrada EF, Sortida SF, TipoEvento te){
 		
 		String ev=EF.ReadString();
-		SC.Write(te.esEvento(ev));
+		SF.Write(te.esEvento(ev));
 	}
-	public void removeEvento(Entrada EF, Sortida SC, TipoEvento te){
+	public void testremoveEvento(Entrada EF, Sortida SF, TipoEvento te){
 		
 		String ev=EF.ReadString();
 		te.removeEvento(ev);
 	}
-	public void addEvento(Entrada EF, Sortida SF, TipoEvento te){
+	public void testaddEvento(Entrada EF, Sortida SF, TipoEvento te){
 		
 		EventoDriver ED= new EventoDriver();
 		Evento e=ED.llegirEvento(EF);
@@ -86,16 +86,16 @@ public class TipoEventoDriver {
 		while(a!=-1){
 			switch(a) {
 			 case 1: 
-				 DTE.setImportancia(EF, te);
+				 DTE.testsetImportancia(EF, te);
 			     break;
 			 case 2: 
-				 DTE.setImportancia(EF, te);
+				 DTE.testaddEvento(EF, SF, te);
 			     break;
 			 case 3: 
-			     DTE.testEsValida(EF, SC);
+			     DTE.testEsValida(EF, SF);
 			     break;
 			 case 4: 
-			     DTE.esEvento(EF, SC, te);
+			     DTE.testesEvento(EF, SF, te);
 			     break;
 			 case 5:
 				 String newName = EF.ReadString();
@@ -103,7 +103,7 @@ public class TipoEventoDriver {
 				 DTE.escriureTipoEvento(SF, aux);
 				 break;
 			 case 6: 
-			     DTE.removeEvento(EF, SC, te);
+			     DTE.testremoveEvento(EF, SF, te);
 			     break;
 			 case 7:
 				 TipoEvento aux2 = DTE.llegirTipoEvento(EF);
