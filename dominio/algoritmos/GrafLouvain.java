@@ -1,5 +1,7 @@
 package dominio.algoritmos;
 
+import io.Sortida;
+
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -145,6 +147,18 @@ public class GrafLouvain extends Graf {
 		if (Comunitat.isEmpty()) return -1.0;
 		return sumaPesosAdjacentsInclusiva(Comunitat) - sumaPesos(Comunitat);
 	}
+
+	/*public void print(Sortida sC) {
+		sC.Write("Nodes");
+		for (String Node : Diccionari.keySet()) sC.Write(Node);
+		for (Integer i = 0; i < Matriu.size();++i) {
+			for (Integer j = i; j < Matriu.size(); ++j) {
+				sC.Write(DiccionariInvers.get(i)+ " " + DiccionariInvers.get(j) + " " + Matriu.get(i).get(j).toString());
+
+			}
+		}
+	}
+	*/
 	
 	
 	

@@ -27,7 +27,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * para los diputados activos en algún momento del periodo especificado, Eventos dentro del periodo y Votaciones
 	 * dentro de las legislaturas que incluyan el periodo.
 	 * @param Algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
-	 * @param Lapso Numero de legislaturas del lapso de tiempo
+	 * @param Lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param ImportanciaModificada Modificaciones en la importáncia predefinida de los Eventos.
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @param DiputadoRelevante Diputado cuya evolución buscamos.
@@ -61,7 +61,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
 	 * usando solamente el Estado de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
-	 * @param lapso Numero de legislaturas del lapso de tiempo
+	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
 	 * @param diputadoRelevante Diputado cuya evolución buscamos.
@@ -89,7 +89,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
 	 * usando solamente el el parecido en los nombres de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
-	 * @param lapso Numero de legislaturas del lapso de tiempo
+	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param periodo Periodo inclusivo de tiempo.
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @param diputadoRelevante Diputado cuya evolución buscamos.
@@ -118,7 +118,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
 	 * usando solamente el Partido Político de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
-	 * @param lapso Numero de legislaturas del lapso de tiempo
+	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param periodo Periodo inclusivo de tiempo.
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.

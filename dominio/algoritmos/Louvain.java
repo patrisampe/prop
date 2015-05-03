@@ -35,6 +35,7 @@ public class Louvain {
 		GrafLouvain NouGraf = new GrafLouvain();
 		Iterator<HashSet<String> >  iHS = Comunidades.iterator();
 		TreeMap<String,HashSet<String> > Mapa = new TreeMap<String, HashSet<String>>();
+		
 		for (Integer i = 0; iHS.hasNext(); ++i) {
 			HashSet<String> Comunidad = new HashSet<String>(iHS.next()); 
 			if (Comunidad.size() > 0) {
@@ -45,15 +46,14 @@ public class Louvain {
 		Historia.addElement(Mapa); //Actualitzem la Història de l'algorisme amb un nou pas
 		HashSet<String> Nodes = new HashSet<String> (Historia.get(Historia.size()-1).keySet()); //Agafa els noms tots els noms que se li ha donat als diversos nodes agregats de comunitats.
 		Comunidades = HSStoHSHSS(Nodes); //Reiniciem les comunitats a comunitats individuals
-		Iterator<String> It = Nodes.iterator();
-		while (It.hasNext()) { //Omplim d'arestes el NouGraf
-			Iterator<String> Jt = Nodes.iterator();
-			while(Jt.hasNext()) {
-				String a = new String(It.next());
-				String b = new String(Jt.next());
+		for (String a : Nodes) { //Omplim d'arestes el NouGraf
+			for(String b : Nodes) {
 				if(!NouGraf.existeixAresta(a, b)) {
 					Double Pes = G.sumaPesosAdjacents(Historia.get(Historia.size()-1).get(a), Historia.get(Historia.size()-1).get(b));
-					if (Pes > 0) NouGraf.addAresta(a, b, Pes);
+					if (Pes > 0) {
+						NouGraf.addAresta(a, b, Pes);
+						
+					}
 				}
 				
 			}
@@ -65,6 +65,7 @@ public class Louvain {
 	private static boolean IncrementModularity() {
 		HashSet<String> Nodes = G.getNodes();
 		Boolean optimitzada = false;
+		Boolean sehaincrementado = false;
 		while (!optimitzada) {
 			optimitzada = true;
 			for (String Node : Nodes) {
@@ -74,25 +75,36 @@ public class Louvain {
 				for(HashSet<String> aTractar : Comunidades) {
 					if (actual == aTractar) continue;
 					Double Inc = ModularityInc(Node, actual, aTractar);
+					//sC.Write(Inc);
 					if (Inc > max) {
+						//sC.Write(Inc);
 						max = Inc;
 						maxCom = aTractar;
 						optimitzada = false;
+						
 					}
 				}
-				actual.remove(Node);
-				maxCom.add(Node);
+				if (!optimitzada) {  
+					actual.remove(Node);
+					maxCom.add(Node);
+					sehaincrementado = true;
+					if (actual.size() == 0) Comunidades.remove(actual);
+				}
 			}
 		}
-		return false;
+		return sehaincrementado;
 	}
 	
 	private static Double ModularityInc(String node, HashSet<String> origen,
 			HashSet<String> destino) {
-		Double grauNode = G.sumaPesosAdjacents(node);
 		Double m = G.sumaPesos();
-		Double res = (G.sumaPesosAdjacentsInclusiva(origen)-G.sumaPesosAdjacentsInclusiva(destino) - grauNode)*grauNode/m; //Casi segur és inclusiva, però ens hem d'assegurar que no sigui exclusiva
-		res += G.sumaPesosAdjacents(node, destino) - G.sumaPesosAdjacents(node, origen);
+		Double pesReflexiu = 0.0;
+		if(G.existeixAresta(node, node)) {
+			pesReflexiu = G.getPes(node, node);
+		}
+		Double grauNode = G.sumaPesosAdjacents(node);
+		Double res = (G.sumaPesosAdjacents(node, destino) - G.sumaPesosAdjacents(node, origen)+pesReflexiu); 
+		res -= (G.sumaPesosAdjacentsInclusiva(destino)-G.sumaPesosAdjacentsInclusiva(origen) + grauNode)*grauNode/m;
 		res /= 2*m;	
 		return res;
 	}
@@ -107,10 +119,11 @@ public class Louvain {
 
 	private static HashSet<HashSet<String>> retorna(Integer percentatge) {
 		Integer Total = Historia.size();
-		Integer Interesante = (100-Total)*percentatge/100;
+		Integer Interesante = (100-percentatge)*Total/100;
 		HashSet<String> Generacion = new HashSet<String>(Historia.get(Interesante).keySet());
-		HashSet<HashSet<String> >  ret = HSStoHSHSS(Generacion);
-		Iterator<HashSet<String> > It = ret.iterator();
+		HashSet<HashSet<String> >  hs = HSStoHSHSS(Generacion);
+		Iterator<HashSet<String> > It = hs.iterator();
+		HashSet<HashSet<String>> ret = new HashSet<HashSet<String>>();
 		while (It.hasNext()) {
 			ret.add(historiador(Interesante, It.next()));
 		}
@@ -146,6 +159,7 @@ public class Louvain {
 	}
 	/**
 	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'aturés.
+	 * @param sC 
 	 * @param Gr Graf sobre el que s'executarà l'algorisme.
 	 * @param percentatge 
 	 * @return Conjunt de Comunitats resultant de l'execució.
@@ -153,9 +167,12 @@ public class Louvain {
 	public static HashSet< HashSet<String> > executa(GrafLouvain Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);
 		init(Gr); 
-		while(Comunidades.size() > 1) {
-			while(IncrementModularity()); 
+		boolean modificacion = true;
+		while(Comunidades.size() > 1 && modificacion) {
+			modificacion = false;
+			while(IncrementModularity()) modificacion = true; 
 			agregaGraf();
+			
 		}
 		return retorna(percentatge);
 		
