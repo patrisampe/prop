@@ -4,7 +4,7 @@ package dominio;
  * Objeto generico del dominio de datos.
  * @author David Moran
  */
-public class ObjetoDominio {
+public class ObjetoDominio implements Comparable<ObjetoDominio> {
 	
 	/**
 	 * Crea una instancia de un objeto generico del dominio.
@@ -26,6 +26,16 @@ public class ObjetoDominio {
 	 */
 	public Integer getID(){
 		return -2;
+	}
+
+	@Override
+	public int compareTo(ObjetoDominio o) {
+		if (getID() != -2) { //Clau externa -> String
+			return getNombre().compareTo(o.getNombre());
+		}
+		else {
+			return getID().compareTo(o.getID());
+		}
 	}
 	
 }
