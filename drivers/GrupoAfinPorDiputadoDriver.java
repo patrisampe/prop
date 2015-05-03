@@ -1,5 +1,7 @@
 package drivers;
 
+import java.util.Set;
+
 import io.ConsolaEntrada;
 import io.ConsolaSortida;
 import io.Entrada;
@@ -57,11 +59,23 @@ public class GrupoAfinPorDiputadoDriver {
 	
 	public static void cargaFichero() {
 		EF = new FitxerEntrada(fichEnt);
-		
+		grupAfi = new GrupoAfinPorDiputado(EF.ReadInteger(), Date.stringToDate(EF.ReadString()), Date.stringToDate(EF.ReadString()));
+		Integer numdip = EF.ReadInteger();
+		for (Integer i = 0; i < numdip; ++i)
+			grupAfi.addDiputado(EF.ReadString());
+		EF.close();
 	}
 	
 	public static void guardaInstancia() {
 		SF = new FitxerSortida(fichSal);
+		SF.Write(grupAfi.getID());
+		SF.Write(grupAfi.getFechaInicio().toString());
+		SF.Write(grupAfi.getFechaFin().toString());
+		Set<String> diputados = grupAfi.getDiputados();
+		SF.Write(diputados.size());
+		for (String diputado:diputados)
+			SF.Write(diputado);
+		SF.close();
 	}
 	
 	public static void nuevaInstancia() {
@@ -123,18 +137,6 @@ public class GrupoAfinPorDiputadoDriver {
 		SC.Write("La fecha de fin es: " + grupAfi.getFechaFin());
 	}
 	
-	/*1.-Crear nueva instancia de GrupoAfinPorDiputado
-	2.-Añadir un Diputado
-	3.-Eliminar un diputado
-	4.-Obtener identificador del GrupoAfin
-	5.-Obtener lista de diputados
-	6.-Comprobar si un diputado pertenece al grupo
-	7.-Comprobar si el grupo está vacío
-	8.-Introducir una nueva fecha de inicio
-	9.-Introducir una nueva fecha de fin
-	10.-Obtener fecha de inicio
-	11.-Ontener fecha de fin*/
-	
 	public static void menuMetodos() {
 		int a = 1;
 		while (a != 0) {
@@ -172,7 +174,6 @@ public class GrupoAfinPorDiputadoDriver {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		EC = new ConsolaEntrada();
 		SC = new ConsolaSortida();
 		fichEnt = "jocproves/jocProvaGrupoAfinPorDiputado.txt";
