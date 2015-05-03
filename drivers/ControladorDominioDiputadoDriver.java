@@ -56,7 +56,6 @@ public class ControladorDominioDiputadoDriver {
 			S.Write("18: Eliminar una legislatura de un diputado.");
 			S.Write("19: Eliminar todas las legislaturas de un diputado.");
 			S.Write("20: Eliminar una legislatura de todos los diputados.");
-			//TODO
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
