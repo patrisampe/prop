@@ -71,6 +71,13 @@ public interface Sortida {
 	public void Write(int n, int[] a);
 	
 	/**
+	 * Escribe <i>n</i> caracteres.
+	 * @param n - Numero de caracteres a escribir.
+	 * @param a - Array con los caracteres a escribir.
+	 */
+	public void Write(int n, Character[] a);
+
+	/**
 	 * Escribe <i>n</i> enteros.
 	 * @param n - Numero de enteros a escribir.
 	 * @param a - Array con los enteros a escribir.

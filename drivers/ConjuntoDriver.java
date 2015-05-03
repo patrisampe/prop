@@ -3,12 +3,28 @@ package drivers;
 import java.util.Set;
 import java.util.TreeSet;
 
+import time.Date;
 import utiles.Conjunto;
 import dominio.Diputado;
 import dominio.Legislatura;
 import io.*;
 
 public class ConjuntoDriver {
+	
+	public static Diputado diputado(Entrada E){
+		String nombre = E.ReadString();
+		String partidoPolitico = E.ReadString();
+		String estado = E.ReadString();
+		Date fechaDeNacimiento = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());
+		return new Diputado(nombre, partidoPolitico, estado, fechaDeNacimiento);
+	}
+	
+	public static Legislatura legislatura(Entrada E){
+		Integer identificador = E.ReadInteger();
+		Date fechaInicio = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());
+		Date fechaFinal = new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger());
+		return new Legislatura(identificador, fechaInicio, fechaFinal);
+	}
 	
 	public static void main(String[] args) {
 		Entrada E = new ConsolaEntrada();
@@ -103,7 +119,7 @@ public class ConjuntoDriver {
 					case 7:
 						n = E.ReadInteger();
 						for (Integer i = 0; i < n; ++i) {
-							set.add(DiputadoDriver.diputado(E));
+							set.add(diputado(E));
 						}
 						CD.addAll(set);
 					break;			
@@ -123,7 +139,7 @@ public class ConjuntoDriver {
 						}
 					break;
 					case 10:
-						Diputado D2 = DiputadoDriver.diputado(E);
+						Diputado D2 = diputado(E);
 						CD.add(D2.getNombre(), D2);
 					break;
 					case 11:
@@ -225,7 +241,7 @@ public class ConjuntoDriver {
 					case 7:
 						n = E.ReadInteger();
 						for (Integer i = 0; i < n; ++i) {
-							set2.add(LegislaturaDriver.legislatura(E));
+							set2.add(legislatura(E));
 						}
 						CL.addAll(set2);
 					break;			
@@ -244,7 +260,7 @@ public class ConjuntoDriver {
 						}
 					break;
 					case 10:
-						Legislatura L2 = LegislaturaDriver.legislatura(E);
+						Legislatura L2 = legislatura(E);
 						CL.add(L2.getID(), L2);
 					break;
 					case 11:

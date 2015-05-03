@@ -60,6 +60,13 @@ public class ConsolaSortida implements Sortida {
 		}
 	}
 	
+	public void Write(int n, Character[] a) {
+		for (int i = 0; i < n; ++i){
+			if (i != n-1) System.out.print(a[i] + ", ");
+			else System.out.println(a[i]);
+		}
+	}
+	
 	public void Write(int n, Integer[] a){
 		for (int i = 0; i < n; ++i){
 			if (i != n-1) System.out.print(a[i].toString() + ", ");
@@ -80,12 +87,14 @@ public class ConsolaSortida implements Sortida {
 			else System.out.println(a[i].toString());
 		}
 	}
+	
 	public void Write(int n, String[] a){
 		for (int i = 0; i < n; ++i){
 			if (i != n-1) System.out.print(a[i] + ", ");
 			else System.out.println(a[i]);
 		}
 	}
+	
 	public void Write(int n, Long[] a){
 		for (int i = 0; i < n; ++i){
 			if (i != n-1) System.out.print(a[i].toString() + ", ");

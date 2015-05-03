@@ -94,6 +94,14 @@ public class ConsolaEntrada implements Entrada {
     	return out;
 	}
 	
+	public Character[] ReadCharacter(int n) {
+		Character[] out = new Character[n];
+		for (int i = 0; i < n; ++i){
+			if (sc.hasNextByte()) out[i] = Character.valueOf((char) sc.nextByte());
+		}
+    	return out;
+	}
+	
 	public Integer[] ReadInteger(int n){
 		Integer[] out = new Integer[n];
 		for (int i = 0; i < n; ++i){
@@ -139,6 +147,7 @@ public class ConsolaEntrada implements Entrada {
 		}
     	return out;
 	}
+	
 	public Set<String> ReadSetString(int n){
 		Set<String> out = new TreeSet<String>();
 		for (int i = 0; i < n; ++i){
