@@ -56,14 +56,14 @@ public abstract class ControladorDominioBusqueda {
 		
 		Set<String> tipoEventos = cEv.getTipoEvento();
 		for (String tipoEvento : tipoEventos) {
-			res.put(tipoEvento, cEv.getEventos(tipoEvento, periodo.getInici(), periodo.getFi()));
+			res.put(tipoEvento, cEv.getEventos(tipoEvento, periodo.getInicio(), periodo.getFin()));
 		}
 		return res;
 	}
 
 	protected Set<String> prepararDiputados(DateInterval Periodo) {
-		Integer legislaturaInicio = cLeg.getID(Periodo.getInici());
-		Integer legislaturaFin = cLeg.getID(Periodo.getFi());
+		Integer legislaturaInicio = cLeg.getID(Periodo.getInicio());
+		Integer legislaturaFin = cLeg.getID(Periodo.getFin());
 		return prepararDiputados(legislaturaInicio, legislaturaFin);
 	}
 	
@@ -141,7 +141,7 @@ public abstract class ControladorDominioBusqueda {
 	
 	protected Map<String, Set<String>> prepararVotaciones(DateInterval periodo) {
 		Map<String, Set<String>> mapa = new TreeMap<String, Set<String>>();
-		for (String votacion : cVot.getVotaciones(periodo.getInici(), periodo.getFi())) {
+		for (String votacion : cVot.getVotaciones(periodo.getInicio(), periodo.getFin())) {
 			mapa.put(votacion+"_A_FAVOR", cVot.getDiputadosVotacion(votacion, TipoVoto.A_FAVOR));
 			mapa.put(votacion+"_EN_CONTRA", cVot.getDiputadosVotacion(votacion, TipoVoto.EN_CONTRA));
 		}

@@ -8,7 +8,6 @@ import java.util.Set;
 import time.*;
 import utiles.Conjunto;
 import dominio.GrupoAfinPorDiputado;
-import dominio.GrupoAfinPorPeriodo;
 import dominio.TipoAlgoritmo;
 import dominio.algoritmos.Graf;
 
@@ -48,7 +47,7 @@ public class ControladorDominioBusquedaPorDiputado extends
  			Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
 			Map<String, Set<String> > votacionesSimp = prepararVotaciones(Periodo); //Divide las votaciones en conjuntos de diputados que votan lo mismo.
 			Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
-			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInici(), Periodo.getFi());
+			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,Algoritmo, porcentaje, DiputadoRelevante);
 			s.add(idgrupo,ga);
 		}
@@ -77,7 +76,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
 			Graf G = construirGrafoEstado(idDiputados);
-			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInici(), Periodo.getFi());
+			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
 			s.add(idgrupo,ga);
 		}
@@ -106,7 +105,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
 			Graf G = construirGrafoNombresParecidos(idDiputados);
-			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInici(), Periodo.getFi());
+			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
 			s.add(idgrupo,ga);
 		}
@@ -135,7 +134,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			DateInterval periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
 			Graf G = construirGrafoPP(idDiputados);
-			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, periodo.getInici(), periodo.getFi());
+			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, periodo.getInicio(), periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
 			s.add(idgrupo,ga);
 		}

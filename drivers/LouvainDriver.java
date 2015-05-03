@@ -8,11 +8,11 @@ import io.*;
 public class LouvainDriver {
 
 	public static void main (String args[]) {
-		//Entrada EC = new ConsolaEntrada();
-		//String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada("jocproves/jocProvaLouvain.txt");
-		//String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida("jocproves/sortidajocProvaLouvain.txt");
+		Entrada EC = new ConsolaEntrada();
+		String Input = EC.ReadString();
+		Entrada EF = new FitxerEntrada(Input);
+		String Output = EC.ReadString();
+		Sortida SF = new FitxerSortida(Output);
 		Sortida SC = new ConsolaSortida();
 		SC.Write("Fitxers Oberts, procedim a l'execucio.");
 		HashSet<HashSet<String>> comunidades = Louvain.executa(GrafLouvainDriver.ReadGraf(EF, EF.ReadInt(), EF.ReadInt()), EF.ReadInt()); 
