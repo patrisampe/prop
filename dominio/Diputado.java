@@ -171,17 +171,6 @@ public class Diputado extends ObjetoDominio {
 	}
 	
 	/**
-	 * Consulta si el diputado es activo en una legislatura.
-	 * @param identificadorLegislatura - Identificador de la legislatura.
-	 * @return <i>true</i> si el diputado es activo en la legislatura.
-	 * <br>
-	 * <i>false</i> en cualquier otro caso.
-	 */
-	public Boolean hasLegistura(Integer identificadorLegislatura) {
-		return legislaturas.contains(identificadorLegislatura);
-	}
-	
-	/**
 	 * Elimina una legislatura de la lista de legislaturas en las que el diputado ha estado activo.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
