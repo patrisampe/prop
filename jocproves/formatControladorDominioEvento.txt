@@ -51,3 +51,6 @@ Comando 17:
 Comando 18:
 	Nos indica si un diputado participa en un Evento
 	Formato: 3 String
+Comando 19:
+	Añade diputados al Conjunto de Diputados
+	Formato:1 Integer= x. Par cada x (3 String, 3 Integer)

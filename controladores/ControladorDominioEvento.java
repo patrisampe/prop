@@ -399,7 +399,7 @@ public class ControladorDominioEvento {
 	    */
 	   public void removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)){
-			   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);
+			   if(conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);
 			   else if(!hasError){
 					   hasError=true;
 					   error.addClauExterna(nombreDiputado);
