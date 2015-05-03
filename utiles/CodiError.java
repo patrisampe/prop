@@ -45,11 +45,11 @@ public class CodiError {
 		Diccionario.put(28, "La legislatura %1 no puede contener la fecha %2, ya que se produce solapamiento entre legislaturas.");
 		Diccionario.put(29, "No se puede eliminar la fecha de finalizacion de la legislatura %1 ya que ya existe una legislatura sin fecha final (%2).");
 		Diccionario.put(30, "El indice de afinidad debe ser un porcentaje (0-100)");
-		Diccionario.put(31, "No existe ningún resultado de búsqueda con nombre %1");
+		Diccionario.put(31, "No existe ningun resultado de busqueda con nombre %1");
 		Diccionario.put(32, "Ya existe un resultado de búsqueda con nombre %1");
-		Diccionario.put(33, "No existe el grupo afín %1 en el resultado de búsqueda %2");
-		Diccionario.put(34, "No se puede hacer una búsqueda cada %1 legislaturas");
-		Diccionario.put(35, "No se ha realizado ninguna búsqueda");
+		Diccionario.put(33, "No existe el grupo afin %1 en el resultado de busqueda %2");
+		Diccionario.put(34, "No se puede hacer una busqueda cada %1 legislaturas");
+		Diccionario.put(35, "No se ha realizado ninguna busqueda");
         return Collections.unmodifiableMap(Diccionario);
 	}
 	/**

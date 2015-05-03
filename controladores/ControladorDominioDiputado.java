@@ -87,6 +87,7 @@ public class ControladorDominioDiputado {
 	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
 	public void addDiputado(String nombreDiputado, String nombrePartido, String nombreEstado, Date fechaDeNacimiento) {
+		error.netejaCodiError();
 		if (existsDiputado(nombreDiputado)) {
 			error.setCodiError(4);
 			error.addClauExterna(nombreDiputado);
@@ -115,6 +116,7 @@ public class ControladorDominioDiputado {
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeDiputado(String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -138,6 +140,7 @@ public class ControladorDominioDiputado {
 	 * @param nombrePartido - Nombre del partido politico al que pertenece el diputado.
 	 */
 	public void setPartidoPolitico(String nombreDiputado, String nombrePartido) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -151,6 +154,7 @@ public class ControladorDominioDiputado {
 	 * @param nombreEstado - Nombre del estado al que representa el diputado.
 	 */
 	public void setEstado(String nombreDiputado, String nombreEstado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -164,6 +168,7 @@ public class ControladorDominioDiputado {
 	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
 	public void setFechaDeNacimiento(String nombreDiputado, Date FechaDeNacimiento) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)){
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -177,6 +182,7 @@ public class ControladorDominioDiputado {
 	 * @return Nombre del partido politico al que pertenece el diputado.
 	 */
 	public String getPartidoPolitico(String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -191,6 +197,7 @@ public class ControladorDominioDiputado {
 	 * @return Nombre del estado al que representa el diputado.
 	 */
 	public String getEstado(String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -205,6 +212,7 @@ public class ControladorDominioDiputado {
 	 * @return Fecha de nacimiento del diputado.
 	 */
 	public Date getFechaDeNacimiento(String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -221,6 +229,7 @@ public class ControladorDominioDiputado {
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
 	public void addLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -250,6 +259,7 @@ public class ControladorDominioDiputado {
 	 * @param legislaturas - Conjunto de identificadores de legislaturas.
 	 */
 	public void setLegisturas(String nombreDiputado, Set<Integer> legislaturas) {
+		error.netejaCodiError();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -279,6 +289,7 @@ public class ControladorDominioDiputado {
 	 * @return Conjunto de identificadores de las legislaturas activas del diputado.
 	 */
 	public Set<Integer> getLegislaturas(String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -296,6 +307,7 @@ public class ControladorDominioDiputado {
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean existsLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -312,6 +324,7 @@ public class ControladorDominioDiputado {
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
 	public void removeLegistura(String nombreDiputado, Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -340,6 +353,7 @@ public class ControladorDominioDiputado {
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeLegisturas(String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);

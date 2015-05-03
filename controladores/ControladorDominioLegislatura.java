@@ -130,6 +130,7 @@ public class ControladorDominioLegislatura {
 	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
 	 */
 	public void addLegislatura(Integer identificadorLegislatura, Date fechaInicio, Date fechaFinal) {
+		error.netejaCodiError();
 		if (existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(16);
 			error.addClauExterna(identificadorLegislatura);
@@ -180,6 +181,7 @@ public class ControladorDominioLegislatura {
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
 	 */
 	public void addLegislatura(Integer identificadorLegislatura, Date fechaInicio) {
+		error.netejaCodiError();
 		if (existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(16);
 			error.addClauExterna(identificadorLegislatura);
@@ -223,6 +225,7 @@ public class ControladorDominioLegislatura {
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
 	public void removeLegislatura(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -236,6 +239,7 @@ public class ControladorDominioLegislatura {
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
 	 */
 	public void setFechaInicio(Integer identificadorLegislatura, Date fechaInicio) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -268,6 +272,7 @@ public class ControladorDominioLegislatura {
 	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
 	 */
 	public void setFechaFinal(Integer identificadorLegislatura, Date fechaFinal) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -300,6 +305,7 @@ public class ControladorDominioLegislatura {
 	 * @return Fecha de inicio de la legislatura.
 	 */
 	public Date getFechaInicio(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -314,6 +320,7 @@ public class ControladorDominioLegislatura {
 	 * @return Fecha de finalizacion de la legislatura.
 	 */
 	public Date getFechaFinal(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -335,6 +342,7 @@ public class ControladorDominioLegislatura {
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean hasFechaFinal(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -349,6 +357,7 @@ public class ControladorDominioLegislatura {
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
 	public void removeFechaFinal(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -376,6 +385,7 @@ public class ControladorDominioLegislatura {
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void addDiputado(Integer identificadorLegislatura, String nombreDiputado) {
+		error.netejaCodiError();
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		if (!CDD.existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -406,6 +416,7 @@ public class ControladorDominioLegislatura {
 	 * @param diputados - Conjunto de identificadores de diputados.
 	 */
 	public void setDiputados(Integer identificadorLegislatura, Set<String> diputados) {
+		error.netejaCodiError();
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
@@ -436,6 +447,7 @@ public class ControladorDominioLegislatura {
 	 * @return Conjunto de nombres de los diputados activos en la legislatura.
 	 */
 	public Set<String> getDiputados(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -453,6 +465,7 @@ public class ControladorDominioLegislatura {
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean existsDiputado(Integer identificadorLegislatura, String nombreDiputado) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -469,6 +482,7 @@ public class ControladorDominioLegislatura {
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeDiputado(Integer identificadorLegislatura, String nombreDiputado) {
+		error.netejaCodiError();
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		if (!CDD.existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -497,6 +511,7 @@ public class ControladorDominioLegislatura {
  	 * @param identificadorLegislatura - Identificador de la legislatura.
  	 */
 	public void removeDiputados(Integer identificadorLegislatura) {
+		error.netejaCodiError();
 		if (!existsLegislatura(identificadorLegislatura)) {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
@@ -513,7 +528,8 @@ public class ControladorDominioLegislatura {
 	 * <p>
 	 * Este metodo garantiza que todas las legislaturas seran eliminadas (si no lo han sido ya) de la listas de legislaturas activas del diputado.
 	 * @param nombreDiputado - Nombre del diputado.
-	 */	public void removeDiputadoFromLegislaturas(String nombreDiputado) {
+	 */
+	public void removeDiputadoFromLegislaturas(String nombreDiputado) {
 		for (Legislatura L:conjuntoLegislaturas.getAll()) {
 			Integer identificadorLegislatura = L.getID();
 			if (existsDiputado(identificadorLegislatura, nombreDiputado))
