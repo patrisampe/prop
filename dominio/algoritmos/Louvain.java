@@ -1,7 +1,5 @@
 package dominio.algoritmos;
 
-import io.Sortida;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
