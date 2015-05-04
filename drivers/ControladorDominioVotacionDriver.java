@@ -20,8 +20,8 @@ import dominio.Legislatura;
 import dominio.TipoVoto;
 import dominio.Votacion;
 /**
- * 
- * @author patricia
+ * @author  Patricia Sampedro
+ * @version 1.0 Mayo 2015 
  *
  */
 public class ControladorDominioVotacionDriver {

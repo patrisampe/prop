@@ -136,3 +136,4 @@ public class TipoEvento extends ObjetoDominio {
 		conjuntoEventos.add(nuevoEvento.getNombre(), nuevoEvento);
 	}
 }
+

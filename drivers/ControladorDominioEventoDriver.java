@@ -15,8 +15,8 @@ import io.Sortida;
 import dominio.Diputado;
 import dominio.Evento;
 /**
- * 
- * @author patricia
+ * @author  Patricia Sampedro
+ * @version 1.0 Mayo 2015 
  *
  */
 public class ControladorDominioEventoDriver {

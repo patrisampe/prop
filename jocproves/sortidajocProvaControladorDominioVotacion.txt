@@ -5,7 +5,7 @@
 12
 LEGISLATURA
 ERROR. El mensaje y el codigo: 
-En la votacion Pensiones el diputado Dani esta de baja
+En la votacion Pensiones el diputado Clara esta de baja
 25
 21
 21
@@ -14,6 +14,11 @@ En la votacion Pensiones el diputado Dani esta de baja
 12
 LEGISLATURA
 Todo ha ido bien!
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+La votacion Pensiones ya existe
+23
 12
 LEGISLATURA
 ERROR. El mensaje y el codigo: 
@@ -176,3 +181,8 @@ La votacion Turquia no existe
 ERROR. El mensaje y el codigo: 
 El diputado Laura no existe.
 3
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+La votacion Publicidad no pertenece a ninguna legislatura
+37

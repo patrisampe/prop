@@ -142,7 +142,7 @@ public abstract class ControladorDominioBusqueda {
 	protected Map<String, Set<String>> prepararVotaciones(DateInterval periodo) {
 		Map<String, Set<String>> mapa = new TreeMap<String, Set<String>>();
 		for (String votacion : cVot.getVotaciones(periodo.getInicio(), periodo.getFin())) {
-			mapa.put(votacion+"_A_FAVOR", cVot.getDiputadosVotacion(votacion, TipoVoto.A_FAVOR));
+			mapa.put(votacion+"_A_FAVOR__", cVot.getDiputadosVotacion(votacion, TipoVoto.A_FAVOR));//Arreglar de cara a la tercera entrega
 			mapa.put(votacion+"_EN_CONTRA", cVot.getDiputadosVotacion(votacion, TipoVoto.EN_CONTRA));
 		}
 		return mapa;
@@ -158,8 +158,9 @@ public abstract class ControladorDominioBusqueda {
 				interrelacionar(G, cEv.getDiputadosEvento(tipoEvento, evento), (Double) importancias.get(tipoEvento).doubleValue());
 			}
 		}
-		for (Set<String> diputadosVotandoLoMismo : votacionesSimp.values()) {
-			interrelacionar(G, diputadosVotandoLoMismo, 5.0);
+		for (String votacionSimp : votacionesSimp.keySet()) {
+			String votacion = votacionSimp.substring(0, votacionSimp.length()-10);
+			interrelacionar(G, cVot.getDiputadosVotacion(votacion), cVot.getImportanciaVotacion(votacion).doubleValue());
 		}
 		return G;
 	}
