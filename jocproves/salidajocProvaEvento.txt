@@ -1,59 +1,40 @@
-Ser o no ser participante
 Monica,true
 Pau,true
 Joana,false
  
-Nombre Evento
 Conferencia1
-Fecha
 2
 4
 1995
-Diputados
 Monica, Pau
  
-Nombre Evento
 Conferencia1
-Fecha
 2
 4
 1995
-Diputados
 Cris, Monica, Patri, Pau
  
-Nombre Evento
 Conferencia1
-Fecha
 15
 10
 1999
-Diputados
 Cris, Monica, Patri, Pau
  
-Nombre Evento
 Conferencianova
-Fecha
 15
 10
 1999
-Diputados
 Cris, Monica, Patri, Pau
  
-Nombre Evento
 Conferencia1
-Fecha
 15
 10
 1999
-Diputados
 Cris, Monica, Pau
  
-Nombre Evento
 Conferenciacreada
-Fecha
 12
 4
 2000
-Diputados
 Leonor, Nicolas
  
