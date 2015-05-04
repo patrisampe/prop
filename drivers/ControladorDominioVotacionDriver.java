@@ -20,8 +20,8 @@ import dominio.Legislatura;
 import dominio.TipoVoto;
 import dominio.Votacion;
 /**
- * 
- * @author patricia
+ * @author  Patricia Sampedro
+ * @version 1.0 Mayo 2015 
  *
  */
 public class ControladorDominioVotacionDriver {
@@ -42,12 +42,15 @@ public class ControladorDominioVotacionDriver {
 	
 	public Boolean testError(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
 		if(CDV.getHasError()){
-			SF.Write("ERROR");
+			SF.Write("ERROR. El mensaje y el codigo: ");
 			SF.Write(CDV.getError().getMensajeError());
 			SF.Write(CDV.getError().getCodiError());
 			CDV.netejaError();
+			//SF.Write(CDV.getError().getMensajeError());
+			//SF.Write(CDV.getError().getCodiError());
 			return true;
 		}
+		SF.Write("Todo ha ido bien!");
 		return false;
 	}
 	
@@ -64,6 +67,7 @@ public class ControladorDominioVotacionDriver {
 		String nombre=EF.ReadString();
 		Integer imp=CDV.getImportanciaVotacion(nombre);
 		if(!testError(EF,SF,CDV)){
+			SF.Write("Importancia de la votacion "+nombre);
 			SF.Write(imp);
 		}
 	}
@@ -158,9 +162,8 @@ public class ControladorDominioVotacionDriver {
 	public void testaddVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
 		VotacionDriver ED=new VotacionDriver();
 		Votacion e=ED.llegirVotacion(EF);
-		Integer aux=CDV.addVotacion(e.getNombre(), e.getFecha(), e.getImportancia(),e.getVotos());
+		CDV.addVotacion(e.getNombre(), e.getFecha(), e.getImportancia(),e.getVotos());
 		SF.Write("LEGISLATURA");
-		SF.Write(aux);
 		testError(EF,SF,CDV);
 	}
 	
@@ -223,6 +226,7 @@ public class ControladorDominioVotacionDriver {
 		ControladorDominioVotacion CDV=ControladorDominioVotacion.getInstance();
 		int a= EF.ReadInt();
 		while(a!=-1){
+			SF.Write(a);
 			switch(a) {
 			 case 1: 
 				 DCDV.testsetImportanciaVotacion(EF, SF, CDV);
@@ -298,6 +302,12 @@ public class ControladorDominioVotacionDriver {
 				 String dip=EF.ReadString();
 				 Integer l=EF.ReadInteger();
 				 CDD1.addLegistura(dip,l);
+				 break;
+			 case 22:
+				 ControladorDominioDiputado CDD2=ControladorDominioDiputado.getInstance();
+				 String dip1=EF.ReadString();
+				 Integer l1=EF.ReadInteger();
+				 CDD2.removeLegistura(dip1, l1);
 				 break;
 			 default: 
 			    SF.Write(" numero no correcto. Para cerrar -1 ");

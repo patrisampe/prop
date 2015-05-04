@@ -1,0 +1,188 @@
+19
+20
+21
+21
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+En la votacion Pensiones el diputado Clara esta de baja
+25
+21
+21
+21
+21
+12
+LEGISLATURA
+Todo ha ido bien!
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+La votacion Pensiones ya existe
+23
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+La votacion Pensiones ya existe
+23
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+En la votacion Armas el diputado Sergi esta de baja
+25
+2
+Todo ha ido bien!
+Importancia de la votacion Pensiones
+2
+2
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+1
+Todo ha ido bien!
+1
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+2
+Todo ha ido bien!
+Importancia de la votacion Pensiones
+3
+4
+Todo ha ido bien!
+2
+11
+1995
+4
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+3
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+3
+Todo ha ido bien!
+4
+Todo ha ido bien!
+2
+10
+2005
+5
+Todo ha ido bien!
+Clara, Cristina, Dani, Monica, Patricia
+ 
+5
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+6
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+6
+Todo ha ido bien!
+Clara
+ 
+6
+Todo ha ido bien!
+Cristina
+ 
+6
+Todo ha ido bien!
+Monica, Patricia
+ 
+6
+Todo ha ido bien!
+Dani
+ 
+7
+ERROR. El mensaje y el codigo: 
+La votacion Armas no existe
+22
+7
+ERROR. El mensaje y el codigo: 
+El diputado Juan no existe.
+3
+7
+Todo ha ido bien!
+true
+7
+Todo ha ido bien!
+false
+21
+21
+12
+LEGISLATURA
+Todo ha ido bien!
+8
+Todo ha ido bien!
+ 
+8
+Todo ha ido bien!
+Armas, Pensiones
+ 
+13
+Todo ha ido bien!
+Diputado Clara voto A_FAVOR
+Diputado Cristina voto ABSTENCION
+Diputado Dani voto EN_CONTRA
+Diputado Monica voto AUSENCIA
+Diputado Patricia voto AUSENCIA
+13
+Todo ha ido bien!
+Diputado Clara voto ABSTENCION
+Diputado Dani voto AUSENCIA
+Diputado Maria voto A_FAVOR
+9
+ERROR. El mensaje y el codigo: 
+El diputado Juan no existe.
+3
+22
+9
+Todo ha ido bien!
+13
+Todo ha ido bien!
+Diputado Cristina voto ABSTENCION
+Diputado Dani voto EN_CONTRA
+Diputado Monica voto AUSENCIA
+Diputado Patricia voto AUSENCIA
+13
+Todo ha ido bien!
+Diputado Dani voto AUSENCIA
+Diputado Maria voto A_FAVOR
+18
+Armas, Pensiones
+14
+Todo ha ido bien!
+TIPO VOTOAUSENCIA
+16
+ERROR. El mensaje y el codigo: 
+El Diputado Patricia no ha votado en la votacion Armas
+24
+16
+ERROR. El mensaje y el codigo: 
+En la votacion Armas el diputado Dani no esta de baja
+36
+22
+16
+Todo ha ido bien!
+15
+ERROR. El mensaje y el codigo: 
+En la votacion Dani el diputado Armas esta de baja
+25
+21
+15
+Todo ha ido bien!
+15
+ERROR. El mensaje y el codigo: 
+La votacion Turquia no existe
+22
+15
+ERROR. El mensaje y el codigo: 
+El diputado Laura no existe.
+3
+12
+LEGISLATURA
+ERROR. El mensaje y el codigo: 
+La votacion Publicidad no pertenece a ninguna legislatura
+37

@@ -8,6 +8,11 @@ import io.FitxerSortida;
 import io.Sortida;
 import utiles.CodiError;
 
+/**
+ * @author  Patricia Sampedro
+ * @version 1.0 Mayo 2015 
+ *
+ */
 public class CodiErrorDriver{
 
 	/**
