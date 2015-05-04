@@ -87,7 +87,7 @@ public class Legislatura extends ObjetoDominio{
 	 * @return La fecha de inicio de la legislatura.
 	 */
 	public Date getFechaInicio() {
-		return fechaInicio;
+		return new Date(fechaInicio);
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public class Legislatura extends ObjetoDominio{
 	 * @return La fecha de finalizacion de la legislatura.
 	 */
 	public Date getFechaFinal() {
-		return fechaFinal;
+		return new Date(fechaFinal);
 	}
 	
 	/**
