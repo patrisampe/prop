@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -73,7 +74,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param nombreTipoEvento - Nombre del evento que adquiere una importancia temporal.
 	 * @param importancia - Grado de importancia que adquiere el evento.
 	 */
-	public void setImportancia(String nombreTipoEvento, Integer importancia) {
+	public void addImportancia(String nombreTipoEvento, Integer importancia) {
 		this.importancia.put(nombreTipoEvento,importancia);
 	}
 	
@@ -189,6 +190,15 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	/**
+	 * Suministra la importancia temporal de un tipo de evento en concreto.
+	 * @param nombreTipoEvento - nombre del evento del que se desea obtener la importancia.
+	 * @return Valor de la importancia del tipo de evento.
+	 */
+	public Map<String, Integer> getImportancias() {
+		return new HashMap<String, Integer>(this.importancia);
+	}
+	
+	/**
 	 * Suministra una cadena de texto con el nombre del diputado relevante para la busqueda.
 	 * @return Nombre del diputado utilizado para la busqueda.
 	 */
@@ -221,6 +231,14 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		for (GrupoAfin grup:gruposAfines.getAll())
 			listaResultado.add(grup.getDiputados());
 		return listaResultado;
+	}
+	
+	/**
+	 * Suministra el multiplicador de las legislaturas.
+	 * @return El multiplicador de las legislaturas.
+	 */
+	public String getLapsoDetiempo() {
+		return "";
 	}
 	
 	/**
