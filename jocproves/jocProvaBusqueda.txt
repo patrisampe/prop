@@ -22,6 +22,11 @@ EVENTO Reunion PSOE 1 1 2015
 EVENTO Reunion Indepe 3 3 2018
 2 Duran Zapatero
 
+LEGISLATURA 1 1 1 2014 1 1 2018 
+6 Zapatero Rajoy Duran Aznar Bono Chaves
+
+LEGISLATURA 2 1 1 2018 1 1 2022 
+6 Sanchez Saenz Rajoy Bono Duran Camacho 
 
 
 VOTACION LeyAborto 1 1 2016 7 
@@ -33,4 +38,10 @@ VOTACION Independencia 1 1 2020 7
 FIN
 
 7 Louvain 1 1 2014 1 1 2024 30
+5 Louvain 1 1 2014 1 1 2024 30
+3 Louvain 1 1 2014 1 1 2024 30
+
+8 Louvain 1 30 Rajoy
+6 Louvain 1 30 Rajoy
+4 Louvain 1 30 Rajoy
 -1

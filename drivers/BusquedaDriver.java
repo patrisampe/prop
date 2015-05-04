@@ -70,7 +70,7 @@ public class BusquedaDriver {
 			 	break;
 			 case 7:
 				 SC.Write("Periodo Nombre");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
+				 PrintConjGrupPeriodo(SC,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
 				 break;
 			 case 8:
 				 SC.Write("Diputado Nombre");
@@ -89,7 +89,6 @@ public class BusquedaDriver {
 		}
 		EF.close();
 		SF.close();
-		SC.close();
 	}
 	
 	private static void ReadAndAddDeTodo(Sortida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) {
@@ -156,6 +155,7 @@ public class BusquedaDriver {
 	
 	public static void PrintConjGrupPeriodo(Sortida sF,
 			Conjunto<GrupoAfinPorPeriodo> Cjt) {
+		sF.Write("El numero de grupos es: " + Cjt.size().toString());
 		for (GrupoAfinPorPeriodo g : Cjt.getAll()) {
 			PrintGrupPeriodo(sF, g);
 		}
@@ -174,6 +174,7 @@ public class BusquedaDriver {
 	
 	public static void PrintConjGrupDiputado(Sortida sF,
 			Conjunto<GrupoAfinPorDiputado> Cjt) {
+		sF.Write("El numero de grupos es: " + Cjt.size().toString());
 		for (GrupoAfinPorDiputado g : Cjt.getAll()) {
 			PrintGrupDiputado(sF, g);
 		}

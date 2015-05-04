@@ -113,13 +113,16 @@ public class ControladorDominioLegislatura {
 	 * @param identificadorLegislatura - Identificador de la legislatura deseada.
 	 * @return Intervalo de fechas en los que se puede modificar la legislatura.
 	 */
-	private DateInterval limits(Integer identificadorLegislatura) {
+	private DateInterval limits(Integer identificadorLegislatura) { //TODO Revisar 
 		Integer idA = identificadorLegislatura - 1;
-		Integer idP = identificadorLegislatura + 1;
+		Integer idP = identificadorLegislatura;
 		while (!existsLegislatura(idA) && idA >= 0) --idA;
-		if (idP != getIDLast()) while (!existsLegislatura(idP)) ++idP;
+		if (idP != getIDLast() && getIDLast() != -1) {
+			++idP;
+			while (!existsLegislatura(idP)) ++idP;
+		}
 		Date inici = (idA == -1 ? Date.NULL : conjuntoLegislaturas.get(idA).getFechaFinal());
-		Date fi = (idP == getIDLast() ? Date.NULL : conjuntoLegislaturas.get(idA).getFechaFinal());
+		Date fi = ((idP == getIDLast() || getIDLast() == -1)  ? Date.NULL : conjuntoLegislaturas.get(idP).getFechaInicio());
 		return new DateInterval(inici, fi);
 	}
 	
