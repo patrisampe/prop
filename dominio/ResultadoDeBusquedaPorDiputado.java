@@ -52,6 +52,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Suministra una cadena de texto con el nombre del diputado relevante para la busqueda.
 	 * @return El nombre del diputado utilizado para la busqueda.
 	 */
+	@Override
 	public String getDiputadoRelevante() {
 		return diputadoRelevante;
 	}
@@ -60,8 +61,9 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Suministra el multiplicador de las legislaturas.
 	 * @return El multiplicador de las legislaturas.
 	 */
+	@Override
 	public String getLapsoDetiempo() {
 		return lapsoDeTiempo.toString();
 	}
-	
+
 }

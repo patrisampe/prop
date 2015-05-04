@@ -3,6 +3,8 @@ package dominio;
 import java.util.Set;
 import java.util.TreeSet;
 
+import time.Date;
+
 /**
  * Grupo de diputados con cierta afinidad entre ellos (Clase abstracta).
  * @author Miguel Angel Aranda
@@ -81,4 +83,18 @@ public abstract class GrupoAfin extends ObjetoDominio {
 		return diputados.isEmpty();
 	}
 	
+	/**
+	 * Fecha de inicio de la busqueda.
+	 */
+	public Date getFechaInicio() {
+		return null;
+	}
+
+	/**
+	 * Fecha de fin de la busqueda.
+	 */
+	public Date getFechaFin() {
+		return null;
+	}
+
 }
