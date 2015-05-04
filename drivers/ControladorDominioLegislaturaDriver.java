@@ -47,36 +47,39 @@ public class ControladorDominioLegislaturaDriver {
 		Sortida S = new ConsolaSortida();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
+		Boolean fitxer = false;
 		Integer n;
 		Integer codi = 0;
 		while (codi != -1) {
-			S.Write("Selecciona una operacion:");
-			S.Write("-2: Modificar la configuracion I/O.");
-			S.Write("-1: Finalizar la ejecucion.");
-			S.Write("1: Consultar el numero de legislaturas del sistema.");
-			S.Write("2: Insertar un conjunto de legislaturas.");
-			S.Write("3: Consultar el conjunto de legislaturas.");
-			S.Write("4: Consultar los identificadores de las legislaturas.");
-			S.Write("5: Insertar una nueva legislatura.");
-			S.Write("6: Insertar una nueva legislatura sin fecha de finalizacion.");
-			S.Write("7: Comprobar si una legislatura existe.");
-			S.Write("8: Eliminar una legislatura.");
-			S.Write("9: Modificar la fecha de inicio de una legislatura.");
-			S.Write("10: Modificar la fecha de finalizacion de una legislatura.");
-			S.Write("11: Consultar la fecha de inicio de una legislatura.");
-			S.Write("12: Consultar la fecha de finalizacion de una legislatura.");
-			S.Write("13: Comprobar si la legislatura tiene fecha de finalizacion.");
-			S.Write("14: Eliminar la fecha de finalizacion de una legislatura.");
-			S.Write("15: Insertar diputado a una legislatura.");
-			S.Write("16: Establecer el conjunto de diputados de una legislatura.");
-			S.Write("17: Consultar el conjunto de diputados de una legislatura.");
-			S.Write("18: Comprobar si el diputado es activo en la legislatura.");
-			S.Write("19: Eliminar un diputado de una legislatura.");
-			S.Write("20: Eliminar todos los diputados de la legislatura.");
-			S.Write("21: Eliminar un diputado de todas las legislaturas.");
-			S.Write("22: Consultar la legislatura a la que pertenece una fecha.");
-			S.Write("23: Consultar el identificador de la ultima legislatura.");
-			S.Write("24: Insertar un nuevo diputado en el sistema.");
+			if (!fitxer) {
+				S.Write("Selecciona una operacion:");
+				S.Write("-2: Modificar la configuracion I/O.");
+				S.Write("-1: Finalizar la ejecucion.");
+				S.Write("1: Consultar el numero de legislaturas del sistema.");
+				S.Write("2: Insertar un conjunto de legislaturas.");
+				S.Write("3: Consultar el conjunto de legislaturas.");
+				S.Write("4: Consultar los identificadores de las legislaturas.");
+				S.Write("5: Insertar una nueva legislatura.");
+				S.Write("6: Insertar una nueva legislatura sin fecha de finalizacion.");
+				S.Write("7: Comprobar si una legislatura existe.");
+				S.Write("8: Eliminar una legislatura.");
+				S.Write("9: Modificar la fecha de inicio de una legislatura.");
+				S.Write("10: Modificar la fecha de finalizacion de una legislatura.");
+				S.Write("11: Consultar la fecha de inicio de una legislatura.");
+				S.Write("12: Consultar la fecha de finalizacion de una legislatura.");
+				S.Write("13: Comprobar si la legislatura tiene fecha de finalizacion.");
+				S.Write("14: Eliminar la fecha de finalizacion de una legislatura.");
+				S.Write("15: Insertar diputado a una legislatura.");
+				S.Write("16: Establecer el conjunto de diputados de una legislatura.");
+				S.Write("17: Consultar el conjunto de diputados de una legislatura.");
+				S.Write("18: Comprobar si el diputado es activo en la legislatura.");
+				S.Write("19: Eliminar un diputado de una legislatura.");
+				S.Write("20: Eliminar todos los diputados de la legislatura.");
+				S.Write("21: Eliminar un diputado de todas las legislaturas.");
+				S.Write("22: Consultar la legislatura a la que pertenece una fecha.");
+				S.Write("23: Consultar el identificador de la ultima legislatura.");
+				S.Write("24: Insertar un nuevo diputado en el sistema.");
+			}
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
@@ -93,21 +96,25 @@ public class ControladorDominioLegislaturaDriver {
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				}
 			break;
@@ -209,5 +216,6 @@ public class ControladorDominioLegislaturaDriver {
 			}
 			if (CDL.hasCodiError()) S.Write(CDL.getCodiError().getMensajeError());
 		}
+		S.close();
 	}
 }

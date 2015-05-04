@@ -12,26 +12,29 @@ public class IODriver {
 	public static void main(String[] args) {
 		Entrada E = new ConsolaEntrada();
 		Sortida S = new ConsolaSortida();
+		Boolean fitxer = false;
 		Integer codi = 0;
 		Integer n = 0;
 		while (codi != -1) {
-			S.Write("Selecciona una operacion:");
-			S.Write("-2: Modificar la configuracion I/O.");
-			S.Write("-1: Finalizar la ejecucion.");
-			S.Write("1: Un String.");
-			S.Write("2: Una linea.");
-			S.Write("3: Un caracter.");
-			S.Write("4: Un entero.");
-			S.Write("5: Un Double.");
-			S.Write("6: Un Boolean.");
-			S.Write("7: Un Long.");
-			S.Write("8: n Strings.");
-			S.Write("9: n caracteres.");
-			S.Write("10: n enteros.");
-			S.Write("11: n Doubles.");
-			S.Write("12: n Booleans.");
-			S.Write("13: n Longs.");
-			S.Write("14: n Strings en un set.");
+			if (!fitxer) {
+				S.Write("Selecciona una operacion:");
+				S.Write("-2: Modificar la configuracion I/O.");
+				S.Write("-1: Finalizar la ejecucion.");
+				S.Write("1: Un String.");
+				S.Write("2: Una linea.");
+				S.Write("3: Un caracter.");
+				S.Write("4: Un entero.");
+				S.Write("5: Un Double.");
+				S.Write("6: Un Boolean.");
+				S.Write("7: Un Long.");
+				S.Write("8: n Strings.");
+				S.Write("9: n caracteres.");
+				S.Write("10: n enteros.");
+				S.Write("11: n Doubles.");
+				S.Write("12: n Booleans.");
+				S.Write("13: n Longs.");
+				S.Write("14: n Strings en un set.");
+			}
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
@@ -48,21 +51,25 @@ public class IODriver {
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				}
 			break;
@@ -112,7 +119,6 @@ public class IODriver {
 			break;
 			case 13:
 				n = E.ReadInteger();
-				S.Write(n, E.ReadLong(n));
 			break;
 			case 14:
 				S.Write(E.ReadSetString(E.ReadInteger()));
@@ -122,5 +128,6 @@ public class IODriver {
 			break;
 			}
 		}
+		S.close();
 	}
 }
