@@ -184,13 +184,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	public abstract Boolean existeGrupo(Integer ID);
 	
 	/**
-	 * Elimina un diputado de un grupo afin en concreto.
-	 * @param nombre - Nombre del diputado a eliminar.
-	 * @param ID - Identificador del grupo del que es eliminado.
-	 */
-	public abstract void removeDiputado(String nombre, Integer ID);
-	
-	/**
 	 * Elimina un diputado de todos los grupos afines donde se encuentre.
 	 * @param nombre - Nombre del diputado a eliminar.
 	 */
@@ -202,6 +195,13 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param ID - Identificador del grupo al que es agregado.
 	 */
 	public abstract void addDiputado(String nombre, Integer ID);
+	
+	/**
+	 * Elimina un diputado de un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 * @param ID - Identificador del grupo del que es eliminado.
+	 */
+	public abstract void removeDiputado(String nombre, Integer ID);
 	
 	/**
 	 * Mueve un diputado de un grupo afin a otro.
