@@ -60,3 +60,6 @@ Comando 20:
 Comando 21:
 	Añade las legislaturas a diputados
 	Formato: 1 String, 1 Integer
+Comando 22:
+	Elimina las legislatura a diputados
+	Formato: 1 String, 1 Integer
