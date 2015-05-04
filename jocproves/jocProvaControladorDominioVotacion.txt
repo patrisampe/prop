@@ -75,9 +75,13 @@ Pensiones
 11
 1995
 2
-2
+4
 Patricia
 Dani
+Cristina
+Clara
+3
+4
 2
 1
 
@@ -112,6 +116,24 @@ Clara
 4
 2
 1
+
+12
+Pensiones
+2
+11
+1995
+2
+4
+Patricia
+Dani
+Cristina
+Clara
+3
+4
+2
+1
+
+
 
 12
 Pensiones
@@ -317,6 +339,22 @@ Dani
 15
 Armas
 Laura
+1
+
+12
+Publicidad
+2
+11
+1895
+2
+4
+Patricia
+Dani
+Cristina
+Clara
+3
+4
+2
 1
 
 -1
