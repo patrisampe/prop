@@ -217,6 +217,7 @@ public class Date{
 	 * <b>1</b> si la fecha es posterior a D.
 	 */
 	public Integer compareTo(Date D){
+		if (esNull() || D.esNull()) return 0;
 		if (Year > D.Year) return 1;
 		if (Year < D.Year) return -1;
 		if (Month > D.Month) return 1;

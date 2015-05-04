@@ -193,7 +193,7 @@ public class ControladorDominioLegislatura {
 		else {
 			Integer idL = getIDLast();
 			Integer idC = getID(fechaInicio);
-			if (idL != -1){
+			if (idL != -1 && !conjuntoLegislaturas.get(idL).hasFechaFinal()){
 				error.setCodiError(18);
 				error.addClauExterna(identificadorLegislatura);
 				error.addClauExterna(idL);
@@ -248,7 +248,7 @@ public class ControladorDominioLegislatura {
 			error.setCodiError(17);
 			error.addClauExterna(identificadorLegislatura);
 		}
-		else if (fechaInicio.compareTo(conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal()) > 0){
+		else if (!(fechaInicio.compareTo(conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal()) <= 0)){
 			error.setCodiError(26);
 			error.addClauExterna(fechaInicio.toString());
 			error.addClauExterna(conjuntoLegislaturas.get(identificadorLegislatura).getFechaFinal().toString());
@@ -299,7 +299,7 @@ public class ControladorDominioLegislatura {
 				error.addClauExterna(identificadorLegislatura);
 				error.addClauExterna(fechaFinal.toString());
 			}
-			else conjuntoLegislaturas.get(identificadorLegislatura).setFechaInicio(fechaFinal);
+			else conjuntoLegislaturas.get(identificadorLegislatura).setFechaFinal(fechaFinal);
 		}
 	}
 	
