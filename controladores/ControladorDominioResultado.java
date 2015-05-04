@@ -2,6 +2,7 @@ package controladores;
 
 import java.util.Set;
 import java.util.Map;
+import java.util.Vector;
 
 import dominio.Criterio;
 import dominio.GrupoAfinPorDiputado;
@@ -25,14 +26,17 @@ public class ControladorDominioResultado {
 	 * Instancia <i>singletone</i> de la clase.
 	 */
 	private static ControladorDominioResultado instancia = null;
+	
 	/**
 	 * Conjunto de resultados de busqueda almacenados en el sistema.
 	 */
 	private Conjunto<ResultadoDeBusqueda> conjuntoResultados;
+	
 	/**
 	 * Ultimo resultado de busqueda sin almacenar en el sistema.
 	 */
 	private ResultadoDeBusqueda ultimoResultado;
+	
 	/**
 	 * Codigo de error del ultimo metodo ejecutado.
 	 */
@@ -173,7 +177,7 @@ public class ControladorDominioResultado {
 				case 3:		resultado = controlDomBus.NuevaBusquedaNombresParecidos(algoritmo, periodo, indiceAfinidad);break;
 				default:	resultado = null; break;
 			}
-			ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado);
+			ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado, criterio);
 		}
 	}
 
@@ -204,7 +208,7 @@ public class ControladorDominioResultado {
 			case 3:		resultado = controlDomBus.NuevaBusquedaNombresParecidos(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
 			default:	resultado = null; break;
 			}
-			ultimoResultado = new ResultadoDeBusquedaPorDiputado("Provisional", indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante);
+			ultimoResultado = new ResultadoDeBusquedaPorDiputado("Provisional", indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante, criterio);
 		}
 	}
 	
@@ -304,7 +308,7 @@ public class ControladorDominioResultado {
 	}
 
 	/**
-	 * Administra un conjunto de cadenas de texto con el nombre de todos los resultados registrados en el sistema.
+	 * Suministra un conjunto de cadenas de texto con el nombre de todos los resultados registrados en el sistema.
 	 * @return Nombre de todos los resultados registrados.
 	 */
 	public Set<String> getNombreResultados() {
@@ -312,7 +316,7 @@ public class ControladorDominioResultado {
 	}
 	
 	/**
-	 * Administra una cadena de texto con el tipo al que pertenece un resultado en concreto.
+	 * Suministra una cadena de texto con el tipo al que pertenece un resultado en concreto.
 	 * @return El tipo de resultado al que pertenece.
 	 */
 	public String getTipoDeResultado(String nombre) {
@@ -335,7 +339,7 @@ public class ControladorDominioResultado {
 	}
 	
 	/**
-	 * Administra una cadena de texto con el indice de afinidad de un resultado en concreto.
+	 * Suministra una cadena de texto con el indice de afinidad de un resultado en concreto.
 	 * @return El indice de afinidad del resultado.
 	 */
 	public String getIndiceAfinidad(String nombre) {
@@ -345,7 +349,7 @@ public class ControladorDominioResultado {
 	}
 	
 	/**
-	 * Administra una cadena de texto con el tipo de algoritmo con el que se ha realizado la busqueda de grupos afines.
+	 * Suministra una cadena de texto con el tipo de algoritmo con el que se ha realizado la busqueda de grupos afines.
 	 * @return El tipo de algoritmo empleado.
 	 */
 	public String getTipoAlgoritmo(String nombre) {
@@ -368,10 +372,34 @@ public class ControladorDominioResultado {
 	 * Administra un conjunto de cadenas con los grupos afines de un resultado en concreto.
 	 * @return Los diputados de cada grupo afin y el grupo afin de cada comunidad.
 	 */
-	public Set<Set<String>> getResultado(String nombre) {
+	public Vector<Set<String>> getResultado(String nombre) {
 		if (existeNombreResultado(nombre))
 			return conjuntoResultados.get(nombre).getResultado();
 		else return null;
+	}
+	
+	/**
+	 * Suministra el criterio empleado en la busqueda.
+	 * @return Criterio de búsqueda.
+	 */
+	public String getCriterio(String name) {
+		return conjuntoResultados.get(name).getCriterio();
+	}
+	
+	/**
+	 * Suministra las importancias temporales definidas por el usuario.
+	 * @return Devuelve las importancias temporales.
+	 */
+	public Map<String, Integer> getImportancia(String nombre) {
+		return conjuntoResultados.get(nombre).getImportancia();
+	}
+	
+	/**
+	 * Suministra una cadena de texto con el algoritmo utilizado para la busqueda.
+	 * @return algoritmo utilizado.
+	 */
+	public String getAlgoritmo(String nombre) {
+		return conjuntoResultados.get(nombre).getAlgoritmo().toString();
 	}
 	
 	/**
@@ -385,7 +413,7 @@ public class ControladorDominioResultado {
 	}
 	
 	/**
-	 * Administra el codigo de error del ultimo metodo utilizado.
+	 * Suministra el codigo de error del ultimo metodo utilizado.
 	 * @return el codigo de error obtenido.
 	 */
 	public CodiError getError(){

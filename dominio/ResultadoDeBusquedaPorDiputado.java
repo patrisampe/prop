@@ -38,9 +38,10 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param lapsoDeTiempo - Indica el multiplicador aplicado a legislatura para realizar la busqueda.
 	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado
 	 * @param diputadoRelevante - El nombre del diputado sobre el que se ha realizado la busqueda
+	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, Conjunto<GrupoAfinPorDiputado> gruposAfines, String diputadoRelevante) {
-			super(nombre, indiceAfinidad, algoritmo, importancia, modificado);
+	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, Conjunto<GrupoAfinPorDiputado> gruposAfines, String diputadoRelevante, Criterio criterio) {
+			super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterio);
 			this.gruposAfines = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
 			for (GrupoAfinPorDiputado grup:gruposAfines.getAll()) {
 				this.gruposAfines.add(grup.getID(), grup);
@@ -53,6 +54,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Elimina un diputado de todos los grupos afines donde se encuentre.
 	 * @param nombre - Nombre del diputado a eliminar.
 	 */
+	@Override
 	public void removeDiputado(String nombre) {
 		for (GrupoAfinPorDiputado grup:gruposAfines.getAll()) {
 			grup.removeDiputado(nombre);
@@ -67,6 +69,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param desdeID - Identificador del grupo afin del que se extrae el diputado.
 	 * @param hastaID - Identificador del grupo afin al que se agrega el diputado.
 	 */
+	@Override
 	public void moveDiputado(String nombre, Integer desdeID, Integer hastaID) {
 		addDiputado(nombre, hastaID);
 		removeDiputado(nombre, desdeID);
@@ -94,6 +97,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * <br>
 	 * <i>false</i> en cualquier otro caso..
 	 */
+	@Override
 	public Boolean existeGrupo(Integer ID) {
 		return gruposAfines.exists(ID);
 	}
@@ -103,6 +107,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param nombre - Nombre del diputado a agregar.
 	 * @param ID - Identificador del grupo al que es agregado.
 	 */
+	@Override
 	public void addDiputado(String nombre, Integer ID) {
 		gruposAfines.get(ID).addDiputado(nombre);
 	}
@@ -112,6 +117,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param nombre - Nombre del diputado a eliminar.
 	 * @param ID - Identificador del grupo del que es eliminado.
 	 */
+	@Override
 	public void removeDiputado(String nombre, Integer ID) {
 		gruposAfines.get(ID).removeDiputado(nombre);
 		if (gruposAfines.get(ID).esVacio())
@@ -130,6 +136,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
 	 * @return Los nombres de todos los diputados separados por grupos.
 	 */
+	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
 		for (GrupoAfinPorDiputado grup:gruposAfines.getAll())

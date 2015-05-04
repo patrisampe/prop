@@ -32,10 +32,11 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param importancia - Importancias temporales introducidas por el usuario.
 	 * @param modificado - Indica si el resultado ha sido modificado manualmente.
 	 * @param periodo - Indica el periodo en el que se ha realizado realizado la busqueda.
-	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado
+	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado.
+	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, Conjunto<GrupoAfinPorPeriodo> gruposAfines) {
-		super(nombre, indiceAfinidad, algoritmo, importancia, modificado);
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, Conjunto<GrupoAfinPorPeriodo> gruposAfines, Criterio criterio) {
+		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterio);
 		this.gruposAfines = new Conjunto<GrupoAfinPorPeriodo>(GrupoAfinPorPeriodo.class);
 		for (GrupoAfinPorPeriodo grup:gruposAfines.getAll())
 			this.gruposAfines.add(grup.getID(), grup);
@@ -46,13 +47,13 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * Elimina un diputado de todos los grupos afines donde se encuentre.
 	 * @param nombre - Nombre del diputado a eliminar.
 	 */
+	@Override
 	public void removeDiputado(String nombre) {
 		for (GrupoAfinPorPeriodo grup:gruposAfines.getAll()) {
 			grup.removeDiputado(nombre);
 			if (grup.esVacio()) eliminarGrupo(grup.getID());
 		}
 	}
-	
 
 	/**
 	 * Mueve un diputado de un grupo afin a otro.
@@ -60,6 +61,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param desdeID - Identificador del grupo afin del que se extrae el diputado.
 	 * @param hastaID - Identificador del grupo afin al que se agrega el diputado.
 	 */
+	@Override
 	public void moveDiputado(String nombre, Integer desdeID, Integer hastaID) {
 		addDiputado(nombre, hastaID);
 		removeDiputado(nombre, desdeID);
@@ -87,6 +89,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * <br>
 	 * <i>false</i> en cualquier otro caso..
 	 */
+	@Override
 	public Boolean existeGrupo(Integer ID) {
 		return gruposAfines.exists(ID);
 	}
@@ -96,6 +99,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param nombre - Nombre del diputado a agregar.
 	 * @param ID - Identificador del grupo al que es agregado.
 	 */
+	@Override
 	public void addDiputado(String nombre, Integer ID) {
 		gruposAfines.get(ID).addDiputado(nombre);
 	}
@@ -105,6 +109,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param nombre - Nombre del diputado a eliminar.
 	 * @param ID - Identificador del grupo del que es eliminado.
 	 */
+	@Override
 	public void removeDiputado(String nombre, Integer ID) {
 		gruposAfines.get(ID).removeDiputado(nombre);
 		if (gruposAfines.get(ID).esVacio())
@@ -123,6 +128,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * Suministra un conjunto de cadenas de texto con todos los nommbres de los resultados.
 	 * @return El periodo utilizado en la busqueda.
 	 */
+	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
 		for (GrupoAfinPorPeriodo grup:gruposAfines.getAll())

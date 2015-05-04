@@ -2,7 +2,9 @@ package dominio;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * Resultado obtenido por la busqueda de grupos afines entre diputados (Clase abstracta).
@@ -32,9 +34,14 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	private Map<String, Integer> importancia;
 	
 	/**
-	 * Importancias temporales introducidas por el usuario.
+	 * Indica si el resultado se ha modificado manualmente.
 	 */
 	private Boolean modificado;
+	
+	/**
+	 * Indica el criterio de búsqueda que se ha empleado.
+	 */
+	private Criterio criterio;
 	
 	/**
 	 * Constructor de la clase resultado de busqueda.
@@ -44,7 +51,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param importancia - Importancias temporales introducidas por el usuario.
 	 * @param modificado - Importancias temporales introducidas por el usuario.
 	 */
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Criterio criterio) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
@@ -146,9 +153,68 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	/**
+	 * Suministra el criterio empleado en la busqueda.
+	 * @return Criterio de búsqueda.
+	 */
+	public String getCriterio() {
+		return this.criterio.toString();
+	}
+	
+	/**
+	 * Suministra las importancias temporales definidas por el usuario.
+	 * @return Devuelve las importancias temporales.
+	 */
+	public Map<String, Integer> getImportancia() {
+		return new HashMap<String, Integer>(this.importancia);
+	}
+	
+	/**
 	 * Suministra una cadena de texto con el nombre de la subclase.
 	 * @return El nombre de la subclase.
 	 */
 	public abstract String getTipoResultado();
+	
+	/**
+	 * Comprueba si existe un grupo en concreto.
+	 * @param ID - Identificador del grupo que se desea comprobar.
+	 * @return <i>true</i> si el grupo existe en el conjunto de grupos afines.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso..
+	 */
+	public abstract Boolean existeGrupo(Integer ID);
+	
+	/**
+	 * Elimina un diputado de un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 * @param ID - Identificador del grupo del que es eliminado.
+	 */
+	public abstract void removeDiputado(String nombre, Integer ID);
+	
+	/**
+	 * Elimina un diputado de todos los grupos afines donde se encuentre.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 */
+	public abstract void removeDiputado(String nombre);
+	
+	/**
+	 * Agrega un diputado a un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a agregar.
+	 * @param ID - Identificador del grupo al que es agregado.
+	 */
+	public abstract void addDiputado(String nombre, Integer ID);
+	
+	/**
+	 * Mueve un diputado de un grupo afin a otro.
+	 * @param nombreDiputado - Diputado que se debe mover.
+	 * @param desdeID - Identificador del grupo afin del que se extrae el diputado.
+	 * @param hastaID - Identificador del grupo afin al que se agrega el diputado.
+	 */
+	public abstract void moveDiputado(String nombre, Integer desdeID, Integer hastaID);
+	
+	/**
+	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
+	 * @return Los nombres de todos los diputados separados por grupos.
+	 */
+	public abstract Vector<Set<String>> getResultado();
 	
 }

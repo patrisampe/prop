@@ -47,7 +47,7 @@ public abstract class GrupoAfin extends ObjetoDominio {
 	}
 	
 	/**
-	 * Administra el identificador del grupo afin.
+	 * Suministra el identificador del grupo afin.
 	 * @return El identificador en valor entero.
 	 */
 	public Integer getID() {
@@ -55,7 +55,7 @@ public abstract class GrupoAfin extends ObjetoDominio {
 	}
 	
 	/**
-	 * Administra un conjunto de cadenas de texto con los diputados del grupo afin.
+	 * Suministra un conjunto de cadenas de texto con los diputados del grupo afin.
 	 * @return Un conjunto de cadenas con el nombre de los diputados.
 	 */
 	public TreeSet<String> getDiputados() {
