@@ -14,7 +14,7 @@ import utiles.Conjunto;
 import dominio.TipoVoto;
 import dominio.Votacion;
 /**
- * Classe ControladorDominioEvento para la gestion tanto en conjunto como individualmente de los tipos de eventos, y en consequencia, eventos.
+ * Classe ControladorDominioVotacion para la gestion tanto en conjunto como individualmente de las votaciones
  * @author  Patricia Sampedro
  * @version 1.0 Mayo 2015 
  */
@@ -80,6 +80,7 @@ public class ControladorDominioVotacion {
 		 * Modifica la fecha de la Votacion
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 	     * 1- nombreVotacion no es una Votacion
+	     * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @param fecha
 		 * <dd><b>Precondition:</b><dd> data tiene de ser una Data valida
@@ -92,6 +93,7 @@ public class ControladorDominioVotacion {
 	 * Causas por las que no se realiza la operacion y se captura el error:<br>
 	 * 1- nombreVotacion no es una Votacion <br>
 	 * 2- importancia no es una importancia valida
+	 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	 * @param nombreVotacion
 	 * @param importancia
 	 */
@@ -126,6 +128,7 @@ public class ControladorDominioVotacion {
 		 * Devuelve la fecha de la Votacion
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion no es una Votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @return fecha de la votacion. Si hay Error, Date.NULL
 		 */
@@ -138,6 +141,7 @@ public class ControladorDominioVotacion {
 		 * Devuelve importancia de la Votacion
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion no es una Votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @return importancia de la votacion. Si hay Error, -1
 		 */
@@ -150,6 +154,7 @@ public class ControladorDominioVotacion {
 		 * Devuelve los diputados que han votado en esa votacion 
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion no es una Votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @return diputados que han votado en la votacion. Si hay Error, set vacio
 		 */
@@ -163,6 +168,7 @@ public class ControladorDominioVotacion {
 		 * Devuelve los diputados que han votado en esa votacion lo mismo, concretamente <b>voto</b>
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion no es una Votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @param voto
 		 * @return diputados que han votado en la votacion. Si hay Error, set vacio
@@ -182,6 +188,7 @@ public class ControladorDominioVotacion {
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion no es una Votacion <br>
 		 * 2- nombreDiputado no es un Diputado <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @param nombreDiputdo
 		 * @return <i>true<i> si el diputado ha votado en esa Votacion, sino <i>false<i>
@@ -192,6 +199,7 @@ public class ControladorDominioVotacion {
 		}
 		/**
 		 * Devuelve el nombre de todas las votacions
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @return nombre de todas las votaciones
 		 */
 		public Set<String> getVotaciones(){
@@ -201,6 +209,7 @@ public class ControladorDominioVotacion {
 		 * Elimina la votacion
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion no es una Votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 */
 		public void removeVotacion(String nombreVotacion){
@@ -211,6 +220,7 @@ public class ControladorDominioVotacion {
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion es una Votacion <br>
 		 * 2- hay como minimo un diputado que no esta activo en la fecha de la Votacion
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @param fecha
 		 * @param imp
@@ -261,6 +271,7 @@ public class ControladorDominioVotacion {
 		}
 		/**
 		 * Indica si es una Votacion
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @return <i>true</i> si es una votacion, sino <i>false</i>
 		 */
@@ -272,6 +283,7 @@ public class ControladorDominioVotacion {
 		 * Devuelve las parejas diputado-lo que ha votado, de todos los diputados que han votado en este evento
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreVotacion es una Votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @return devuelve un map con los diputados y su voto, si ha habido error el map esta vacio
 		 */
@@ -285,6 +297,7 @@ public class ControladorDominioVotacion {
 		 * 1- nombreVotacion es una Votacion <br>
 		 * 2- nombreDiputado no existe
 		 * 3- nombreDiputado no es votante
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @param nombreDiputado
 		 * @return el voto del diputado en esa votacion, si ha habido error ABSTENCION
@@ -305,6 +318,7 @@ public class ControladorDominioVotacion {
 		 * 1- nombreVotacion es una Votacion <br>
 		 * 2- nombreDiputado no es un Diputado <br>
 		 * 3- nombreDiputado no es un Diputaado activo durante la realizacion de la votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreVotacion
 		 * @param nombreDiputado
 		 * @param voto - lo que ha votado el Diputado con nombreDiputado
@@ -328,6 +342,7 @@ public class ControladorDominioVotacion {
 		* 1- nombreVotacion es una Votacion <br>
 		* 2- nombreDiputado no ha votado en esta votacion
 		* 3- nombreDiputado esta activo durante la votacion
+		* <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreVotacion
 	    * @param nombreDiputado
 	    */
@@ -372,6 +387,7 @@ public class ControladorDominioVotacion {
 		 * Elimina el diputado de todas las votaciones
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 		 * 1- nombreDiputado no es un Diputado <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreDiputado
 		 */
 		public void removeDiputado(String nombreDiputado){

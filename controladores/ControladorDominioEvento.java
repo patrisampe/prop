@@ -97,6 +97,7 @@ public class ControladorDominioEvento {
 		/**
 		 * Modifica la importancia del Tipo Evento con nombre nombreTipoEvento
 		 * Si el Tipo Evento no existe o la importancia no es valida, no se realiza la modificacion y captura el Error
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 		 * @param nombreTipoEvento
 		 * @param Importancia
 		 * 
@@ -114,6 +115,7 @@ public class ControladorDominioEvento {
 	   /**
 	    * Devueleve la importancia del Tipo Evento con nombre nombreTipoEvento
 		 * Si el Tipo Evento no existe, devuelve -1 y se captura el Error
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @return
 	    */
@@ -124,6 +126,7 @@ public class ControladorDominioEvento {
 	   
 	   /**
 	    * Devuelve un el nombre de todos los Tipo Evento que existen
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @return nombre de los Tipo Evento que existen
 	    */
 	   public Set<String> getTipoEvento(){
@@ -132,6 +135,7 @@ public class ControladorDominioEvento {
 	   /**
 	    * Devuelve los eventos del Tipo Evento con nombre nombreTipoEvento
 	    * Si el Tipo Evento no existe, devuelve un set vacio y captura el error.
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @return los eventos de ese Tipo Evento, si existe
 	    */
@@ -144,6 +148,7 @@ public class ControladorDominioEvento {
 	    * Devuelve los eventos del Tipo Evento con nombre nombreTipoEvento que esten entre las fechas dataInici y dataFi
 	    * Si el Tipo Evento no existe, devuelve un set vacio y captura el error.<br>
 	    * <dd><b>Precondition:</b><dd> dataInici<=dataFi
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param dataInici
 	    * <dd><b>Precondition:</b><dd> data tiene de ser una Data valida
@@ -165,6 +170,7 @@ public class ControladorDominioEvento {
 	   /**
 	    * Elimina un Diputado de todos los eventos
 	    * Si el diputado no existe se captura el error
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreDiputado
 	    */
 	   public void removeDiputado(String nombreDiputado){
@@ -193,6 +199,7 @@ public class ControladorDominioEvento {
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- El nombreTipoEvento ya existia <br>
 	    * 2- La importancia no es valida <br>
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param importancia
 	    */
@@ -217,6 +224,7 @@ public class ControladorDominioEvento {
 	    * Elimina el TipoEvento con nombre nombreTipoEvento
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- nombreTipoEvento no es un TipoEvento
+	    *  <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    *  @param nombreTipoEvento
 	    */
 	   public void removeTipoEvento(String nombreTipoEvento){
@@ -243,6 +251,7 @@ public class ControladorDominioEvento {
 
 	   /**
 	    * Nos indica si es un Tipo Evento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @return <i>true<i> si es un Tipo Evento, sino <i>false<i>
 	    */
@@ -256,6 +265,7 @@ public class ControladorDominioEvento {
 	    * 1- nombreTipoEvento no es un TipoEvento
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
 	    * 3- Alguno de los Diputados no existe
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param fecha
@@ -285,6 +295,7 @@ public class ControladorDominioEvento {
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- nombreTipoEvento no es un TipoEvento
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    */
@@ -296,6 +307,7 @@ public class ControladorDominioEvento {
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- nombreTipoEvento no es un TipoEvento
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @return <i>true<i> si es un Evento de este Tipo, sino, false
@@ -311,6 +323,7 @@ public class ControladorDominioEvento {
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- nombreTipoEvento no es un TipoEvento
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param fecha
@@ -324,6 +337,7 @@ public class ControladorDominioEvento {
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- nombreTipoEvento no es un TipoEvento
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @return Data del Evento y si hay error, una data NULL
@@ -337,6 +351,7 @@ public class ControladorDominioEvento {
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
 	    * 1- nombreTipoEvento no es un TipoEvento
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @return devuelve los diputados de ese Evento, sino existe, esta vacio
@@ -352,7 +367,7 @@ public class ControladorDominioEvento {
 	    * 2- nombreEvento no es un Evento de ese TipoEvento
 	    * 3- nombreDiputado no es un Diputado
 	    * 4- Diputado ya ha participado en ese Evento
-	    * 
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param nombreDiputado
@@ -378,6 +393,7 @@ public class ControladorDominioEvento {
 	    * 1- nombreTipoEvento no es un TipoEvento <br>
 	    * 2- nombreEvento no es un Evento de ese TipoEvento <br>
 	    * 3- nombreDiputado no es un Diputado
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param nombreDiputado
@@ -393,6 +409,7 @@ public class ControladorDominioEvento {
 	    * 1- nombreTipoEvento no es un TipoEvento <br>
 	    * 2- nombreEvento no es un Evento de ese TipoEvento <br>
 	    * 3- nombreDiputado no ha participado en ese Evento
+	    * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
 	    * @param nombreTipoEvento
 	    * @param nombreEvento
 	    * @param nombreDiputado
