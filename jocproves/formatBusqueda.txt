@@ -1,41 +1,41 @@
 
 
-Comando 0:
+Comando 1:
 Por Periodo Standard
 Formato: String Integer Integer n seguido de n pares de  (String, Integer) Integer String (Algoritmo, Lapso, ImportanciaModificada, porcentaje, DiputadoRelevante)
 
 
-Comando 1:
+Comando 2:
 Por Diputado Standard
 Formato: String Fecha Fecha Integer n seguido de n pares de  (String, Integer) Integer (Algoritmo, FechaInicio, FechaFin, ImportanciaModificada, porcentaje)
 
-Comando 2:	
+Comando 3:	
 Por Periodo Partido Político
 Formato: String Fecha Fecha Integer (Algoritmo, FechaInicio, FechaFin, Porcentaje)
 
-Comando 3:
+Comando 4:
 Por Diputado Partido Político
 Formato: String Integer Integer String (algoritmo, lapso, porcentaje, diputadoRelevante)
 
-Comando 4:
+Comando 5:
 Por Periodo Estado
 Formato: String Fecha Fecha Integer (Algoritmo, FechaInicio, FechaFin, Porcentaje)
 
-Comando 5:
+Comando 6:
 Por Diputado Estado
 Formato: String Integer Integer String (algoritmo, lapso, porcentaje, diputadoRelevante)
 
-Comando 6: 
+Comando 7: 
 Por Periodo Nombres Parecidos
 Formato: String Fecha Fecha Integer (Algoritmo, FechaInicio, FechaFin, Porcentaje)
 
-Comando 7:
+Comando 8:
 Por Diputado Nombres Parecidos
 Formato: String Integer Integer String (algoritmo, lapso, porcentaje, diputadoRelevante)
 
-Comandon 8:
+Comando 9:
 Añade datos.
-Formato: Entero n seguido del número de objetos a añadir.
+Formato: Objetos a añadir seguidos de la marca FIN.
 Fecha = String con formato: dd/mm/aaaa
 ConjuntoDeStrings = Integer seguido de tantos strings como el valor del Integer
 4 posibilidades de formato para los objetos:
@@ -43,3 +43,4 @@ DIPUTADO String String String String (nombreDiputado, nombrePartido, nombreEstad
 TIPOEVENTO String Integer (nombreTipoEvento, importancia)
 EVENTO String String String Fecha ConjuntoDeStrings (nombreTipoEvento, nombreEvento, fechaEvento, Diputados)
 LEGISLATURA Integer Fecha Fecha ConjuntoDeStrings (identificadorLegislatura, fechaInicio, fechaFinal, Diputados)
+VOTACION String Fecha Integer Integer n seguido de n pares de Stings (nombreVotacion, fecha, imp, votos(Diputado,Voto)) 
