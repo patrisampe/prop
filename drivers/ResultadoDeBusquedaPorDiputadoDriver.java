@@ -19,13 +19,13 @@ import dominio.GrupoAfinPorDiputado;
 import dominio.TipoAlgoritmo;
 
 public class ResultadoDeBusquedaPorDiputadoDriver {
-	static Entrada EC, EF;
-	static Sortida SC, SF;
-	static String fichEnt;
-	static String fichSal;
-	static ResultadoDeBusquedaPorDiputado resultado;
+	private static Entrada EC, EF;
+	private static Sortida SC, SF;
+	private static String fichEnt;
+	private static String fichSal;
+	private static ResultadoDeBusquedaPorDiputado resultado;
 	
-	public static Integer muestraMenuPrincipal() {
+	private static Integer muestraMenuPrincipal() {
 		SC.Write("0.-Salir");
 		SC.Write("1.-Cambiar fichero de pruebas (ACTUAL: " + fichEnt + ")");
 		SC.Write("2.-Cambiar fichero de salida  (ACTUAL: " + fichSal + ")");
@@ -36,7 +36,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		return EC.ReadInteger();
 	}
 	
-	public static Integer muestraMenuMetodosCreaMod() {
+	private static Integer muestraMenuMetodosCreaMod() {
 		SC.Write("0.-Atrás");
 		SC.Write("1.-Crear nueva instancia de Resultado de búsqueda por diputado");
 		SC.Write("2.-Introducir el nombre del resultado");
@@ -50,7 +50,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		return EC.ReadInteger();
 	}
 	
-	public static Integer muestraMenuMetodosCons() {
+	private static Integer muestraMenuMetodosCons() {
 		SC.Write("0.-Atrás");
 		SC.Write("1.-Existe grupo?");
 		SC.Write("2.-Consultar nombre del grupo");
@@ -65,19 +65,19 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		return EC.ReadInteger();
 	}
 	
-	public static void cambiaFicheroEntrada() {
+	private static void cambiaFicheroEntrada() {
 		SC.Write("Introduzca un nuevo archivo de pruebas: ");
 		fichEnt = EC.ReadString();
 		SC.Write("El nuevo archivo de pruebas es: " + fichEnt);
 	}
 	
-	public static void cambiaFicheroSalida() {
+	private static void cambiaFicheroSalida() {
 		SC.Write("Introduzca un nuevo archivo de salida: ");
 		fichSal = EC.ReadString();
 		SC.Write("El nuevo archivo de salida es: " + fichSal);
 	}
 	
-	public static void cargaFichero() {
+	private static void cargaFichero() {
 		EF = new FitxerEntrada(fichEnt);
 		String nombre = EF.ReadString();
 		Integer indiceAfinidad = EF.ReadInteger();
@@ -105,7 +105,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		EF.close();
 	}
 	
-	public static void guardaInstancia() {
+	private static void guardaInstancia() {
 		SF = new FitxerSortida(fichSal);
 		SF.Write(resultado.getNombre());
 		SF.Write(resultado.getIndiceAfinidad());
@@ -132,7 +132,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SF.close();
 	}
 	
-	public static void nuevaInstancia() {
+	private static void nuevaInstancia() {
 		SC.Write("Introduzca un nombre para el resultado:");
 		String nombre = EC.ReadString();
 		SC.Write("Introduzca un indice de afinidad para el resultado:");
@@ -159,15 +159,17 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		for (Integer i = 0; i < numGrup; ++i) {
 			SC.Write("Introduzca un ID para el grupo:");
 			Integer ID = EC.ReadInteger();
-			SC.Write("Introduzca la fecha de inicio DD/MM/AA:");
+			SC.Write("Introduzca la fecha de inicio DD/MM/AAAA:");
 			String fI = EC.ReadString();
-			SC.Write("Introduzca la fecha de fin DD/MM/AA:");
+			SC.Write("Introduzca la fecha de fin DD/MM/AAAA:");
 			String fF = EC.ReadString();
 			GrupoAfinPorDiputado grup = new GrupoAfinPorDiputado(ID, Date.stringToDate(fI), Date.stringToDate(fF));
 			SC.Write("Indique el número de diputados del grupo:");
-			Integer numDip = EC.ReadInt();
-			for (Integer j = 0; j < numDip; ++j)
+			Integer numDip = EC.ReadInteger();
+			for (Integer j = 0; j < numDip; ++j) {
+				SC.Write("Nombre: ");
 				grup.addDiputado(EC.ReadString());
+			}
 			con.add(grup.getID(), grup);
 		}
 		SC.Write("Introduzca el nombre del diputado relevante:");
@@ -175,13 +177,13 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		resultado = new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancias, esModificado, lapsoDeTiempo, con, diputadoRelevante);
 	}
 	
-	public static void setNombre() {
+	private static void setNombre() {
 		SC.Write("Nombre del resultado:");
 		String nomGrup = EC.ReadString();
 		resultado.setNombre(nomGrup);
 	}
 	
-	public static void addImportancia() {
+	private static void addImportancia() {
 		SC.Write("Nombre del evento:");
 		String evento = EC.ReadString();
 		SC.Write("Importancia:");
@@ -189,13 +191,13 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		resultado.addImportancia(evento, importancia);
 	}
 	
-	public static void eliminarDiputadoResul() {
+	private static void eliminarDiputadoResul() {
 		SC.Write("Nombre del diputado a eliminar:");
 		String nombre = EC.ReadString();
 		resultado.removeDiputado(nombre);
 	}
 	
-	public static void addDiputadoAGrupo() {
+	private static void addDiputadoAGrupo() {
 		SC.Write("Nombre del diputado:");
 		String diputado = EC.ReadString();
 		SC.Write("Identificador del grupo:");
@@ -203,7 +205,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		resultado.addDiputado(diputado, ID);
 	}
 	
-	public static void removeDiputadoDeGrupo() {
+	private static void removeDiputadoDeGrupo() {
 		SC.Write("Nombre del diputado:");
 		String diputado = EC.ReadString();
 		SC.Write("Identificador del grupo:");
@@ -211,7 +213,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		resultado.removeDiputado(diputado, ID);
 	}
 	
-	public static void moverDiputado() {
+	private static void moverDiputado() {
 		SC.Write("Nombre del diputado:");
 		String diputado = EC.ReadString();
 		SC.Write("Identificador del grupo de origen:");
@@ -221,60 +223,60 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		resultado.moveDiputado(diputado, desdeID, hastaID);
 	}
 	
-	public static void addGrupo() {
+	private static void addGrupo() {
 		SC.Write("Introduzca un ID para el grupo:");
-		Integer ID = EC.ReadInt();
+		Integer ID = EC.ReadInteger();
 		SC.Write("Introduzca la fecha de inicio DD/MM/AA:");
 		String fI = EC.ReadString();
 		SC.Write("Introduzca la fecha de fin DD/MM/AA:");
 		String fF = EC.ReadString();
 		GrupoAfinPorDiputado grup = new GrupoAfinPorDiputado(ID, Date.stringToDate(fI), Date.stringToDate(fF));
 		SC.Write("Indique el número de diputados del grupo:");
-		Integer numDip = EC.ReadInt();
+		Integer numDip = EC.ReadInteger();
 		for (Integer j = 0; j < numDip; ++j)
 			grup.addDiputado(EC.ReadString());
 		resultado.addGrupo(grup);
 	}
 	
-	public static void removeGrupo() {
+	private static void removeGrupo() {
 		SC.Write("Introduzca el ID del grupo a eliminar:");
-		Integer ID = EC.ReadInt();
+		Integer ID = EC.ReadInteger();
 		resultado.eliminarGrupo(ID);
 	}
 	
-	public static void existeGrupo() {
+	private static void existeGrupo() {
 		SC.Write("Introduzca el ID del grupo a comprobar:");
-		Integer ID = EC.ReadInt();
+		Integer ID = EC.ReadInteger();
 		if (resultado.existeGrupo(ID)) SC.Write("El grupo " + ID + " existe");
 		else SC.Write("El grupo "+ ID + " no existe");
 	}
 	
-	public static void getNombreResultado() {
+	private static void getNombreResultado() {
 		SC.Write("El nombre del resultado es: " + resultado.getNombre());
 	}
 	
-	public static void getIndiceAfinidad() {
+	private static void getIndiceAfinidad() {
 		SC.Write("El índice de afinidad es: " + resultado.getIndiceAfinidad());
 	}
 	
-	public static void getAlgoritmo() {
+	private static void getAlgoritmo() {
 		SC.Write("El tipo de algoritmo es: " + resultado.getAlgoritmo().toString());
 	}
 	
-	public static void esModificado() {
+	private static void esModificado() {
 		if (resultado.esModificado()) SC.Write("El resultado ha sido modificado");
 		else SC.Write("El resultado no ha sido modificado");
 	}
 	
-	public static void getDiputadoRelevante() {
+	private static void getDiputadoRelevante() {
 		SC.Write("El diputado relevante es: " + resultado.getDiputadoRelevante());
 	}
 	
-	public static void getPeriodo() {
+	private static void getPeriodo() {
 		SC.Write("El periodo es: " + resultado.getPeriodo());
 	}
 	
-	public static void getGruposAfines() {
+	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
 		Conjunto<GrupoAfin> conj = resultado.getGruposAfines();
 		for (GrupoAfin grup:conj.getAll()) {
@@ -287,7 +289,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 	}
 	
-	public static void getResultados() {
+	private static void getResultados() {
 		Set<Set<String>> res = resultado.getResultado();
 		Integer i = 0;
 		for (Set<String> conj:res) {
@@ -297,11 +299,11 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 	}
 	
-	public static void getTipoResultado() {
+	private static void getTipoResultado() {
 		SC.Write("El tipo de resultado es: " + resultado.getTipoResultado());
 	}
 	
-	public static void menuMetodosCreaMod() {
+	private static void menuMetodosCreaMod() {
 		Integer a = 1;
 		while (a != 0) {
 			a = muestraMenuMetodosCreaMod();
@@ -320,7 +322,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 	}
 	
-	public static void menuMetodosCons() {
+	private static void menuMetodosCons() {
 		Integer a = 1;
 		while (a != 0) {
 			a = muestraMenuMetodosCons();
@@ -340,7 +342,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 	}
 	
-	public static void menuPrincipal() {
+	private static void menuPrincipal() {
 		Integer a = 1;
 		while (a != 0) {
 			a = muestraMenuPrincipal();
@@ -361,7 +363,6 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC = new ConsolaSortida();
 		fichEnt = "jocproves/jocProvaResultadoDeBusquedaPorDiputado.txt";
 		fichSal = "jocproves/sortidaJocProvaResultadoDeBusquedaPorDiputado.txt";
-		resultado = null;
 		menuPrincipal();
 	}
 }
