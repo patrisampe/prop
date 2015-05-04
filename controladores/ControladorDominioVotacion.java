@@ -13,7 +13,11 @@ import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.TipoVoto;
 import dominio.Votacion;
-
+/**
+ * Classe ControladorDominioEvento para la gestion tanto en conjunto como individualmente de los tipos de eventos, y en consequencia, eventos.
+ * @author  Patricia Sampedro
+ * @version 1.0 Mayo 2015 
+ */
 public class ControladorDominioVotacion {
 
 	private Conjunto<Votacion> conjuntoVotacion;
@@ -221,31 +225,39 @@ public class ControladorDominioVotacion {
 			else{
 				ControladorDominioLegislatura CDL= ControladorDominioLegislatura.getInstance();
 				Integer leg=CDL.getID(fecha);
-				Set<String> dip=CDL.getDiputados(leg);
-				Map<String,TipoVoto> votosnew=new TreeMap<String,TipoVoto>();
-				for(String elem :dip){
-					if(esDiputado(elem)){
-						TipoVoto nouvot=TipoVoto.AUSENCIA;
-						if(votos.containsKey(elem)){
-						 nouvot=votos.get(elem);
-						 votos.remove(elem);
+				if(leg!=-1){
+					Set<String> dip=CDL.getDiputados(leg);
+					Map<String,TipoVoto> votosnew=new TreeMap<String,TipoVoto>();
+					for(String elem :dip){
+						if(esDiputado(elem)){
+							TipoVoto nouvot=TipoVoto.AUSENCIA;
+							if(votos.containsKey(elem)){
+							 nouvot=votos.get(elem);
+							 votos.remove(elem);
+							}
+							votosnew.put(elem, nouvot);
 						}
-						votosnew.put(elem, nouvot);
+						else return;
 					}
-					else return;
+					if(votos.size()>0){
+						hasError=true;
+						error.addClauExterna(nombreVotacion);
+						Iterator<String> it = votos.keySet().iterator();
+						error.addClauExterna(it.next());
+						error.setCodiError(25);
+						return;
+					}
+					Votacion aux= new Votacion(nombreVotacion,fecha,imp,votosnew);
+					conjuntoVotacion.add(nombreVotacion, aux);
 				}
-				if(votos.size()>0){
+				else{
 					hasError=true;
 					error.addClauExterna(nombreVotacion);
-					Iterator<String> it = votos.keySet().iterator();
-					error.addClauExterna(it.next());
-					error.setCodiError(25);
+					error.setCodiError(37);
 					return;
 				}
-				Votacion aux= new Votacion(nombreVotacion,fecha,imp,votosnew);
-				conjuntoVotacion.add(nombreVotacion, aux);
-			}
 			
+			}
 		}
 		/**
 		 * Indica si es una Votacion
@@ -375,3 +387,5 @@ public class ControladorDominioVotacion {
 		
 		}
 }
+
+
