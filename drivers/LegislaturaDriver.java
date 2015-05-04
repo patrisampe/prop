@@ -38,6 +38,7 @@ public class LegislaturaDriver {
 		Entrada E = new ConsolaEntrada();
 		Sortida S = new ConsolaSortida();
 		Legislatura L = Legislatura.NULL;
+		Boolean fitxer = false;
 		Integer codi = -2;
 		while (codi < -1 || codi > 2) {
 			S.Write("Selecciona una operacion:");
@@ -70,26 +71,28 @@ public class LegislaturaDriver {
 			}
 		}
 		while (codi != -1) {
-			S.Write("Selecciona una operacion:");
-			S.Write("-1: Finalizar la ejecucion.");
-			S.Write("0: Insertar una nueva legislatura nula.");
-			S.Write("1: Insertar una nueva legislatura(por atributos).");
-			S.Write("2: Insertar una nueva legislatura sin fin(por atributos).");
-			S.Write("3: Insertar una nueva legislatura(por copia).");
-			S.Write("4: Consultar el identificador de la legislatura.");
-			S.Write("5: Consultar la fecha de inicio de la legislatura.");
-			S.Write("6: Comprobar si la legislatura tiene fecha de finalizacion.");
-			S.Write("7: Consultar la fecha de finalizacion de la legislatura.");
-			S.Write("8: Consultar los diputados activos de la legislatura.");
-			S.Write("9: Comprobar si el la legislatura tiene el diputado activo.");
-			S.Write("10: Comprobar si la legislatura es una legislatura nula.");
-			S.Write("11: Modificar la fecha de inicio de la legislatura.");
-			S.Write("12: Modificar la fecha de finalizacion de la legislatura.");
-			S.Write("13: Eliminar la fecha de finalizacion de la legislatura.");
-			S.Write("14: Insertar un nuevo diputado en la legislatura.");
-			S.Write("15: Establecer los n diputados de la legislatura.");
-			S.Write("16: Eliminar un diputado de la legislatura.");
-			S.Write("17: Eliminar todos los diputados de la legislatura.");
+			if (!fitxer){
+				S.Write("Selecciona una operacion:");
+				S.Write("-1: Finalizar la ejecucion.");
+				S.Write("0: Insertar una nueva legislatura nula.");
+				S.Write("1: Insertar una nueva legislatura(por atributos).");
+				S.Write("2: Insertar una nueva legislatura sin fin(por atributos).");
+				S.Write("3: Insertar una nueva legislatura(por copia).");
+				S.Write("4: Consultar el identificador de la legislatura.");
+				S.Write("5: Consultar la fecha de inicio de la legislatura.");
+				S.Write("6: Comprobar si la legislatura tiene fecha de finalizacion.");
+				S.Write("7: Consultar la fecha de finalizacion de la legislatura.");
+				S.Write("8: Consultar los diputados activos de la legislatura.");
+				S.Write("9: Comprobar si el la legislatura tiene el diputado activo.");
+				S.Write("10: Comprobar si la legislatura es una legislatura nula.");
+				S.Write("11: Modificar la fecha de inicio de la legislatura.");
+				S.Write("12: Modificar la fecha de finalizacion de la legislatura.");
+				S.Write("13: Eliminar la fecha de finalizacion de la legislatura.");
+				S.Write("14: Insertar un nuevo diputado en la legislatura.");
+				S.Write("15: Establecer los n diputados de la legislatura.");
+				S.Write("16: Eliminar un diputado de la legislatura.");
+				S.Write("17: Eliminar todos los diputados de la legislatura.");
+			}
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
@@ -106,21 +109,25 @@ public class LegislaturaDriver {
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				}
 			break;
@@ -189,5 +196,6 @@ public class LegislaturaDriver {
 			break;
 			}
 		}
+		S.close();
 	}
 }
