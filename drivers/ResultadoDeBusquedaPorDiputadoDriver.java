@@ -10,6 +10,7 @@ import io.Sortida;
 import java.util.TreeMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import time.Date;
 import utiles.Conjunto;
@@ -62,6 +63,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC.Write("8.-Consultar grupos afines");
 		SC.Write("9.-Consultar resultados");
 		SC.Write("10.-Consultar tipo resultado");
+		SC.Write("11.-Consultar importancia");
 		return EC.ReadInteger();
 	}
 	
@@ -118,7 +120,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 		SF.Write(resultado.esModificado());
 		SF.Write(resultado.getLapsoDetiempo());
-		Conjunto<GrupoAfin> conj = resultado.getGruposAfines();
+		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfines();
 		SF.Write(conj.size());
 		for (GrupoAfin grup:conj.getAll()) {
 			SF.Write(grup.getID());
@@ -233,8 +235,10 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		GrupoAfinPorDiputado grup = new GrupoAfinPorDiputado(ID, Date.stringToDate(fI), Date.stringToDate(fF));
 		SC.Write("Indique el número de diputados del grupo:");
 		Integer numDip = EC.ReadInteger();
-		for (Integer j = 0; j < numDip; ++j)
+		for (Integer j = 0; j < numDip; ++j) {
+			SC.Write("Nombre:");
 			grup.addDiputado(EC.ReadString());
+		}
 		resultado.addGrupo(grup);
 	}
 	
@@ -278,7 +282,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 	
 	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
-		Conjunto<GrupoAfin> conj = resultado.getGruposAfines();
+		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfines();
 		for (GrupoAfin grup:conj.getAll()) {
 			SC.Write("ID: " + grup.getID());
 			SC.Write("Fecha inicio:" + grup.getFechaInicio().toString());
@@ -290,7 +294,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 	}
 	
 	private static void getResultados() {
-		Set<Set<String>> res = resultado.getResultado();
+		Vector<Set<String>> res = resultado.getResultado();
 		Integer i = 0;
 		for (Set<String> conj:res) {
 			SC.Write("Grupo " + ++i + ": ");
@@ -301,6 +305,12 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 	
 	private static void getTipoResultado() {
 		SC.Write("El tipo de resultado es: " + resultado.getTipoResultado());
+	}
+	
+	private static void getImportancia() {
+		SC.Write("Introduzca el nombre del evento del que desea conocer la importancia:");
+		String evento = EC.ReadString();
+		SC.Write("La importancia es: " + resultado.getImportancia(evento));
 	}
 	
 	private static void menuMetodosCreaMod() {
@@ -337,6 +347,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 			case 8:	getGruposAfines(); break;
 			case 9:	getResultados(); break;
 			case 10:getTipoResultado(); break;
+			case 11:getImportancia(); break;
 			default: break;
 			}
 		}
@@ -363,13 +374,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC = new ConsolaSortida();
 		fichEnt = "jocproves/jocProvaResultadoDeBusquedaPorDiputado.txt";
 		fichSal = "jocproves/sortidaJocProvaResultadoDeBusquedaPorDiputado.txt";
-		Conjunto<GrupoAfinPorDiputado> con = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
-		GrupoAfinPorDiputado grup = new GrupoAfinPorDiputado(1, Date.stringToDate("11/11/2011"), Date.stringToDate("11/11/2011"));
-		con.add(grup.getID(), grup);
-		Map<String, Integer> mapa = new TreeMap<String, Integer>();
-		ResultadoDeBusquedaPorDiputado resul = new ResultadoDeBusquedaPorDiputado("ee", 2, TipoAlgoritmo.CliquePercolation, mapa, false, 2, con, "Lolita");
-		if (con.exists(1)) System.out.println("Hola");
-		if (resul.existeGrupo(1)) System.out.println("Adios");
-		//menuPrincipal();
+		resultado = null;
+		menuPrincipal();
 	}
 }

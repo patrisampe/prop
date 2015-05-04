@@ -48,7 +48,7 @@ public class GrupoAfinPorDiputado extends GrupoAfin {
 	}
 	
 	/**
-	 * Administra la fecha de inicio de la busqueda.
+	 * Suministra la fecha de inicio de la busqueda.
 	 * @return Fecha de inicio de la busqueda.
 	 */
 	public Date getFechaInicio() {
@@ -56,7 +56,7 @@ public class GrupoAfinPorDiputado extends GrupoAfin {
 	}
 	
 	/**
-	 * Administra la fecha de fin de la busqueda.
+	 * Suministra la fecha de fin de la busqueda.
 	 * @return Fecha de fin de la busqueda.
 	 */
 	public Date getFechaFin() {

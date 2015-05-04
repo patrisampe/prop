@@ -1,6 +1,5 @@
 package dominio;
 
-import java.util.Set;
 import java.util.TreeSet;
 
 import time.Date;
@@ -20,7 +19,7 @@ public abstract class GrupoAfin extends ObjetoDominio {
 	/**
 	 * Conjunto de los diputados que forman el grupo.
 	 */
-	private Set<String> diputados;
+	private TreeSet<String> diputados;
 	
 	/**
 	 * Constructora por defecto.
@@ -48,7 +47,7 @@ public abstract class GrupoAfin extends ObjetoDominio {
 	}
 	
 	/**
-	 * Administra el identificador del grupo afin.
+	 * Suministra el identificador del grupo afin.
 	 * @return El identificador en valor entero.
 	 */
 	public Integer getID() {
@@ -56,10 +55,10 @@ public abstract class GrupoAfin extends ObjetoDominio {
 	}
 	
 	/**
-	 * Administra un conjunto de cadenas de texto con los diputados del grupo afin.
+	 * Suministra un conjunto de cadenas de texto con los diputados del grupo afin.
 	 * @return Un conjunto de cadenas con el nombre de los diputados.
 	 */
-	public Set<String> getDiputados() {
+	public TreeSet<String> getDiputados() {
 		return new TreeSet<String>(diputados);
 	}
 	
