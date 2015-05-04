@@ -1,5 +1,4 @@
 9
-
 DIPUTADO Rajoy PP Galicia 12 15 1959
 DIPUTADO Sanchez PSOE Castilla 12 15 1980
 DIPUTADO Saenz PP Madrid 12 15 1959
@@ -20,8 +19,18 @@ EVENTO Reunion PP 1 1 2015
 EVENTO Reunion PSOE 1 1 2015 
 4  Sanchez Zapatero BOno Chaves
 
-Evento Reunion Indepe 3 3 2018
+EVENTO Reunion Indepe 3 3 2018
 2 Duran Zapatero
 
-LEGISLATURA 1 Fecha Fecha ConjuntoDeStrings (identificadorLegislatura, fechaInicio, fechaFinal, Diputados)
-VOTACION String Fecha Integer Integer n seguido de n pares de Stings (nombreVotacion, fecha, imp, votos(Diputado,Voto)) 
+
+
+VOTACION LeyAborto 1 1 2016 7 
+5 Zapatero EN_CONTRA Rajoy A_FAVOR Duran EN_CONTRA Aznar A_FAVOR Camacho A_FAVOR
+
+VOTACION Independencia 1 1 2020 7 
+6 Sanchez EN_CONTRA Saenz EN_CONTRA Rajoy EN_CONTRA Bono EN_CONTRA Duran A_FAVOR Camacho EN_CONTRA
+
+FIN
+
+7 Louvain 1 1 2014 1 1 2024 30
+-1
