@@ -37,11 +37,15 @@ VOTACION Independencia 1 1 2020 7
 
 FIN
 
-7 Louvain 1 1 2014 1 1 2024 30
-5 Louvain 1 1 2014 1 1 2024 30
-3 Louvain 1 1 2014 1 1 2024 30
+7 Louvain 1 1 2014 1 1 2024 60
+5 Louvain 1 1 2014 1 1 2024 60
+3 Louvain 1 1 2014 1 1 2024 60
 
 8 Louvain 1 30 Rajoy
 6 Louvain 1 30 Rajoy
 4 Louvain 1 30 Rajoy
+
+1 Louvain 1 1 2014 1 1 2024 0 30
+2 Louvain 1 0 30 Rajoy
+
 -1

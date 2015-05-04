@@ -70,7 +70,7 @@ public class BusquedaDriver {
 			 	break;
 			 case 7:
 				 SC.Write("Periodo Nombre");
-				 PrintConjGrupPeriodo(SC,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
+				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
 				 break;
 			 case 8:
 				 SC.Write("Diputado Nombre");
@@ -106,14 +106,9 @@ public class BusquedaDriver {
 			}
 			else if (s.equals("LEGISLATURA")) {
 				Integer identificador = eF.ReadInteger();
-				sC.Write("hola");
 				Date fechaIni = DateIntervalDriver.ReadDate(eF);
 				Date fechaFin = DateIntervalDriver.ReadDate(eF);
-				sC.Write(identificador);
-				sC.Write(fechaIni.toString());
-				sC.Write(fechaFin.toString());
 				cLeg.addLegislatura(identificador, fechaIni, fechaFin);
-				sC.Write("Adios");
 				Integer n = eF.ReadInteger();
 				for (int i = 0; i < n; ++i) {
 					sC.Write(i);

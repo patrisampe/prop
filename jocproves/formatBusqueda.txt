@@ -2,12 +2,11 @@
 
 Comando 1:
 Por Periodo Standard
-Formato: String Integer Integer n seguido de n pares de  (String, Integer) Integer String (Algoritmo, Lapso, ImportanciaModificada, porcentaje, DiputadoRelevante)
-
+Formato: String Fecha Fecha Integer n seguido de n pares de  (String, Integer) Integer (Algoritmo, FechaInicio, FechaFin, ImportanciaModificada, porcentaje)
 
 Comando 2:
 Por Diputado Standard
-Formato: String Fecha Fecha Integer n seguido de n pares de  (String, Integer) Integer (Algoritmo, FechaInicio, FechaFin, ImportanciaModificada, porcentaje)
+Formato: String Integer Integer n seguido de n pares de  (String, Integer) Integer String (Algoritmo, Lapso, ImportanciaModificada, porcentaje, DiputadoRelevante)
 
 Comando 3:	
 Por Periodo Partido Político
