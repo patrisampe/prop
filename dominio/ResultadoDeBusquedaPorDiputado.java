@@ -36,6 +36,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 			this.gruposAfines = new Conjunto<GrupoAfin>(GrupoAfin.class);
 			for (GrupoAfinPorDiputado grup:gruposAfines.getAll()) {
 				this.gruposAfines.add(grup.getID(), grup);
+				if (existeGrupo(grup.getID())) System.out.println("Dishhhh");
 			}
 			this.diputadoRelevante = diputadoRelevante;
 	}

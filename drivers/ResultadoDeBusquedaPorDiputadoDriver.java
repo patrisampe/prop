@@ -7,7 +7,7 @@ import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,7 +83,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		Integer indiceAfinidad = EF.ReadInteger();
 		TipoAlgoritmo algoritmo = TipoAlgoritmo.valueOf(EF.ReadString());
 		Integer importancias = (EF.ReadInteger());
-		Map<String, Integer> importancia = new HashMap<String, Integer>();
+		Map<String, Integer> importancia = new TreeMap<String, Integer>();
 		for (Integer i = 0; i < importancias; ++i)
 			importancia.put(EF.ReadString(), EF.ReadInteger());
 		Boolean modificado = EF.ReadBoolean();
@@ -140,7 +140,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC.Write("Seleccione el tipo de algoritmo(CliquePercolation, GirvanNewmann, Louvain): ");
 		TipoAlgoritmo algoritmo = TipoAlgoritmo.valueOf(EC.ReadString());
 		SC.Write("Indique el número de importancias de eventos temporales");
-		Map<String, Integer> importancias = new HashMap<String, Integer>();
+		Map<String, Integer> importancias = new TreeMap<String, Integer>();
 		Integer numimp = EC.ReadInteger();
 		for (Integer i = 0; i < numimp; ++i) {
 			SC.Write("Introduzca el nombre del evento: ");
@@ -363,6 +363,13 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC = new ConsolaSortida();
 		fichEnt = "jocproves/jocProvaResultadoDeBusquedaPorDiputado.txt";
 		fichSal = "jocproves/sortidaJocProvaResultadoDeBusquedaPorDiputado.txt";
-		menuPrincipal();
+		Conjunto<GrupoAfinPorDiputado> con = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
+		GrupoAfinPorDiputado grup = new GrupoAfinPorDiputado(1, Date.stringToDate("11/11/2011"), Date.stringToDate("11/11/2011"));
+		con.add(grup.getID(), grup);
+		Map<String, Integer> mapa = new TreeMap<String, Integer>();
+		ResultadoDeBusquedaPorDiputado resul = new ResultadoDeBusquedaPorDiputado("ee", 2, TipoAlgoritmo.CliquePercolation, mapa, false, 2, con, "Lolita");
+		if (con.exists(1)) System.out.println("Hola");
+		if (resul.existeGrupo(1)) System.out.println("Adios");
+		//menuPrincipal();
 	}
 }
