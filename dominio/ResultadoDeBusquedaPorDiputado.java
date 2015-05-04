@@ -34,8 +34,10 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, Conjunto<GrupoAfinPorDiputado> gruposAfines, String diputadoRelevante) {
 			super(nombre, indiceAfinidad, algoritmo, importancia, modificado);
 			this.gruposAfines = new Conjunto<GrupoAfin>(GrupoAfin.class);
-			for (GrupoAfinPorDiputado grup:gruposAfines.getAll())
+			for (GrupoAfinPorDiputado grup:gruposAfines.getAll()) {
 				this.gruposAfines.add(grup.getID(), grup);
+				if (existeGrupo(grup.getID())) System.out.println("Dishhhh");
+			}
 			this.diputadoRelevante = diputadoRelevante;
 	}
 	

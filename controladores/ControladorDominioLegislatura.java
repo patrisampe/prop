@@ -86,7 +86,6 @@ public class ControladorDominioLegislatura {
 	 */
 	public Integer getID(Date fechaContenida) {
 		for (Legislatura L:conjuntoLegislaturas.getAll()) {
-			System.out.println("Cercant a la legislatura " + L.getID());
 			if (L.hasFechaFinal()) {
 				DateInterval DI = new DateInterval(L.getFechaInicio(), L.getFechaFinal());
 				if (DI.contains(fechaContenida)) return L.getID();
@@ -157,6 +156,7 @@ public class ControladorDominioLegislatura {
 			else {
 				idData = getID(fechaFinal);
 				if (idData != -1 && idData != identificadorLegislatura){
+					System.out.println("PETA!");
 					error.setCodiError(27);
 					error.addClauExterna(identificadorLegislatura);
 					error.addClauExterna(fechaFinal.toString());

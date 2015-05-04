@@ -97,7 +97,7 @@ public class Legislatura extends ObjetoDominio{
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean hasFechaFinal() {
-		return fechaFinal.esNull();
+		return !fechaFinal.esNull();
 	}
 	
 	/**
