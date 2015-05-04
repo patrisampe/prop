@@ -137,14 +137,15 @@ public class DateInterval {
 	 * Modifica la fecha de inicio del intervalo.
 	 */
 	public void setInicio(Date Ini) {
-		if (Ini.compareTo(Fin) <= 0) Inicio = Ini;
+		
+		if (Fin.esNull() || Ini.compareTo(Fin) <= 0) Inicio = Ini;
 	} 
 	
 	/**
 	 * Modifica la fecha de fin del intervalo.
 	 */
 	public void setFin(Date Final) {
-		if (Inicio.compareTo(Final) <= 0) Fin = Final;
+		if (Inicio.esNull() || Inicio.compareTo(Final) <= 0) Fin = Final;
 	}
 	
 	/**

@@ -4,9 +4,11 @@ Comando 1:
 	
 Comando 2: 
 	Crea un DateInterval con la creadora por pareja de fechas.
+	Formato: Fecha Fecha
 	
 Comando 3: 
 	Crea un DateInterval con la creadora por copia.
+	Formato: Fecha Fecha
 
 Comando 4:
 	Mira si la fecha de la entrada está contenida.
@@ -30,12 +32,21 @@ Comando 9:
 	Imprime la fecha inicio del Periodo.
 
 Comando 10:
-	
+	Mira si el periodo leído intersecta.
+	Formato: Fecha Fecha
 
 Comando 11:
+	Modifica la fecha fin del Periodo.
+	Formato: Fecha
 
 Comando 12:
+	Modifica la fecha inicio del Periodo.
+	Formato: Fecha
 
 Comando 13:
+	Imprime la intersección entre los Periodos leidos.
+	Formato: Fecha Fecha Fecha Fecha
 
 Comando 14:
+	Imprime la unión entre los Periodos leidos
+	Formato: Fecha Fecha Fecha Fecha

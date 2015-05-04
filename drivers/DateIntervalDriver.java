@@ -6,9 +6,6 @@ import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
 
-import java.util.HashSet;
-
-import dominio.algoritmos.Graf;
 import time.Date;
 import time.DateInterval;
 
@@ -19,6 +16,7 @@ public class DateIntervalDriver {
 		DateInterval D = new DateInterval();
 		D.setInicio(ReadDate(eF));
 		D.setFin(ReadDate(eF));
+		return D;
 	}
 	
 	public static Date ReadDate(Entrada eF) {
@@ -32,7 +30,6 @@ public class DateIntervalDriver {
 		Entrada EF = new FitxerEntrada(Input);
 		String Output = EC.ReadString();
 		Sortida SF = new FitxerSortida(Output);
-		GrafDriver GD = new GrafDriver();
 		int a= EF.ReadInt();
 		while(a!=-1) {
 			switch(a) {
