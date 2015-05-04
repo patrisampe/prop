@@ -127,7 +127,13 @@ public class ControladorDominioResultadoDriver {
 	}
 	
 	private static void cargaConjunto() {
-		String nombre;
+		Integer n = EF.ReadInteger();
+		for (Integer i = 0; i < n; ++i) {
+			String tipo = EF.ReadString();
+			if (tipo.equals("Búsqueda por diputado")) {
+				
+			}
+		}
 	}
 	
 	private static void guardaConjunto() {
@@ -145,8 +151,16 @@ public class ControladorDominioResultadoDriver {
 				SF.Write(importancias.get(evento));
 			}
 			SF.Write(controlDomRes.haSidoModificado(resul));
-			
+			Vector<Set<String>> gruposAfines = controlDomRes.getResultado(resul);
+			SF.Write(gruposAfines.size());
+			for (Set<String> grup:gruposAfines) {
+				SF.Write(grup.size());
+				for (String diputado:grup) {
+					SF.Write(diputado);
+				}
+			}
 		}
+		SF.close();
 	}
 	
 	private static void registraUltimoResultado() {
