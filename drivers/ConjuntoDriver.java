@@ -46,6 +46,7 @@ public class ConjuntoDriver {
 		Sortida S = new ConsolaSortida();
 		Integer n = 0;
 		Integer codi = -2;
+		Boolean fitxer = false;
 		while (codi < -1 || codi > 2) {
 			S.Write("Selecciona una operacion:");
 			S.Write("-1: Finalizar la ejecucion.");
@@ -60,22 +61,24 @@ public class ConjuntoDriver {
 				Conjunto<Diputado> CD = new Conjunto<Diputado>(Diputado.class);
 				Set<Diputado> set = new TreeSet<Diputado>();
 				while (codi != -1) {
-					S.Write("Selecciona una operacion:");
-					S.Write("-2: Modificar la configuracion I/O.");
-					S.Write("-1: Finalizar la ejecucion.");
-					S.Write("1: Replicar el conjunto.");
-					S.Write("2: Consultar el tipo contenido.");
-					S.Write("3: Comprobar el tipo de la clave externa.");
-					S.Write("4: Consultar el numero de elementos del conjunto.");
-					S.Write("5: Comprobar si el conjunto esta vacio.");
-					S.Write("6: Eliminar todos los elementos del conjunto.");
-					S.Write("7: Insertar un conjunto de diputados.");
-					S.Write("8: Consultar el conjunto de diputados.");
-					S.Write("9: Consultar el conjunto de nombres de diputado.");
-					S.Write("10: Insertar un diputado en el conjunto.");
-					S.Write("11: Consultar un diputado en el conjunto.");
-					S.Write("12: Comprobar si un diputado existe en el conjunto.");
-					S.Write("13: Eliminar un diputado del conjunto.");
+					if (!fitxer) {
+						S.Write("Selecciona una operacion:");
+						S.Write("-2: Modificar la configuracion I/O.");
+						S.Write("-1: Finalizar la ejecucion.");
+						S.Write("1: Replicar el conjunto.");
+						S.Write("2: Consultar el tipo contenido.");
+						S.Write("3: Comprobar el tipo de la clave externa.");
+						S.Write("4: Consultar el numero de elementos del conjunto.");
+						S.Write("5: Comprobar si el conjunto esta vacio.");
+						S.Write("6: Eliminar todos los elementos del conjunto.");
+						S.Write("7: Insertar un conjunto de diputados.");
+						S.Write("8: Consultar el conjunto de diputados.");
+						S.Write("9: Consultar el conjunto de nombres de diputado.");
+						S.Write("10: Insertar un diputado en el conjunto.");
+						S.Write("11: Consultar un diputado en el conjunto.");
+						S.Write("12: Comprobar si un diputado existe en el conjunto.");
+						S.Write("13: Eliminar un diputado del conjunto.");
+					}
 					codi = E.ReadInteger();
 					switch (codi) {
 					case -2:
@@ -92,21 +95,25 @@ public class ConjuntoDriver {
 							fOut = E.ReadString();
 							E = new ConsolaEntrada();
 							S = new FitxerSortida(fOut);
+							fitxer = true;
 						break;
 						case 3:
 							fIn = E.ReadString();
 							E = new FitxerEntrada(fIn);
 							S = new ConsolaSortida();
+							fitxer = false;
 						break;
 						case 4:
 							fIn = E.ReadString();
 							fOut = E.ReadString();
 							E = new FitxerEntrada(fIn);
 							S = new FitxerSortida(fOut);
+							fitxer = true;
 						break;
 						default:
 							E = new ConsolaEntrada();
 							S = new ConsolaSortida();
+							fitxer = false;
 						break;
 						}
 					break;
@@ -182,22 +189,24 @@ public class ConjuntoDriver {
 				Conjunto<Legislatura> CL = new Conjunto<Legislatura>(Legislatura.class);
 				Set<Legislatura> set2 = new TreeSet<Legislatura>();
 				while (codi != -1) {
-					S.Write("Selecciona una operacion:");
-					S.Write("-2: Modificar la configuracion I/O.");
-					S.Write("-1: Finalizar la ejecucion.");
-					S.Write("1: Replicar el conjunto.");
-					S.Write("2: Consultar el tipo contenido.");
-					S.Write("3: Comprobar el tipo de la clave externa.");
-					S.Write("4: Consultar el numero de elementos del conjunto.");
-					S.Write("5: Comprobar si el conjunto esta vacio.");
-					S.Write("6: Eliminar todos los elementos del conjunto.");
-					S.Write("7: Insertar un conjunto de legislaturas.");
-					S.Write("8: Consultar el conjunto de legislaturas.");
-					S.Write("9: Consultar el conjunto de identificadores de legislaturas.");
-					S.Write("10: Insertar una legislatura en el conjunto.");
-					S.Write("11: Consultar una legislatura en el conjunto.");
-					S.Write("12: Comprobar si una legislatura existe en el conjunto.");
-					S.Write("13: Eliminar una legislatura del conjunto.");
+					if (!fitxer) {
+						S.Write("Selecciona una operacion:");
+						S.Write("-2: Modificar la configuracion I/O.");
+						S.Write("-1: Finalizar la ejecucion.");
+						S.Write("1: Replicar el conjunto.");
+						S.Write("2: Consultar el tipo contenido.");
+						S.Write("3: Comprobar el tipo de la clave externa.");
+						S.Write("4: Consultar el numero de elementos del conjunto.");
+						S.Write("5: Comprobar si el conjunto esta vacio.");
+						S.Write("6: Eliminar todos los elementos del conjunto.");
+						S.Write("7: Insertar un conjunto de legislaturas.");
+						S.Write("8: Consultar el conjunto de legislaturas.");
+						S.Write("9: Consultar el conjunto de identificadores de legislaturas.");
+						S.Write("10: Insertar una legislatura en el conjunto.");
+						S.Write("11: Consultar una legislatura en el conjunto.");
+						S.Write("12: Comprobar si una legislatura existe en el conjunto.");
+						S.Write("13: Eliminar una legislatura del conjunto.");
+					}
 					codi = E.ReadInteger();
 					switch (codi) {
 					case -2:
@@ -214,21 +223,25 @@ public class ConjuntoDriver {
 							fOut = E.ReadString();
 							E = new ConsolaEntrada();
 							S = new FitxerSortida(fOut);
+							fitxer = true;
 						break;
 						case 3:
 							fIn = E.ReadString();
 							E = new FitxerEntrada(fIn);
 							S = new ConsolaSortida();
+							fitxer = false;
 						break;
 						case 4:
 							fIn = E.ReadString();
 							fOut = E.ReadString();
 							E = new FitxerEntrada(fIn);
 							S = new FitxerSortida(fOut);
+							fitxer = true;
 						break;
 						default:
 							E = new ConsolaEntrada();
 							S = new ConsolaSortida();
+							fitxer = false;
 						break;
 						}
 					break;
@@ -264,8 +277,8 @@ public class ConjuntoDriver {
 						for (Legislatura L:CL.getAll()) {
 							String[] out = new String[3];
 							out[0] = L.getID().toString();
-							out[2] = L.getFechaInicio().toString();
-							out[3] = L.getFechaFinal().toString();
+							out[1] = L.getFechaInicio().toString();
+							out[2] = L.getFechaFinal().toString();
 							S.Write(3, out);
 						}
 					break;
@@ -282,8 +295,8 @@ public class ConjuntoDriver {
 						Legislatura L3 = CL.get(E.ReadInteger());
 						String[] out2 = new String[3];
 						out2[0] = L3.getID().toString();
-						out2[2] = L3.getFechaInicio().toString();
-						out2[3] = L3.getFechaFinal().toString();
+						out2[1] = L3.getFechaInicio().toString();
+						out2[2] = L3.getFechaFinal().toString();
 						S.Write(3, out2);
 					break;
 					case 12:
@@ -303,5 +316,6 @@ public class ConjuntoDriver {
 			break;
 			}
 		}
+		S.close();
 	}
 }
