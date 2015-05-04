@@ -1,0 +1,41 @@
+Fecha = dd/mm/aaaa
+Comando 1:
+	Crea un DateInterval con la creadora por defecto.
+	
+Comando 2: 
+	Crea un DateInterval con la creadora por pareja de fechas.
+	
+Comando 3: 
+	Crea un DateInterval con la creadora por copia.
+
+Comando 4:
+	Mira si la fecha de la entrada está contenida.
+	Formato: Fecha
+	
+Comando 5:
+	Mira si el periodo de la entrada está contenido.
+	Formato: Fecha Fecha
+	
+Comando 6:
+     Devuelve el número de días del periodo.
+     
+Comando 7:
+	Mira si el periodo leído es igual al que estamos probando.
+	Formato: Fecha Fecha
+	
+Comando 8:
+	Imprime la fecha fin del Periodo.
+
+Comando 9:
+	Imprime la fecha inicio del Periodo.
+
+Comando 10:
+	
+
+Comando 11:
+
+Comando 12:
+
+Comando 13:
+
+Comando 14:
