@@ -49,32 +49,35 @@ public class ControladorDominioDiputadoDriver {
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		Integer n;
 		Integer codi = 0;
+		Boolean fitxer = false;
 		while (codi != -1) {
-			S.Write("Selecciona una operacion:");
-			S.Write("-2: Modificar la configuracion I/O.");
-			S.Write("-1: Finalizar la ejecucion.");
-			S.Write("1: Consultar el numero de diputados del sistema.");
-			S.Write("2: Insertar un conjunto de diputados.");
-			S.Write("3: Consultar el conjunto de diputados.");
-			S.Write("4: Consultar los nombres de los diputados.");
-			S.Write("5: Insertar un nuevo diputado.");
-			S.Write("6: Comprobar si un diputado existe.");
-			S.Write("7: Eliminar un diputado.");
-			S.Write("8: Modificar el partido politico de un diputado.");
-			S.Write("9: Modificar el estado de un diputado.");
-			S.Write("10: Modificar la fecha de nacimiento de un diputado.");
-			S.Write("11: Consultar el partido politico de un diputado.");
-			S.Write("12: Consulta el estado de un diputado.");
-			S.Write("13: Consulta la fecha de nacimiento de un diputado.");
-			S.Write("14: Insertar legislatura a un diputado.");
-			S.Write("15: Establecer el conjunto de legislaturas de un diputado.");
-			S.Write("16: Consultar el conjunto de legislaturas de un diputado.");
-			S.Write("17: Comprobar si el diputado es activo en la legislatura.");
-			S.Write("18: Eliminar una legislatura de un diputado.");
-			S.Write("19: Eliminar todas las legislaturas de un diputado.");
-			S.Write("20: Eliminar una legislatura de todos los diputados.");
-			S.Write("21: Insertar una nueva legislatura en el sistema.");
-			S.Write("22: Insertar una nueva legislatura sin fecha de finalizacion en el sistema.");
+			if (!fitxer) {
+				S.Write("Selecciona una operacion:");
+				S.Write("-2: Modificar la configuracion I/O.");
+				S.Write("-1: Finalizar la ejecucion.");
+				S.Write("1: Consultar el numero de diputados del sistema.");
+				S.Write("2: Insertar un conjunto de diputados.");
+				S.Write("3: Consultar el conjunto de diputados.");
+				S.Write("4: Consultar los nombres de los diputados.");
+				S.Write("5: Insertar un nuevo diputado.");
+				S.Write("6: Comprobar si un diputado existe.");
+				S.Write("7: Eliminar un diputado.");
+				S.Write("8: Modificar el partido politico de un diputado.");
+				S.Write("9: Modificar el estado de un diputado.");
+				S.Write("10: Modificar la fecha de nacimiento de un diputado.");
+				S.Write("11: Consultar el partido politico de un diputado.");
+				S.Write("12: Consulta el estado de un diputado.");
+				S.Write("13: Consulta la fecha de nacimiento de un diputado.");
+				S.Write("14: Insertar legislatura a un diputado.");
+				S.Write("15: Establecer el conjunto de legislaturas de un diputado.");
+				S.Write("16: Consultar el conjunto de legislaturas de un diputado.");
+				S.Write("17: Comprobar si el diputado es activo en la legislatura.");
+				S.Write("18: Eliminar una legislatura de un diputado.");
+				S.Write("19: Eliminar todas las legislaturas de un diputado.");
+				S.Write("20: Eliminar una legislatura de todos los diputados.");
+				S.Write("21: Insertar una nueva legislatura en el sistema.");
+				S.Write("22: Insertar una nueva legislatura sin fecha de finalizacion en el sistema.");
+			}
 			codi = E.ReadInteger();
 			switch (codi) {
 			case -2:
@@ -91,21 +94,25 @@ public class ControladorDominioDiputadoDriver {
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
 					E = new FitxerEntrada(fIn);
 					S = new FitxerSortida(fOut);
+					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
 					S = new ConsolaSortida();
+					fitxer = false;
 				break;
 				}
 			break;
@@ -199,5 +206,6 @@ public class ControladorDominioDiputadoDriver {
 			}
 			if (CDD.hasCodiError()) S.Write(CDD.getCodiError().getMensajeError());
 		}
+		S.close();
 	}
 }

@@ -159,17 +159,18 @@ public class ControladorDominioLegislatura {
 			else {
 				idData = getID(fechaFinal);
 				if (idData != -1 && idData != identificadorLegislatura){
-					System.out.println("PETA!");
 					error.setCodiError(27);
 					error.addClauExterna(identificadorLegislatura);
 					error.addClauExterna(fechaFinal.toString());
 					error.addClauExterna(idData);
 				}
+				/*
 				else if (idData == -1 && !limits(identificadorLegislatura).contains(fechaFinal)) {
 					error.setCodiError(28);
 					error.addClauExterna(identificadorLegislatura);
 					error.addClauExterna(fechaFinal.toString());
 				}
+				*/
 				else {
 					Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio, fechaFinal);
 					conjuntoLegislaturas.add(identificadorLegislatura, L);				
