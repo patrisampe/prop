@@ -55,6 +55,10 @@ public class BusquedaDriver {
 				 break;
 			 case 6:
 			 	break;
+			 case 7:
+				 break;
+			 case 8:
+				 break;
 			 default: 
 				    SF.Write(" Comanda incorrecta. Per a tancar -1 ");
 				     break;
