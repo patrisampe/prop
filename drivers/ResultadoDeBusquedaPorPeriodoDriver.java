@@ -15,6 +15,7 @@ import java.util.Vector;
 import time.Date;
 import time.DateInterval;
 import utiles.Conjunto;
+import dominio.Criterio;
 import dominio.GrupoAfin;
 import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusquedaPorPeriodo;
@@ -102,8 +103,8 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 				grupo.addDiputado(EF.ReadString());
 			conjuntoDip.add(grupo.getID(), grupo);
 		}
-		
-		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancia, modificado, periodo, conjuntoDip);
+		Criterio criterio = Criterio.valueOf(EF.ReadString());
+		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancia, modificado, periodo, conjuntoDip, criterio);
 		EF.close();
 	}
 	
@@ -129,6 +130,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 			for (String diputado:grup.getDiputados())
 				SF.Write(diputado);
 		}
+		SF.Write(resultado.getCriterio());
 		SF.close();
 	}
 	
@@ -172,7 +174,9 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 			con.add(grup.getID(), grup);
 		}
 		SC.Write("Introduzca el nombre del diputado relevante:");
-		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancias, esModificado, periodo, con);
+		SC.Write("Indique el criterio de búsqueda(Standard, Estado, PartidoPolitico, ParecidoNombres):");
+		Criterio criterio = Criterio.valueOf(EC.ReadString());
+		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancias, esModificado, periodo, con, criterio);
 	}
 	
 	private static void setNombre() {

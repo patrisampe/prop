@@ -14,6 +14,7 @@ import java.util.Vector;
 
 import time.Date;
 import utiles.Conjunto;
+import dominio.Criterio;
 import dominio.GrupoAfin;
 import dominio.ResultadoDeBusquedaPorDiputado;
 import dominio.GrupoAfinPorDiputado;
@@ -103,7 +104,8 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 		
 		String diputadoRelevante = EF.ReadString();
-		resultado = new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancia, modificado, lapsoDeTiempo, conjuntoDip, diputadoRelevante);
+		Criterio criterio = Criterio.valueOf(EF.ReadString());
+		resultado = new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancia, modificado, lapsoDeTiempo, conjuntoDip, diputadoRelevante, criterio);
 		EF.close();
 	}
 	
@@ -131,6 +133,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 				SF.Write(diputado);
 		}
 		SF.Write(resultado.getDiputadoRelevante());
+		SF.Write(resultado.getCriterio());
 		SF.close();
 	}
 	
@@ -176,7 +179,9 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 		SC.Write("Introduzca el nombre del diputado relevante:");
 		String diputadoRelevante = EC.ReadString();
-		resultado = new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancias, esModificado, lapsoDeTiempo, con, diputadoRelevante);
+		SC.Write("Indique el criterio de búsqueda(Standard, Estado, PartidoPolitico, ParecidoNombres):");
+		Criterio criterio = Criterio.valueOf(EC.ReadString());
+		resultado = new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancias, esModificado, lapsoDeTiempo, con, diputadoRelevante, criterio);
 	}
 	
 	private static void setNombre() {
