@@ -2,6 +2,7 @@ package io;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.TreeSet;
 /**
  * Entrada por fichero que permite leer cualquier tipo de dato basico.
  * @author David Moran
- * @version 04/05/2015 01:00
+ * @version 06/05/2015 15:00
  */
 public class FitxerEntrada implements Entrada {
 	
@@ -46,45 +47,48 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 	public String ReadString(){
-    	return sc.next();
+    	return (sc.hasNext() ? sc.next() : "");
 	}
 	
 	public String ReadLine(){
-    	return sc.nextLine();
+    	return (sc.hasNextLine() ? sc.nextLine() : "");
 	}
 	
 	public char ReadChar(){
-    	return (char) sc.nextByte();
+    	return (sc.hasNextByte() ? (char) sc.nextByte() : ' ');
 	}
 	
 	public int ReadInt(){
-    	return sc.nextInt();
+    	return (sc.hasNextInt() ? sc.nextInt() : 0);
 	}
 	
 	public Character ReadCharacter(){
-    	return Character.valueOf((char) sc.nextByte());
+    	return (sc.hasNextByte() ? Character.valueOf((char) sc.nextByte()) : ' ');
 	}
 	
 	public Integer ReadInteger(){
-    	return Integer.valueOf(sc.nextInt());
+    	return (sc.hasNextInt() ? Integer.valueOf(sc.nextInt()) : 0);
 	}
 	
 	public Double ReadDouble(){
-		try {
-			return sc.nextDouble();
-		} catch (InputMismatchException e) {
-			String S = sc.next();
-			S.replace('.', ',');
-			return Double.parseDouble(S);
+		if (sc.hasNextDouble()) {
+			try {
+				return sc.nextDouble();
+			} catch (InputMismatchException e) {
+				String S = sc.next();
+				S.replace('.', ',');
+				return Double.parseDouble(S);
+			}
 		}
+		else return 0.0;
 	}
 	
 	public Boolean ReadBoolean(){
-    	return sc.nextBoolean();
+    	return (sc.hasNextBoolean() ? sc.nextBoolean() : false);
 	}
 	
 	public Long ReadLong(){
-    	return sc.nextLong();
+    	return (sc.hasNextLong() ? sc.nextLong() : 0);
 	}
 	
 	public char[] ReadChar(int n){
@@ -107,6 +111,7 @@ public class FitxerEntrada implements Entrada {
 		Character[] out = new Character[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextByte()) out[i] = Character.valueOf((char) sc.nextByte());
+			else return new Character[0];
 		}
     	return out;
 	}
@@ -115,6 +120,7 @@ public class FitxerEntrada implements Entrada {
 		Integer[] out = new Integer[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextInt()) out[i] = sc.nextInt();
+			else return new Integer[0];
 		}
     	return out;
 	}
@@ -124,6 +130,7 @@ public class FitxerEntrada implements Entrada {
 		for (int i = 0; i < n; ++i){
 			try {
 				if (sc.hasNextDouble()) out[i] = sc.nextDouble();
+				else return new Double[0];
 			} catch (InputMismatchException e) {
 				String S = sc.next();
 				S.replace('.', ',');
@@ -137,14 +144,16 @@ public class FitxerEntrada implements Entrada {
 		Boolean[] out = new Boolean[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextBoolean()) out[i] = sc.nextBoolean();
+			else return new Boolean[0];
 		}
     	return out;
 	}
-	
+
 	public String[] ReadString(int n){
 		String[] out = new String[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out[i] = sc.next();
+			else return new String[0];
 		}
     	return out;
 	}
@@ -153,6 +162,7 @@ public class FitxerEntrada implements Entrada {
 		Long[] out = new Long[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextInt()) out[i] = sc.nextLong();
+			else return new Long[0];
 		}
     	return out;
 	}
@@ -161,6 +171,16 @@ public class FitxerEntrada implements Entrada {
 		Set<String> out = new TreeSet<String>();
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out.add(sc.next());
+			else return new HashSet<String>();
+		}
+    	return out;
+	}
+	
+	public Set<Integer> ReadSetInteger(int n){
+		Set<Integer> out = new TreeSet<Integer>();
+		for (int i = 0; i < n; ++i){
+			if (sc.hasNext()) out.add(Integer.valueOf(sc.nextInt()));
+			else return new HashSet<Integer>();
 		}
     	return out;
 	}

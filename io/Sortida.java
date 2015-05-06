@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Salida generica que permite escribir cualquier tipo de dato basico.
  * @author David Moran
- * @version 04/05/2015 01:00
+ * @version 06/05/2015 15:00
  */
 public interface Sortida {
 

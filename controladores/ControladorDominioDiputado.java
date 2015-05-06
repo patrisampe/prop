@@ -11,7 +11,7 @@ import dominio.Diputado;
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los diputados.
  * @author David Moran
- * @version 04/05/2015 01:00
+ * @version 06/05/2015 15:00
  */
 public class ControladorDominioDiputado {
 	
@@ -124,13 +124,19 @@ public class ControladorDominioDiputado {
 		else {
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
+			if (CDL.hasCodiError()) error = CDL.getCodiError();
  			ControladorDominioResultado CDR = ControladorDominioResultado.getInstance();
 			CDR.removeDiputado(nombreDiputado);
+			if (CDR.hasError()) error = CDR.getError();
  			ControladorDominioEvento CDE = ControladorDominioEvento.getInstance();
 			CDE.removeDiputado(nombreDiputado);
+			if (CDE.getHasError()) error = CDE.getError();
  			ControladorDominioVotacion CDV = ControladorDominioVotacion.getInstance();
 			CDV.removeDiputado(nombreDiputado);
-			conjuntoDiputados.remove(nombreDiputado);
+			if (CDV.getHasError()) error = CDV.getError();
+			if (!hasCodiError()) {
+				conjuntoDiputados.remove(nombreDiputado);
+			}
 		}
 	}
 	
@@ -248,6 +254,7 @@ public class ControladorDominioDiputado {
 			conjuntoDiputados.get(nombreDiputado).addLegistura(identificadorLegislatura);
 			if (!CDL.existsDiputado(identificadorLegislatura, nombreDiputado))
 				CDL.addDiputado(identificadorLegislatura, nombreDiputado);
+			if (CDL.hasCodiError()) error = CDL.getCodiError();
 		}
 	}
 	
@@ -343,6 +350,7 @@ public class ControladorDominioDiputado {
 			conjuntoDiputados.get(nombreDiputado).removeLegistura(identificadorLegislatura);
 			if (CDL.existsDiputado(identificadorLegislatura, nombreDiputado))
 				CDL.removeDiputado(identificadorLegislatura, nombreDiputado);
+			if (CDL.hasCodiError()) error = CDL.getCodiError();
 		}
 	}
 	
@@ -362,6 +370,7 @@ public class ControladorDominioDiputado {
 			conjuntoDiputados.get(nombreDiputado).removeLegisturas();
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
+			if (CDL.hasCodiError()) error = CDL.getCodiError();
 		}
 	}
 	

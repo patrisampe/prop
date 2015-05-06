@@ -10,7 +10,7 @@ import dominio.*;
 /**
  * Conjunto abstracto que almacena diferentes objetos del dominio.
  * @author David Moran
- * @version 04/05/2015 01:00
+ * @version 06/05/2015 15:00
  */
 public class Conjunto<T extends ObjetoDominio> {
 	

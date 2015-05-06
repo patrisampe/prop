@@ -11,7 +11,7 @@ import dominio.Legislatura;
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de las legislaturas.
  * @author David Moran
- * @version 04/05/2015 01:00
+ * @version 06/05/2015 15:00
  */
 public class ControladorDominioLegislatura {
 	
@@ -113,16 +113,19 @@ public class ControladorDominioLegislatura {
 	 * @param identificadorLegislatura - Identificador de la legislatura deseada.
 	 * @return Intervalo de fechas en los que se puede modificar la legislatura.
 	 */
-	private DateInterval limits(Integer identificadorLegislatura) { //TODO Revisar 
+	private DateInterval limits(Integer identificadorLegislatura) {
+		System.out.println("Cercant els limits de " + identificadorLegislatura.toString());
 		Integer idA = identificadorLegislatura - 1;
 		Integer idP = identificadorLegislatura;
 		while (!existsLegislatura(idA) && idA >= 0) --idA;
-		if (idP != getIDLast() && getIDLast() != -1) {
+		System.out.println("Limit inferior: " + idA.toString());
+		Integer IDLast = getIDLast();
+		if (identificadorLegislatura < IDLast) {
 			++idP;
 			while (!existsLegislatura(idP)) ++idP;
 		}
 		Date inici = (idA == -1 ? Date.NULL : conjuntoLegislaturas.get(idA).getFechaFinal());
-		Date fi = ((idP == getIDLast() || getIDLast() == -1)  ? Date.NULL : conjuntoLegislaturas.get(idP).getFechaInicio());
+		Date fi = ((idP == identificadorLegislatura || IDLast == -1)  ? Date.NULL : conjuntoLegislaturas.get(idP).getFechaInicio());
 		return new DateInterval(inici, fi);
 	}
 	
@@ -164,16 +167,14 @@ public class ControladorDominioLegislatura {
 					error.addClauExterna(fechaFinal.toString());
 					error.addClauExterna(idData);
 				}
-				/*
 				else if (idData == -1 && !limits(identificadorLegislatura).contains(fechaFinal)) {
 					error.setCodiError(28);
 					error.addClauExterna(identificadorLegislatura);
 					error.addClauExterna(fechaFinal.toString());
 				}
-				*/
 				else {
 					Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio, fechaFinal);
-					conjuntoLegislaturas.add(identificadorLegislatura, L);				
+					conjuntoLegislaturas.add(identificadorLegislatura, L);
 				}
 			}
 		}
@@ -409,6 +410,7 @@ public class ControladorDominioLegislatura {
 			conjuntoLegislaturas.get(identificadorLegislatura).addDiputado(nombreDiputado);
 			if (!CDD.existsLegistura(nombreDiputado, identificadorLegislatura))
 				CDD.addLegistura(nombreDiputado, identificadorLegislatura);
+			if (CDD.hasCodiError()) error = CDD.getCodiError();
 		}
 	}
 	
@@ -506,6 +508,7 @@ public class ControladorDominioLegislatura {
 			conjuntoLegislaturas.get(identificadorLegislatura).removeDiputado(nombreDiputado);
 			if (CDD.existsLegistura(nombreDiputado, identificadorLegislatura))
 				CDD.removeLegistura(nombreDiputado, identificadorLegislatura);
+			if (CDD.hasCodiError()) error = CDD.getCodiError();
 			}
 	}
 	
@@ -525,6 +528,7 @@ public class ControladorDominioLegislatura {
 			conjuntoLegislaturas.get(identificadorLegislatura).removeDiputados();
 			ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 			CDD.removeLegislaturaFromDiputados(identificadorLegislatura);
+			if (CDD.hasCodiError()) error = CDD.getCodiError();
 		}
 	}
 	
