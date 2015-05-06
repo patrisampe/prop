@@ -162,7 +162,7 @@ public class BusquedaDriver {
 		SF.Write(grupAfi.getFechaInicio().toString());
 		SF.Write(grupAfi.getFechaFin().toString());
 		Set<String> diputados = grupAfi.getDiputados();
-		SF.Write(diputados.size());
+		SF.Write(diputados);
 		for (String diputado:diputados)
 			SF.Write(diputado);
 	}
