@@ -120,4 +120,12 @@ public class ConjuntoGrupoAfin {
 		conjunto.remove(idObjeto);
 	}
 	
+	/**
+	 * Obtiene el conjunto parametrizado.
+	 * @return El Conjunto de GrupoAfin utilizado en el resto de clases.
+	 */
+	public Conjunto<GrupoAfin> getConjunto() {
+		return conjunto;
+	}
+	
 }
