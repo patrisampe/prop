@@ -10,7 +10,7 @@ import dominio.*;
 /**
  * Conjunto abstracto que almacena diferentes objetos del dominio.
  * @author David Moran
- * @version 06/05/2015 15:00
+ * @version 07/05/2015 11:30
  */
 public class Conjunto<T extends ObjetoDominio> {
 	
@@ -30,7 +30,7 @@ public class Conjunto<T extends ObjetoDominio> {
     private final Class<T> type;
 	
 	/**
-	 * Crea una nueva instancia del conjunto, que contiene objetos de calse T.
+	 * Crea una nueva instancia del conjunto, que contiene objetos de clase T.
 	 * @param type - Clase de los objetos que contendra el conjunto.
 	 */
 	public Conjunto(Class<T> type){

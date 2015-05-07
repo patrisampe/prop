@@ -12,7 +12,7 @@ import io.*;
 /**
  * Driver para la clase Conjunto.
  * @author David Moran
- * @version 06/05/2015 15:00
+ * @version 07/05/2015 11:30
  */
 public class ConjuntoDriver {
 	
@@ -162,7 +162,7 @@ public class ConjuntoDriver {
 					break;
 					case 10:
 						Diputado D2 = diputado(E);
-						CD.add(D2.getNombre(), D2);
+						CD.add(D2);
 					break;
 					case 11:
 						Diputado D3 = CD.get(E.ReadString());
@@ -289,7 +289,7 @@ public class ConjuntoDriver {
 					break;
 					case 10:
 						Legislatura L2 = legislatura(E);
-						CL.add(L2.getID(), L2);
+						CL.add(L2);
 					break;
 					case 11:
 						Legislatura L3 = CL.get(E.ReadInteger());

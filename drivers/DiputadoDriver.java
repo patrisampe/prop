@@ -10,7 +10,7 @@ import io.*;
 /**
  * Driver para la clase Diputado.
  * @author David Moran
- * @version 06/05/2015 15:00
+ * @version 07/05/2015 11:30
  */
 public class DiputadoDriver {
 	

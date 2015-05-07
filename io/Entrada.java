@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Entrada generica que permite leer cualquier tipo de dato basico.
  * @author David Moran
- * @version 06/05/2015 15:00
+ * @version 07/05/2015 11:30
  */
 public interface Entrada {
 

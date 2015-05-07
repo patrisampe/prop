@@ -6,7 +6,7 @@ import java.util.TreeSet;
 /**
  * Conjunto de metodos con finalidades auxiliares para uso general.
  * @author David Moran
- * @version 03/05/2015 01:02
+ * @version 07/05/2015 11:30
  */
 public class Utiles {
 	
