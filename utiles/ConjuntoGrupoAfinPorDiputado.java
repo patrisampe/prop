@@ -1,6 +1,5 @@
 package utiles;
 
-import java.util.Set;
 
 import dominio.GrupoAfinPorDiputado;
 

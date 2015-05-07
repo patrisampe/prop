@@ -16,7 +16,6 @@ import time.Date;
 import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfinPorDiputado;
 import dominio.Criterio;
-import dominio.GrupoAfin;
 import dominio.ResultadoDeBusquedaPorDiputado;
 import dominio.GrupoAfinPorDiputado;
 import dominio.TipoAlgoritmo;
