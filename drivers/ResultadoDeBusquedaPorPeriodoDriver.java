@@ -14,7 +14,7 @@ import java.util.Vector;
 
 import time.Date;
 import time.DateInterval;
-import utiles.Conjunto;
+import utiles.ConjuntoGrupoAfinPorPeriodo;
 import dominio.Criterio;
 import dominio.GrupoAfin;
 import dominio.GrupoAfinPorPeriodo;
@@ -94,14 +94,14 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 		DateInterval periodo = new DateInterval(Date.stringToDate(EF.ReadString()), Date.stringToDate(EF.ReadString()));
 		
 		// Conjunto de Grupos Afines Por Periodo
-		Conjunto<GrupoAfinPorPeriodo> conjuntoDip = new Conjunto<GrupoAfinPorPeriodo>(GrupoAfinPorPeriodo.class);
+		ConjuntoGrupoAfinPorPeriodo conjuntoDip = new ConjuntoGrupoAfinPorPeriodo();
 		Integer numGrupos = EF.ReadInteger();
 		for (Integer i = 0; i < numGrupos; ++i) {
 			GrupoAfinPorPeriodo grupo = new GrupoAfinPorPeriodo(EF.ReadInteger());
 			Integer numDip = EF.ReadInteger();
 			for (Integer j = 0; j < numDip; ++j)
 				grupo.addDiputado(EF.ReadString());
-			conjuntoDip.add(grupo.getID(), grupo);
+			conjuntoDip.add(grupo);
 		}
 		Criterio criterio = Criterio.valueOf(EF.ReadString());
 		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancia, modificado, periodo, conjuntoDip, criterio);
@@ -122,7 +122,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 		SF.Write(resultado.esModificado());
 		SF.Write(resultado.getInterval().getInicio().toString());
 		SF.Write(resultado.getInterval().getFin().toString());
-		Conjunto<GrupoAfinPorPeriodo> conj = resultado.getGruposAfines();
+		ConjuntoGrupoAfinPorPeriodo conj = (ConjuntoGrupoAfinPorPeriodo) resultado.getGruposAfines();
 		SF.Write(conj.size());
 		for (GrupoAfin grup:conj.getAll()) {
 			SF.Write(grup.getID());
@@ -158,7 +158,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 		SC.Write("Indique la fecha de Fin: ");
 		Date fechaFin = Date.stringToDate(EC.ReadString());
 		DateInterval periodo = new DateInterval(fechaInicio, fechaFin);
-		Conjunto<GrupoAfinPorPeriodo> con = new Conjunto<GrupoAfinPorPeriodo>(GrupoAfinPorPeriodo.class);
+		ConjuntoGrupoAfinPorPeriodo con = new ConjuntoGrupoAfinPorPeriodo();
 		SC.Write("Indique el número de grupos afines que contiene el resultado:");
 		Integer numGrup = EC.ReadInteger();
 		for (Integer i = 0; i < numGrup; ++i) {
@@ -171,9 +171,8 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 				SC.Write("Nombre: ");
 				grup.addDiputado(EC.ReadString());
 			}
-			con.add(grup.getID(), grup);
+			con.add(grup);
 		}
-		SC.Write("Introduzca el nombre del diputado relevante:");
 		SC.Write("Indique el criterio de búsqueda(Standard, Estado, PartidoPolitico, ParecidoNombres):");
 		Criterio criterio = Criterio.valueOf(EC.ReadString());
 		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancias, esModificado, periodo, con, criterio);
@@ -278,7 +277,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 	
 	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
-		Conjunto<GrupoAfinPorPeriodo> conj = resultado.getGruposAfines();
+		ConjuntoGrupoAfinPorPeriodo conj = (ConjuntoGrupoAfinPorPeriodo) resultado.getGruposAfines();
 		for (GrupoAfin grup:conj.getAll()) {
 			SC.Write("ID: " + grup.getID());
 			SC.Write("Diputados:");

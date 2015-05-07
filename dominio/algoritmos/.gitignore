@@ -4,3 +4,7 @@
 /Clique.class
 /GrafNewman.class
 /Newman.class
+/GrafNewman$Aresta.class
+/GrafNewman$ArestaPes.class
+/GrafNewman$ComparaValors.class
+/GrafNewman$QueueVector.class

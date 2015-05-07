@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import dominio.Criterio;
-import dominio.GrupoAfinPorDiputado;
-import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
 import dominio.ResultadoDeBusquedaPorPeriodo;
 import dominio.ResultadoDeBusquedaPorDiputado;
@@ -14,6 +12,8 @@ import dominio.TipoAlgoritmo;
 import time.*;
 import utiles.CodiError;
 import utiles.Conjunto;
+import utiles.ConjuntoGrupoAfinPorDiputado;
+import utiles.ConjuntoGrupoAfinPorPeriodo;
 
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los resultados de busqueda.
@@ -169,7 +169,7 @@ public class ControladorDominioResultado {
 		}
 		else {
 			ControladorDominioBusquedaPorPeriodo controlDomBus = new ControladorDominioBusquedaPorPeriodo();
-			Conjunto<GrupoAfinPorPeriodo> resultado;
+			ConjuntoGrupoAfinPorPeriodo resultado;
 			switch (criterio.hashCode()) {
 				case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, periodo, importancia, indiceAfinidad);break;
 				case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, periodo, indiceAfinidad);break;
@@ -200,7 +200,7 @@ public class ControladorDominioResultado {
 		}
 		else if (existeDiputado(diputadoRelevante)) {
 			ControladorDominioBusquedaPorDiputado controlDomBus = new ControladorDominioBusquedaPorDiputado();
-			Conjunto<GrupoAfinPorDiputado> resultado;
+			ConjuntoGrupoAfinPorDiputado resultado;
 			switch (criterio.hashCode()) {
 			case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, lapsoDeTiempo, importancia, indiceAfinidad, diputadoRelevante); break;
 			case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
@@ -219,7 +219,7 @@ public class ControladorDominioResultado {
 	public void registraUltimoResultado(String nombre) {
 		if (nombreResultadoDisponible(nombre) && ultimaBusquedaCorrecta()) {
 			ultimoResultado.setNombre(nombre);
-			conjuntoResultados.add(nombre, ultimoResultado);
+			conjuntoResultados.add(ultimoResultado);
 		}
 	}
 	
@@ -233,7 +233,7 @@ public class ControladorDominioResultado {
 			ResultadoDeBusqueda aux = conjuntoResultados.get(nombreAnterior);
 			aux.setNombre(nuevoNombre);
 			conjuntoResultados.remove(nombreAnterior);
-			conjuntoResultados.add(nuevoNombre, aux);
+			conjuntoResultados.add(aux);
 		}
 	}
 	

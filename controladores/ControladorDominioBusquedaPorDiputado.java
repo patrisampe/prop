@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Set;
 
 import time.*;
-import utiles.Conjunto;
+import utiles.ConjuntoGrupoAfinPorDiputado;
 import dominio.GrupoAfinPorDiputado;
 import dominio.TipoAlgoritmo;
 import dominio.algoritmos.Graf;
 
 /**
  * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
- * Este controlador genera la información necesaria para crear Resultados de Búsqueda por Diputado
+ * Este controlador genera la informaciï¿½n necesaria para crear Resultados de Bï¿½squeda por Diputado
  * @author Yoel Cabo
  *
  */
@@ -21,21 +21,21 @@ public class ControladorDominioBusquedaPorDiputado extends
 		ControladorDominioBusqueda {
 	
 	/**
-	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
-	 * usando el criterio estándar: Teniendo en cuenta Eventos y Votaciones, 
-	 * para los diputados activos en algún momento del periodo especificado, Eventos dentro del periodo y Votaciones
+	 * Realiza una nueva bï¿½squeda durante toda la historia fijï¿½ndose en la evoluciï¿½n de un diputado concreto
+	 * usando el criterio estï¿½ndar: Teniendo en cuenta Eventos y Votaciones, 
+	 * para los diputados activos en algï¿½n momento del periodo especificado, Eventos dentro del periodo y Votaciones
 	 * dentro de las legislaturas que incluyan el periodo.
 	 * @param Algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param Lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
-	 * @param ImportanciaModificada Modificaciones en la importáncia predefinida de los Eventos.
+	 * @param ImportanciaModificada Modificaciones en la importï¿½ncia predefinida de los Eventos.
 	 * @param porcentaje Porcentaje de afinidad deseado.
-	 * @param DiputadoRelevante Diputado cuya evolución buscamos.
-	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
+	 * @param DiputadoRelevante Diputado cuya evoluciï¿½n buscamos.
+	 * @return Conjunto de Grupos Afines resultantes de la bï¿½squeda.
 	 */
-	public Conjunto<GrupoAfinPorDiputado> NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
+	public ConjuntoGrupoAfinPorDiputado NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
 		
-		Conjunto<GrupoAfinPorDiputado> s = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
+		ConjuntoGrupoAfinPorDiputado s = new ConjuntoGrupoAfinPorDiputado();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			Integer legislaturaInicial = It.next();
@@ -57,16 +57,16 @@ public class ControladorDominioBusquedaPorDiputado extends
 	}
 
 	/**
-	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
+	 * Realiza una nueva bï¿½squeda durante toda la historia fijï¿½ndose en la evoluciï¿½n de un diputado concreto
 	 * usando solamente el Estado de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param porcentaje Porcentaje de afinidad deseado.
-	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
-	 * @param diputadoRelevante Diputado cuya evolución buscamos.
+	 * @return Conjunto de Grupos Afines resultantes de la bï¿½squeda.
+	 * @param diputadoRelevante Diputado cuya evoluciï¿½n buscamos.
 	 */
-	public Conjunto<GrupoAfinPorDiputado> NuevaBusquedaEstado(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
-		Conjunto<GrupoAfinPorDiputado> s = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
+	public ConjuntoGrupoAfinPorDiputado NuevaBusquedaEstado(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
+		ConjuntoGrupoAfinPorDiputado s = new ConjuntoGrupoAfinPorDiputado();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			Integer legislaturaInicial = It.next();
@@ -85,17 +85,17 @@ public class ControladorDominioBusquedaPorDiputado extends
 	}
 	
 	/**
-	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
+	 * Realiza una nueva bï¿½squeda durante toda la historia fijï¿½ndose en la evoluciï¿½n de un diputado concreto
 	 * usando solamente el parecido en los nombres de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param periodo Periodo inclusivo de tiempo.
 	 * @param porcentaje Porcentaje de afinidad deseado.
-	 * @param diputadoRelevante Diputado cuya evolución buscamos.
-	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
+	 * @param diputadoRelevante Diputado cuya evoluciï¿½n buscamos.
+	 * @return Conjunto de Grupos Afines resultantes de la bï¿½squeda.
 	 */
-	public Conjunto<GrupoAfinPorDiputado> NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
-		Conjunto<GrupoAfinPorDiputado> s = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
+	public ConjuntoGrupoAfinPorDiputado NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
+		ConjuntoGrupoAfinPorDiputado s = new ConjuntoGrupoAfinPorDiputado();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			Integer legislaturaInicial = It.next();
@@ -114,17 +114,17 @@ public class ControladorDominioBusquedaPorDiputado extends
 	}
 	
 	/**
-	 * Realiza una nueva búsqueda durante toda la historia fijándose en la evolución de un diputado concreto
-	 * usando solamente el Partido Político de los diputados.
+	 * Realiza una nueva bï¿½squeda durante toda la historia fijï¿½ndose en la evoluciï¿½n de un diputado concreto
+	 * usando solamente el Partido Polï¿½tico de los diputados.
 	 * @param algoritmo Tipo de algoritmo a ejecutar, puede ser CliquePercolation, GirvanNewmann o Louvain.
 	 * @param lapso Numero de legislaturas del lapso de tiempo, ha de ser mayor a 0.
 	 * @param periodo Periodo inclusivo de tiempo.
 	 * @param porcentaje Porcentaje de afinidad deseado.
-	 * @return Conjunto de Grupos Afines resultantes de la búsqueda.
-	 * @param diputadoRelevante Diputado cuya evolución buscamos.
+	 * @return Conjunto de Grupos Afines resultantes de la bï¿½squeda.
+	 * @param diputadoRelevante Diputado cuya evoluciï¿½n buscamos.
 	 */
-	public Conjunto<GrupoAfinPorDiputado> NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
-		Conjunto<GrupoAfinPorDiputado> s = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
+	public ConjuntoGrupoAfinPorDiputado NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
+		ConjuntoGrupoAfinPorDiputado s = new ConjuntoGrupoAfinPorDiputado();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			Integer legislaturaInicial = It.next();

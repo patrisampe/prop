@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import utiles.ConjuntoGrupoAfin;
+
 /**
  * Resultado obtenido por la busqueda de grupos afines entre diputados (Clase abstracta).
  * @author Miguel Angel Aranda
@@ -44,6 +46,11 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	private Criterio criterio;
 	
 	/**
+	 * Conjunto de grupos afines.
+	 */
+	protected ConjuntoGrupoAfin gruposAfines;
+	
+	/**
 	 * Constructor de la clase resultado de busqueda.
 	 * @param nombre - Nombre del resultado.
 	 * @param indiceAfinidad - Indice de afinidad utilizado para obtener el resultado.
@@ -74,6 +81,56 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 */
 	public void addImportancia(String nombreTipoEvento, Integer importancia) {
 		this.importancia.put(nombreTipoEvento,importancia);
+	}
+	
+	/**
+	 * Elimina un diputado de todos los grupos afines donde se encuentre.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 */
+	public void removeDiputado(String nombre) {
+		for (GrupoAfin grup:gruposAfines.getAll()) {
+			grup.removeDiputado(nombre);
+			if (grup.esVacio()) gruposAfines.remove(grup.getID());
+		}
+	}
+	
+	/**
+	 * Agrega un diputado a un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a agregar.
+	 * @param ID - Identificador del grupo al que es agregado.
+	 */
+	public void addDiputado(String nombre, Integer ID) {
+		gruposAfines.get(ID).addDiputado(nombre);
+	}
+	
+	/**
+	 * Elimina un diputado de un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 * @param ID - Identificador del grupo del que es eliminado.
+	 */
+	public void removeDiputado(String nombre, Integer ID) {
+		gruposAfines.get(ID).removeDiputado(nombre);
+		if (gruposAfines.get(ID).esVacio())
+			gruposAfines.remove(ID);
+	}
+
+	/**
+	 * Mueve un diputado de un grupo afin a otro.
+	 * @param nombreDiputado - Diputado que se debe mover.
+	 * @param desdeID - Identificador del grupo afin del que se extrae el diputado.
+	 * @param hastaID - Identificador del grupo afin al que se agrega el diputado.
+	 */
+	public void moveDiputado(String nombre, Integer desdeID, Integer hastaID) {
+		addDiputado(nombre, hastaID);
+		removeDiputado(nombre, desdeID);
+	}
+	
+	/**
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
+	 */
+	public ConjuntoGrupoAfin getGruposAfines() {
+		return new ConjuntoGrupoAfin(this.gruposAfines);
 	}
 	
 	/**
@@ -182,34 +239,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * <i>false</i> en cualquier otro caso..
 	 */
 	public abstract Boolean existeGrupo(Integer ID);
-	
-	/**
-	 * Elimina un diputado de todos los grupos afines donde se encuentre.
-	 * @param nombre - Nombre del diputado a eliminar.
-	 */
-	public abstract void removeDiputado(String nombre);
-	
-	/**
-	 * Agrega un diputado a un grupo afin en concreto.
-	 * @param nombre - Nombre del diputado a agregar.
-	 * @param ID - Identificador del grupo al que es agregado.
-	 */
-	public abstract void addDiputado(String nombre, Integer ID);
-	
-	/**
-	 * Elimina un diputado de un grupo afin en concreto.
-	 * @param nombre - Nombre del diputado a eliminar.
-	 * @param ID - Identificador del grupo del que es eliminado.
-	 */
-	public abstract void removeDiputado(String nombre, Integer ID);
-	
-	/**
-	 * Mueve un diputado de un grupo afin a otro.
-	 * @param nombreDiputado - Diputado que se debe mover.
-	 * @param desdeID - Identificador del grupo afin del que se extrae el diputado.
-	 * @param hastaID - Identificador del grupo afin al que se agrega el diputado.
-	 */
-	public abstract void moveDiputado(String nombre, Integer desdeID, Integer hastaID);
 	
 	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
