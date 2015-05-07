@@ -3,8 +3,6 @@ package utiles;
 import java.util.Set;
 
 import dominio.GrupoAfin;
-import dominio.GrupoAfinPorDiputado;
-import dominio.GrupoAfinPorPeriodo;
 
 /**
  * Conjunto abstracto auxilitar que almacena grupos afines.
@@ -74,22 +72,6 @@ public class ConjuntoGrupoAfin {
 	 */
 	public Conjunto<GrupoAfin> getAll() {
 		return conjunto;
-	}
-	
-	/**
-	 * Consulta todos los elementos del conjunto.
-	 * @return Set que contiene todos los elementos del conjunto.
-	 */
-	public Conjunto<GrupoAfinPorDiputado> getAllPorDiputado() {
-		return null;
-	}
-	
-	/**
-	 * Consulta todos los elementos del conjunto.
-	 * @return Set que contiene todos los elementos del conjunto.
-	 */
-	public Conjunto<GrupoAfinPorPeriodo> getAllPorPeriodo() {
-		return null;
 	}
 	
 	/**
