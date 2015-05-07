@@ -38,7 +38,8 @@ public class Conjunto<T extends ObjetoDominio> {
 		conjunto = new TreeMap<String, T>();
 		hasIntegerKey = (type.equals(Legislatura.class)
 					  || type.equals(GrupoAfinPorDiputado.class)
-					  || type.equals(GrupoAfinPorPeriodo.class));
+					  || type.equals(GrupoAfinPorPeriodo.class)
+					  || type.equals(GrupoAfin.class));
 	}
 	
 	/**
