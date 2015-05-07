@@ -116,6 +116,6 @@ public interface Sortida {
 	 * Escribe el contenido de un Set de Strings.
 	 * @param set - Set con los Strings a escribir.
 	 */
-	public void Write(Set<String> set);
+	public <T extends Object> void Write(Set<T> set);
 		
 }

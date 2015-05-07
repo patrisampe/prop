@@ -114,11 +114,9 @@ public class ControladorDominioLegislatura {
 	 * @return Intervalo de fechas en los que se puede modificar la legislatura.
 	 */
 	private DateInterval limits(Integer identificadorLegislatura) {
-		System.out.println("Cercant els limits de " + identificadorLegislatura.toString());
 		Integer idA = identificadorLegislatura - 1;
 		Integer idP = identificadorLegislatura;
 		while (!existsLegislatura(idA) && idA >= 0) --idA;
-		System.out.println("Limit inferior: " + idA.toString());
 		Integer IDLast = getIDLast();
 		if (identificadorLegislatura < IDLast) {
 			++idP;
@@ -174,7 +172,7 @@ public class ControladorDominioLegislatura {
 				}
 				else {
 					Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio, fechaFinal);
-					conjuntoLegislaturas.add(identificadorLegislatura, L);
+					conjuntoLegislaturas.add(L);
 				}
 			}
 		}
@@ -208,7 +206,7 @@ public class ControladorDominioLegislatura {
 			}
 			else {
 				Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio);
-				conjuntoLegislaturas.add(identificadorLegislatura, L);
+				conjuntoLegislaturas.add(L);
 			}
 		} 
 	}

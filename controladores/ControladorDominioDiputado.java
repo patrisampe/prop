@@ -94,7 +94,7 @@ public class ControladorDominioDiputado {
 		}
 		else {
 			Diputado D = new Diputado(nombreDiputado, nombrePartido, nombreEstado, fechaDeNacimiento);
-			conjuntoDiputados.add(nombreDiputado, D);
+			conjuntoDiputados.add(D);
 		}
 	}
 
@@ -386,7 +386,7 @@ public class ControladorDominioDiputado {
 			if (existsLegistura(nombreDiputado, identificadorLegislatura))
 				removeLegistura(nombreDiputado, identificadorLegislatura);
 		}
-	}	
+	}
 	
 	/**
 	 * Consulta si se ha producido algun error en el ultimo metodo utilizado.

@@ -89,7 +89,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 			for (String Diputado : Comunidad) {
 				ga.addDiputado(Diputado);
 			}
-			s.add(idgrupo,ga);
+			s.add(ga);
 		}
 		return s;
 	}

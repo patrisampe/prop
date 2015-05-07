@@ -124,7 +124,11 @@ public abstract class ControladorDominioBusqueda {
 			int index2 = diputado2.indexOf(diputado1.charAt(index));
 			if (index2 > 0) res += largestlength - Math.abs(index2-index);
 		}
-		res /= shortestlength;
+		for (int index = 0; index < diputado2.length(); ++index) {
+			int index2 = diputado1.indexOf(diputado2.charAt(index));
+			if (index2 > 0) res += largestlength - Math.abs(index2-index);
+		}
+		res /= 2*shortestlength;
 		return res*100;
 	}
 

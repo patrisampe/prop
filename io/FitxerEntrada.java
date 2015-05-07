@@ -59,7 +59,7 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 	public int ReadInt(){
-    	return (sc.hasNextInt() ? sc.nextInt() : 0);
+    	return (sc.hasNextInt() ? sc.nextInt() : -1);
 	}
 	
 	public Character ReadCharacter(){
@@ -67,7 +67,7 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 	public Integer ReadInteger(){
-    	return (sc.hasNextInt() ? Integer.valueOf(sc.nextInt()) : 0);
+    	return (sc.hasNextInt() ? Integer.valueOf(sc.nextInt()) : -1);
 	}
 	
 	public Double ReadDouble(){
@@ -88,7 +88,7 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 	public Long ReadLong(){
-    	return (sc.hasNextLong() ? sc.nextLong() : 0);
+    	return (sc.hasNextLong() ? sc.nextLong() : -1);
 	}
 	
 	public char[] ReadChar(int n){

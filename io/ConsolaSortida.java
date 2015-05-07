@@ -102,11 +102,11 @@ public class ConsolaSortida implements Sortida {
 		}
 	}
 	
-	public void Write(Set<String> set) {
+	public <T extends Object> void Write(Set<T> set) {
 		Integer count = 0;
-		for (String toPrint:set){
-			if(count != set.size()-1) System.out.print(toPrint + ", ");
-			else System.out.print(toPrint + System.lineSeparator());
+		for (T toPrint:set){
+			if(count != set.size()-1) System.out.print(toPrint.toString() + ", ");
+			else System.out.print(toPrint.toString() + System.lineSeparator());
 			++count;
 		}
 	}

@@ -49,7 +49,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,Algoritmo, porcentaje, DiputadoRelevante);
-			s.add(idgrupo,ga);
+			s.add(ga);
 		}
 		
 		return s;
@@ -78,7 +78,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			Graf G = construirGrafoEstado(idDiputados);
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
-			s.add(idgrupo,ga);
+			s.add(ga);
 		}
 		
 		return s;
@@ -107,7 +107,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			Graf G = construirGrafoNombresParecidos(idDiputados);
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
-			s.add(idgrupo,ga);
+			s.add(ga);
 		}
 		
 		return s;
@@ -136,7 +136,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			Graf G = construirGrafoPP(idDiputados);
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, periodo.getInicio(), periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
-			s.add(idgrupo,ga);
+			s.add(ga);
 		}
 		
 		return s;

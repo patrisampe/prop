@@ -140,17 +140,9 @@ public class Conjunto<T extends ObjetoDominio> {
 	 * @param nombreObjeto - Nombre del elemento.
 	 * @param objeto - Elemento a introducir.
 	 */
-	public void add(String nombreObjeto, T objeto) {
-		if (!hasIntegerKey) conjunto.put(nombreObjeto, objeto);
-	}
-	
-	/**
-	 * Introduce un elemento al conjunto.
-	 * @param idObjeto - Identificador del elemento.
-	 * @param objeto - Elemento a introducir.
-	 */
-	public void add(Integer idObjeto, T objeto) {
-		if (hasIntegerKey) conjunto.put(idObjeto.toString(), objeto);
+	public void add(T objeto) {
+		if (!hasIntegerKey) conjunto.put(objeto.getNombre(), objeto);
+		else conjunto.put(objeto.getID().toString(), objeto);
 	}
 	
 	/**

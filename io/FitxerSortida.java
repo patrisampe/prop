@@ -195,12 +195,12 @@ public class FitxerSortida implements Sortida {
 		}
 	}
 	
-	public void Write(Set<String> set) {
+	public <T extends Object> void Write(Set<T> set) {
 		Integer count = 0;
-		for (String toPrint:set){
+		for (T toPrint:set){
 			try {
-				if(count != set.size()-1) BW.write(toPrint + ", ");
-				else BW.write(toPrint + System.lineSeparator());
+				if(count != set.size()-1) BW.write(toPrint.toString() + ", ");
+				else BW.write(toPrint.toString() + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en l'escriptura.");
 			}
