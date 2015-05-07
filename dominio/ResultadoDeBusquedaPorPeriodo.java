@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.DateInterval;
-import utiles.ConjuntoGrupoAfinPorPeriodo;
+import utiles.ConjuntoGrupoAfin;
 
 /**
  * Resultado obtenido por la busqueda por periodo de grupos afines entre diputados.
@@ -30,9 +30,9 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado.
 	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoGrupoAfinPorPeriodo gruposAfines, Criterio criterio) {
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoGrupoAfin gruposAfines, Criterio criterio) {
 		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterio);
-		this.gruposAfines = new ConjuntoGrupoAfinPorPeriodo(gruposAfines);
+		this.gruposAfines = new ConjuntoGrupoAfin(gruposAfines);
 		this.periodo = new DateInterval(periodo);
 	}
 	
@@ -40,7 +40,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorPeriodo nuevoGrupo) {
-		gruposAfines.add(nuevoGrupo);
+		gruposAfines.addPorPeriodo(nuevoGrupo);
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param ID - Identificador del grupo del que es eliminado.
 	 */
 	public void eliminarGrupo(Integer ID) {
-		gruposAfines.remove(ID);
+		gruposAfines.removePorPeriodo(ID);
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
-		for (GrupoAfin grup:gruposAfines.getAll())
+		for (GrupoAfin grup:gruposAfines.getAllPorPeriodo().getAll())
 			listaResultado.add(grup.getDiputados());
 		return listaResultado;
 	}

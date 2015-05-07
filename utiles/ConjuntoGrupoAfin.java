@@ -2,7 +2,6 @@ package utiles;
 
 import java.util.Set;
 
-import dominio.GrupoAfin;
 import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 
@@ -16,14 +15,15 @@ public class ConjuntoGrupoAfin {
 	/**
 	 * Conjunto base donde se almacenan los datos.
 	 */
-	Conjunto<GrupoAfin> conjunto;
+	protected Conjunto<GrupoAfinPorDiputado> conjuntoPorDiputado;
+	protected Conjunto<GrupoAfinPorPeriodo> conjuntoPorPeriodo;
 	
 	/**
 	 * Crea una nueva instancia del conjunto, que contiene objetos de clase GrupoAfin.
 	 */
 	public ConjuntoGrupoAfin(){
-		conjunto = new Conjunto<GrupoAfin>(GrupoAfin.class);
-
+		conjuntoPorDiputado = new Conjunto<GrupoAfinPorDiputado>(GrupoAfinPorDiputado.class);
+		conjuntoPorPeriodo = new Conjunto<GrupoAfinPorPeriodo>(GrupoAfinPorPeriodo.class);
 	}
 	
 	/**
@@ -32,7 +32,8 @@ public class ConjuntoGrupoAfin {
 	 */
 
 	public ConjuntoGrupoAfin(ConjuntoGrupoAfin C){
-		conjunto = new Conjunto<GrupoAfin>(C.conjunto);
+		conjuntoPorDiputado = new Conjunto<GrupoAfinPorDiputado>(C.conjuntoPorDiputado);
+		conjuntoPorPeriodo = new Conjunto<GrupoAfinPorPeriodo>(C.conjuntoPorPeriodo);
 	}
 	
 	/**
@@ -40,7 +41,7 @@ public class ConjuntoGrupoAfin {
 	 * @return El numero de elementos del conjunto.
 	 */
 	public Integer size(){
-		return conjunto.size();
+		return conjuntoPorDiputado.size() + conjuntoPorPeriodo.size();
 	}
 	
 	/**
@@ -50,48 +51,50 @@ public class ConjuntoGrupoAfin {
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean isEmpty(){
-		return conjunto.isEmpty();
+		return conjuntoPorDiputado.isEmpty() && conjuntoPorPeriodo.isEmpty();
 	}
 	
 	/**
 	 * Elimina todos los elementos del conjunto.
 	 */
 	public void clear() {
-		conjunto.clear();
+		conjuntoPorDiputado.clear();
+		conjuntoPorPeriodo.clear();
 	}
 	
 	/**
 	 * Introduce todos los elementos de un Set al conjunto.
 	 * @param S - Set que contiene todos los elementos a introducir.
 	 */
-	public void addAll(Set<GrupoAfin> S){
-		conjunto.addAll(S);
-	}
-	
-	/**
-	 * Consulta todos los elementos del conjunto.
-	 * @return Set que contiene todos los elementos del conjunto.
-	 */
-	public Conjunto<GrupoAfin> getAll() {
-		return conjunto;
+	public void addAll(Set<GrupoAfinPorDiputado> D, Set<GrupoAfinPorPeriodo> P){
+		conjuntoPorDiputado.addAll(D);
+		conjuntoPorPeriodo.addAll(P);
 	}
 	
 	// Modificado Miguel
 	public Conjunto<GrupoAfinPorDiputado> getAllPorDiputado() {
-		return null;
+		return conjuntoPorDiputado;
 	}
 	
 	//Modificado Miguel
 	public Conjunto<GrupoAfinPorPeriodo> getAllPorPeriodo() {
-		return null;
+		return conjuntoPorPeriodo;
 	}
 	
 	/**
 	 * Consulta las claves del conjunto.
 	 * @return Las claves del conjunto, si y solo si el conjunto esta mapeado con identificadores.
 	 */
-	public Set<Integer> getKeys() {
-		return conjunto.getIntegerKeys();
+	public Set<Integer> getKeysPorDiputado() {
+		return conjuntoPorDiputado.getIntegerKeys();
+	}
+	
+	/**
+	 * Consulta las claves del conjunto.
+	 * @return Las claves del conjunto, si y solo si el conjunto esta mapeado con identificadores.
+	 */
+	public Set<Integer> getKeysPorPeriodo() {
+		return conjuntoPorPeriodo.getIntegerKeys();
 	}
 	
 	/**
@@ -99,8 +102,11 @@ public class ConjuntoGrupoAfin {
 	 * @param nombreObjeto - Nombre del elemento.
 	 * @param objeto - Elemento a introducir.
 	 */
-	public void add(GrupoAfin objeto) {
-		conjunto.add(objeto);
+	public void addPorDiputado(GrupoAfinPorDiputado objeto) {
+		conjuntoPorDiputado.add(objeto);
+	}
+	public void addPorPeriodo(GrupoAfinPorPeriodo objeto) {
+		conjuntoPorPeriodo.add(objeto);
 	}
 	
 	/**
@@ -108,8 +114,17 @@ public class ConjuntoGrupoAfin {
 	 * @param idObjeto - Identificador del elemento.
 	 * @return Objeto identificado con el identificador.
 	 */
-	public GrupoAfin get(Integer idObjeto) {
-		return conjunto.get(idObjeto);
+	public GrupoAfinPorDiputado getPorDiputado(Integer idObjeto) {
+		return conjuntoPorDiputado.get(idObjeto);
+	}
+	
+	/**
+	 * Consulta un elemento del conjunto.
+	 * @param idObjeto - Identificador del elemento.
+	 * @return Objeto identificado con el identificador.
+	 */
+	public GrupoAfinPorPeriodo getPorPeriodo(Integer idObjeto) {
+		return conjuntoPorPeriodo.get(idObjeto);
 	}
 	
 	/**
@@ -119,8 +134,19 @@ public class ConjuntoGrupoAfin {
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
-	public Boolean exists(Integer idObjeto) {
-		return conjunto.exists(idObjeto);
+	public Boolean existsPorDiputado(Integer idObjeto) {
+		return conjuntoPorDiputado.exists(idObjeto);
+	}
+	
+	/**
+	 * Consulta si existe un elemento del conjunto.
+	 * @param idObjeto - Identificador del elemento.
+	 * @return <i>true</i> si el conjunto contiene el elemento.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
+	public Boolean existsPorPeriodo(Integer idObjeto) {
+		return conjuntoPorPeriodo.exists(idObjeto);
 	}
 	
 	/**
@@ -128,16 +154,17 @@ public class ConjuntoGrupoAfin {
 	 * @param nombreObjeto - Nombre del elemento.
 	 * @param idObjeto - Identificador del elemento.
 	 */
-	public void remove(Integer idObjeto) {
-		conjunto.remove(idObjeto);
+	public void removePorDiputado(Integer idObjeto) {
+		conjuntoPorDiputado.remove(idObjeto);
 	}
-	
+
 	/**
-	 * Obtiene el conjunto parametrizado.
-	 * @return El Conjunto de GrupoAfin utilizado en el resto de clases.
+	 * Elimina un elemento del conjunto.
+	 * @param nombreObjeto - Nombre del elemento.
+	 * @param idObjeto - Identificador del elemento.
 	 */
-	public Conjunto<GrupoAfin> getConjunto() {
-		return conjunto;
+	public void removePorPeriodo(Integer idObjeto) {
+		conjuntoPorPeriodo.remove(idObjeto);
 	}
-	
+
 }

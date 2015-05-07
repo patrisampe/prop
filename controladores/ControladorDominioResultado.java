@@ -12,8 +12,7 @@ import dominio.TipoAlgoritmo;
 import time.*;
 import utiles.CodiError;
 import utiles.Conjunto;
-import utiles.ConjuntoGrupoAfinPorDiputado;
-import utiles.ConjuntoGrupoAfinPorPeriodo;
+import utiles.ConjuntoGrupoAfin;
 
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los resultados de busqueda.
@@ -169,7 +168,7 @@ public class ControladorDominioResultado {
 		}
 		else {
 			ControladorDominioBusquedaPorPeriodo controlDomBus = new ControladorDominioBusquedaPorPeriodo();
-			ConjuntoGrupoAfinPorPeriodo resultado;
+			ConjuntoGrupoAfin resultado;
 			switch (criterio.hashCode()) {
 				case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, periodo, importancia, indiceAfinidad);break;
 				case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, periodo, indiceAfinidad);break;
@@ -200,7 +199,7 @@ public class ControladorDominioResultado {
 		}
 		else if (existeDiputado(diputadoRelevante)) {
 			ControladorDominioBusquedaPorDiputado controlDomBus = new ControladorDominioBusquedaPorDiputado();
-			ConjuntoGrupoAfinPorDiputado resultado;
+			ConjuntoGrupoAfin resultado;
 			switch (criterio.hashCode()) {
 			case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, lapsoDeTiempo, importancia, indiceAfinidad, diputadoRelevante); break;
 			case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;

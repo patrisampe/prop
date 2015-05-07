@@ -14,7 +14,7 @@ import java.util.Vector;
 
 import time.Date;
 import utiles.Conjunto;
-import utiles.ConjuntoGrupoAfinPorDiputado;
+import utiles.ConjuntoGrupoAfin;
 import dominio.Criterio;
 import dominio.ResultadoDeBusquedaPorDiputado;
 import dominio.GrupoAfinPorDiputado;
@@ -93,14 +93,14 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		Integer lapsoDeTiempo = EF.ReadInteger();
 		
 		// Conjunto de Grupos Afines Por Diputado
-		ConjuntoGrupoAfinPorDiputado conjuntoDip = new ConjuntoGrupoAfinPorDiputado();
+		ConjuntoGrupoAfin conjuntoDip = new ConjuntoGrupoAfin();
 		Integer numGrupos = EF.ReadInteger();
 		for (Integer i = 0; i < numGrupos; ++i) {
 			GrupoAfinPorDiputado grupo = new GrupoAfinPorDiputado(EF.ReadInteger(), Date.stringToDate(EF.ReadString()), Date.stringToDate(EF.ReadString()));
 			Integer numDip = EF.ReadInteger();
 			for (Integer j = 0; j < numDip; ++j)
 				grupo.addDiputado(EF.ReadString());
-			conjuntoDip.add(grupo);
+			conjuntoDip.addPorDiputado(grupo);
 		}
 		
 		String diputadoRelevante = EF.ReadString();
@@ -158,7 +158,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		Boolean esModificado = EC.ReadBoolean();
 		SC.Write("Indique el lapso de tiempo: ");
 		Integer lapsoDeTiempo = EC.ReadInteger();
-		ConjuntoGrupoAfinPorDiputado con = new ConjuntoGrupoAfinPorDiputado();
+		ConjuntoGrupoAfin con = new ConjuntoGrupoAfin();
 		SC.Write("Indique el número de grupos afines que contiene el resultado:");
 		Integer numGrup = EC.ReadInteger();
 		for (Integer i = 0; i < numGrup; ++i) {
@@ -175,7 +175,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 				SC.Write("Nombre: ");
 				grup.addDiputado(EC.ReadString());
 			}
-			con.add(grup);
+			con.addPorDiputado(grup);
 		}
 		SC.Write("Introduzca el nombre del diputado relevante:");
 		String diputadoRelevante = EC.ReadString();

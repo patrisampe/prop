@@ -89,7 +89,16 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Elimina un diputado de todos los grupos afines donde se encuentre.
 	 * @param nombre - Nombre del diputado a eliminar.
 	 */
-	public abstract void removeDiputado(String nombre);
+	public void removeDiputado(String nombre) {
+		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado().getAll()) {
+			grup.removeDiputado(nombre);
+			if (grup.esVacio()) gruposAfines.removePorDiputado(grup.getID());
+		}
+		for (GrupoAfinPorPeriodo grup:gruposAfines.getAllPorPeriodo().getAll()) {
+			grup.removeDiputado(nombre);
+			if (grup.esVacio()) gruposAfines.removePorDiputado(grup.getID());
+		}
+	}
 	
 	/**
 	 * Agrega un diputado a un grupo afin en concreto.
@@ -97,7 +106,10 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param ID - Identificador del grupo al que es agregado.
 	 */
 	public void addDiputado(String nombre, Integer ID) {
-		gruposAfines.get(ID).addDiputado(nombre);
+		if (gruposAfines.existsPorDiputado(ID))
+			gruposAfines.getPorDiputado(ID).addDiputado(nombre);
+		else if (gruposAfines.existsPorPeriodo(ID))
+			gruposAfines.getPorPeriodo(ID).addDiputado(nombre);
 	}
 	
 	/**
@@ -106,9 +118,16 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param ID - Identificador del grupo del que es eliminado.
 	 */
 	public void removeDiputado(String nombre, Integer ID) {
-		gruposAfines.get(ID).removeDiputado(nombre);
-		if (gruposAfines.get(ID).esVacio())
-			gruposAfines.remove(ID);
+		if (gruposAfines.existsPorDiputado(ID)) {
+			gruposAfines.getPorDiputado(ID).removeDiputado(nombre);
+			if (gruposAfines.getPorDiputado(ID).esVacio())
+				gruposAfines.removePorDiputado(ID);
+		}
+		else if (gruposAfines.existsPorPeriodo(ID)) {
+			gruposAfines.getPorPeriodo(ID).removeDiputado(nombre);
+			if (gruposAfines.getPorPeriodo(ID).esVacio())
+				gruposAfines.removePorPeriodo(ID);
+		}
 	}
 
 	/**
@@ -154,7 +173,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * <i>false</i> en cualquier otro caso..
 	 */
 	public Boolean existeGrupo(Integer ID) {
-		return gruposAfines.exists(ID);
+		return gruposAfines.existsPorDiputado(ID) || gruposAfines.existsPorPeriodo(ID);
 	}
 	
 	/**
