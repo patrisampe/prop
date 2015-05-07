@@ -67,7 +67,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
-		for (GrupoAfin grup:gruposAfines.getAll())
+		for (GrupoAfinPorDiputado grup:gruposAfines.getAll())
 			listaResultado.add(grup.getDiputados());
 		return listaResultado;
 	}
@@ -107,4 +107,15 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 		return gruposAfines.getAllPorDiputado();
 	}
 
+	/**
+	 * Elimina un diputado de todos los grupos afines donde se encuentre.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 */
+	public void removeDiputado(String nombre) {
+		for (GrupoAfinPorDiputado grup:gruposAfines.getAll()) {
+			grup.removeDiputado(nombre);
+			if (grup.esVacio()) gruposAfines.remove(grup.getID());
+		}
+	}
+	
 }

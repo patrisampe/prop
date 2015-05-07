@@ -37,6 +37,7 @@ public class ConjuntoGrupoAfinPorDiputado extends ConjuntoGrupoAfin {
 	 * @return El Conjunto de GrupoAfinPorDiputado utilizado en el resto de clases.
 	 * @Override
 	 */
+	@Override
 	public Conjunto<GrupoAfinPorDiputado> getAllPorDiputado() {
 		return conjunto;
 	}

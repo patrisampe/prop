@@ -35,6 +35,7 @@ public class ConjuntoGrupoAfinPorPeriodo extends ConjuntoGrupoAfin {
 	 * @return El Conjunto de GrupoAfinPorPeriodo utilizado en el resto de clases.
 	 * @Override
 	 */
+	@Override
 	public Conjunto<GrupoAfinPorPeriodo> getAllPorPeriodo() {
 		return conjunto;
 	}

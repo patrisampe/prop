@@ -89,12 +89,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Elimina un diputado de todos los grupos afines donde se encuentre.
 	 * @param nombre - Nombre del diputado a eliminar.
 	 */
-	public void removeDiputado(String nombre) {
-		for (GrupoAfin grup:gruposAfines.getAll()) {
-			grup.removeDiputado(nombre);
-			if (grup.esVacio()) gruposAfines.remove(grup.getID());
-		}
-	}
+	public abstract void removeDiputado(String nombre);
 	
 	/**
 	 * Agrega un diputado a un grupo afin en concreto.
