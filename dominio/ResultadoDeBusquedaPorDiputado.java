@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 import utiles.ConjuntoGrupoAfinPorDiputado;
 
@@ -38,9 +39,10 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 */
 	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoGrupoAfinPorDiputado gruposAfines, String diputadoRelevante, Criterio criterio) {
 			super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterio);
-			this.gruposAfines = new ConjuntoGrupoAfin(gruposAfines);
+			this.gruposAfines = new ConjuntoGrupoAfinPorDiputado(gruposAfines);
 			this.lapsoDeTiempo = lapsoDeTiempo;
 			this.diputadoRelevante = diputadoRelevante;
+			System.out.println(gruposAfines.getConjunto().getAll());
 	}
 	
 	/**
@@ -57,19 +59,6 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	public void eliminarGrupo(Integer ID) {
 		gruposAfines.remove(ID);
 	}
-	
-	/**
-	 * Comprueba si existe un grupo en concreto.
-	 * @param ID - Identificador del grupo que se desea comprobar.
-	 * @return <i>true</i> si el grupo existe en el conjunto de grupos afines.
-	 * <br>
-	 * <i>false</i> en cualquier otro caso..
-	 */
-	@Override
-	public Boolean existeGrupo(Integer ID) {
-		return gruposAfines.exists(ID);
-	}
-	
 	
 	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
@@ -108,6 +97,14 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	@Override
 	public String getLapsoDetiempo() {
 		return lapsoDeTiempo.toString();
+	}
+	
+	/**
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
+	 */
+	public Conjunto<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
+		return gruposAfines.getAllPorDiputado();
 	}
 
 }

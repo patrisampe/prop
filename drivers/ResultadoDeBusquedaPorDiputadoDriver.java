@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.Date;
+import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfinPorDiputado;
 import dominio.Criterio;
 import dominio.GrupoAfin;
@@ -122,9 +123,9 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 		SF.Write(resultado.esModificado());
 		SF.Write(resultado.getLapsoDetiempo());
-		ConjuntoGrupoAfinPorDiputado conj = (ConjuntoGrupoAfinPorDiputado) resultado.getGruposAfines();
+		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
 		SF.Write(conj.size());
-		for (GrupoAfin grup:conj.getAll()) {
+		for (GrupoAfinPorDiputado grup:conj.getAll()) {
 			SF.Write(grup.getID());
 			SF.Write(grup.getFechaInicio().toString());
 			SF.Write(grup.getFechaFin().toString());
@@ -287,8 +288,8 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 	
 	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
-		ConjuntoGrupoAfinPorDiputado conj = (ConjuntoGrupoAfinPorDiputado) resultado.getGruposAfines();
-		for (GrupoAfin grup:conj.getAll()) {
+		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
+		for (GrupoAfinPorDiputado grup:conj.getAll()) {
 			SC.Write("ID: " + grup.getID());
 			SC.Write("Fecha inicio:" + grup.getFechaInicio().toString());
 			SC.Write("Fecha fin:" + grup.getFechaFin().toString());

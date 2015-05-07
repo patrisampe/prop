@@ -52,18 +52,6 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	}
 	
 	/**
-	 * Comprueba si existe un grupo en concreto.
-	 * @param ID - Identificador del grupo que se desea comprobar.
-	 * @return <i>true</i> si el grupo existe en el conjunto de grupos afines.
-	 * <br>
-	 * <i>false</i> en cualquier otro caso..
-	 */
-	@Override
-	public Boolean existeGrupo(Integer ID) {
-		return gruposAfines.exists(ID);
-	}
-	
-	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nommbres de los resultados.
 	 * @return El periodo utilizado en la busqueda.
 	 */

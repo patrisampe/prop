@@ -1,5 +1,7 @@
 package utiles;
 
+import java.util.Set;
+
 import dominio.GrupoAfinPorDiputado;
 
 /**
@@ -29,6 +31,15 @@ public class ConjuntoGrupoAfinPorDiputado extends ConjuntoGrupoAfin {
 
 	public ConjuntoGrupoAfinPorDiputado(ConjuntoGrupoAfinPorDiputado C){
 		conjunto = new Conjunto<GrupoAfinPorDiputado>(C.conjunto);
+	}
+	
+	/**
+	 * Consulta todos los elementos del conjunto.
+	 * @return Set que contiene todos los elementos del conjunto.
+	 */
+	@Override
+	public Conjunto<GrupoAfinPorDiputado> getAllPorDiputado() {
+		return conjunto;
 	}
 	
 }

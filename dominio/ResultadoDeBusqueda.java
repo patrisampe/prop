@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 
 /**
@@ -64,6 +65,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
+		this.criterio = criterio;
 	}
 	
 	/**
@@ -131,6 +133,33 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 */
 	public ConjuntoGrupoAfin getGruposAfines() {
 		return new ConjuntoGrupoAfin(this.gruposAfines);
+	}
+	
+	/**
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
+	 */
+	public Conjunto<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
+		return null;
+	}
+	
+	/**
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
+	 */
+	public Conjunto<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
+		return null;
+	}
+	
+	/**
+	 * Comprueba si existe un grupo en concreto.
+	 * @param ID - Identificador del grupo que se desea comprobar.
+	 * @return <i>true</i> si el grupo existe en el conjunto de grupos afines.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso..
+	 */
+	public Boolean existeGrupo(Integer ID) {
+		return gruposAfines.exists(ID);
 	}
 	
 	/**
@@ -230,15 +259,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @return El nombre de la subclase.
 	 */
 	public abstract String getTipoResultado();
-	
-	/**
-	 * Comprueba si existe un grupo en concreto.
-	 * @param ID - Identificador del grupo que se desea comprobar.
-	 * @return <i>true</i> si el grupo existe en el conjunto de grupos afines.
-	 * <br>
-	 * <i>false</i> en cualquier otro caso..
-	 */
-	public abstract Boolean existeGrupo(Integer ID);
 	
 	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
