@@ -1,8 +1,8 @@
 package dominio.algoritmos;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Vector;
 
 /**
@@ -20,8 +20,8 @@ public class Graf {
 	 * Creadora per defecte.
 	 */
 	public Graf() {
-		Diccionari = new TreeMap<String,Integer>();
-		DiccionariInvers = new TreeMap<Integer,String>();
+		Diccionari = new HashMap<String,Integer>();
+		DiccionariInvers = new HashMap<Integer,String>();
 		Matriu = new Vector< Vector<Double> >();
 	}
 	
@@ -41,8 +41,8 @@ public class Graf {
 	 * @param G Graf que es copiarà.
 	 */
 	public Graf(Graf G) {
-		Diccionari = new TreeMap<String,Integer>(G.Diccionari);
-		DiccionariInvers = new TreeMap<Integer,String>(G.DiccionariInvers);
+		Diccionari = new HashMap<String,Integer>(G.Diccionari);
+		DiccionariInvers = new HashMap<Integer,String>(G.DiccionariInvers);
 		Matriu = new Vector< Vector<Double> >(G.Matriu);
 	}
 	
