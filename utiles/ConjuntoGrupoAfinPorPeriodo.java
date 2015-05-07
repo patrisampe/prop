@@ -1,6 +1,5 @@
 package utiles;
 
-import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 
 /**
