@@ -1,5 +1,6 @@
 package utiles;
 
+import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 
 /**
@@ -29,6 +30,14 @@ public class ConjuntoGrupoAfinPorPeriodo extends ConjuntoGrupoAfin {
 
 	public ConjuntoGrupoAfinPorPeriodo(ConjuntoGrupoAfinPorPeriodo C){
 		conjunto = new Conjunto<GrupoAfinPorPeriodo>(C.conjunto);
+	}
+	
+	/**
+	 * Consulta todos los elementos del conjunto.
+	 * @return Set que contiene todos los elementos del conjunto.
+	 */
+	public Conjunto<GrupoAfinPorPeriodo> getAllPorPeriodo() {
+		return conjunto;
 	}
 	
 }
