@@ -110,7 +110,7 @@ public class DateInterval {
 	public Integer days() {
 		Date aux = new Date(Inicio);
 		Integer count = 0;
-		while (!aux.equals(Fin)) {
+		while (aux.compareTo(Fin) < 0) {
 			++count;
 			aux.incremento();
 		}
