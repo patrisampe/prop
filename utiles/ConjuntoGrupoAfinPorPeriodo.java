@@ -26,14 +26,14 @@ public class ConjuntoGrupoAfinPorPeriodo extends ConjuntoGrupoAfin {
 	 * Crea una nueva instancia del conjunto a partir de los datos de otro conjunto.
 	 * @param C - Conjunto del que se deben copiar los datos.
 	 */
-
 	public ConjuntoGrupoAfinPorPeriodo(ConjuntoGrupoAfinPorPeriodo C){
 		conjunto = new Conjunto<GrupoAfinPorPeriodo>(C.conjunto);
 	}
 	
 	/**
-	 * Consulta todos los elementos del conjunto.
-	 * @return Set que contiene todos los elementos del conjunto.
+	 * Obtiene el conjunto parametrizado.
+	 * @return El Conjunto de GrupoAfinPorPeriodo utilizado en el resto de clases.
+	 * @Override
 	 */
 	public Conjunto<GrupoAfinPorPeriodo> getAllPorPeriodo() {
 		return conjunto;
