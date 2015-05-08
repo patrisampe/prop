@@ -144,7 +144,7 @@ public class ControladorDominioResultadoDriver {
 			SF.Write(resul);
 			SF.Write(controlDomRes.getIndiceAfinidad(resul));
 			SF.Write(controlDomRes.getAlgoritmo(resul));
-			Map<String, Integer> importancias = controlDomRes.getImportancia(resul);
+			Map<String, Integer> importancias = controlDomRes.getImportancias(resul);
 			SF.Write(importancias.size());
 			for (String evento:importancias.keySet()) {
 				SF.Write(evento);

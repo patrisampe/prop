@@ -160,6 +160,7 @@ public class ControladorDominioResultado {
 	 * @param algoritmo - Algoritmo que se desea utilizar para realizar la busqueda.
 	 * @param importancia - Importancia de todos los eventos del sistema.
 	 * @param periodo - Intervalo entre dos fechas a tener en cuenta en la busqueda.
+	 * @param criterio - Criterio relevante para la busqueda de grupos afines.
 	 */
 	public void nuevoResultadoPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Criterio criterio) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) { 
@@ -187,6 +188,7 @@ public class ControladorDominioResultado {
 	 * @param importancia - Importancia de todos los eventos del sistema.
 	 * @param lapsoDeTiempo - Cantidad de tiempo a tener en cuenta en la busqueda.
 	 * @param diputadoRelevante - Diputado en torno al cual se desean encontrar comunidades.
+	 * @param criterio - Criterio relevante para la busqueda de grupos afines.
 	 */
 	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Criterio criterio) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) {
@@ -389,8 +391,8 @@ public class ControladorDominioResultado {
 	 * Suministra las importancias temporales definidas por el usuario.
 	 * @return Devuelve las importancias temporales.
 	 */
-	public Map<String, Integer> getImportancia(String nombre) {
-		return conjuntoResultados.get(nombre).getImportancia();
+	public Map<String, Integer> getImportancias(String nombre) {
+		return conjuntoResultados.get(nombre).getImportancias();
 	}
 	
 	/**

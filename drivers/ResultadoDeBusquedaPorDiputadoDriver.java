@@ -60,11 +60,13 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC.Write("4.-Consultar algoritmo");
 		SC.Write("5.-Ha sido modificado?");
 		SC.Write("6.-Consultar diputado relevante");
-		SC.Write("7.-Consultar periodo");
-		SC.Write("8.-Consultar grupos afines");
-		SC.Write("9.-Consultar resultados");
-		SC.Write("10.-Consultar tipo resultado");
-		SC.Write("11.-Consultar importancia");
+		SC.Write("7.-Consultar grupos afines");
+		SC.Write("8.-Consultar resultados");
+		SC.Write("9.-Consultar tipo resultado");
+		SC.Write("10.-Consultar importancia");
+		SC.Write("11.-Consultar importancias");
+		SC.Write("12.-Consultar lapso de tiempo");
+		SC.Write("13.-Consultar criterio");
 		return EC.ReadInteger();
 	}
 	
@@ -281,10 +283,6 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC.Write("El diputado relevante es: " + resultado.getDiputadoRelevante());
 	}
 	
-	private static void getPeriodo() {
-		SC.Write("El periodo es: " + resultado.getPeriodo());
-	}
-	
 	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
 		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
@@ -318,6 +316,20 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		SC.Write("La importancia es: " + resultado.getImportancia(evento));
 	}
 	
+	private static void getImportancias() {
+		Map<String, Integer> importancias = resultado.getImportancias();
+		for (String key:importancias.keySet())
+			SC.Write("La importancia del evento '" + key + "' es " + importancias.get(key));
+	}
+	
+	private static void getLapsoDeTiempo() {
+		SC.Write("El lapso de tiempo es: " + resultado.getLapsoDetiempo());
+	}
+	
+	private static void getCriterio() {
+		SC.Write("El criterio es: " + resultado.getCriterio());
+	}
+	
 	private static void menuMetodosCreaMod() {
 		Integer a = 1;
 		while (a != 0) {
@@ -348,11 +360,13 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 			case 4:	getAlgoritmo(); break;
 			case 5:	esModificado(); break;	
 			case 6:	getDiputadoRelevante(); break;
-			case 7:	getPeriodo(); break;
-			case 8:	getGruposAfines(); break;
-			case 9:	getResultados(); break;
-			case 10:getTipoResultado(); break;
-			case 11:getImportancia(); break;
+			case 7:	getGruposAfines(); break;
+			case 8:	getResultados(); break;
+			case 9:getTipoResultado(); break;
+			case 10:getImportancia(); break;
+			case 11:getImportancias(); break;
+			case 12:getLapsoDeTiempo(); break;
+			case 13:getCriterio(); break;
 			default: break;
 			}
 		}

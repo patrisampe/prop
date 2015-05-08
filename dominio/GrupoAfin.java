@@ -2,8 +2,6 @@ package dominio;
 
 import java.util.TreeSet;
 
-import time.Date;
-
 /**
  * Grupo de diputados con cierta afinidad entre ellos (Clase abstracta).
  * @author Miguel Angel Aranda
@@ -22,7 +20,7 @@ public abstract class GrupoAfin extends ObjetoDominio {
 	private TreeSet<String> diputados;
 	
 	/**
-	 * Constructora por defecto.
+	 * Constructora con identificador.
 	 * @param ID - Identificador del grupo afin.
 	 */
 	public GrupoAfin(Integer ID) {
@@ -82,18 +80,4 @@ public abstract class GrupoAfin extends ObjetoDominio {
 		return diputados.isEmpty();
 	}
 	
-	/**
-	 * Fecha de inicio de la busqueda.
-	 */
-	public Date getFechaInicio() {
-		return null;
-	}
-
-	/**
-	 * Fecha de fin de la busqueda.
-	 */
-	public Date getFechaFin() {
-		return null;
-	}
-
 }
