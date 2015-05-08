@@ -1,8 +1,7 @@
-package com.Algoritmos;
+package dominio.algoritmos;
 
 
 
-import com.company.Graf;
 import java.util.*;
 
 /**
