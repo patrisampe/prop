@@ -71,13 +71,13 @@ public class ConjuntoDriver {
 						S.Write("4: Consultar el numero de elementos del conjunto.");
 						S.Write("5: Comprobar si el conjunto esta vacio.");
 						S.Write("6: Eliminar todos los elementos del conjunto.");
-						S.Write("7: Insertar un conjunto de diputados.");
-						S.Write("8: Consultar el conjunto de diputados.");
-						S.Write("9: Consultar el conjunto de nombres de diputado.");
-						S.Write("10: Insertar un diputado en el conjunto.");
-						S.Write("11: Consultar un diputado en el conjunto.");
-						S.Write("12: Comprobar si un diputado existe en el conjunto.");
-						S.Write("13: Eliminar un diputado del conjunto.");
+						S.Write("7: Insertar un conjunto de elementos.");
+						S.Write("8: Consultar el conjunto de elementos.");
+						S.Write("9: Consultar el conjunto de claves de elementos.");
+						S.Write("10: Insertar un elemento en el conjunto.");
+						S.Write("11: Consultar un elemento en el conjunto.");
+						S.Write("12: Comprobar si un elemento existe en el conjunto.");
+						S.Write("13: Eliminar un elemento del conjunto.");
 					}
 					codi = E.ReadInteger();
 					switch (codi) {
@@ -199,13 +199,13 @@ public class ConjuntoDriver {
 						S.Write("4: Consultar el numero de elementos del conjunto.");
 						S.Write("5: Comprobar si el conjunto esta vacio.");
 						S.Write("6: Eliminar todos los elementos del conjunto.");
-						S.Write("7: Insertar un conjunto de legislaturas.");
-						S.Write("8: Consultar el conjunto de legislaturas.");
-						S.Write("9: Consultar el conjunto de identificadores de legislaturas.");
-						S.Write("10: Insertar una legislatura en el conjunto.");
-						S.Write("11: Consultar una legislatura en el conjunto.");
-						S.Write("12: Comprobar si una legislatura existe en el conjunto.");
-						S.Write("13: Eliminar una legislatura del conjunto.");
+						S.Write("7: Insertar un conjunto de elementos.");
+						S.Write("8: Consultar el conjunto de elementos.");
+						S.Write("9: Consultar el conjunto de claves de elementos.");
+						S.Write("10: Insertar un elemento en el conjunto.");
+						S.Write("11: Consultar un elemento en el conjunto.");
+						S.Write("12: Comprobar si un elemento existe en el conjunto.");
+						S.Write("13: Eliminar un elemento del conjunto.");
 					}
 					codi = E.ReadInteger();
 					switch (codi) {
