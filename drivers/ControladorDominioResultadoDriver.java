@@ -55,13 +55,15 @@ public class ControladorDominioResultadoDriver {
 		SC.Write("1.-Existe resultado?");
 		SC.Write("2.-Consultar nombre de los resultados");
 		SC.Write("3.-Consultar el tipo de un resultado");
-		SC.Write("5.-Ha sido modificado?");
-		SC.Write("6.-Consultar indice de afinidad");
-		SC.Write("7.-Consultar tipo de algoritmo");
-		SC.Write("8.-Consultar periodo");
-		SC.Write("9.-Consultar resultados");
-		SC.Write("10.-Consultar si ha ocurrido un error");
-		SC.Write("11.-Consultar código de error");
+		SC.Write("4.-Ha sido modificado?");
+		SC.Write("5.-Consultar indice de afinidad");
+		SC.Write("6.-Consultar tipo de algoritmo");
+		SC.Write("7.-Consultar periodo");
+		SC.Write("8.-Consultar resultados");
+		SC.Write("9.-Consultar criterio");
+		SC.Write("10.-Consultar importancias");
+		SC.Write("11.-Consultar si ha ocurrido un error");
+		SC.Write("12.-Consultar código de error");
 		return EC.ReadInteger();
 	}
 	
@@ -221,59 +223,87 @@ public class ControladorDominioResultadoDriver {
 		controlDomRes.moveDiputado(nombreResultado, nombreDiputado, desdeID, hastaID);
 	}
 
-	private static Boolean existeResultado() {
+	private static void existeResultado() {
 		SC.Write("Introduzca el nombre del resultado a buscar: ");
 		String nombre = EC.ReadString();
-		if (controlDomRes.existeResultado(nombre)) return true;
-		else return false;
+		if (controlDomRes.existeResultado(nombre)) SC.Write("El resultado " + nombre + " existe");
+		else SC.Write("El resultado " + nombre + " no existe");
 	}
 	
-	private static Set<String> getNombreResultados() {
-		return controlDomRes.getNombreResultados();
+	private static void getNombreResultados() {
+		Set<String> res = controlDomRes.getNombreResultados();
+		for (String nombre:res)
+			SC.Write("Nombre: " + nombre);
 	}
 	
-	private static String getTipoDeResultado() {
+	private static void getTipoDeResultado() {
 		SC.Write("Introduzca el nombre del resultado: ");
 		String nombre = EC.ReadString();
-		return controlDomRes.getTipoDeResultado(nombre).toString();
+		SC.Write(controlDomRes.getTipoDeResultado(nombre).toString());
 	}
 	
-	private static Boolean haSidoModificado() {
+	private static void haSidoModificado() {
 		SC.Write("Introduzca el nombre del resultado a comprobar: ");
 		String nombre = EC.ReadString();
-		return controlDomRes.haSidoModificado(nombre);
+		if (controlDomRes.haSidoModificado(nombre))
+			SC.Write("El resultado " + nombre + " ha sido modificado");
+		else
+			SC.Write("El resultado " + nombre + " no ha sido modificado");
 	}
 	
-	private static String getIndiceAfinidad() {
+	private static void getIndiceAfinidad() {
 		SC.Write("Introduzca el nombre del resultado a buscar: ");
 		String nombre = EC.ReadString();
-		return controlDomRes.getIndiceAfinidad(nombre);
+		SC.Write("El indice de afinidad es: " + controlDomRes.getIndiceAfinidad(nombre));
 	}
 	
-	private static String getTipoAlgoritmo() {
+	private static void getTipoAlgoritmo() {
 		SC.Write("Introduzca el nombre del resultado a buscar: ");
 		String nombre = EC.ReadString();
-		return controlDomRes.getAlgoritmo(nombre);
+		SC.Write("El tipo de algoritmo es: " + controlDomRes.getTipoAlgoritmo(nombre));
 	}
 	
-	private static String getPeriodo() {
+	private static void getPeriodo() {
 		SC.Write("Introduzca el nombre del resultado a buscar: ");
 		String nombre = EC.ReadString();
-		return controlDomRes.getPeriodo(nombre);
+		SC.Write("El periodo es: " + controlDomRes.getPeriodo(nombre));
 	}
 	
-	private static Vector<Set<String>> getResultado() {
+	private static void getResultado() {
 		SC.Write("Introduzca el nombre del resultado a buscar: ");
 		String nombre = EC.ReadString();
-		return controlDomRes.getResultado(nombre);
+		Integer i = 1;
+		Vector<Set<String>> resul = controlDomRes.getResultado(nombre);
+		for (Set<String> res:resul) {
+			SC.Write("Grupo " + i++);
+			for (String nom:res) {
+				SC.Write(nom);
+			}
+		}
 	}
 	
-	private static Boolean hasError() {
-		return controlDomRes.hasError();
+	private static void getCriterio() {
+		SC.Write("Introduzca el nombre del resultado a buscar: ");
+		String nombre = EC.ReadString();
+		SC.Write("El criterio es: " + controlDomRes.getCriterio(nombre));
 	}
 	
-	private static CodiError getCodiError() {
-		return controlDomRes.getError();
+	private static void getImportancias() {
+		SC.Write("Introduzca el nombre del resultado a buscar: ");
+		String nombre = EC.ReadString();
+		Map<String, Integer> importancias = controlDomRes.getImportancias(nombre);
+		for (String key:importancias.keySet())
+			SC.Write("El evento '" + key + "' tiene una importancia de " + importancias.get(key));
+	}
+	
+	private static void hasError() {
+		if (controlDomRes.hasError()) SC.Write("Se ha producido un error");
+		else SC.Write("No se ha producido ningún error");
+	}
+	
+	private static void getCodiError() {
+		CodiError codi = new CodiError(controlDomRes.getError());
+		SC.Write("Còdigo error: " + codi.getCodiError() + " Mensaje: " + codi.getMensajeError());
 	}
 	
 	private static void menuMetodosCreaMod() {
@@ -300,17 +330,19 @@ public class ControladorDominioResultadoDriver {
 		while (a != 0) {
 			a = muestraMenuMetodosCons();
 			switch (a) {
-			case 1:	existeResultado(); break;
-			case 2:	getNombreResultados(); break;
-			case 3:	getTipoDeResultado(); break;
-			case 4:	haSidoModificado(); break;
-			case 5:	getIndiceAfinidad(); break;	
-			case 6:	getTipoAlgoritmo(); break;
-			case 7:	getPeriodo(); break;
-			case 8:	getResultado(); break;
-			case 9:	hasError(); break;
-			case 10:getCodiError(); break;
-			default: break;
+			case 1:		existeResultado(); break;
+			case 2:		getNombreResultados(); break;
+			case 3:		getTipoDeResultado(); break;
+			case 4:		haSidoModificado(); break;
+			case 5:		getIndiceAfinidad(); break;	
+			case 6:		getTipoAlgoritmo(); break;
+			case 7:		getPeriodo(); break;
+			case 8:		getResultado(); break;
+			case 9:		getCriterio(); break;
+			case 10:	getImportancias(); break;
+			case 11:	hasError(); break;
+			case 12:	getCodiError(); break;
+			default: 	break;
 			}
 		}
 	}
