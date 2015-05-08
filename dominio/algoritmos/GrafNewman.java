@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cercaComunitats;
+package dominio.algoritmos;
 
 import java.util.Comparator;
 import java.util.HashSet;

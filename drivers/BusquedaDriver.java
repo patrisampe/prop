@@ -6,13 +6,14 @@ import io.Entrada;
 import io.FitxerEntrada;
 import io.FitxerSortida;
 import io.Sortida;
-
 import time.*;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import utiles.Conjunto;
+import utiles.ConjuntoGrupoAfin;
 import controladores.*;
 import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
@@ -149,9 +150,9 @@ public class BusquedaDriver {
 	}
 	
 	public static void PrintConjGrupPeriodo(Sortida sF,
-			Conjunto<GrupoAfinPorPeriodo> Cjt) {
-		sF.Write("El numero de grupos es: " + Cjt.size().toString());
-		for (GrupoAfinPorPeriodo g : Cjt.getAll()) {
+			ConjuntoGrupoAfin conjuntoGrupoAfin) {
+		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
+		for (GrupoAfinPorPeriodo g : conjuntoGrupoAfin.getAllPorPeriodo().getAll()) {
 			PrintGrupPeriodo(sF, g);
 		}
 		
@@ -168,9 +169,9 @@ public class BusquedaDriver {
 	}
 	
 	public static void PrintConjGrupDiputado(Sortida sF,
-			Conjunto<GrupoAfinPorDiputado> Cjt) {
-		sF.Write("El numero de grupos es: " + Cjt.size().toString());
-		for (GrupoAfinPorDiputado g : Cjt.getAll()) {
+			ConjuntoGrupoAfin conjuntoGrupoAfin) {
+		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
+		for (GrupoAfinPorDiputado g : conjuntoGrupoAfin.getAllPorDiputado().getAll()) {
 			PrintGrupDiputado(sF, g);
 		}
 		
