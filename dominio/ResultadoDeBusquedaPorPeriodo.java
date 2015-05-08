@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.DateInterval;
+import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 
 /**
@@ -52,6 +53,49 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	}
 	
 	/**
+	 * Agrega un diputado a un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a agregar.
+	 * @param ID - Identificador del grupo al que es agregado.
+	 */
+	@Override
+	public void addDiputado(String nombre, Integer ID) {
+			gruposAfines.getPorPeriodo(ID).addDiputado(nombre);
+	}
+	
+	/**
+	 * Elimina un diputado de todos los grupos afines donde se encuentre.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 */
+	@Override
+	public void removeDiputado(String nombre) {
+		for (GrupoAfinPorPeriodo grup:gruposAfines.getAllPorPeriodo().getAll()) {
+			grup.removeDiputado(nombre);
+			if (grup.esVacio()) gruposAfines.removePorPeriodo(grup.getID());
+		}
+	}
+
+	/**
+	 * Elimina un diputado de un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 * @param ID - Identificador del grupo del que es eliminado.
+	 */
+	@Override
+	public void removeDiputado(String nombre, Integer ID) {
+		gruposAfines.getPorPeriodo(ID).removeDiputado(nombre);
+		if (gruposAfines.getPorPeriodo(ID).esVacio())
+			gruposAfines.removePorPeriodo(ID);
+	}
+
+	/**
+	 * Suministra una cadena de texto con el nombre de la subclase.
+	 * @return El nombre de la subclase.
+	 */
+	@Override
+	public String getTipoResultado() {
+		return "Búsqueda por periodo";
+	}
+
+	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nommbres de los resultados.
 	 * @return El periodo utilizado en la busqueda.
 	 */
@@ -64,14 +108,14 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	}
 
 	/**
-	 * Suministra una cadena de texto con el nombre de la subclase.
-	 * @return El nombre de la subclase.
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
 	 */
 	@Override
-	public String getTipoResultado() {
-		return "Búsqueda por periodo";
+	public Conjunto<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
+		return gruposAfines.getAllPorPeriodo();
 	}
-
+	
 	/**
 	 * Suministra una cadena de texto con el periodo en el que se ha realizado la busqueda.
 	 * @return Periodo en el que se realizo la busqueda.
@@ -87,5 +131,5 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	public DateInterval getInterval() {
 		return new DateInterval(periodo);
 	}
-
+	
 }

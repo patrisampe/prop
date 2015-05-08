@@ -66,6 +66,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
 		this.criterio = criterio;
+		this.gruposAfines = new ConjuntoGrupoAfin();
 	}
 	
 	/**
@@ -85,52 +86,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.importancia.put(nombreTipoEvento,importancia);
 	}
 	
-	/**
-	 * Elimina un diputado de todos los grupos afines donde se encuentre.
-	 * @param nombre - Nombre del diputado a eliminar.
-	 */
-	public void removeDiputado(String nombre) {
-		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado().getAll()) {
-			grup.removeDiputado(nombre);
-			if (grup.esVacio()) gruposAfines.removePorDiputado(grup.getID());
-		}
-		for (GrupoAfinPorPeriodo grup:gruposAfines.getAllPorPeriodo().getAll()) {
-			grup.removeDiputado(nombre);
-			if (grup.esVacio()) gruposAfines.removePorDiputado(grup.getID());
-		}
-	}
-	
-	/**
-	 * Agrega un diputado a un grupo afin en concreto.
-	 * @param nombre - Nombre del diputado a agregar.
-	 * @param ID - Identificador del grupo al que es agregado.
-	 */
-	public void addDiputado(String nombre, Integer ID) {
-		if (gruposAfines.existsPorDiputado(ID))
-			gruposAfines.getPorDiputado(ID).addDiputado(nombre);
-		else if (gruposAfines.existsPorPeriodo(ID))
-			gruposAfines.getPorPeriodo(ID).addDiputado(nombre);
-	}
-	
-	/**
-	 * Elimina un diputado de un grupo afin en concreto.
-	 * @param nombre - Nombre del diputado a eliminar.
-	 * @param ID - Identificador del grupo del que es eliminado.
-	 */
-	public void removeDiputado(String nombre, Integer ID) {
-		if (gruposAfines.existsPorDiputado(ID)) {
-			gruposAfines.getPorDiputado(ID).removeDiputado(nombre);
-			if (gruposAfines.getPorDiputado(ID).esVacio())
-				gruposAfines.removePorDiputado(ID);
-		}
-		else if (gruposAfines.existsPorPeriodo(ID)) {
-			gruposAfines.getPorPeriodo(ID).removeDiputado(nombre);
-			if (gruposAfines.getPorPeriodo(ID).esVacio())
-				gruposAfines.removePorPeriodo(ID);
-		}
-	}
-
-	/**
+		/**
 	 * Mueve un diputado de un grupo afin a otro.
 	 * @param nombreDiputado - Diputado que se debe mover.
 	 * @param desdeID - Identificador del grupo afin del que se extrae el diputado.
@@ -139,30 +95,6 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	public void moveDiputado(String nombre, Integer desdeID, Integer hastaID) {
 		addDiputado(nombre, hastaID);
 		removeDiputado(nombre, desdeID);
-	}
-	
-	/**
-	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
-	 * @return Conjunto de grupos afines.
-	 */
-	public ConjuntoGrupoAfin getGruposAfines() {
-		return new ConjuntoGrupoAfin(this.gruposAfines);
-	}
-	
-	/**
-	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
-	 * @return Conjunto de grupos afines.
-	 */
-	public Conjunto<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
-		return null;
-	}
-	
-	/**
-	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
-	 * @return Conjunto de grupos afines.
-	 */
-	public Conjunto<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
-		return null;
 	}
 	
 	/**
@@ -220,9 +152,8 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	/**
-	 * Suministra la importancia temporal de un tipo de evento en concreto.
-	 * @param nombreTipoEvento - nombre del evento del que se desea obtener la importancia.
-	 * @return Valor de la importancia del tipo de evento.
+	 * Suministra todas las importancias temporales definidas por el usuario.
+	 * @return Devuelve las importancias temporales.
 	 */
 	public Map<String, Integer> getImportancias() {
 		return new HashMap<String, Integer>(this.importancia);
@@ -261,13 +192,49 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	/**
-	 * Suministra las importancias temporales definidas por el usuario.
-	 * @return Devuelve las importancias temporales.
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
 	 */
-	public Map<String, Integer> getImportancia() {
-		return new HashMap<String, Integer>(this.importancia);
+	public ConjuntoGrupoAfin getGruposAfines() {
+		return new ConjuntoGrupoAfin(this.gruposAfines);
 	}
 	
+	/**
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
+	 */
+	public Conjunto<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
+		return null;
+	}
+	
+	/**
+	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
+	 * @return Conjunto de grupos afines.
+	 */
+	public Conjunto<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
+		return null;
+	}
+	
+	/**
+	 * Agrega un diputado a un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a agregar.
+	 * @param ID - Identificador del grupo al que es agregado.
+	 */
+	public abstract void addDiputado(String nombre, Integer ID);
+	
+	/**
+	 * Elimina un diputado de todos los grupos afines donde se encuentre.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 */
+	public abstract void removeDiputado(String nombre);
+	
+	/**
+	 * Elimina un diputado de un grupo afin en concreto.
+	 * @param nombre - Nombre del diputado a eliminar.
+	 * @param ID - Identificador del grupo del que es eliminado.
+	 */
+	public abstract void removeDiputado(String nombre, Integer ID);
+
 	/**
 	 * Suministra una cadena de texto con el nombre de la subclase.
 	 * @return El nombre de la subclase.
