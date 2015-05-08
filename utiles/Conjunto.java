@@ -138,7 +138,6 @@ public class Conjunto<T extends ObjetoDominio> {
 
 	/**
 	 * Introduce un elemento al conjunto.
-	 * @param nombreObjeto - Nombre del elemento.
 	 * @param objeto - Elemento a introducir.
 	 */
 	public void add(T objeto) {

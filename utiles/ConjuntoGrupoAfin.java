@@ -6,17 +6,21 @@ import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 
 /**
- * Conjunto abstracto auxilitar que almacena grupos afines.
+ * Conjunto abstracto auxilitar que almacena grupos afines por diputado y por periodo.
  * @author David Moran
  * @version 07/05/2015 11:30
  */
 public class ConjuntoGrupoAfin {
 	
 	/**
-	 * Conjunto base donde se almacenan los datos.
+	 * Conjunto donde se almacenan los grupos afines por diputado.
 	 */
-	protected Conjunto<GrupoAfinPorDiputado> conjuntoPorDiputado;
-	protected Conjunto<GrupoAfinPorPeriodo> conjuntoPorPeriodo;
+	private Conjunto<GrupoAfinPorDiputado> conjuntoPorDiputado;
+	
+	/**
+	 * Conjunto donde se almacenan los grupos afines por periodo.
+	 */
+	private Conjunto<GrupoAfinPorPeriodo> conjuntoPorPeriodo;
 	
 	/**
 	 * Crea una nueva instancia del conjunto, que contiene objetos de clase GrupoAfin.
@@ -30,7 +34,6 @@ public class ConjuntoGrupoAfin {
 	 * Crea una nueva instancia del conjunto a partir de los datos de otro conjunto.
 	 * @param C - Conjunto del que se deben copiar los datos.
 	 */
-
 	public ConjuntoGrupoAfin(ConjuntoGrupoAfin C){
 		conjuntoPorDiputado = new Conjunto<GrupoAfinPorDiputado>(C.conjuntoPorDiputado);
 		conjuntoPorPeriodo = new Conjunto<GrupoAfinPorPeriodo>(C.conjuntoPorPeriodo);
@@ -71,27 +74,33 @@ public class ConjuntoGrupoAfin {
 		conjuntoPorPeriodo.addAll(P);
 	}
 	
-	// Modificado Miguel
-	public Conjunto<GrupoAfinPorDiputado> getAllPorDiputado() {
-		return conjuntoPorDiputado;
-	}
-	
-	//Modificado Miguel
-	public Conjunto<GrupoAfinPorPeriodo> getAllPorPeriodo() {
-		return conjuntoPorPeriodo;
+	/**
+	 * Consulta los grupos afines por diputado.
+	 * @return Set que contiene todos los grupos afines por diputado.
+	 */
+	public Set<GrupoAfinPorDiputado> getAllPorDiputado() {
+		return conjuntoPorDiputado.getAll();
 	}
 	
 	/**
-	 * Consulta las claves del conjunto.
-	 * @return Las claves del conjunto, si y solo si el conjunto esta mapeado con identificadores.
+	 * Consulta los grupos afines por periodo.
+	 * @return Set que contiene todos los grupos afines por periodo.
+	 */
+	public Set<GrupoAfinPorPeriodo> getAllPorPeriodo() {
+		return conjuntoPorPeriodo.getAll();
+	}
+	
+	/**
+	 * Consulta los identificadores de los grupos afines por diputado.
+	 * @return Las claves del conjunto.
 	 */
 	public Set<Integer> getKeysPorDiputado() {
 		return conjuntoPorDiputado.getIntegerKeys();
 	}
 	
 	/**
-	 * Consulta las claves del conjunto.
-	 * @return Las claves del conjunto, si y solo si el conjunto esta mapeado con identificadores.
+	 * Consulta los identificadores de los grupos afines por periodo.
+	 * @return Las claves del conjunto.
 	 */
 	public Set<Integer> getKeysPorPeriodo() {
 		return conjuntoPorPeriodo.getIntegerKeys();
@@ -99,13 +108,17 @@ public class ConjuntoGrupoAfin {
 	
 	/**
 	 * Introduce un elemento al conjunto.
-	 * @param nombreObjeto - Nombre del elemento.
 	 * @param objeto - Elemento a introducir.
 	 */
-	public void addPorDiputado(GrupoAfinPorDiputado objeto) {
+	public void add(GrupoAfinPorDiputado objeto) {
 		conjuntoPorDiputado.add(objeto);
 	}
-	public void addPorPeriodo(GrupoAfinPorPeriodo objeto) {
+	
+	/**
+	 * Introduce un elemento al conjunto.
+	 * @param objeto - Elemento a introducir.
+	 */
+	public void add(GrupoAfinPorPeriodo objeto) {
 		conjuntoPorPeriodo.add(objeto);
 	}
 	
@@ -134,37 +147,40 @@ public class ConjuntoGrupoAfin {
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
-	public Boolean existsPorDiputado(Integer idObjeto) {
-		return conjuntoPorDiputado.exists(idObjeto);
+	public Boolean exists(Integer idObjeto) {
+		return conjuntoPorDiputado.exists(idObjeto) || conjuntoPorPeriodo.exists(idObjeto);
 	}
 	
 	/**
-	 * Consulta si existe un elemento del conjunto.
+	 * Consulta a que conjunto pertenece el elemento.
 	 * @param idObjeto - Identificador del elemento.
-	 * @return <i>true</i> si el conjunto contiene el elemento.
+	 * @return <i>1</i> si el elemento pertenece al conjunto por diputado.
 	 * <br>
-	 * <i>false</i> en cualquier otro caso.
+	 * <i>2</i> si el elemento pertenece al conjunto por periodo.
+	 * <br>
+	 * <i>-1</i> si el elemento no pertenece a ningun conjunto.
 	 */
-	public Boolean existsPorPeriodo(Integer idObjeto) {
-		return conjuntoPorPeriodo.exists(idObjeto);
+	public Integer aQueConjunto(Integer idObjeto) {
+		if (conjuntoPorDiputado.exists(idObjeto)) return 1;
+		if (conjuntoPorPeriodo.exists(idObjeto)) return 2;
+		return -1;
 	}
 	
 	/**
 	 * Elimina un elemento del conjunto.
-	 * @param nombreObjeto - Nombre del elemento.
 	 * @param idObjeto - Identificador del elemento.
 	 */
-	public void removePorDiputado(Integer idObjeto) {
-		conjuntoPorDiputado.remove(idObjeto);
-	}
-
-	/**
-	 * Elimina un elemento del conjunto.
-	 * @param nombreObjeto - Nombre del elemento.
-	 * @param idObjeto - Identificador del elemento.
-	 */
-	public void removePorPeriodo(Integer idObjeto) {
-		conjuntoPorPeriodo.remove(idObjeto);
+	public void remove(Integer idObjeto) {
+		switch(aQueConjunto(idObjeto)){
+		case 1:
+			conjuntoPorDiputado.remove(idObjeto);
+		break;
+		case 2:
+			conjuntoPorPeriodo.remove(idObjeto);
+		break;
+		default:
+		break;
+		}
 	}
 
 }
