@@ -102,7 +102,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 			Integer numDip = EF.ReadInteger();
 			for (Integer j = 0; j < numDip; ++j)
 				grupo.addDiputado(EF.ReadString());
-			conjuntoDip.addPorPeriodo(grupo);
+			conjuntoDip.add(grupo);
 		}
 		Criterio criterio = Criterio.valueOf(EF.ReadString());
 		resultado = new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancia, modificado, periodo, conjuntoDip, criterio);
@@ -125,7 +125,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 		SF.Write(resultado.getInterval().getFin().toString());
 		ConjuntoGrupoAfin conj = (ConjuntoGrupoAfin) resultado.getGruposAfines();
 		SF.Write(conj.size());
-		for (GrupoAfin grup:conj.getAllPorPeriodo().getAll()) {
+		for (GrupoAfin grup:conj.getAllPorPeriodo()) {
 			SF.Write(grup.getID());
 			SF.Write(grup.getDiputados().size());
 			for (String diputado:grup.getDiputados())
@@ -172,7 +172,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 				SC.Write("Nombre: ");
 				grup.addDiputado(EC.ReadString());
 			}
-			con.addPorPeriodo(grup);
+			con.add(grup);
 		}
 		SC.Write("Indique el criterio de búsqueda(Standard, Estado, PartidoPolitico, ParecidoNombres):");
 		Criterio criterio = Criterio.valueOf(EC.ReadString());
@@ -275,7 +275,7 @@ public class ResultadoDeBusquedaPorPeriodoDriver {
 	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
 		ConjuntoGrupoAfin conj = (ConjuntoGrupoAfin) resultado.getGruposAfines();
-		for (GrupoAfin grup:conj.getAllPorPeriodo().getAll()) {
+		for (GrupoAfin grup:conj.getAllPorPeriodo()) {
 			SC.Write("ID: " + grup.getID());
 			SC.Write("Diputados:");
 			for (String diputado:grup.getDiputados())

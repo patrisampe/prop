@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.Date;
-import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 import dominio.Criterio;
 import dominio.ResultadoDeBusquedaPorDiputado;
@@ -102,7 +101,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 			Integer numDip = EF.ReadInteger();
 			for (Integer j = 0; j < numDip; ++j)
 				grupo.addDiputado(EF.ReadString());
-			conjuntoDip.addPorDiputado(grupo);
+			conjuntoDip.add(grupo);
 		}
 		
 		String diputadoRelevante = EF.ReadString();
@@ -124,9 +123,9 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 		}
 		SF.Write(resultado.esModificado());
 		SF.Write(resultado.getLapsoDetiempo());
-		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
+		Set<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
 		SF.Write(conj.size());
-		for (GrupoAfinPorDiputado grup:conj.getAll()) {
+		for (GrupoAfinPorDiputado grup:conj) {
 			SF.Write(grup.getID());
 			SF.Write(grup.getFechaInicio().toString());
 			SF.Write(grup.getFechaFin().toString());
@@ -177,7 +176,7 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 				SC.Write("Nombre: ");
 				grup.addDiputado(EC.ReadString());
 			}
-			con.addPorDiputado(grup);
+			con.add(grup);
 		}
 		SC.Write("Introduzca el nombre del diputado relevante:");
 		String diputadoRelevante = EC.ReadString();
@@ -285,8 +284,8 @@ public class ResultadoDeBusquedaPorDiputadoDriver {
 	
 	private static void getGruposAfines() {
 		SC.Write("Los grupos afines son: ");
-		Conjunto<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
-		for (GrupoAfinPorDiputado grup:conj.getAll()) {
+		Set<GrupoAfinPorDiputado> conj = resultado.getGruposAfinesPorDiputado();
+		for (GrupoAfinPorDiputado grup:conj) {
 			SC.Write("ID: " + grup.getID());
 			SC.Write("Fecha inicio:" + grup.getFechaInicio().toString());
 			SC.Write("Fecha fin:" + grup.getFechaFin().toString());

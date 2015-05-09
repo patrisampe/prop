@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.DateInterval;
-import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 
 /**
@@ -41,7 +40,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorPeriodo nuevoGrupo) {
-		gruposAfines.addPorPeriodo(nuevoGrupo);
+		gruposAfines.add(nuevoGrupo);
 	}
 	
 	/**
@@ -49,7 +48,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param ID - Identificador del grupo del que es eliminado.
 	 */
 	public void eliminarGrupo(Integer ID) {
-		gruposAfines.removePorPeriodo(ID);
+		gruposAfines.remove(ID);
 	}
 	
 	/**
@@ -68,9 +67,9 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 */
 	@Override
 	public void removeDiputado(String nombre) {
-		for (GrupoAfinPorPeriodo grup:gruposAfines.getAllPorPeriodo().getAll()) {
+		for (GrupoAfinPorPeriodo grup:gruposAfines.getAllPorPeriodo()) {
 			grup.removeDiputado(nombre);
-			if (grup.esVacio()) gruposAfines.removePorPeriodo(grup.getID());
+			if (grup.esVacio()) gruposAfines.remove(grup.getID());
 		}
 	}
 
@@ -83,7 +82,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	public void removeDiputado(String nombre, Integer ID) {
 		gruposAfines.getPorPeriodo(ID).removeDiputado(nombre);
 		if (gruposAfines.getPorPeriodo(ID).esVacio())
-			gruposAfines.removePorPeriodo(ID);
+			gruposAfines.remove(ID);
 	}
 
 	/**
@@ -102,7 +101,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
-		for (GrupoAfin grup:gruposAfines.getAllPorPeriodo().getAll())
+		for (GrupoAfin grup:gruposAfines.getAllPorPeriodo())
 			listaResultado.add(grup.getDiputados());
 		return listaResultado;
 	}
@@ -112,7 +111,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @return Conjunto de grupos afines.
 	 */
 	@Override
-	public Conjunto<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
+	public Set<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
 		return gruposAfines.getAllPorPeriodo();
 	}
 	

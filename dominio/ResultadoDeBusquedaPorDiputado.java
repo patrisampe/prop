@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 
 /**
@@ -48,7 +47,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorDiputado nuevoGrupo) {
-		gruposAfines.addPorDiputado(nuevoGrupo);
+		gruposAfines.add(nuevoGrupo);
 	}
 	
 	/**
@@ -56,7 +55,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param ID - Identificador del grupo del que es eliminado.
 	 */
 	public void eliminarGrupo(Integer ID) {
-		gruposAfines.removePorDiputado(ID);
+		gruposAfines.remove(ID);
 	}
 	
 	/**
@@ -75,9 +74,9 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 */
 	@Override
 	public void removeDiputado(String nombre) {
-		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado().getAll()) {
+		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado()) {
 			grup.removeDiputado(nombre);
-			if (grup.esVacio()) gruposAfines.removePorDiputado(grup.getID());
+			if (grup.esVacio()) gruposAfines.remove(grup.getID());
 		}
 	}
 	
@@ -90,7 +89,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	public void removeDiputado(String nombre, Integer ID) {
 		gruposAfines.getPorDiputado(ID).removeDiputado(nombre);
 		if (gruposAfines.getPorDiputado(ID).esVacio())
-			gruposAfines.removePorDiputado(ID);
+			gruposAfines.remove(ID);
 	}
 
 	/**
@@ -109,7 +108,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
-		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado().getAll()) {
+		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado()) {
 			Set<String> res = new TreeSet<String>();
 			res.add(grup.getFechaInicio().toString());
 			res.add(grup.getFechaFin().toString());
@@ -142,7 +141,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @return Conjunto de grupos afines.
 	 */
 	@Override
-	public Conjunto<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
+	public Set<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
 		return gruposAfines.getAllPorDiputado();
 	}
 

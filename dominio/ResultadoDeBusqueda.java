@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
 
 /**
@@ -105,7 +104,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * <i>false</i> en cualquier otro caso..
 	 */
 	public Boolean existeGrupo(Integer ID) {
-		return gruposAfines.existsPorDiputado(ID) || gruposAfines.existsPorPeriodo(ID);
+		return gruposAfines.exists(ID) || gruposAfines.exists(ID);
 	}
 	
 	/**
@@ -203,7 +202,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
 	 * @return Conjunto de grupos afines.
 	 */
-	public Conjunto<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
+	public Set<GrupoAfinPorDiputado> getGruposAfinesPorDiputado() {
 		return null;
 	}
 	
@@ -211,7 +210,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
 	 * @return Conjunto de grupos afines.
 	 */
-	public Conjunto<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
+	public Set<GrupoAfinPorPeriodo> getGruposAfinesPorPeriodo() {
 		return null;
 	}
 	
