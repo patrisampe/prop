@@ -1,7 +1,8 @@
-package dominio.algoritmos;
+package com.Algoritmos;
 
 
 
+import com.company.Graf;
 import java.util.*;
 
 /**
@@ -13,10 +14,10 @@ import java.util.*;
  */
 public class Clique {
 
-    private Graf graph;
-    private double pMax;
-    private double pMin;
-    private ArrayList<HashSet<String>> cliques; //Tendra TODOS los cliques ordenados del grafo "graph"
+    private static Graf graph;
+    private static double pMax;
+    private static double pMin;
+    private static ArrayList<HashSet<String>> cliques; //Tendra TODOS los cliques ordenados del grafo "graph"
 
     /**
      * Creadora por defecto.
@@ -29,7 +30,7 @@ public class Clique {
      *
      * @return conjuntos de todos los cliques del Graf graph.
      */
-    private ArrayList<HashSet<String>> getAllMaximalCliques()
+    private static ArrayList<HashSet<String>> getAllMaximalCliques()
     {
 
         cliques = new ArrayList<HashSet<String>>();
@@ -48,7 +49,7 @@ public class Clique {
      * @param candidates conjunto de nodos candidatos a ser clique.
      *
      */
-    private void findCliques(List<String> potential_clique, List<String> candidates, List<String> already_found)
+    private static void findCliques(List<String> potential_clique, List<String> candidates, List<String> already_found)
     {
         List<String> candidates_array = new ArrayList<String>(candidates);
         if (!end(candidates, already_found)) {
@@ -105,7 +106,7 @@ public class Clique {
      * @param already_found conjunto de nodos que pueden pertenecer a un clique
      * @return true si un nodo de los encontrados esta conectado con todos los nodos candidatos, false en otro caso.
      */
-    private Boolean end(List<String> candidates, List<String> already_found)
+    private static Boolean end(List<String> candidates, List<String> already_found)
     {
         // if a node in already_found is connected to all nodes in candidates
         Boolean end = false;
@@ -130,7 +131,7 @@ public class Clique {
      *
      * @return conjunto de cliques ordenados de mayor a menor
      */
-    private ArrayList<HashSet<String>> getCliquesOrder()
+    private static ArrayList<HashSet<String>> getCliquesOrder()
     {
         //tenemos en cliques todos los cliques
         int maximum = 0;
@@ -155,7 +156,7 @@ public class Clique {
      * @param f Grafo original sin filtrado.
      * @param percentatge indica lo estricto que desea ser.
      */
-    private void determinarGrafoNuevo(Graf f, Integer percentatge){
+    private static void determinarGrafoNuevo(Graf f, Integer percentatge){
         //Primero determinamos pMax y pMin
         //obtengo todos los nodos
         pMax = -1111111111111111111.0;
@@ -196,7 +197,7 @@ public class Clique {
      * @param percentatge indica lo estricto que desea ser.
      * @return conjunto de comunidades que tiene el grafo G con peso aplicandole una filtrado.
      */
-    public HashSet<HashSet<String>> executa(Graf G, Integer percentatge){
+    public static HashSet<HashSet<String>> executa(Graf G, Integer percentatge){
 
         //GEnero el grafo con la cual va a trabajar para detectar los cliques
         determinarGrafoNuevo(G, percentatge);
@@ -220,7 +221,7 @@ public class Clique {
      * @param  C2 clique 2.
      * @return el número de nodos que comparten en común esos dos cliques
      */
-    private int numNodosComunes(HashSet<String> C1, HashSet<String> C2){
+    private static int numNodosComunes(HashSet<String> C1, HashSet<String> C2){
         HashSet<String> CX = new HashSet<String>(C1); //Duplicamos para no machacar los datos
         CX.retainAll(C2); //Intersecci0n de los cliques para ver el numero de nodos en comun
         return CX.size(); //Devolvemos el tamaño
@@ -237,7 +238,7 @@ public class Clique {
      * @param percentatge como de estricto será el algoritmo al buscar las comunidades en esos cliques
      * @return todas las comunidades encontradas según el percentatge de estricto y los cliques dados
      */
-    private HashSet<HashSet<String>> obtenerComunidades(ArrayList<HashSet<String>> cliques,Integer percentatge){
+    private static HashSet<HashSet<String>> obtenerComunidades(ArrayList<HashSet<String>> cliques,Integer percentatge){
         int n = cliques.size();
         int k = kComunidad(cliques.get(0).size(),cliques.get(n-1).size(),percentatge);
         int overMat[][] = new int[n][n]; //La matriz de NxN cliques inicializada
@@ -304,7 +305,7 @@ public class Clique {
      * @param  i fila que va a ser analizada.
      * @return todos los cliques que son adyacentes (cumpliendo la definición de k-comunidad en su overlaping matrix binaria).
      */
-    private HashSet<Integer> obtenerComunidades(int m[][], int i,int c[]){
+    private static HashSet<Integer> obtenerComunidades(int m[][], int i,int c[]){
         HashSet<Integer> cs = new HashSet<>();
         if(m[i][i]==1) cs.add(i);
         for(int j=i+1; j<m.length;j++){
@@ -325,7 +326,7 @@ public class Clique {
      * @return La k de forma heurística, en función del lo estricto que se pida y el k max,min.
      */
 
-    private int kComunidad(int max,int min, Integer porcentaje){
+    private static int kComunidad(int max,int min, Integer porcentaje){
         double por = 1-(porcentaje)/100.0;
         int k = (int) Math.round(max-((max-min)*por));
         return k;
