@@ -43,7 +43,10 @@ public class Graf {
 	public Graf(Graf G) {
 		Diccionari = new HashMap<String,Integer>(G.Diccionari);
 		DiccionariInvers = new HashMap<Integer,String>(G.DiccionariInvers);
-		Matriu = new Vector< Vector<Double> >(G.Matriu);
+		Matriu = new Vector< Vector<Double> >();
+		for (int i = 0; i < G.Matriu.size(); ++i) {
+			Matriu.add(new Vector<Double> (G.Matriu.get(i)));
+		}
 	}
 	
 	/**

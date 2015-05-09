@@ -1,0 +1,4 @@
+3
+Nodes del Graf:
+Marc, Genis, Ricard, Patricia, Clara, Eric, Marisa, Eduard, Miguel, Jesus, Roser, Anna, Josep, Pablo, Roger, Martin, Toni, Gerard, Anabel, Bernat, Yoel, Naiara, Dani, David
+-1

@@ -62,16 +62,13 @@ public class ConsolaEntrada implements Entrada {
 	}
 	
 	public Double ReadDouble(){
-		if (sc.hasNextDouble()) {
-			try {
-				return sc.nextDouble();
-			} catch (InputMismatchException e) {
-				String S = sc.next();
-				S.replace('.', ',');
-				return Double.parseDouble(S);
-			}
+		try {
+			return sc.nextDouble();
+		} catch (InputMismatchException e) {
+			String S = sc.next();
+			S.replace('.', ',');
+			return Double.parseDouble(S);
 		}
-		else return 0.0;
 	}
 	
 	public Boolean ReadBoolean(){

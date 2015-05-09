@@ -123,10 +123,9 @@ public class Louvain {
 		Integer Interesante = (100-percentatge)*Total/100;
 		HashSet<String> Generacion = new HashSet<String>(Historia.get(Interesante).keySet());
 		HashSet<HashSet<String> >  hs = HSStoHSHSS(Generacion);
-		Iterator<HashSet<String> > It = hs.iterator();
 		HashSet<HashSet<String>> ret = new HashSet<HashSet<String>>();
-		while (It.hasNext()) {
-			ret.add(historiador(Interesante, It.next()));
+		for (HashSet<String> comunitat : hs) {
+			ret.add(historiador(Interesante, comunitat));
 		}
 		return ret;
 	}
@@ -166,9 +165,9 @@ public class Louvain {
 	 * @param percentatge 
 	 * @return Conjunt de Comunitats resultant de l'execució.
 	 */
-	public static HashSet< HashSet<String> > executa(GrafLouvain Gr, Integer percentatge) {
+	public static HashSet< HashSet<String> > executa(Graf Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);
-		init(Gr); 
+		init(G); 
 		boolean modificacion = true;
 		while(Comunidades.size() > 1 && modificacion) {
 			modificacion = false;

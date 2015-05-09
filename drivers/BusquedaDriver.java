@@ -152,7 +152,7 @@ public class BusquedaDriver {
 	public static void PrintConjGrupPeriodo(Sortida sF,
 			ConjuntoGrupoAfin conjuntoGrupoAfin) {
 		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
-		for (GrupoAfinPorPeriodo g : conjuntoGrupoAfin.getAllPorPeriodo().getAll()) {
+		for (GrupoAfinPorPeriodo g : conjuntoGrupoAfin.getAllPorPeriodo()) {
 			PrintGrupPeriodo(sF, g);
 		}
 		
@@ -171,7 +171,7 @@ public class BusquedaDriver {
 	public static void PrintConjGrupDiputado(Sortida sF,
 			ConjuntoGrupoAfin conjuntoGrupoAfin) {
 		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
-		for (GrupoAfinPorDiputado g : conjuntoGrupoAfin.getAllPorDiputado().getAll()) {
+		for (GrupoAfinPorDiputado g : conjuntoGrupoAfin.getAllPorDiputado()) {
 			PrintGrupDiputado(sF, g);
 		}
 		

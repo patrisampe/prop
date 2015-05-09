@@ -11,12 +11,12 @@ import dominio.algoritmos.*;
  * @author Yoel Cabo
  *
  */
-public class GrafLouvainDriver { //No està gens fet, però s'intenta
+public class GrafLouvainDriver { 
 	private GrafLouvain G;
 	
 	
-	public static GrafLouvain ReadGraf(Entrada eF, int v, int a) {
-		GrafLouvain out = new GrafLouvain();
+	public static Graf ReadGraf(Entrada eF, int v, int a) {
+		Graf out = new Graf();
 		for (int i = 0; i < v; ++i) {
 			out.addNode(eF.ReadString());
 		}
@@ -39,6 +39,7 @@ public class GrafLouvainDriver { //No està gens fet, però s'intenta
 		Sortida SF = new FitxerSortida(Output);
 		GrafLouvainDriver GD = new GrafLouvainDriver();
 		int a= EF.ReadInt();
+		SF.Write(a);
 		while(a!=-1) {
 			switch(a) {
 			 case 1: 
@@ -48,7 +49,7 @@ public class GrafLouvainDriver { //No està gens fet, però s'intenta
 				 GD.createGraf((HashSet<String>) EF.ReadSetString(EF.ReadInt()));
 			     break;
 			 case 3: 
-				 GrafLouvain G2 = (GrafLouvain) ReadGraf(EF, EF.ReadInt(), EF.ReadInt());
+				 Graf G2 = new Graf(ReadGraf(EF, EF.ReadInt(), EF.ReadInt()));
 				 GD.createGraf(G2);
 			     break;
 			 case 4: 
@@ -124,6 +125,7 @@ public class GrafLouvainDriver { //No està gens fet, però s'intenta
 			 }
 			a=EF.ReadInt();
 		}
+		SF.Write(a);
 		EF.close();
 		SF.close();
 	}
@@ -136,7 +138,7 @@ public class GrafLouvainDriver { //No està gens fet, però s'intenta
 	}
 	
 
-	private void createGraf(GrafLouvain G) {
+	private void createGraf(Graf G) {
 		this.G = new GrafLouvain(G);
 	}
 	
