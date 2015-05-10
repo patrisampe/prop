@@ -33,8 +33,19 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
 		Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
 		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInicio())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFin())));
+		System.out.println(Periodo.toString()+ " --> "+ PeriodoVotaciones.toString() );
 		Map<String, Set<String> > votacionesSimp = prepararVotaciones(PeriodoVotaciones); 
+		for (Set<String> tipoEvento : tiposYeventos.values()) {
+			System.out.println(tipoEvento);
+		}
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
+		
+		/*for (String nodo : G.getNodes()) {
+			System.out.println("Adyacentes a "+nodo);
+			for (String adj : G.getAdjacents(nodo)) System.out.print(adj+", ");
+			System.out.println("");
+		}*/
+			
 		
 		return ejecutarYretornar(G,algoritmo,porcentaje);
 	}
@@ -48,6 +59,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 */
 	public ConjuntoGrupoAfin NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
+		//for (String nodo : idDiputados) System.out.println(nodo);
 		Graf G = construirGrafoPP(idDiputados);
 		return ejecutarYretornar(G,algoritmo,porcentaje);
 	}
@@ -81,12 +93,14 @@ public class ControladorDominioBusquedaPorPeriodo extends
 
 	private ConjuntoGrupoAfin ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
 		HashSet<HashSet<String> > hs = ejecutar(g,algoritmo,porcentaje);
-		
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
+		//for (String nodo : g.getNodes()) System.out.println(nodo);
 		Integer idgrupo = 1;
-		for (Set<String> Comunidad : hs) {
+		for (HashSet<String> Comunidad : hs) {
+			//System.out.println("hellooooooooooooow");
 			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo(idgrupo++);
 			for (String Diputado : Comunidad) {
+				//System.out.println(Diputado);
 				ga.addDiputado(Diputado);
 			}
 			s.add(ga);

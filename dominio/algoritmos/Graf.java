@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
- * La classe Graf implementa un graf ponderat no dirigit on els nodes són Strings.
+ * La classe Graf implementa un graf ponderat no dirigit on els nodes sÃ³n Strings.
  * @author Yoel Cabo
  *
  */
@@ -26,7 +26,7 @@ public class Graf {
 	}
 	
 	/**
-	 * Creadora a partir de HashSet. Crea un Graf que té per nodes el contingut del HashSet.
+	 * Creadora a partir de HashSet. Crea un Graf que tÃ© per nodes el contingut del HashSet.
 	 * @param NodesInicials Nodes del Graf que es crea.
 	 */
 	public Graf(HashSet<String> NodesInicials) {
@@ -37,8 +37,8 @@ public class Graf {
 	}
 	
 	/**
-	 * Creadora per còpia a partir d'un Graf.
-	 * @param G Graf que es copiarà.
+	 * Creadora per cï¿½pia a partir d'un Graf.
+	 * @param G Graf que es copiarï¿½.
 	 */
 	public Graf(Graf G) {
 		Diccionari = new HashMap<String,Integer>(G.Diccionari);
@@ -115,7 +115,7 @@ public class Graf {
 	
 	/**
 	 * 
-	 * @param id Node a comprovar la existència.
+	 * @param id Node a comprovar la existï¿½ncia.
 	 * @return true si existeix, false altrament.
 	 */
 	public Boolean existeixNode(String id) {
@@ -127,7 +127,7 @@ public class Graf {
 	 * @param a Un dels Nodes que connecta l'aresta.
 	 * @param b L'altre dels Nodes que connecta l'aresta.
 	 * @param Pes Pes de l'aresta entre a i b. Ha de ser >= 0.
-	 * @return false si l'aresta ja existia o no existeix un dels dos nodes o el pes no és correcte, true altrament.
+	 * @return false si l'aresta ja existia o no existeix un dels dos nodes o el pes no ï¿½s correcte, true altrament.
 	 */
 	public Boolean addAresta(String a, String b, Double Pes) {
 		if (!Diccionari.containsKey(a) || !Diccionari.containsKey(b) || existeixAresta(a,b) || Pes < 0) return false;
@@ -166,7 +166,7 @@ public class Graf {
 	 * @param a Un dels Nodes que connecta l'aresta.
 	 * @param b L'altre dels Nodes que connecta l'aresta.
 	 * @param Pes Pes de l'aresta entre a i b. Ha de ser >= 0.
-	 * @return false si l'aresta no existia o si el Pes és incorrecte, true altrament.
+	 * @return false si l'aresta no existia o si el Pes ï¿½s incorrecte, true altrament.
 	 */
 	public Boolean setPes(String a, String b, Double Pes) {
 		if (!existeixAresta(a,b) || Pes < 0) return false;
@@ -189,7 +189,7 @@ public class Graf {
 	/**
 	 * Donat un Node, retorna els Nodes adjacents a aquest.
 	 * @param id Node
-	 * @return Conjunt de nodes adjacent a id. Si id no existeix, el conjunt és buit.
+	 * @return Conjunt de nodes adjacent a id. Si id no existeix, el conjunt Ã©s buit.
 	 */
 	public HashSet<String> getAdjacents(String id) {
 		HashSet<String> Cjt = new HashSet<String>();

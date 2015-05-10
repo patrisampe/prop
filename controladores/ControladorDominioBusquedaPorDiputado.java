@@ -146,8 +146,11 @@ public class ControladorDominioBusquedaPorDiputado extends
 			TipoAlgoritmo algoritmo, Integer porcentaje,
 			String diputadoRelevante) {
 		HashSet<HashSet<String>> hs = ejecutar(g, algoritmo,porcentaje);
+		//System.out.println("Comunidad:");
 		for (HashSet<String> comunidad : hs) {
+			//for (String Diputado : comunidad) System.out.println(Diputado);
 			if (comunidad.contains(diputadoRelevante)) {
+				//System.out.println("Lo encontré "+diputadoRelevante);
 				for (String diputado : comunidad) {
 					ga.addDiputado(diputado);
 				}

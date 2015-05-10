@@ -20,7 +20,7 @@ import dominio.algoritmos.Newman;
  * @author Yoel Cabo
  *
  */
-public abstract class ControladorDominioBusqueda {
+public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	
 	protected ControladorDominioDiputado cDip;
 	protected ControladorDominioLegislatura cLeg;
@@ -64,6 +64,7 @@ public abstract class ControladorDominioBusqueda {
 	protected Set<String> prepararDiputados(DateInterval Periodo) {
 		Integer legislaturaInicio = cLeg.getID(Periodo.getInicio());
 		Integer legislaturaFin = cLeg.getID(Periodo.getFin());
+		if (legislaturaInicio == -1 || legislaturaFin == -1 ) System.out.println("te jodisteeeeee");
 		return prepararDiputados(legislaturaInicio, legislaturaFin);
 	}
 	
@@ -173,7 +174,7 @@ public abstract class ControladorDominioBusqueda {
 			Double peso) {
 		for (String diputado1 : diputadosRelacionados) {
 			for (String diputado2 : diputadosRelacionados) {
-				if (diputado1 != diputado2 && g.existeixNode(diputado1) && g.addNode(diputado2)) {
+				if (diputado1 != diputado2 && g.existeixNode(diputado1) && g.existeixNode(diputado2)) {
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}
@@ -195,6 +196,8 @@ public abstract class ControladorDominioBusqueda {
 		else if (algoritmo == TipoAlgoritmo.Louvain) {
 			hs = Louvain.executa(new GrafLouvain(g), porcentaje);
 		}
+		else System.out.println("Te Jodiste pelotudo");
+
 		return hs;
 	}
 	

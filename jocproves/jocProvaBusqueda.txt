@@ -17,15 +17,15 @@ EVENTO Reunion PP 1 1 2015
 4 Rajoy Saenz Camacho Aznar
 
 EVENTO Reunion PSOE 1 1 2015 
-4  Sanchez Zapatero BOno Chaves
+4  Sanchez Zapatero Bono Chaves
 
 EVENTO Reunion Indepe 3 3 2018
 2 Duran Zapatero
 
 LEGISLATURA 1 1 1 2014 1 1 2018 
-6 Zapatero Rajoy Duran Aznar Bono Chaves
+7 Zapatero Rajoy Duran Aznar Bono Chaves Camacho
 
-LEGISLATURA 2 1 1 2018 1 1 2022 
+LEGISLATURA 2 2 1 2018 1 1 2022 
 6 Sanchez Saenz Rajoy Bono Duran Camacho 
 
 
@@ -37,15 +37,19 @@ VOTACION Independencia 1 1 2020 7
 
 FIN
 
-7 Louvain 1 1 2014 1 1 2024 60
-5 Louvain 1 1 2014 1 1 2024 60
-3 Louvain 1 1 2014 1 1 2024 60
+7 Louvain 1 1 2014 1 1 2022 50
+7 CliquePercolation 1 1 2014 1 1 2022 70
+7 GirvanNewmann 1 1 2014 1 1 2022 90
+5 Louvain 1 1 2014 1 1 2022 30
+3 Louvain 1 1 2014 1 1 2022 30
 
 8 Louvain 1 30 Rajoy
 6 Louvain 1 30 Rajoy
 4 Louvain 1 30 Rajoy
 
-1 Louvain 1 1 2014 1 1 2024 0 30
+1 Louvain 1 1 2014 1 1 2022 0 50
+1 CliquePercolation 1 1 2014 1 1 2022 0 50
+1 GirvanNewmann 1 1 2014 1 1 2022 0 50
 2 Louvain 1 0 30 Rajoy
 
 -1
