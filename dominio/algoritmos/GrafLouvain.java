@@ -29,15 +29,15 @@ public class GrafLouvain extends Graf {
 	}
 	
 	/**
-	 * Creadora per còpia a partir d'un GrafLouvain.
-	 * @param g GrafLouvain que es copiarà.
+	 * Creadora per cÃ²pia a partir d'un Graf.
+	 * @param g Graf que es copiarÃ .
 	 */
 	public GrafLouvain(Graf g) {
 		super(g);
 	}
 	
 	/**
-	 * Creadora a partir de HashSet. Crea un GrafLouvain que té per nodes el contingut del HashSet.
+	 * Creadora a partir de HashSet. Crea un GrafLouvain que tï¿½ per nodes el contingut del HashSet.
 	 * @param NodesInicials Nodes del Graf que es crea.
 	 */
 	public GrafLouvain(HashSet<String> NodesInicials) {
@@ -88,7 +88,7 @@ public class GrafLouvain extends Graf {
 	 * 
 	 * @param id Node
 	 * @param Comunitat Conjunt de Nodes.
-	 * @return Suma dels pesos de les Arestes entre el Node i la Comunitat. -1 si el node no existeix o la comunitat és buida.
+	 * @return Suma dels pesos de les Arestes entre el Node i la Comunitat. -1 si el node no existeix o la comunitat Ã©s buida.
 	 */
 	public Double sumaPesosAdjacents(String id,HashSet<String> Comunitat) {
 		if (!existeixNode(id)) return -1.0;
@@ -107,7 +107,7 @@ public class GrafLouvain extends Graf {
 	 * 
 	 * @param C1 Comunitat 1
 	 * @param C2 Comunitat 1
-	 * @return Suma dels pesos de les Arestes entre les Comunitats, que han de ser disjuntes. -1 si el node no existeix o la comunitat és buida.
+	 * @return Suma dels pesos de les Arestes entre les Comunitats, que han de ser disjuntes. -1 si el node no existeix o la comunitat Ã©s buida.
 	 */
 	public Double sumaPesosAdjacents(HashSet<String> C1, HashSet<String> C2) {
 		if (C1.isEmpty() || C2.isEmpty()) return -1.0;
@@ -124,7 +124,7 @@ public class GrafLouvain extends Graf {
 	/**
 	 * 
 	 * @param Comunitat
-	 * @return Suma dels pesos de les arestes adjacents a Nodes de la Comunitat. -1 si és buida.
+	 * @return Suma dels pesos de les arestes adjacents a Nodes de la Comunitat. -1 si Ã©s buida.
 	 */
 	public Double sumaPesosAdjacentsInclusiva(HashSet<String> Comunitat) {
 		if (Comunitat.isEmpty()) return -1.0;
