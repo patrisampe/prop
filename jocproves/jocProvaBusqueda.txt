@@ -8,7 +8,7 @@ DIPUTADO Bono PSOE Andalucia 12 15 1959
 DIPUTADO Chaves PSOE Andalucia 12 15 1959
 DIPUTADO Camacho PP Catalunya 12 15 1959
 DIPUTADO Duran CIU Catalunya 12 15 1959
-TIPOEVENTO Meeting 3 
+TIPOEVENTO Meeting 3
 EVENTO Meeting MeetingMoncloa 1 1 2015 
 5 Rajoy Saenz Zapatero Aznar Bono
 
@@ -35,6 +35,7 @@ VOTACION LeyAborto 1 1 2016 7
 VOTACION Independencia 1 1 2020 7 
 6 Sanchez EN_CONTRA Saenz EN_CONTRA Rajoy EN_CONTRA Bono EN_CONTRA Duran A_FAVOR Camacho EN_CONTRA
 
+
 FIN
 
 7 Louvain 1 1 2014 1 1 2022 50
@@ -47,9 +48,10 @@ FIN
 6 Louvain 1 30 Rajoy
 4 Louvain 1 30 Rajoy
 
+2 Louvain 1 0 30 Rajoy
+
 1 Louvain 1 1 2014 1 1 2022 0 50
 1 CliquePercolation 1 1 2014 1 1 2022 0 50
 1 GirvanNewmann 1 1 2014 1 1 2022 0 50
-2 Louvain 1 0 30 Rajoy
 
 -1

@@ -35,11 +35,11 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInicio())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFin())));
 		System.out.println(Periodo.toString()+ " --> "+ PeriodoVotaciones.toString() );
 		Map<String, Set<String> > votacionesSimp = prepararVotaciones(PeriodoVotaciones); 
-		for (Set<String> tipoEvento : tiposYeventos.values()) {
+		/*for (Set<String> tipoEvento : tiposYeventos.values()) {
 			System.out.println(tipoEvento);
-		}
+		}*/
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
-		
+		System.out.println((new GrafLouvain(G)).sumaPesos());
 		/*for (String nodo : G.getNodes()) {
 			System.out.println("Adyacentes a "+nodo);
 			for (String adj : G.getAdjacents(nodo)) System.out.print(adj+", ");

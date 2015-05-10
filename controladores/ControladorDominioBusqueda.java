@@ -16,7 +16,7 @@ import dominio.algoritmos.Newman;
 
 /**
  * Controlador encargado de calcular Afinidades entre los diputados del dominio. Haciendo uso de todos los datos disponibles en el dominio.
- * Este tipo de controlador depende directamente del Controlador de Resultados De Búsqueda.
+ * Este tipo de controlador depende directamente del Controlador de Resultados De Bï¿½squeda.
  * @author Yoel Cabo
  *
  */
@@ -73,7 +73,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		Double peso = 5.0;
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
-				if (cDip.getPartidoPolitico(diputado1).equals(cDip.getPartidoPolitico(diputado2)) && diputado1 != diputado2) {
+				if (cDip.getPartidoPolitico(diputado1).equals(cDip.getPartidoPolitico(diputado2)) && !diputado1.equals(diputado2)) {
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}
@@ -87,7 +87,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		Double peso = 5.0;
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
-				if (cDip.getEstado(diputado1).equals(cDip.getEstado(diputado2)) && diputado1 != diputado2) {
+				if (cDip.getEstado(diputado1).equals(cDip.getEstado(diputado2)) && !diputado1.equals(diputado2)) {
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}
@@ -102,7 +102,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
 				Double peso = 0.0;
-				if (diputado1 != diputado2) peso = parecidoStrings(diputado1, diputado2);
+				if (!diputado1.equals(diputado2)) peso = parecidoStrings(diputado1, diputado2);
 				if (peso > 0.0) {
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
@@ -147,7 +147,10 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected Map<String, Set<String>> prepararVotaciones(DateInterval periodo) {
 		Map<String, Set<String>> mapa = new TreeMap<String, Set<String>>();
 		for (String votacion : cVot.getVotaciones(periodo.getInicio(), periodo.getFin())) {
-			mapa.put(votacion+"_A_FAVOR__", cVot.getDiputadosVotacion(votacion, TipoVoto.A_FAVOR));//Arreglar de cara a la tercera entrega
+			System.out.println(votacion);
+			System.out.println(cVot.getDiputadosVotacion(votacion,TipoVoto.A_FAVOR));
+			System.out.println(cVot.getDiputadosVotacion(votacion,TipoVoto.EN_CONTRA));
+			mapa.put(votacion+"_A_FAVOR__", cVot.getDiputadosVotacion(votacion, TipoVoto.A_FAVOR));//Embellecer de cara a la tercera entrega
 			mapa.put(votacion+"_EN_CONTRA", cVot.getDiputadosVotacion(votacion, TipoVoto.EN_CONTRA));
 		}
 		return mapa;
@@ -165,7 +168,8 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		}
 		for (String votacionSimp : votacionesSimp.keySet()) {
 			String votacion = votacionSimp.substring(0, votacionSimp.length()-10);
-			interrelacionar(G, cVot.getDiputadosVotacion(votacion), cVot.getImportanciaVotacion(votacion).doubleValue());
+			//System.out.println(votacionSimp+" ---> "+votacion+ "Importancia: "+cVot.getImportanciaVotacion(votacion).toString());
+			interrelacionar(G, votacionesSimp.get(votacionSimp), (Double) cVot.getImportanciaVotacion(votacion).doubleValue());
 		}
 		return G;
 	}
@@ -174,7 +178,8 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 			Double peso) {
 		for (String diputado1 : diputadosRelacionados) {
 			for (String diputado2 : diputadosRelacionados) {
-				if (diputado1 != diputado2 && g.existeixNode(diputado1) && g.existeixNode(diputado2)) {
+				if (!diputado1.equals(diputado2) && g.existeixNode(diputado1) && g.existeixNode(diputado2)) {
+					//System.out.println(diputado1+" "+diputado2);
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}

@@ -88,35 +88,37 @@ Aznar, Camacho, Rajoy
 02/01/2018
 01/01/2022
 Camacho, Rajoy, Saenz
-Periodo Standard
-El numero de grupos es: 2
-1
-Bono, Camacho, Duran, Rajoy, Saenz, Sanchez
-2
-Aznar, Chaves, Zapatero
-Periodo Standard
-El numero de grupos es: 3
-1
-Aznar, Bono, Camacho, Duran, Rajoy, Saenz, Zapatero
-2
-Bono, Chaves, Duran, Zapatero
-3
-Bono, Sanchez
-Periodo Standard
-El numero de grupos es: 3
-1
-Aznar, Bono, Camacho, Chaves, Duran, Rajoy, Zapatero
-2
-Saenz
-3
-Sanchez
 Diputado Standard
 El numero de grupos es: 2
 2
 01/01/2014
 01/01/2018
-Aznar, Bono, Camacho, Chaves, Duran, Rajoy, Zapatero
+Aznar, Camacho, Rajoy
 3
 02/01/2018
 01/01/2022
-Bono, Camacho, Duran, Rajoy, Saenz, Sanchez
+Bono, Camacho, Rajoy, Saenz, Sanchez
+Periodo Standard
+El numero de grupos es: 2
+1
+Aznar, Camacho, Rajoy, Saenz
+2
+Bono, Chaves, Duran, Sanchez, Zapatero
+Periodo Standard
+El numero de grupos es: 4
+1
+Duran, Zapatero
+2
+Aznar, Camacho, Rajoy, Saenz
+3
+Chaves
+4
+Bono, Sanchez
+Periodo Standard
+El numero de grupos es: 3
+1
+Aznar, Bono, Camacho, Rajoy, Saenz
+2
+Duran
+3
+Chaves, Sanchez, Zapatero
