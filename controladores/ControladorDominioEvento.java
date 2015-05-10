@@ -212,7 +212,7 @@ public class ControladorDominioEvento {
 		   }
 		   else if(TipoEvento.esValidaImportancia(importancia)){ 
 			   TipoEvento aux=new TipoEvento(nombreTipoEvento,importancia);
-			   conjuntoTipoEvento.add(nombreTipoEvento, aux);
+			   conjuntoTipoEvento.add(aux);
 		   }
 		   else{
 			   hasError=true;

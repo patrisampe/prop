@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import utiles.Conjunto;
+
 import utiles.ConjuntoGrupoAfin;
 import controladores.*;
 import dominio.GrupoAfinPorDiputado;

@@ -258,7 +258,7 @@ public class ControladorDominioVotacion {
 						return;
 					}
 					Votacion aux= new Votacion(nombreVotacion,fecha,imp,votosnew);
-					conjuntoVotacion.add(nombreVotacion, aux);
+					conjuntoVotacion.add(aux);
 				}
 				else{
 					hasError=true;

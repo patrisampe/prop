@@ -133,7 +133,7 @@ public class TipoEvento extends ObjetoDominio {
 	 * 
 	 */
 	public void addEvento(Evento nuevoEvento){
-		conjuntoEventos.add(nuevoEvento.getNombre(), nuevoEvento);
+		conjuntoEventos.add(nuevoEvento);
 	}
 }
 
