@@ -22,7 +22,7 @@ public class ControladorDominio {
 	 * Creadora por defecto.
 	 */
 	public ControladorDominio() {
-		hasError = false;
+		error = new CodiError(0);
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class ControladorDominio {
 	 * @return true si el ControladorDominio tiene un error, false en caso contrario
 	 */
 	public Boolean hasError() {
-		return hasError;
+		return error.getCodiError() != 0;
 	}
 	
 	/**
@@ -38,8 +38,8 @@ public class ControladorDominio {
 	 * @return si hay error lo devuelve, en caso contrario devuelve null.
 	 */
 	public CodiError getError() {
-		if (hasError) {
-			hasError = false;
+		if (this.hasError()) {
+			error = new CodiError(0);
 			return error;
 		}
 		return null;
@@ -51,8 +51,7 @@ public class ControladorDominio {
 	 * @return true si cd tenia error, false en caso contrario.
 	 */
 	protected Boolean catchError(ControladorDominio cd) {
-		if (cd.hasError) {
-			hasError = true;
+		if (cd.hasError()) {
 			error = cd.getError();
 			return true;
 		}
