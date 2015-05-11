@@ -1,11 +1,6 @@
 package drivers;
 
-import io.ConsolaEntrada;
-import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
-
+import io.*;
 import time.Date;
 import time.DateInterval;
 
@@ -27,9 +22,9 @@ public class DateIntervalDriver {
 	public static void main (String args[]) {
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		int a= EF.ReadInt();
 		while(a!=-1) {
 			switch(a) {

@@ -10,10 +10,10 @@ public class LouvainDriver {
 	public static void main (String args[]) {
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
-		Sortida SC = new ConsolaSortida();
+		Salida SF = new FicheroSalida(Output);
+		Salida SC = new ConsolaSalida();
 		SC.Write("Fitxers Oberts, procedim a l'execucio.");
 		HashSet<HashSet<String>> comunidades = Louvain.executa(GrafLouvainDriver.ReadGraf(EF, EF.ReadInt(), EF.ReadInt()), EF.ReadInt()); 
 		SC.Write("Execucio completada, procedim a imprimir les comunitats.");

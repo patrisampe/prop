@@ -3,6 +3,7 @@ package drivers;
 import io.*;
 
 import java.util.HashSet;
+
 import dominio.algoritmos.Graf;
 
 /**
@@ -10,7 +11,7 @@ import dominio.algoritmos.Graf;
  * @author Yoel Cabo
  *
  */
-public class GrafDriver { //No està gens fet, però s'intenta
+public class GrafDriver { //No estï¿½ gens fet, perï¿½ s'intenta
 	private Graf G;
 	
 	
@@ -33,9 +34,9 @@ public class GrafDriver { //No està gens fet, però s'intenta
 	public static void main (String args[]) {
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		GrafDriver GD = new GrafDriver();
 		int a= EF.ReadInt();
 		while(a!=-1) {

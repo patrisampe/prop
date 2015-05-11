@@ -34,9 +34,9 @@ public class GrafLouvainDriver {
 	public static void main (String args[]) {
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		GrafLouvainDriver GD = new GrafLouvainDriver();
 		int a= EF.ReadInt();
 		SF.Write(a);

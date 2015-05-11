@@ -1,16 +1,20 @@
 package drivers;
 
-import io.ConsolaEntrada;
-import io.ConsolaSortida;
-import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.*;
 import time.*;
 
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+
+
+
+
+
+
+
+
 
 
 import utiles.ConjuntoGrupoAfin;
@@ -21,8 +25,8 @@ import dominio.TipoAlgoritmo;
 import dominio.TipoVoto;
 
 /**
- * Driver de los Controladores de Búsqueda.
- * Por su naturaleza, este driver ejerce también de Driver del Dominio completo exceptuando Resultado de Búsqueda.
+ * Driver de los Controladores de Bï¿½squeda.
+ * Por su naturaleza, este driver ejerce tambiï¿½n de Driver del Dominio completo exceptuando Resultado de Bï¿½squeda.
  * @author Yoel Cabo
  *
  */
@@ -38,10 +42,10 @@ public class BusquedaDriver {
 		ControladorDominioLegislatura cLeg = ControladorDominioLegislatura.getInstance();
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
-		Sortida SC = new ConsolaSortida();
+		Salida SF = new FicheroSalida(Output);
+		Salida SC = new ConsolaSalida();
 		int a= EF.ReadInt();
 		while(a!=-1) {
 			switch(a) {
@@ -92,13 +96,13 @@ public class BusquedaDriver {
 		SF.close();
 	}
 	
-	private static void ReadAndAddDeTodo(Sortida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) {
+	private static void ReadAndAddDeTodo(Salida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) {
 		String s = eF.ReadString();
 		while (!s.equals("FIN")) {
 			sC.Write(s);
 			if (s.equals("DIPUTADO")) {
 				cDip.addDiputado(eF.ReadString(), eF.ReadString(), eF.ReadString(), DateIntervalDriver.ReadDate(eF));
-				if (cDip.hasCodiError()) sC.Write(cDip.getCodiError().getMensajeError());
+				if (cDip.hasError()) sC.Write(cDip.getError().getMensajeError());
 			}
 			else if (s.equals("EVENTO")) {
 				cEv.addEvento(eF.ReadString(), eF.ReadString(), DateIntervalDriver.ReadDate(eF), eF.ReadSetString(eF.ReadInt()));
@@ -113,11 +117,11 @@ public class BusquedaDriver {
 				Date fechaIni = DateIntervalDriver.ReadDate(eF);
 				Date fechaFin = DateIntervalDriver.ReadDate(eF);
 				cLeg.addLegislatura(identificador, fechaIni, fechaFin);
-				if (cLeg.hasCodiError()) sC.Write(cLeg.getCodiError().getMensajeError());
+				if (cLeg.hasError()) sC.Write(cLeg.getError().getMensajeError());
 				Integer n = eF.ReadInteger();
 				for (int i = 0; i < n; ++i) {
 					cLeg.addDiputado(identificador, eF.ReadString());
-					if (cLeg.hasCodiError()) sC.Write(cLeg.getCodiError().getMensajeError());
+					if (cLeg.hasError()) sC.Write(cLeg.getError().getMensajeError());
 				}
 			}
 			else if (s.equals("VOTACION")) {
@@ -147,13 +151,13 @@ public class BusquedaDriver {
 		return null;
 	}
 
-	public static void PrintGrupPeriodo(Sortida SF, GrupoAfinPorPeriodo grupAfi) {
+	public static void PrintGrupPeriodo(Salida SF, GrupoAfinPorPeriodo grupAfi) {
 		SF.Write(grupAfi.getID());
 		Set<String> diputados = grupAfi.getDiputados();
 		SF.Write(diputados);
 	}
 	
-	public static void PrintConjGrupPeriodo(Sortida sF,
+	public static void PrintConjGrupPeriodo(Salida sF,
 			ConjuntoGrupoAfin conjuntoGrupoAfin) {
 		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
 		for (GrupoAfinPorPeriodo g : conjuntoGrupoAfin.getAllPorPeriodo()) {
@@ -162,7 +166,7 @@ public class BusquedaDriver {
 		
 	}
 	
-	public static void PrintGrupDiputado(Sortida SF, GrupoAfinPorDiputado grupAfi) {
+	public static void PrintGrupDiputado(Salida SF, GrupoAfinPorDiputado grupAfi) {
 		SF.Write(grupAfi.getID());
 		SF.Write(grupAfi.getFechaInicio().toString());
 		SF.Write(grupAfi.getFechaFin().toString());
@@ -170,7 +174,7 @@ public class BusquedaDriver {
 		SF.Write(diputados);
 	}
 	
-	public static void PrintConjGrupDiputado(Sortida sF,
+	public static void PrintConjGrupDiputado(Salida sF,
 			ConjuntoGrupoAfin conjuntoGrupoAfin) {
 		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
 		for (GrupoAfinPorDiputado g : conjuntoGrupoAfin.getAllPorDiputado()) {
