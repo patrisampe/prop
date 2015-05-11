@@ -11,14 +11,10 @@ import dominio.Diputado;
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los diputados.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
-public class ControladorDominioDiputado {
+public class ControladorDominioDiputado extends ControladorDominio {
 	
-	/**
-	 * Codigo de error del ultimo metodo ejecutado.
-	 */
-	private CodiError error;
 	/**
 	 * Conjunto de diputados almacenados en el sistema.
 	 */
@@ -87,7 +83,6 @@ public class ControladorDominioDiputado {
 	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
 	public void addDiputado(String nombreDiputado, String nombrePartido, String nombreEstado, Date fechaDeNacimiento) {
-		error.netejaCodiError();
 		if (existsDiputado(nombreDiputado)) {
 			error.setCodiError(4);
 			error.addClauExterna(nombreDiputado);
@@ -116,7 +111,6 @@ public class ControladorDominioDiputado {
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeDiputado(String nombreDiputado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -124,17 +118,17 @@ public class ControladorDominioDiputado {
 		else {
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
-			if (CDL.hasCodiError()) error = CDL.getCodiError();
+			catchError(CDL);
  			ControladorDominioResultado CDR = ControladorDominioResultado.getInstance();
 			CDR.removeDiputado(nombreDiputado);
-			if (CDR.hasError()) error = CDR.getError();
+			catchError(CDR);
  			ControladorDominioEvento CDE = ControladorDominioEvento.getInstance();
 			CDE.removeDiputado(nombreDiputado);
-			if (CDE.getHasError()) error = CDE.getError();
+			catchError(CDE);
  			ControladorDominioVotacion CDV = ControladorDominioVotacion.getInstance();
 			CDV.removeDiputado(nombreDiputado);
-			if (CDV.getHasError()) error = CDV.getError();
-			if (!hasCodiError()) {
+			catchError(CDV);
+			if (!hasError()) {
 				conjuntoDiputados.remove(nombreDiputado);
 			}
 		}
@@ -146,7 +140,6 @@ public class ControladorDominioDiputado {
 	 * @param nombrePartido - Nombre del partido politico al que pertenece el diputado.
 	 */
 	public void setPartidoPolitico(String nombreDiputado, String nombrePartido) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -160,7 +153,6 @@ public class ControladorDominioDiputado {
 	 * @param nombreEstado - Nombre del estado al que representa el diputado.
 	 */
 	public void setEstado(String nombreDiputado, String nombreEstado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -174,7 +166,6 @@ public class ControladorDominioDiputado {
 	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
 	public void setFechaDeNacimiento(String nombreDiputado, Date FechaDeNacimiento) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)){
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -188,7 +179,6 @@ public class ControladorDominioDiputado {
 	 * @return Nombre del partido politico al que pertenece el diputado.
 	 */
 	public String getPartidoPolitico(String nombreDiputado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -203,7 +193,6 @@ public class ControladorDominioDiputado {
 	 * @return Nombre del estado al que representa el diputado.
 	 */
 	public String getEstado(String nombreDiputado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -218,7 +207,6 @@ public class ControladorDominioDiputado {
 	 * @return Fecha de nacimiento del diputado.
 	 */
 	public Date getFechaDeNacimiento(String nombreDiputado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -235,7 +223,6 @@ public class ControladorDominioDiputado {
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
 	public void addLegistura(String nombreDiputado, Integer identificadorLegislatura) {
-		error.netejaCodiError();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -254,7 +241,7 @@ public class ControladorDominioDiputado {
 			conjuntoDiputados.get(nombreDiputado).addLegistura(identificadorLegislatura);
 			if (!CDL.existsDiputado(identificadorLegislatura, nombreDiputado))
 				CDL.addDiputado(identificadorLegislatura, nombreDiputado);
-			if (CDL.hasCodiError()) error = CDL.getCodiError();
+			catchError(CDL);
 		}
 	}
 	
@@ -266,7 +253,6 @@ public class ControladorDominioDiputado {
 	 * @param legislaturas - Conjunto de identificadores de legislaturas.
 	 */
 	public void setLegisturas(String nombreDiputado, Set<Integer> legislaturas) {
-		error.netejaCodiError();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -296,7 +282,6 @@ public class ControladorDominioDiputado {
 	 * @return Conjunto de identificadores de las legislaturas activas del diputado.
 	 */
 	public Set<Integer> getLegislaturas(String nombreDiputado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -314,7 +299,6 @@ public class ControladorDominioDiputado {
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean existsLegistura(String nombreDiputado, Integer identificadorLegislatura) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -331,7 +315,6 @@ public class ControladorDominioDiputado {
 	 * @param identificadorLegislatura - Numero que identifica la legislatura.
 	 */
 	public void removeLegistura(String nombreDiputado, Integer identificadorLegislatura) {
-		error.netejaCodiError();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
@@ -350,7 +333,7 @@ public class ControladorDominioDiputado {
 			conjuntoDiputados.get(nombreDiputado).removeLegistura(identificadorLegislatura);
 			if (CDL.existsDiputado(identificadorLegislatura, nombreDiputado))
 				CDL.removeDiputado(identificadorLegislatura, nombreDiputado);
-			if (CDL.hasCodiError()) error = CDL.getCodiError();
+			catchError(CDL);
 		}
 	}
 	
@@ -361,7 +344,6 @@ public class ControladorDominioDiputado {
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeLegisturas(String nombreDiputado) {
-		error.netejaCodiError();
 		if (!existsDiputado(nombreDiputado)) {
 			error.setCodiError(3);
 			error.addClauExterna(nombreDiputado);
@@ -370,7 +352,7 @@ public class ControladorDominioDiputado {
 			conjuntoDiputados.get(nombreDiputado).removeLegisturas();
 			ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 			CDL.removeDiputadoFromLegislaturas(nombreDiputado);
-			if (CDL.hasCodiError()) error = CDL.getCodiError();
+			catchError(CDL);
 		}
 	}
 	
@@ -386,24 +368,6 @@ public class ControladorDominioDiputado {
 			if (existsLegistura(nombreDiputado, identificadorLegislatura))
 				removeLegistura(nombreDiputado, identificadorLegislatura);
 		}
-	}
-	
-	/**
-	 * Consulta si se ha producido algun error en el ultimo metodo utilizado.
-	 * @return <i>true</i> si se ha producido algun error.
-	 * <br>
- 	 * <i>false</i> en cualquier otro caso.
-	 */
-	public Boolean hasCodiError() {
-		return (error.getCodiError() != 0);
-	}
-	
-	/**
-	 * Consulta el error que se ha producido en el ultimo metodo utilizado.
-	 * @return Codigo de error del ultimo metodo.
-	 */
-	public CodiError getCodiError() {
-		return error;
 	}
 	
 }
