@@ -13,10 +13,6 @@ public class ControladorDominio {
 	 * Codigo de error del último metodo ejecutado.
 	 */
 	protected CodiError error;
-	/**
-	 * Indica si se ha producido un error en el último método ejecutado.
-	 */
-	protected Boolean hasError;
 	
 	/**
 	 * Creadora por defecto.
@@ -39,7 +35,8 @@ public class ControladorDominio {
 	 */
 	public CodiError getError() {
 		if (this.hasError()) {
-			error = new CodiError(0);
+			CodiError error = this.error;
+			this.error.netejaCodiError();;
 			return error;
 		}
 		return null;
