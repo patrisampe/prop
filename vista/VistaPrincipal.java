@@ -23,6 +23,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      */
     public VistaPrincipal() {
         initComponents();
+        setTitle("Diputados de Estados Unidos");
         setLocationRelativeTo(null);
         setResizable(false);
         VistaLegislatura visLeg = new VistaLegislatura();
@@ -54,36 +55,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelRotuloPrincipal = new javax.swing.JPanel();
-        jLabelRotuloPrincipal = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Diputados de Estados Unidos");
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanelRotuloPrincipal.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabelRotuloPrincipal.setFont(new java.awt.Font("Aharoni", 0, 18)); // NOI18N
-        jLabelRotuloPrincipal.setForeground(new java.awt.Color(51, 51, 255));
-        jLabelRotuloPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelRotuloPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/logos/Rotulo400x70.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanelRotuloPrincipalLayout = new javax.swing.GroupLayout(jPanelRotuloPrincipal);
         jPanelRotuloPrincipal.setLayout(jPanelRotuloPrincipalLayout);
         jPanelRotuloPrincipalLayout.setHorizontalGroup(
             jPanelRotuloPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRotuloPrincipalLayout.createSequentialGroup()
-                .addGroup(jPanelRotuloPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelRotuloPrincipal))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRotuloPrincipalLayout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelRotuloPrincipalLayout.setVerticalGroup(
             jPanelRotuloPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRotuloPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelRotuloPrincipal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 699, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -101,7 +91,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabelRotuloPrincipal;
     private javax.swing.JPanel jPanelRotuloPrincipal;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
