@@ -10,11 +10,11 @@ import utiles.CodiError;
 public class ControladorDominio {
 
 	/**
-	 * Codigo de error del ultimo metodo ejecutado.
+	 * Codigo de error del último metodo ejecutado.
 	 */
 	protected CodiError error;
 	/**
-	 * Indica si se ha producido un error en el ultimo metodo ejecutado.
+	 * Indica si se ha producido un error en el último método ejecutado.
 	 */
 	protected Boolean hasError;
 	
