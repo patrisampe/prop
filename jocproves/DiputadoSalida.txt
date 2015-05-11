@@ -1,0 +1,22 @@
+Marc
+Propio
+Barna
+01/02/2000
+David
+Independiente
+Barcelona
+17/10/1995
+David
+Republicano
+Tarragona
+18/11/2002
+1, 2, 4, 5
+El diputado es activo en la legislatura.
+El diputado no es activo en la legislatura.
+10, 6, 7, 8, 9
+El diputado es activo en la legislatura.
+El diputado no es activo en la legislatura.
+10, 6, 8, 9
+El diputado no es nulo.
+El diputado es nulo.
+Finalizando el driver...

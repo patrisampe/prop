@@ -10,7 +10,7 @@ import io.*;
 /**
  * Driver para la clase Diputado.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class DiputadoDriver {
 	
@@ -29,7 +29,7 @@ public class DiputadoDriver {
 	
 	public static void main(String[] args) {
 		Entrada E = new ConsolaEntrada();
-		Sortida S = new ConsolaSortida();
+		Salida S = new ConsolaSalida();
 		Diputado D = Diputado.NULL;
 		Set<String> setS = new TreeSet<String>();
 		Set<Integer> setI = new TreeSet<Integer>();
@@ -99,25 +99,25 @@ public class DiputadoDriver {
 				case 2:
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
-					S = new FitxerSortida(fOut);
+					S = new FicheroSalida(fOut);
 					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
-					E = new FitxerEntrada(fIn);
-					S = new ConsolaSortida();
+					E = new FicheroEntrada(fIn);
+					S = new ConsolaSalida();
 					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
-					E = new FitxerEntrada(fIn);
-					S = new FitxerSortida(fOut);
+					E = new FicheroEntrada(fIn);
+					S = new FicheroSalida(fOut);
 					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
-					S = new ConsolaSortida();
+					S = new ConsolaSalida();
 					fitxer = false;
 				break;
 				}

@@ -5,9 +5,9 @@ import java.util.Set;
 /**
  * Salida generica que permite escribir cualquier tipo de dato basico.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
-public interface Sortida {
+public interface Salida {
 
 	/**
 	 * Cierra el canal de salida.

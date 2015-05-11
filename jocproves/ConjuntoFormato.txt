@@ -1,0 +1,92 @@
+Menu 1:
+
+	Comando 1:
+		Trabajar con conjuntos de diputados (clave externa: String).
+		
+	Comando 2: 
+		Trabajar con conjuntos de legislaturas (clave externa: Integer).
+
+Menu 2:
+
+	Comando 1:
+		Crea un nuevo conjunto mediante la creadora por copia del conjunto almacenado.
+			
+	Comando 2: 
+		Consulta el tipo de objeto contenido en el conjunto.
+	
+	Comando 3: 
+		Consulta el tipo de clave externa del conjunto.
+	
+	Comando 4: 
+		Consulta el numero de elementos del conjunto.
+	
+	Comando 5: 
+		Comprueba si el conjunto esta vacio.
+	
+	Comando 6: 
+		Elimina todos los elementos del conjunto.
+	
+	Comando 7: 
+		Inserta un conjutno de elementos.
+		Parametros: Integer(Numero de elementos) Diputado/Legislatura (Dependiendo de la opcion, consultar al final del documento)
+		
+	Comando 8: 
+		Consulta el conjutno de elementos.
+		
+	Comando 9: 
+		Consulta el conjutno de claves exernas de elementos.
+		
+	Comando 10: 
+		Inserta un elemento en el conjunto.
+		Parametros: Diputado/Legislatura (Dependiendo de la opcion, consultar al final del documento)
+		
+	Comando 11: 
+		Consulta un elemento en el conjunto.
+		Parametros: Integer/String(Integer si es una legislatura, String si es un diputado)
+		
+	Comando 12: 
+		Comprueba si un elemento existe en el conjunto.
+		Parametros: Integer/String(Integer si es una legislatura, String si es un diputado)
+	
+	Comando 13: 
+		Elimina un elemento del conjunto.
+		Parametros: Integer/String(Integer si es una legislatura, String si es un diputado)
+	
+
+Comandos genericos:
+	Comando -1:
+		Finaliza la ejecucion del driver.
+		
+	Comando -2:
+		Modifica la configuracion de Entrada/Salida.
+		Permite configurar ficheros o consola.
+		El valor por defecto es con entrada y salida por consola.
+		
+		Menu I/O:
+			Comando 1:
+				Configura la entrada por consola y la salida por consola.
+			
+			Comando 2:
+				Configura la entrada por consola y la salida por fichero.
+				Parametros: String(Fichero de salida)
+		
+			Comando 3:
+				Configura la entrada por fichero y la salida por consola.
+				Parametros: String(Fichero de entrada)
+				
+			Comando 4:
+				Configura la entrada por fichero y la salida por fichero.
+				Parametros: String(Fichero de entrada) String(Fichero de salida)
+				
+				
+Objeto Diputado:
+	Cuando sea necesario leer un Diputado, los parametros son los siguientes.
+	Parametros: String(Nombre) String(Partido) String(Estado) Date(Fecha de nacimiento)
+	
+Objeto Legislatura:
+	Cuando sea necesario leer una Legislatura, los parametros son los siguientes.
+	Parametros: Integer(Identificador) Date(Fecha de inicio) Date(Fecha de finalizacion)
+	
+Objeto Date:
+	Cuando sea necesario leer una fecha, los parametros son los siguientes.
+	Parametros: Integer(Dia) Integer(Mes) Integer("Year")

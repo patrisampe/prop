@@ -1,0 +1,22 @@
+La fecha no es valida.
+NULL
+La fecha es nula.
+La fecha no es nula.
+17
+10
+1995
+La fecha es valida.
+17/10/1995
+17/Octubre/1995
+Las fechas no son iguales.
+Las fechas no son iguales.
+Las fechas son iguales.
+La fecha es menor.
+La fecha es mayor.
+18/11/2002
+NULL
+1995 no es bisiesto.
+2004 es bisiesto.
+02/05/1999
+21/12/1995
+Finalizando el driver...

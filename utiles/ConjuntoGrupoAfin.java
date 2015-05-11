@@ -8,7 +8,7 @@ import dominio.GrupoAfinPorPeriodo;
 /**
  * Conjunto abstracto auxilitar que almacena grupos afines por diputado y por periodo.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class ConjuntoGrupoAfin {
 	

@@ -1,0 +1,27 @@
+2
+Anna, b, b, 24/02/1996
+David, a, a, 17/10/1995
+Anna, David
+El diputado no existe.
+El diputado existe.
+3
+Anna, b, b, 24/02/1996
+David, a, a, 17/10/1995
+Marc, c, c, 18/11/2002
+Anna, David, Marc
+El diputado existe.
+El diputado no existe.
+2
+David, a, a, 17/10/1995
+Marc, c, c, 18/11/2002
+David, Marc
+z
+x
+01/01/1990
+La legislatura 2 no existe.
+La legislatura 2 no existe.
+1
+El diputado esta activo en esta legislatura.
+El diputado no esta activo en esta legislatura.
+El diputado no esta activo en esta legislatura.
+Finalizando el driver...

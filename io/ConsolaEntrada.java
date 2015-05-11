@@ -9,7 +9,7 @@ import java.util.TreeSet;
 /**
  * Entrada por consola que permite leer cualquier tipo de dato basico.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class ConsolaEntrada implements Entrada {
 	
@@ -117,8 +117,7 @@ public class ConsolaEntrada implements Entrada {
 		Double[] out = new Double[n];
 		for (int i = 0; i < n; ++i){
 			try {
-				if (sc.hasNextDouble()) out[i] = sc.nextDouble();
-				else return new Double[0];
+				out[i] = sc.nextDouble();
 			} catch (InputMismatchException e) {
 				String S = sc.next();
 				S.replace('.', ',');

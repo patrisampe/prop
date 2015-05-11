@@ -8,7 +8,7 @@ import time.Date;
 /**
  * Periodo de tiempo transcurrido a lo largo de un mandato.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class Legislatura extends ObjetoDominio{
 	

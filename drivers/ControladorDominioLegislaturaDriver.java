@@ -13,7 +13,7 @@ import io.*;
 /**
  * Driver para el controlador de dominio de legislaturas.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class ControladorDominioLegislaturaDriver {
 	
@@ -44,7 +44,7 @@ public class ControladorDominioLegislaturaDriver {
 	
 	public static void main(String[] args) {
 		Entrada E = new ConsolaEntrada();
-		Sortida S = new ConsolaSortida();
+		Salida S = new ConsolaSalida();
 		ControladorDominioLegislatura CDL = ControladorDominioLegislatura.getInstance();
 		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
 		Boolean fitxer = false;
@@ -79,6 +79,7 @@ public class ControladorDominioLegislaturaDriver {
 				S.Write("22: Consultar la legislatura a la que pertenece una fecha.");
 				S.Write("23: Consultar el identificador de la ultima legislatura.");
 				S.Write("24: Insertar un nuevo diputado en el sistema.");
+				S.Write("25: Consultar las legislaturas mas cercanas a una fecha.");
 			}
 			codi = E.ReadInteger();
 			switch (codi) {
@@ -95,25 +96,25 @@ public class ControladorDominioLegislaturaDriver {
 				case 2:
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
-					S = new FitxerSortida(fOut);
+					S = new FicheroSalida(fOut);
 					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
-					E = new FitxerEntrada(fIn);
-					S = new ConsolaSortida();
+					E = new FicheroEntrada(fIn);
+					S = new ConsolaSalida();
 					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
-					E = new FitxerEntrada(fIn);
-					S = new FitxerSortida(fOut);
+					E = new FicheroEntrada(fIn);
+					S = new FicheroSalida(fOut);
 					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
-					S = new ConsolaSortida();
+					S = new ConsolaSalida();
 					fitxer = false;
 				break;
 				}
@@ -210,11 +211,15 @@ public class ControladorDominioLegislaturaDriver {
 			case 24:
 				CDD.addDiputado(E.ReadString(), E.ReadString(), E.ReadString(), new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
 			break;
+			case 25:
+				Integer[] a = CDL.getNearID(new Date(E.ReadInteger(), E.ReadInteger(), E.ReadInteger()));
+				S.Write("La fecha se encuentra entre las legislaturas " + a[0] + " y " + a[1]);
+			break;
 			default:
 				S.Write("Codigo incorrecto.");
 			break;
 			}
-			if (CDL.hasCodiError()) S.Write(CDL.getCodiError().getMensajeError());
+			if (CDL.hasError()) S.Write(CDL.getError().getMensajeError());
 		}
 		S.close();
 	}

@@ -6,7 +6,7 @@ import java.util.TreeSet;
 /**
  * Conjunto de metodos con finalidades auxiliares para uso general.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class Utiles {
 	
@@ -29,9 +29,9 @@ public class Utiles {
 	 * @param S - String a formatear.
 	 * @return El string escrito con la primera letra mayuscula y el resto minusculas.
 	 */
-	public static Set<String> SetObjetToSetString(Set<Object> set){
+	public static <T extends Object> Set<String> SetObjetToSetString(Set<T> set){
 		Set<String> out = new TreeSet<String>();
-		for (Object o:set) out.add(o.toString());
+		for (T o:set) out.add(o.toString());
 		return out;
 	}
 	

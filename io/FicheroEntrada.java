@@ -12,9 +12,9 @@ import java.util.TreeSet;
 /**
  * Entrada por fichero que permite leer cualquier tipo de dato basico.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
-public class FitxerEntrada implements Entrada {
+public class FicheroEntrada implements Entrada {
 	
 	/**
 	 * Scanner utilizado para la lectura por fichero.
@@ -25,12 +25,12 @@ public class FitxerEntrada implements Entrada {
 	 * Crea una nueva entrada mediante fichero.
 	 * @param FileName - ruta del fichero de entrada.
 	 */
-	public FitxerEntrada(String FileName){
+	public FicheroEntrada(String FileName){
 		File F = new File(FileName);
 		try {
 			sc = new Scanner(F);
 		} catch (FileNotFoundException e) {
-			System.out.println("Fitxer inexistent.");
+			System.out.println("Fichero inexistente.");
 		}
 	}
 	
@@ -71,16 +71,13 @@ public class FitxerEntrada implements Entrada {
 	}
 	
 	public Double ReadDouble(){
-		if (sc.hasNextDouble()) {
-			try {
-				return sc.nextDouble();
-			} catch (InputMismatchException e) {
-				String S = sc.next();
-				S.replace('.', ',');
-				return Double.parseDouble(S);
-			}
+		try {
+			return sc.nextDouble();
+		} catch (InputMismatchException e) {
+			String S = sc.next();
+			S.replace('.', ',');
+			return Double.parseDouble(S);
 		}
-		else return 0.0;
 	}
 	
 	public Boolean ReadBoolean(){
@@ -129,8 +126,7 @@ public class FitxerEntrada implements Entrada {
 		Double[] out = new Double[n];
 		for (int i = 0; i < n; ++i){
 			try {
-				if (sc.hasNextDouble()) out[i] = sc.nextDouble();
-				else return new Double[0];
+				out[i] = sc.nextDouble();
 			} catch (InputMismatchException e) {
 				String S = sc.next();
 				S.replace('.', ',');

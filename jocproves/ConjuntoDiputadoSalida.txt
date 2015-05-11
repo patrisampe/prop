@@ -1,0 +1,35 @@
+dominio.Diputado
+La clave externa es String.
+0
+El conjunto esta vacio.
+2
+El conjunto no esta vacio.
+Anna, b, a, 24/02/1996
+David, a, b, 17/10/1995
+Anna
+David
+David, a, b, 17/10/1995
+El diputado no existe.
+El diputado existe.
+2
+Anna, b, a, 24/02/1996
+Marc, c, c, 18/11/2002
+Anna
+Marc
+El diputado no existe.
+dominio.Diputado
+La clave externa es String.
+2
+El conjunto no esta vacio.
+Anna, b, a, 24/02/1996
+Marc, c, c, 18/11/2002
+Anna
+Marc
+Anna, b, a, 24/02/1996
+El diputado existe.
+dominio.Diputado
+La clave externa es String.
+0
+El conjunto esta vacio.
+El diputado no existe.
+Finalizando el driver...

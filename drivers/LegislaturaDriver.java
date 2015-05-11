@@ -7,7 +7,7 @@ import io.*;
 /**
  * Driver para la clase Legislatura.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class LegislaturaDriver {
 	
@@ -36,7 +36,7 @@ public class LegislaturaDriver {
 	
 	public static void main(String[] args) {
 		Entrada E = new ConsolaEntrada();
-		Sortida S = new ConsolaSortida();
+		Salida S = new ConsolaSalida();
 		Legislatura L = Legislatura.NULL;
 		Boolean fitxer = false;
 		Integer codi = -2;
@@ -108,25 +108,25 @@ public class LegislaturaDriver {
 				case 2:
 					fOut = E.ReadString();
 					E = new ConsolaEntrada();
-					S = new FitxerSortida(fOut);
+					S = new FicheroSalida(fOut);
 					fitxer = true;
 				break;
 				case 3:
 					fIn = E.ReadString();
-					E = new FitxerEntrada(fIn);
-					S = new ConsolaSortida();
+					E = new FicheroEntrada(fIn);
+					S = new ConsolaSalida();
 					fitxer = false;
 				break;
 				case 4:
 					fIn = E.ReadString();
 					fOut = E.ReadString();
-					E = new FitxerEntrada(fIn);
-					S = new FitxerSortida(fOut);
+					E = new FicheroEntrada(fIn);
+					S = new FicheroSalida(fOut);
 					fitxer = true;
 				break;
 				default:
 					E = new ConsolaEntrada();
-					S = new ConsolaSortida();
+					S = new ConsolaSalida();
 					fitxer = false;
 				break;
 				}

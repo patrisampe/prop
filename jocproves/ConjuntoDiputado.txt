@@ -1,0 +1,36 @@
+2
+3
+4
+5
+7 2 David a b 17 10 1995 Anna b a 24 2 1996
+4
+5
+8
+9
+11 David
+12 Marc
+10 Marc c c 18 11 2002
+12 Marc
+13 David
+4
+8
+9
+12 David
+1
+2
+3
+4
+5
+8
+9
+11 Anna
+12 Anna
+6
+2
+3
+4
+5
+8
+9
+12 Anna
+-1

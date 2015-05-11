@@ -1,0 +1,17 @@
+5
+17/10/1995
+18/11/2002
+NULL
+La legislatura no tiene fecha de finalizacion
+La legislatura tiene fecha de finalizacion
+1
+20/10/1995
+24/02/1996
+Anna, David
+Anna, David, Marc
+La legislatura tiene al diputado activo.
+La legislatura no tiene al diputado activo.
+David, Marc
+La legislatura no es nula.
+La legislatura es nula.
+Finalizando el driver...

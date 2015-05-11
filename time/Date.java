@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Fecha basada en el calendario gregoriano.
  * @author David Moran
- * @version 07/05/2015 11:30
+ * @version 11/05/2015 14:00
  */
 public class Date{
 

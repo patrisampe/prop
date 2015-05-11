@@ -1,0 +1,35 @@
+dominio.Legislatura
+La clave externa es Integer.
+0
+El conjunto esta vacio.
+2
+El conjunto no esta vacio.
+1, 17/10/1995, 24/02/1996
+2, 18/11/2002, 01/01/2008
+1
+2
+1, 17/10/1995, 24/02/1996
+La legislatura no existe.
+La legislatura existe.
+2
+2, 18/11/2002, 01/01/2008
+3, 01/01/2009, 01/01/2010
+2
+3
+La legislatura no existe.
+dominio.Legislatura
+La clave externa es Integer.
+2
+El conjunto no esta vacio.
+2, 18/11/2002, 01/01/2008
+3, 01/01/2009, 01/01/2010
+2
+3
+2, 18/11/2002, 01/01/2008
+La legislatura existe.
+dominio.Legislatura
+La clave externa es Integer.
+0
+El conjunto esta vacio.
+La legislatura no existe.
+Finalizando el driver...

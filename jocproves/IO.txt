@@ -1,0 +1,11 @@
+1 hola
+2 hola soc en David
+4 42
+4 -42
+5 3.1415
+6 true
+6 false
+7 1234567890
+8 4 hola soc en David
+10 3 -1 -0 1
+-1
