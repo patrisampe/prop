@@ -34,20 +34,33 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 */
 	public ConjuntoGrupoAfin NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
+		if (this.hasError()) return null;
 		
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return null;
 			Integer legislaturaInicial = It.next();
 			Integer legislaturaFinal = null;
 			if(Lapso == 1) legislaturaFinal = legislaturaInicial;
 			else for (Integer i = 1; i < Lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
 			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
+			if (catchError(cLeg)) return null;
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
+			if (this.hasError()) return null;
+
  			Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
+ 			if (this.hasError()) return null;
+
 			Map<String, Set<String> > votacionesSimp = prepararVotaciones(Periodo); //Divide las votaciones en conjuntos de diputados que votan lo mismo.
+			if (this.hasError()) return null;
+
 			Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
+			if (this.hasError()) return null;
+
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
+			if (this.hasError()) return null;
+
 			ejecutar(G,ga,Algoritmo, porcentaje, DiputadoRelevante);
 			s.add(ga);
 		}
@@ -69,13 +82,21 @@ public class ControladorDominioBusquedaPorDiputado extends
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return null;
+
 			Integer legislaturaInicial = It.next();
 			Integer legislaturaFinal = null;
 			if(lapso == 1) legislaturaFinal = legislaturaInicial;
 			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
 			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
+			if (catchError(cLeg)) return null;
+
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
+			if (this.hasError()) return null;
+
 			Graf G = construirGrafoEstado(idDiputados);
+			if (this.hasError()) return null;
+
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
 			s.add(ga);
@@ -98,13 +119,21 @@ public class ControladorDominioBusquedaPorDiputado extends
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return null;
+
 			Integer legislaturaInicial = It.next();
 			Integer legislaturaFinal = null;
 			if(lapso == 1) legislaturaFinal = legislaturaInicial;
 			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
 			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
+			if (catchError(cLeg)) return null;
+
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
+			if (this.hasError()) return null;
+
 			Graf G = construirGrafoNombresParecidos(idDiputados);
+			if (this.hasError()) return null;
+
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
 			s.add(ga);
@@ -127,13 +156,21 @@ public class ControladorDominioBusquedaPorDiputado extends
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return null;
+
 			Integer legislaturaInicial = It.next();
 			Integer legislaturaFinal = null;
 			if(lapso == 1) legislaturaFinal = legislaturaInicial;
 			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
 			DateInterval periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
+			if (catchError(cLeg)) return null;
+
 			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
+			if (this.hasError()) return null;
+
 			Graf G = construirGrafoPP(idDiputados);
+			if (this.hasError()) return null;
+
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, periodo.getInicio(), periodo.getFin());
 			ejecutar(G,ga,algoritmo, porcentaje, diputadoRelevante);
 			s.add(ga);
@@ -150,7 +187,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 		for (HashSet<String> comunidad : hs) {
 			//for (String Diputado : comunidad) System.out.println(Diputado);
 			if (comunidad.contains(diputadoRelevante)) {
-				//System.out.println("Lo encontré "+diputadoRelevante);
+				//System.out.println("Lo encontrï¿½ "+diputadoRelevante);
 				for (String diputado : comunidad) {
 					ga.addDiputado(diputado);
 				}

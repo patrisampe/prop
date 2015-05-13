@@ -30,16 +30,25 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 */ 
 	public ConjuntoGrupoAfin NuevaBusquedaStandard(TipoAlgoritmo algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(Periodo);
+		if (this.hasError()) return null;
+		
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
+		if (this.hasError()) return null;
+		
 		Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
+		if (this.hasError()) return null;
+		
 		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInicio())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFin())));
-		System.out.println(Periodo.toString()+ " --> "+ PeriodoVotaciones.toString() );
+		if (catchError(cLeg)) return null;
+		
+		//System.out.println(Periodo.toString()+ " --> "+ PeriodoVotaciones.toString() );
 		Map<String, Set<String> > votacionesSimp = prepararVotaciones(PeriodoVotaciones); 
 		/*for (Set<String> tipoEvento : tiposYeventos.values()) {
 			System.out.println(tipoEvento);
 		}*/
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
-		System.out.println((new GrafLouvain(G)).sumaPesos());
+		if (this.hasError()) return null;
+		//System.out.println((new GrafLouvain(G)).sumaPesos());
 		/*for (String nodo : G.getNodes()) {
 			System.out.println("Adyacentes a "+nodo);
 			for (String adj : G.getAdjacents(nodo)) System.out.print(adj+", ");
@@ -59,6 +68,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 */
 	public ConjuntoGrupoAfin NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
+		if (this.hasError()) return null;
 		//for (String nodo : idDiputados) System.out.println(nodo);
 		Graf G = construirGrafoPP(idDiputados);
 		return ejecutarYretornar(G,algoritmo,porcentaje);
@@ -73,7 +83,9 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 */
 	public ConjuntoGrupoAfin NuevaBusquedaEstado(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
+		if (this.hasError()) return null;
 		Graf G = construirGrafoEstado(idDiputados);
+		if (this.hasError()) return null;
 		return ejecutarYretornar(G,algoritmo,porcentaje);
 	}
 	
@@ -86,6 +98,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 */
 	public ConjuntoGrupoAfin NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
+		if (this.hasError()) return null;
 		Graf G = construirGrafoNombresParecidos(idDiputados);
 		return ejecutarYretornar(G,algoritmo,porcentaje);
 	}

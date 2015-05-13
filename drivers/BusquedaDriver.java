@@ -52,34 +52,43 @@ public class BusquedaDriver {
 			 case 1: 
 				 SF.Write("Periodo Standard");
 				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaStandard(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), ReadMap(EF), EF.ReadInteger()));
-			     break;
+				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
+				 break;
 			 case 2: 
 				 SF.Write("Diputado Standard");
 				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaStandard(ReadAlgoritmo(EF), EF.ReadInteger(), ReadMap(EF), EF.ReadInteger(), EF.ReadString()));
-			     break;
+				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 break;
 			 case 3: 
 				 SF.Write("Periodo Partido");
 				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
-			     break;
+				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
+				 break;
 			 case 4: 
 				 SF.Write("Diputado Partido");
 				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), EF.ReadInteger(), EF.ReadInteger(), EF.ReadString()));
-			     break;
+				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 break;
 			 case 5:
 				 SF.Write("Periodo Estado");
 				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaEstado(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
+				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
 				 break;
 			 case 6:
 				 SF.Write("Diputado Estado");
 				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaEstado(ReadAlgoritmo(EF), EF.ReadInteger(), EF.ReadInteger(), EF.ReadString()));
-			 	break;
+				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 break;
 			 case 7:
 				 SF.Write("Periodo Nombre");
 				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
+				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
 				 break;
 			 case 8:
 				 SF.Write("Diputado Nombre");
 				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), EF.ReadInteger(), EF.ReadInteger(), EF.ReadString()));
+				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+
 				 break;
 			 case 9:
 				 SC.Write("Lectura");
@@ -106,11 +115,11 @@ public class BusquedaDriver {
 			}
 			else if (s.equals("EVENTO")) {
 				cEv.addEvento(eF.ReadString(), eF.ReadString(), DateIntervalDriver.ReadDate(eF), eF.ReadSetString(eF.ReadInt()));
-				if (cEv.getHasError()) sC.Write(cEv.getError().getMensajeError());
+				if (cEv.hasError()) sC.Write(cEv.getError().getMensajeError());
 			}
 			else if (s.equals("TIPOEVENTO")) {
 				cEv.addTipoEvento(eF.ReadString(), eF.ReadInteger());
-				if (cEv.getHasError()) sC.Write(cEv.getError().getMensajeError());
+				if (cEv.hasError()) sC.Write(cEv.getError().getMensajeError());
 			}
 			else if (s.equals("LEGISLATURA")) {
 				Integer identificador = eF.ReadInteger();
@@ -126,7 +135,7 @@ public class BusquedaDriver {
 			}
 			else if (s.equals("VOTACION")) {
 				cVot.addVotacion(eF.ReadString(), DateIntervalDriver.ReadDate(eF), eF.ReadInteger(), ReadMapVotos(eF));
-				if (cVot.getHasError()) sC.Write(cVot.getError().getMensajeError());
+				if (cVot.hasError()) sC.Write(cVot.getError().getMensajeError());
 
 			}
 			s = eF.ReadString();

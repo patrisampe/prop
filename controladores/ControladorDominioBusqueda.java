@@ -43,9 +43,12 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		Map<String, Integer> res = new TreeMap<String,Integer>(); 
 		res.putAll(importanciaModificada);
 		Set<String> tipoEventos = cEv.getTipoEvento();
+		if (catchError(cEv)) return null;
 		for (String tipoEvento : tipoEventos) {
 			if (!res.containsKey(tipoEvento)) {
-				res.put(tipoEvento, cEv.getImportanciaTipoEvento(tipoEvento)); 
+				res.put(tipoEvento, cEv.getImportanciaTipoEvento(tipoEvento));
+				if (catchError(cEv)) return null;
+
 			}
 		}
 		return res;
@@ -55,16 +58,20 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		Map<String, Set<String>> res = new TreeMap<String, Set<String>>(); 
 		
 		Set<String> tipoEventos = cEv.getTipoEvento();
+		if (catchError(cEv)) return null;
 		for (String tipoEvento : tipoEventos) {
 			res.put(tipoEvento, cEv.getEventos(tipoEvento, periodo.getInicio(), periodo.getFin()));
+			if (catchError(cEv)) return null;
 		}
 		return res;
 	}
 
 	protected Set<String> prepararDiputados(DateInterval Periodo) {
-		Integer legislaturaInicio = cLeg.getID(Periodo.getInicio());
-		Integer legislaturaFin = cLeg.getID(Periodo.getFin());
-		if (legislaturaInicio == -1 || legislaturaFin == -1 ) System.out.println("te jodisteeeeee");
+		Integer legislaturaInicio = cLeg.getNearID(Periodo.getInicio())[1];
+		if (catchError(cLeg)) return null;
+		Integer legislaturaFin = cLeg.getNearID(Periodo.getFin())[0];
+		if (catchError(cLeg)) return null;
+		//TODO if (legislaturaInicio == -1 || legislaturaFin == -1 ) ver qué hacemos;
 		return prepararDiputados(legislaturaInicio, legislaturaFin);
 	}
 	
@@ -74,6 +81,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
 				if (cDip.getPartidoPolitico(diputado1).equals(cDip.getPartidoPolitico(diputado2)) && !diputado1.equals(diputado2)) {
+					if (catchError(cDip)) return null;
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}
@@ -88,6 +96,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
 				if (cDip.getEstado(diputado1).equals(cDip.getEstado(diputado2)) && !diputado1.equals(diputado2)) {
+					if (catchError(cDip)) return null;
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}
@@ -139,6 +148,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		Set<String> res = new HashSet<String>();
 		for (Integer i = legislaturaInicio; i <= legislaturaFin; ++i) {
 			 if(cLeg.existsLegislatura(i)) res.addAll(cLeg.getDiputados(i));
+			 if (catchError(cLeg)) return null;
 		}
 		return res;
 	}
@@ -147,9 +157,10 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected Map<String, Set<String>> prepararVotaciones(DateInterval periodo) {
 		Map<String, Set<String>> mapa = new TreeMap<String, Set<String>>();
 		for (String votacion : cVot.getVotaciones(periodo.getInicio(), periodo.getFin())) {
-			System.out.println(votacion);
+			if (catchError(cVot)) return null;
+			/*System.out.println(votacion);
 			System.out.println(cVot.getDiputadosVotacion(votacion,TipoVoto.A_FAVOR));
-			System.out.println(cVot.getDiputadosVotacion(votacion,TipoVoto.EN_CONTRA));
+			System.out.println(cVot.getDiputadosVotacion(votacion,TipoVoto.EN_CONTRA));*/
 			mapa.put(votacion+"_A_FAVOR__", cVot.getDiputadosVotacion(votacion, TipoVoto.A_FAVOR));//Embellecer de cara a la tercera entrega
 			mapa.put(votacion+"_EN_CONTRA", cVot.getDiputadosVotacion(votacion, TipoVoto.EN_CONTRA));
 		}
@@ -164,12 +175,14 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		for (String tipoEvento : tiposYeventos.keySet()) {
 			for(String evento : tiposYeventos.get(tipoEvento)) {
 				interrelacionar(G, cEv.getDiputadosEvento(tipoEvento, evento), (Double) importancias.get(tipoEvento).doubleValue());
+				if (catchError(cEv)) return null;
 			}
 		}
 		for (String votacionSimp : votacionesSimp.keySet()) {
 			String votacion = votacionSimp.substring(0, votacionSimp.length()-10);
 			//System.out.println(votacionSimp+" ---> "+votacion+ "Importancia: "+cVot.getImportanciaVotacion(votacion).toString());
 			interrelacionar(G, votacionesSimp.get(votacionSimp), (Double) cVot.getImportanciaVotacion(votacion).doubleValue());
+			if (catchError(cVot)) return null;
 		}
 		return G;
 	}
@@ -201,8 +214,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		else if (algoritmo == TipoAlgoritmo.Louvain) {
 			hs = Louvain.executa(new GrafLouvain(g), porcentaje);
 		}
-		else System.out.println("Te Jodiste pelotudo");
-
+		//else TODO ver qué hacemos
 		return hs;
 	}
 	
