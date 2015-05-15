@@ -1,0 +1,200 @@
+1
+OK
+1
+OK
+19
+8
+OK
+8
+ERROR
+No hay error.
+8
+ERROR
+No hay error.
+8
+OK
+8
+OK
+8
+OK
+8
+ERROR
+No hay error.
+8
+ERROR
+No hay error.
+2
+ERROR
+No hay error.
+2
+OK
+3
+OK
+3
+4
+ERROR
+No hay error.
+4
+OK
+ 
+4
+OK
+Conferencia1, Conferencia2, Conferencia3, Conferencia4
+ 
+5
+OK
+Conferencia2, Conferencia3
+ 
+5
+OK
+ 
+5
+OK
+ 
+5
+ERROR
+No hay error.
+13
+OK
+Dani, Patricia
+13
+OK
+Dani, Patricia
+13
+OK
+Cristina, Dani
+13
+OK
+Clara, Patricia
+6
+OK
+6
+ERROR
+No hay error.
+6
+OK
+13
+OK
+Dani
+13
+OK
+Dani
+13
+OK
+Cristina, Dani
+13
+OK
+Clara
+7
+ERROR
+No hay error.
+16
+ActosBeneficos, Conferencias
+7
+OK
+16
+Conferencias
+9
+ERROR
+No hay error.
+9
+ERROR
+No hay error.
+9
+OK
+10
+OK
+false
+10
+OK
+true
+11
+ERROR
+No hay error.
+11
+ERROR
+No hay error.
+11
+OK
+12
+OK
+2
+10
+1995
+12
+ERROR
+No hay error.
+12
+ERROR
+No hay error.
+5
+OK
+Conferencia3
+ 
+13
+OK
+Dani
+13
+ERROR
+No hay error.
+13
+ERROR
+No hay error.
+14
+ERROR
+No hay error.
+14
+ERROR
+No hay error.
+13
+OK
+Dani
+14
+ERROR
+No hay error.
+14
+OK
+14
+ERROR
+No hay error.
+14
+OK
+13
+OK
+Cristina, Dani, Patricia
+15
+ERROR
+No hay error.
+15
+ERROR
+No hay error.
+15
+ERROR
+No hay error.
+15
+ERROR
+No hay error.
+15
+OK
+16
+Conferencias
+17
+Conferencias
+18
+ERROR
+No hay error.
+18
+ERROR
+No hay error.
+18
+ERROR
+No hay error.
+18
+OK
+false
+18
+OK
+false
+18
+OK
+true
