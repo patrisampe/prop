@@ -16,6 +16,17 @@ public class Graf {
 	protected Map<Integer,String> DiccionariInvers;
 	protected Vector< Vector<Double> > Matriu;
 	
+	private class LlistaAdjacencia {
+		private Vector< HashMap<Integer,Double> > lista;
+		public LlistaAdjacencia() {}
+		public LlistaAdjacencia(LlistaAdjacencia l) {
+			lista = new Vector< HashMap<Integer,Double> >(l.lista.size());
+			for (int i = 0; i < l.lista.size();++i) {
+				lista.add(new HashMap<Integer,Double>(l.lista.get(i)));
+			}
+		}
+		
+	}
 	/**
 	 * Creadora per defecte.
 	 */
