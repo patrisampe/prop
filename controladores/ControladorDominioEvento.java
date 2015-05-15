@@ -18,17 +18,15 @@ import time.DateInterval;
 public class ControladorDominioEvento extends ControladorDominio {
 	private Conjunto<TipoEvento> conjuntoTipoEvento;
 	private static ControladorDominioEvento instance = null;
-	private CodiError error;
-	private Boolean hasError;
 
 		/**
 		 * Crea un nuevo controlador de Dominio Evento
 		 * 
 		 */
 	   protected ControladorDominioEvento(){
+		   super();
 		   conjuntoTipoEvento=  new Conjunto<TipoEvento>(TipoEvento.class);
 		   error = new CodiError();
-		   hasError=false;
 	   }
 	   
 	   /**
@@ -50,8 +48,7 @@ public class ControladorDominioEvento extends ControladorDominio {
 	    **/
 	    private Boolean comprovacionTP(String nombreTipoEvento){
 		   if(conjuntoTipoEvento.exists(nombreTipoEvento))return true;
-		   else if(!hasError){
-			   hasError=true;
+		   else if(!super.hasError()){
 			   error.setCodiError(15);
 			   error.addClauExterna(nombreTipoEvento);
 		   }
@@ -66,8 +63,7 @@ public class ControladorDominioEvento extends ControladorDominio {
 		private Boolean esDiputado(String nombreDiputado){
 			ControladorDominioDiputado CDD=ControladorDominioDiputado.getInstance();
 			if(CDD.existsDiputado(nombreDiputado))return true;
-			else if(!hasError){
-				   hasError=true;
+			else if(!super.hasError()){
 				   error.addClauExterna(nombreDiputado);
 				   error.setCodiError(3);
 			}
@@ -84,8 +80,7 @@ public class ControladorDominioEvento extends ControladorDominio {
 		 */
 		private Boolean comprovacionEvento(String nombreTipoEvento, String nombreEvento){
 			if(comprovacionTP(nombreTipoEvento) && conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento))return true;
-			else if(!hasError){
-			   hasError=true;
+			else if(!super.hasError()){
 			   error.addClauExterna(nombreEvento);
 			   error.addClauExterna(nombreTipoEvento);
 			   error.setCodiError(7);
@@ -105,8 +100,7 @@ public class ControladorDominioEvento extends ControladorDominio {
 	   public void setImportanciaTipoEvento(String nombreTipoEvento, Integer Importancia){
 		   if(comprovacionTP(nombreTipoEvento)){
 			   if(TipoEvento.esValidaImportancia(Importancia))conjuntoTipoEvento.get(nombreTipoEvento).setImportancia(Importancia);
-			   else if(!hasError){
-				   hasError=true;
+			   else if(!super.hasError()){
 				   error.setCodiError(9);
 				   error.addClauExterna(Importancia.toString());
 			   }
@@ -186,14 +180,6 @@ public class ControladorDominioEvento extends ControladorDominio {
 					   }
 				}
 	   }
-	  /**
-	   * Si ha habido un error antes, nos deja los campos correspondientes como sino<br>
-	   * Es necessario llamar esta funcion despues de usar cada funcion que capture un error.
-	   */
-	   public void netejaError(){
-		   hasError=false;
-		   error.netejaCodiError();
-	   }
 	   /**
 	    * Se incorpora un nuevo TipoEvento. <br>
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
@@ -206,7 +192,6 @@ public class ControladorDominioEvento extends ControladorDominio {
 	   public void addTipoEvento(String nombreTipoEvento, Integer importancia){
 		   
 		   if(conjuntoTipoEvento.exists(nombreTipoEvento)){
-			   hasError=true;
 			   error.addClauExterna(nombreTipoEvento);
 			   error.setCodiError(14);
 		   }
@@ -215,7 +200,6 @@ public class ControladorDominioEvento extends ControladorDominio {
 			   conjuntoTipoEvento.add(aux);
 		   }
 		   else{
-			   hasError=true;
 			   error.setCodiError(9);
 			   error.addClauExterna(importancia.toString());
 		   }
@@ -230,23 +214,6 @@ public class ControladorDominioEvento extends ControladorDominio {
 	   public void removeTipoEvento(String nombreTipoEvento){
 		   
 		   if(comprovacionTP(nombreTipoEvento))conjuntoTipoEvento.remove(nombreTipoEvento);
-	   }
-
-	   /**
-	    * Indica si ha habido Error
-	    * @return <i>true<i> si ha error, sino <i>false<i>
-	    */
-	   public Boolean getHasError() {
-		  return hasError;
-	   }
-	   
-	   /**
-	    * Indica el error que se ha producido
-	    * Solo llamar si ha habido error
-	    * @return
-	    */
-	   public CodiError getError(){
-		   return error;
 	   }
 
 	   /**
@@ -275,7 +242,6 @@ public class ControladorDominioEvento extends ControladorDominio {
 		   
 		   if(comprovacionTP(nombreTipoEvento)){
 			   if(conjuntoTipoEvento.get(nombreTipoEvento).esEvento(nombreEvento)){
-				   hasError=true;
 				   error.addClauExterna(nombreEvento);
 				   error.addClauExterna(nombreTipoEvento);
 				   error.setCodiError(8);
@@ -376,8 +342,7 @@ public class ControladorDominioEvento extends ControladorDominio {
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)){
 			   if(esDiputado(nombreDiputado)){
 				   if(!conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).addDiputado(nombreDiputado);
-				   else if(!hasError){
-					   hasError=true;
+				   else if(!super.hasError()){
 					   error.addClauExterna(nombreDiputado);
 					   error.addClauExterna(nombreEvento);
 					   error.addClauExterna(nombreTipoEvento);
@@ -417,8 +382,7 @@ public class ControladorDominioEvento extends ControladorDominio {
 	   public void removeDiputadoEvento(String nombreTipoEvento, String nombreEvento, String nombreDiputado){
 		   if(comprovacionEvento(nombreTipoEvento,nombreEvento)){
 			   if(conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).esParticipante(nombreDiputado))conjuntoTipoEvento.get(nombreTipoEvento).getEvento(nombreEvento).removeDiputado(nombreDiputado);
-			   else if(!hasError){
-					   hasError=true;
+			   else if(!super.hasError()){
 					   error.addClauExterna(nombreDiputado);
 					   error.addClauExterna(nombreEvento);
 					   error.addClauExterna(nombreTipoEvento);
@@ -426,6 +390,30 @@ public class ControladorDominioEvento extends ControladorDominio {
 			   }
 	      }
 	   }
+	   
+	   
+		public Set<TreeSet<String>> getlistatipo(){
+			Set<TreeSet<String>> res= new TreeSet<TreeSet<String>>();
+			for(TipoEvento elem:conjuntoTipoEvento.getAll()){
+				TreeSet<String> linea=new TreeSet<String>();
+				linea.add(elem.getNombre());
+				linea.add(elem.getImportancia().toString());
+				res.add(linea);
+			}
+			return res;
+		}
+		
+		public Set<TreeSet<String>> getlistalevento(String nombreTipoEvento){
+			Set<TreeSet<String>> res= new TreeSet<TreeSet<String>>();
+			
+			for(Evento elem: conjuntoTipoEvento.get(nombreTipoEvento).getEventos()){
+				TreeSet<String> linea=new TreeSet<String>();
+				linea.add(elem.getNombre());
+				linea.add(elem.getFecha().toString());
+				res.add(linea);
+			}
+			return res;
+		}
 	   
 }
 	

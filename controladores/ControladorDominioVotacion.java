@@ -31,6 +31,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 	 */
 	 protected ControladorDominioVotacion() {
 	      // Exists only to defeat instantiation.
+		   super();
 		   conjuntoVotacion=  new Conjunto<Votacion>(Votacion.class);
 		   error = new CodiError();
 		   hasError=false;
@@ -67,14 +68,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 			}
 			 return false;
 		}
-		   /**
-		    * Indica el error que se ha producido
-		    * Solo llamar si ha habido error
-		    * @return
-		    */
-		public CodiError getError(){
-			   return error;
-		}
 		
 		/**
 		 * Modifica la fecha de la Votacion
@@ -109,21 +102,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 			  
 	  }
 	
-	  /**
-	   * Si ha habido un error antes, nos deja los campos correspondientes como sino<br>
-	   * Es necessario llamar esta funcion despues de usar cada funcion que capture un error.
-	   */
-	   public void netejaError(){
-		   hasError=false;
-		   error.netejaCodiError();
-	   }
-	   /**
-	    * Indica si ha habido Error
-	    * @return <i>true<i> si ha error, sino <i>false<i>
-	    */
-		public Boolean getHasError(){
-			return hasError;
-		}
+
 		/**
 		 * Devuelve la fecha de la Votacion
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
@@ -402,6 +381,22 @@ public class ControladorDominioVotacion extends ControladorDominio {
 			 }
 		
 		}
+		
+		public Set<TreeSet<String>> getlistall(){
+			Set<TreeSet<String>> res= new TreeSet<TreeSet<String>>();
+			for(Votacion elem:conjuntoVotacion.getAll()){
+				TreeSet<String> linea=new TreeSet<String>();
+				linea.add(elem.getNombre());
+				linea.add(elem.getImportancia().toString());
+				linea.add(elem.getFecha().toString());
+				res.add(linea);
+			}
+			return res;
+		}
+		
+	
+		
+		
 }
 
 
