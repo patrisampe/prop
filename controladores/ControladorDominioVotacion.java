@@ -22,8 +22,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 
 	private Conjunto<Votacion> conjuntoVotacion;
 	private static ControladorDominioVotacion instance = null;
-	private CodiError error;
-	private Boolean hasError;
 
 	/**
 	 * Crea un nuevo controlador de Dominio Evento
@@ -34,7 +32,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 		   super();
 		   conjuntoVotacion=  new Conjunto<Votacion>(Votacion.class);
 		   error = new CodiError();
-		   hasError=false;
 	   }
 	   
 	   /**
@@ -50,8 +47,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 	
 	 private Boolean comprovaExsitenciaVotacion(String nombreVotacion){
 		 if(conjuntoVotacion.exists(nombreVotacion))return true;
-		 else if(!hasError){
-				   hasError=true;
+		 else if(!hasError()){
 				   error.addClauExterna(nombreVotacion);
 				   error.setCodiError(22);
 			}
@@ -61,8 +57,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 		private Boolean esDiputado(String nombreDiputado){
 			ControladorDominioDiputado CDD=ControladorDominioDiputado.getInstance();
 			if(CDD.existsDiputado(nombreDiputado))return true;
-			else if(!hasError){
-				   hasError=true;
+			else if(!hasError()){
 				   error.addClauExterna(nombreDiputado);
 				   error.setCodiError(3);
 			}
@@ -93,8 +88,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 	  public void setImportanciaVotacion(String nombreVotacion,Integer importancia){
 		  if(comprovaExsitenciaVotacion(nombreVotacion)){
 			   if(Votacion.esValidaImportancia(importancia)) conjuntoVotacion.get(nombreVotacion).setImportancia(importancia);
-			   else if(!hasError){
-				   hasError=true;
+			   else if(!hasError()){
 				   error.setCodiError(9);
 				   error.addClauExterna(importancia.toString());
 			   }
@@ -207,7 +201,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 		 */
 		public void addVotacion(String nombreVotacion, Date fecha,Integer imp, Map<String,TipoVoto> votos){
 			if(conjuntoVotacion.exists(nombreVotacion)){
-				hasError=true;
 				error.addClauExterna(nombreVotacion);
 				error.setCodiError(23);
 			}
@@ -229,7 +222,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 						else return;
 					}
 					if(votos.size()>0){
-						hasError=true;
 						error.addClauExterna(nombreVotacion);
 						Iterator<String> it = votos.keySet().iterator();
 						error.addClauExterna(it.next());
@@ -240,7 +232,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 					conjuntoVotacion.add(aux);
 				}
 				else{
-					hasError=true;
 					error.addClauExterna(nombreVotacion);
 					error.setCodiError(37);
 					return;
@@ -283,8 +274,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 		 */
 		public TipoVoto getVotoDiputado(String nombreVotacion, String nombreDiputado){
 				if(esVotanteEnVotacion(nombreVotacion, nombreDiputado))return conjuntoVotacion.get(nombreVotacion).getVoto(nombreDiputado);
-				else if(!hasError){
-					hasError=true;
+				else if(!hasError()){
 					error.addClauExterna(nombreVotacion);
 					error.setCodiError(24);
 				}
@@ -308,7 +298,6 @@ public class ControladorDominioVotacion extends ControladorDominio {
 				Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
 				if(CDL.existsDiputado(leg, nombreDiputado))conjuntoVotacion.get(nombreVotacion).setaddVoto(nombreDiputado, voto);
 				else{
-						hasError=true;
 						error.addClauExterna(nombreDiputado);
 						error.addClauExterna(nombreVotacion);
 						error.setCodiError(25);
@@ -331,15 +320,13 @@ public class ControladorDominioVotacion extends ControladorDominio {
 							ControladorDominioLegislatura CDL=ControladorDominioLegislatura.getInstance();
 							Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
 							if(CDL.existsDiputado(leg, nombreDiputado)){
-								hasError=true;
 								error.addClauExterna(nombreVotacion);
 								error.addClauExterna(nombreDiputado);
 								error.setCodiError(36);
 							}
 							else conjuntoVotacion.get(nombreVotacion).removeVoto(nombreDiputado);
 				}
-				else if(!hasError){
-					hasError=true;
+				else if(!hasError()){
 					error.addClauExterna(nombreDiputado);
 					error.addClauExterna(nombreVotacion);
 					error.setCodiError(24);
