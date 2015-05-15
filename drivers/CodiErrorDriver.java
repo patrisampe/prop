@@ -1,11 +1,11 @@
 package drivers;
 
 import io.ConsolaEntrada;
-import io.ConsolaSortida;
+import io.ConsolaSalida;
 import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.FicheroEntrada;
+import io.FicheroSalida;
+import io.Salida;
 import utiles.CodiError;
 
 /**
@@ -18,7 +18,7 @@ public class CodiErrorDriver{
 	/**
 	 * @param args
 	 */
-	public void escriureCodiError(Sortida SF,CodiError ce){
+	public void escriureCodiError(Salida SF,CodiError ce){
 		
 	  
 	   SF.Write("ESCRIU CodiError");
@@ -35,11 +35,11 @@ public class CodiErrorDriver{
 		// TODO Auto-generated method stub
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		CodiErrorDriver DCE= new CodiErrorDriver();
-		Sortida SC = new ConsolaSortida();
+		Salida SC = new ConsolaSalida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'error.");
 		CodiError ce=new CodiError();
 		int a= EF.ReadInt();

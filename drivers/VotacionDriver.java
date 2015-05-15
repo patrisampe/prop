@@ -6,11 +6,11 @@ import java.util.TreeMap;
 import time.Date;
 
 import io.ConsolaEntrada;
-import io.ConsolaSortida;
+import io.ConsolaSalida;
 import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.FicheroEntrada;
+import io.FicheroSalida;
+import io.Salida;
 import dominio.TipoVoto;
 import dominio.Votacion;
 /**
@@ -73,7 +73,7 @@ public class VotacionDriver {
 		for(int i=0;i<end;++i)v.removeVoto(dip[i]);
 	}
 	
-	public void esVotante(Entrada EF,Votacion v, Sortida SF){
+	public void esVotante(Entrada EF,Votacion v, Salida SF){
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
@@ -84,7 +84,7 @@ public class VotacionDriver {
 		
 	}
 	
-	public void getVotos(Entrada EF,Votacion v, Sortida SF){
+	public void getVotos(Entrada EF,Votacion v, Salida SF){
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
@@ -95,7 +95,7 @@ public class VotacionDriver {
 		
 	}
 	
-	public void setVotos(Entrada EF,Votacion v, Sortida SF){
+	public void setVotos(Entrada EF,Votacion v, Salida SF){
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
@@ -107,13 +107,13 @@ public class VotacionDriver {
 		
 	}
 	
-	public void testEsValida(Entrada EF, Sortida SF){
+	public void testEsValida(Entrada EF, Salida SF){
 		
 		 Integer imp=EF.ReadInteger();
 		 SF.Write(Votacion.esValidaImportancia(imp));
 	}
 	
-	public void escriureVotacion(Sortida SF, Votacion v){
+	public void escriureVotacion(Salida SF, Votacion v){
 		SF.Write(v.getNombre());
 		SF.Write(v.getFecha().getDay());
 		SF.Write(v.getFecha().getMonth());
@@ -145,11 +145,11 @@ public class VotacionDriver {
 		// TODO Auto-generated method stub
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		VotacionDriver DV= new VotacionDriver();
-		Sortida SC = new ConsolaSortida();
+		Salida SC = new ConsolaSalida();
 		SC.Write("Recorda: Lo primero que hacemos es inicialitzar la votacion.");
 		Votacion v= DV.llegirVotacion(EF);
 		int a= EF.ReadInt();
