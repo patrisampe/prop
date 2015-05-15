@@ -27,8 +27,8 @@ public class Newman {
 	 * @param iterador
 	 *            Integer que indica les iteracions que s'han fet
 	 * @param percentatge
-	 *            Integer de dispersió requerida
-	 * @return Retorna la iteració en la qual hi havia el param de dispersió
+	 *            Integer de dispersiÃ³ requerida
+	 * @return Retorna la iteraciÃ³ en la qual hi havia el param de dispersiÃ³
 	 *         requerit
 	 */
 	private static Integer calculadora(Integer iterador, Integer percentatge) {
@@ -37,20 +37,21 @@ public class Newman {
 	}
 
 	/**
-	 * Retorna el conjunt de comunitats corresponent a l’execució de l’algorisme
-	 * NewmanGirvan a partir del percentatge de dispersió desitjat.
+	 * Retorna el conjunt de comunitats corresponent a lâ€™execuciÃ³ de lâ€™algorisme
+	 * NewmanGirvan a partir del percentatge de dispersiÃ³ desitjat.
 	 * 
 	 * @param G
-	 *            Graf que es tractarà
+	 *            Graf que es tractarÃ 
 	 * @param percentatge
-	 *            Integer que indica el percentatge de dispersió desitjat
-	 * @return Comunitats creades a partir de l'execució amb el parametre de
-	 *         dispersió requerit
+	 *            Integer que indica el percentatge de dispersiÃ³ desitjat
+	 * @return Comunitats creades a partir de l'execuciÃ³ amb el parametre de
+	 *         dispersiÃ³ requerit
 	 */
 	public static HashSet<HashSet<String>> executa(Graf G, Integer percentatge) {
 		ArrayList<HashSet<HashSet<String>>> storage = new ArrayList<HashSet<HashSet<String>>>();
 		int iterador = 0;
 		GrafNewman util = new GrafNewman(G);
+                util.invertirPesos();
 		util.calcularEdgeBetween();
 		while (util.numComunitats() < G.size()) {
 			storage.add(iterador, util.comunitats());
@@ -65,19 +66,23 @@ public class Newman {
 	}
 
 	/**
-	 * Retorna el conjunt de comunitats corresponent a l’execució de l’algorisme
+	 * Retorna el conjunt de comunitats corresponent a lâ€™execuciÃ³ de lâ€™algorisme
 	 * NewmanGirvan a partir del nombre de Comunitats desitjat.
 	 * 
 	 * @param G
-	 *            Graf que es tractarà
+	 *            Graf que es tractarÃ 
 	 * @param numComunidades
-	 *            Integer que indica el max nº de comunitats que es poden crear
-	 * @return Comunitats creades a partir de l'execució ( com a max =
+	 *            Integer que indica el max nÂº de comunitats que es poden crear
+	 * @return Comunitats creades a partir de l'execuciÃ³ ( com a max =
 	 *         numcomunidades comunitats)
 	 */
 	public static HashSet<HashSet<String>> executaNum(Graf G, Integer numComunidades) {
+            
 		GrafNewman util = new GrafNewman(G);
+                util.invertirPesos();
 		util.calcularEdgeBetween();
+		Integer tamany = new Integer(G.getNodes().size());
+		if(numComunidades > tamany) numComunidades = tamany; // En cas de q se'ns demani mes comunitats q nodes, canviem el valor
 		while (util.numComunitats() < numComunidades) {
 			if (!util.esborrarMaxim()) return null; //control d'errors
 			util.calcularEdgeBetween();
@@ -87,18 +92,19 @@ public class Newman {
 	}
 
 	/**
-	 * Retorna el conjunt de comunitats corresponent a l’execució de l’algorisme
-	 * NewmanGirvan a partir del màxim de camins mínims que passen per a
+	 * Retorna el conjunt de comunitats corresponent a lâ€™execuciÃ³ de lâ€™algorisme
+	 * NewmanGirvan a partir del mÃ xim de camins mÃ­nims que passen per a
 	 * qualsevol aresta.
 	 * 
 	 * @param G
-	 *            Graf que es tractarà
+	 *            Graf que es tractarÃ 
 	 * @param maxbetweness
 	 *            Integer que indica la max btw que hi pot haver al graf
-	 * @return Comunitats en les qual cap node tindrá btw > maxbetweness.
+	 * @return Comunitats en les qual cap node tindrÃ¡ btw > maxbetweness.
 	 */
 	public static HashSet<HashSet<String>> executabet(Graf G, Integer maxbetweness) {
 		GrafNewman util = new GrafNewman(G);
+                util.invertirPesos();
 		util.calcularEdgeBetween();
 		int maxactual = util.getMaxBetween(); // Variable amb el valor de maxbtw
 		while (maxactual > maxbetweness) {
