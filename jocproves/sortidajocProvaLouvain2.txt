@@ -1,8 +1,8 @@
 Comunidad 1:
 K, L, M, N
 Comunidad 2:
-I, J
+C, D, E, F
 Comunidad 3:
-A, B, C, D
+G, H, I, J
 Comunidad 4:
-E, F, G, H
+A, B

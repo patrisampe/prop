@@ -1,7 +1,6 @@
 24 88
 
 Patricia
-
 Anna
 Marisa
 Eduard
@@ -89,7 +88,7 @@ Toni Genis 5,5
 Toni Bernat 12,0
 Yoel Toni 85,0
 Yoel Anabel 75,0
-Yoel Jesús 72,0
+Yoel Jesï¿½s 72,0
 Yoel Roser 41,1
 Yoel Anna 42,0
 Yoel Marisa 52,0

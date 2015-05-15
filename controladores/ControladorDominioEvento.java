@@ -15,7 +15,7 @@ import time.DateInterval;
  * @author  Patricia Sampedro
  * @version 1.0 Mayo 2015 
  */
-public class ControladorDominioEvento {
+public class ControladorDominioEvento extends ControladorDominio {
 	private Conjunto<TipoEvento> conjuntoTipoEvento;
 	private static ControladorDominioEvento instance = null;
 	private CodiError error;

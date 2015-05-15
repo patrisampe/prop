@@ -1,8 +1,8 @@
 package dominio.algoritmos;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.TreeMap;
 import java.util.Vector;
 
 public class Louvain {
@@ -10,16 +10,16 @@ public class Louvain {
 	private static HashSet<HashSet<String> > Comunidades;
 	//Potser cal un diccionari<Node, Punter a Comunitat>. Per quan volem saber a quina comunitat pertany un cert node en un cert moment.
 	//O potser no :)
-	private static Vector<TreeMap<String,HashSet<String> > > Historia;
+	private static Vector<HashMap<String,HashSet<String> > > Historia;
 	
 	
 	
 	private static void init(GrafLouvain G)  {
-		Historia = new Vector<TreeMap<String,HashSet<String> > >();
+		Historia = new Vector<HashMap<String,HashSet<String> > >();
 		Comunidades = new HashSet< HashSet<String> >();
 		HashSet<String> Nodes = G.getNodes();
 		Iterator<String> It = Nodes.iterator();
-		TreeMap<String,HashSet<String> > Mapa = new TreeMap<String, HashSet<String>>();
+		HashMap<String,HashSet<String> > Mapa = new HashMap<String, HashSet<String>>();
 		while(It.hasNext()) {
 			HashSet<String> primera = new HashSet<String>();
 			String act = new String(It.next());
@@ -34,7 +34,7 @@ public class Louvain {
 	private static void agregaGraf() {
 		GrafLouvain NouGraf = new GrafLouvain();
 		Iterator<HashSet<String> >  iHS = Comunidades.iterator();
-		TreeMap<String,HashSet<String> > Mapa = new TreeMap<String, HashSet<String>>();
+		HashMap<String, HashSet<String>> Mapa = new HashMap<String, HashSet<String>>();
 		
 		for (Integer i = 0; iHS.hasNext(); ++i) {
 			HashSet<String> Comunidad = new HashSet<String>(iHS.next()); 
@@ -43,7 +43,7 @@ public class Louvain {
 				Mapa.put(i.toString(), Comunidad);
 			}
 		}
-		Historia.addElement(Mapa); //Actualitzem la Història de l'algorisme amb un nou pas
+		Historia.addElement(Mapa); //Actualitzem la Histï¿½ria de l'algorisme amb un nou pas
 		HashSet<String> Nodes = new HashSet<String> (Historia.get(Historia.size()-1).keySet()); //Agafa els noms tots els noms que se li ha donat als diversos nodes agregats de comunitats.
 		Comunidades = HSStoHSHSS(Nodes); //Reiniciem les comunitats a comunitats individuals
 		for (String a : Nodes) { //Omplim d'arestes el NouGraf
@@ -64,36 +64,33 @@ public class Louvain {
 
 	private static boolean IncrementModularity() {
 		HashSet<String> Nodes = G.getNodes();
-		Boolean optimitzada = false;
-		Boolean sehaincrementado = false;
-		while (!optimitzada) {
-			optimitzada = true;
-			for (String Node : Nodes) {
-				HashSet<String> actual = getComunitat(Node);
-				HashSet<String> maxCom = actual;
-				Double max = 0.0;
-				for(String nodeAdjacent : G.getAdjacents(Node)) {
-					HashSet<String> aTractar = getComunitat(nodeAdjacent);
-					if (actual == aTractar) continue;
-					Double Inc = ModularityInc(Node, actual, aTractar);
+		Boolean optimitzada = true;
+		for (String Node : Nodes) {
+			Boolean sehaincrementado = false;
+			HashSet<String> actual = getComunitat(Node);
+			HashSet<String> maxCom = actual;
+			Double max = 0.0;
+			for(String nodeAdjacent : G.getAdjacents(Node)) {
+				HashSet<String> aTractar = getComunitat(nodeAdjacent);
+				if (actual == aTractar) continue;
+				Double Inc = ModularityInc(Node, actual, aTractar);
+				//sC.Write(Inc);
+				if (Inc > max) {
 					//sC.Write(Inc);
-					if (Inc > max) {
-						//sC.Write(Inc);
-						max = Inc;
-						maxCom = aTractar;
-						optimitzada = false;
-						
-					}
-				}
-				if (!optimitzada) {  
-					actual.remove(Node);
-					maxCom.add(Node);
+					max = Inc;
+					maxCom = aTractar;
 					sehaincrementado = true;
-					if (actual.size() == 0) Comunidades.remove(actual);
+					
 				}
 			}
+			if (sehaincrementado) {  
+				actual.remove(Node);
+				maxCom.add(Node);
+				optimitzada = false;
+				if (actual.size() == 0) Comunidades.remove(actual);
+			}
 		}
-		return sehaincrementado;
+		return !optimitzada;
 	}
 	
 	private static Double ModularityInc(String node, HashSet<String> origen,
@@ -114,7 +111,7 @@ public class Louvain {
 		for (HashSet<String> Comunidad : Comunidades) {
 			if (Comunidad.contains(node)) return Comunidad;
 		}
-		return null; //Nunca llegará aquí.
+		return null; //Nunca llegarï¿½ aquï¿½.
 		
 	}
 
@@ -158,12 +155,12 @@ public class Louvain {
 		return Plant;
 	}
 	/**
-	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'aturés.
+	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'aturï¿½s.
 	 * @param sC 
 	 * @param sC 
-	 * @param Gr Graf sobre el que s'executarà l'algorisme.
+	 * @param Gr Graf sobre el que s'executarï¿½ l'algorisme.
 	 * @param percentatge 
-	 * @return Conjunt de Comunitats resultant de l'execució.
+	 * @return Conjunt de Comunitats resultant de l'execuciï¿½.
 	 */
 	public static HashSet< HashSet<String> > executa(Graf Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);

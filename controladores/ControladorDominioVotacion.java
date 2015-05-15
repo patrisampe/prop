@@ -18,7 +18,7 @@ import dominio.Votacion;
  * @author  Patricia Sampedro
  * @version 1.0 Mayo 2015 
  */
-public class ControladorDominioVotacion {
+public class ControladorDominioVotacion extends ControladorDominio {
 
 	private Conjunto<Votacion> conjuntoVotacion;
 	private static ControladorDominioVotacion instance = null;
