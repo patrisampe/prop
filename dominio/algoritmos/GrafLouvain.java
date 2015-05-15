@@ -7,8 +7,8 @@ public class GrafLouvain extends Graf {
 	
 	private Double sumaFila(Integer i) {
 		Double sum = 0.0;
-		for (Integer j = 0; j < Matriu.get(0).size(); ++j) {
-			sum += Matriu.get(i).get(j);
+		for (Double pes : llista.adjacents(i).values()) {
+			sum += pes;
 		}
 		return sum;
 	}
@@ -50,10 +50,10 @@ public class GrafLouvain extends Graf {
 	 */
 	public Double sumaPesos() {
 		Double sum = 0.0;
-		for (Integer i = 0; i < Matriu.size(); ++i) {
+		for (Integer i = 0; i < llista.size(); ++i) {
 			sum += sumaFila(i);
 		}
-		if (Matriu.size() == 0) return -1.0;
+		if (llista.size() == 0) return -1.0;
 		return sum/2;
 	}
 	
@@ -95,9 +95,9 @@ public class GrafLouvain extends Graf {
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
 		Integer Posicio = Diccionari.get(id);
-		for (Integer i = 0; i < Matriu.size(); ++i) {
+		for (Integer i = 0; i < llista.size(); ++i) {
 			if (Comunitat.contains(DiccionariInvers.get(i))) {
-				sum += Matriu.get(Posicio).get(i);
+				sum += llista.get(Posicio,i);
 			}
 		}
 		return sum;

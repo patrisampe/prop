@@ -16,7 +16,7 @@ public class Graf {
 	protected Map<Integer,String> DiccionariInvers;
 	protected LlistaAdjacencia llista;
 	
-	private class LlistaAdjacencia {
+	protected class LlistaAdjacencia {
 		private Vector< HashMap<Integer,Double> > lista;
 		public LlistaAdjacencia() {
 			lista = new Vector< HashMap<Integer,Double> >();
@@ -48,7 +48,7 @@ public class Graf {
 			for (int i = 0; i < lista.size(); ++i) {
 				lista.get(i).remove(index);
 			}
-			lista.remove(index);
+			lista.remove((int) index);
 		}
 		public int size() {
 			return lista.size();
@@ -59,6 +59,9 @@ public class Graf {
 		}
 		public void remove(Integer i, Integer j) {
 			set(i,j,0.0);
+		}
+		public HashMap<Integer,Double> adjacents(Integer i) {
+			return lista.get(i);
 		}
 		
 	}
