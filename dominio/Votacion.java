@@ -175,7 +175,9 @@ public class Votacion extends ObjetoDominio {
 		votos.remove(nombreDiputado);
 	}
 	
-	
+	public int compareTo(Votacion V) {
+		return fecha.compareTo(V.getFecha());
+	}
 	
 }
 

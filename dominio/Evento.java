@@ -120,6 +120,9 @@ public class Evento extends ObjetoDominio{
 		diputados.remove(nombreDiputado);
 	}
 	
+	public int compareTo(Evento E) {
+		return fecha.compareTo(E.getFecha());
+	}
 	
 }
 
