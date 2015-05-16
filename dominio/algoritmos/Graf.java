@@ -64,14 +64,8 @@ public class Graf {
 		 * @param value pes
 		 */
 		public void set(Integer i, Integer j, Double value) {
-			if(exists(i,j)) {
-				lista.get(i).replace(j, value);
-				lista.get(j).replace(i, value);
-			}
-			else {
 				lista.get(i).put(j, value);
 				lista.get(j).put(i, value);
-			}
 		}
 		
 		/**
@@ -104,12 +98,13 @@ public class Graf {
 		
 		/**
 		 * Remove de adyacencia.
-		 * Pone a 0 la adyacencia entre i y j.
+		 * Elimina la adyacencia entre i y j.
 		 * @param i
 		 * @param j
 		 */
 		public void remove(Integer i, Integer j) {
-			set(i,j,0.0);
+			lista.get(i).remove(j);
+			lista.get(j).remove(i);
 		}
 		
 		/**
