@@ -1,9 +1,9 @@
 package dominio.algoritmos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * La classe Graf implementa un graf ponderat no dirigit on els nodes són Strings.
@@ -17,12 +17,12 @@ public class Graf {
 	protected LlistaAdjacencia llista;
 	
 	protected class LlistaAdjacencia {
-		private Vector< HashMap<Integer,Double> > lista;
+		private ArrayList< HashMap<Integer,Double> > lista;
 		/**
 		 * Creadora per defecte.
 		 */
 		public LlistaAdjacencia() {
-			lista = new Vector< HashMap<Integer,Double> >();
+			lista = new ArrayList< HashMap<Integer,Double> >();
 		}
 		
 		/**
@@ -30,7 +30,7 @@ public class Graf {
 		 * @param l llista a copiar
 		 */
 		public LlistaAdjacencia(LlistaAdjacencia l) {
-			lista = new Vector< HashMap<Integer,Double> >(l.lista.size());
+			lista = new ArrayList< HashMap<Integer,Double> >(l.lista.size());
 			for (int i = 0; i < l.lista.size();++i) {
 				lista.add(new HashMap<Integer,Double>(l.lista.get(i)));
 			}
@@ -69,11 +69,21 @@ public class Graf {
 		}
 		
 		/**
+		 * Modificadora de pes dirigit, de i a j
+		 * @param i
+		 * @param j
+		 * @param value
+		 */
+		public void setDirected(Integer i, Integer j, Double value) {
+			lista.get(i).put(j, value);
+		}
+		
+		/**
 		 * Elimina el node amb index index
 		 * @param index
 		 */
 		public void remove(Integer index) {
-			for (int i = 0; i < lista.size(); ++i) {
+			for (Integer i : lista.get(index).keySet()) {
 				lista.get(i).remove(index);
 			}
 			lista.remove((int) index);
@@ -138,8 +148,8 @@ public class Graf {
 	}
 	
 	/**
-	 * Creadora per c�pia a partir d'un Graf.
-	 * @param G Graf que es copiar�.
+	 * Creadora per còpia a partir d'un Graf.
+	 * @param G Graf que es copiarà.
 	 */
 	public Graf(Graf G) {
 		Diccionari = new HashMap<String,Integer>(G.Diccionari);
@@ -187,7 +197,7 @@ public class Graf {
 		Integer Size = llista.size();
 		llista.remove(Posicio);
 		Diccionari.remove(id);
-		for (Integer i = Posicio; i < Size-1; ++i) {//TODO Corregir errores
+		for (Integer i = Posicio; i < Size-1; ++i) {//TODO Intentar hacerlo más eficiente
 			String iString = DiccionariInvers.get(i+1);
 			Diccionari.put(iString,i);
 			DiccionariInvers.put(i, iString);
@@ -199,7 +209,7 @@ public class Graf {
 	
 	/**
 	 * 
-	 * @param id Node a comprovar la exist�ncia.
+	 * @param id Node a comprovar la existència.
 	 * @return true si existeix, false altrament.
 	 */
 	public Boolean existeixNode(String id) {
@@ -277,9 +287,8 @@ public class Graf {
 		HashSet<String> Cjt = new HashSet<String>();
 		if(!existeixNode(id)) return Cjt;
 		Integer Posicio = Diccionari.get(id);
-		Integer N = llista.size();
-		for(Integer j = 0; j < N; ++j) {
-			if (llista.get(Posicio,j) > 0.0) Cjt.add(DiccionariInvers.get(j));
+		for(Integer index : llista.adjacents(Posicio).keySet()) {
+			Cjt.add(DiccionariInvers.get(index));
 		}
 		return Cjt;
 	}

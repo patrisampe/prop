@@ -43,7 +43,7 @@ public class Louvain {
 				Mapa.put(i.toString(), Comunidad);
 			}
 		}
-		Historia.addElement(Mapa); //Actualitzem la Hist�ria de l'algorisme amb un nou pas
+		Historia.addElement(Mapa); //Actualitzem la Història de l'algorisme amb un nou pas
 		HashSet<String> Nodes = new HashSet<String> (Historia.get(Historia.size()-1).keySet()); //Agafa els noms tots els noms que se li ha donat als diversos nodes agregats de comunitats.
 		Comunidades = HSStoHSHSS(Nodes); //Reiniciem les comunitats a comunitats individuals
 		for (String a : Nodes) { //Omplim d'arestes el NouGraf
@@ -111,7 +111,7 @@ public class Louvain {
 		for (HashSet<String> Comunidad : Comunidades) {
 			if (Comunidad.contains(node)) return Comunidad;
 		}
-		return null; //Nunca llegar� aqu�.
+		return null; //Nunca llegará aquí.
 		
 	}
 
@@ -155,12 +155,10 @@ public class Louvain {
 		return Plant;
 	}
 	/**
-	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'atur�s.
-	 * @param sC 
-	 * @param sC 
-	 * @param Gr Graf sobre el que s'executar� l'algorisme.
+	 * Executa l'algorisme Louvain fent el percentatge% dels passos que faria l'algorisme si no se l'aturés.
+	 * @param Gr Graf sobre el que s'executarà l'algorisme.
 	 * @param percentatge 
-	 * @return Conjunt de Comunitats resultant de l'execuci�.
+	 * @return Conjunt de Comunitats resultant de l'execució.
 	 */
 	public static HashSet< HashSet<String> > executa(Graf Gr, Integer percentatge) {
 		G = new GrafLouvain(Gr);

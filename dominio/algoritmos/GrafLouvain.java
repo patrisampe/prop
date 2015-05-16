@@ -65,9 +65,8 @@ public class GrafLouvain extends Graf {
 	public Double sumaPesos(HashSet<String> Comunitat) {
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
-		Iterator<String> it = Comunitat.iterator();
-		while(it.hasNext()) {
-			Double sumi = sumaPesosAdjacents(it.next(), Comunitat);
+		for(String node: Comunitat) {
+			Double sumi = sumaPesosAdjacents(node, Comunitat);
 			if (sumi > 0) sum += sumi;
 		}
 		return sum;
@@ -95,10 +94,8 @@ public class GrafLouvain extends Graf {
 		if (Comunitat.isEmpty()) return -1.0;
 		Double sum = 0.0;
 		Integer Posicio = Diccionari.get(id);
-		for (Integer i = 0; i < llista.size(); ++i) {
-			if (Comunitat.contains(DiccionariInvers.get(i))) {
-				sum += llista.get(Posicio,i);
-			}
+		for (String nodeC : Comunitat) {
+			sum += llista.get(Posicio,Diccionari.get(nodeC));
 		}
 		return sum;
 	}
@@ -113,9 +110,9 @@ public class GrafLouvain extends Graf {
 		if (C1.isEmpty() || C2.isEmpty()) return -1.0;
 		if (C1 == C2) return sumaPesos(C1);
 		Double sum = 0.0;
-		Iterator<String> it = C1.iterator();
-		while(it.hasNext()) {
-			Double sumi = sumaPesosAdjacents(it.next(), C2);
+
+		for (String nodeC1 : C1) {
+			Double sumi = sumaPesosAdjacents(nodeC1, C2);
 			if (sumi > 0) sum += sumi;
 		}
 		return sum;
