@@ -1,0 +1,114 @@
+Votacion1
+2
+10
+1995
+4
+Diputados de la votacion
+Juan, Pepito
+Diputados que votan ABSTENCION
+Juan
+Diputados que votan A_FAVOR
+Pepito
+Diputados que votan AUSENCIA
+Diputados que votan EN_CONTRA
+Diputados y votos
+Diputado Juan voto ABSTENCION
+Diputado Pepito voto A_FAVOR
+ 
+Pepito,true
+Juan,true
+Patricia,false
+ 
+false
+true
+Votacion1
+3
+11
+1997
+4
+Diputados de la votacion
+Juan, Pepito
+Diputados que votan ABSTENCION
+Juan
+Diputados que votan A_FAVOR
+Pepito
+Diputados que votan AUSENCIA
+Diputados que votan EN_CONTRA
+Diputados y votos
+Diputado Juan voto ABSTENCION
+Diputado Pepito voto A_FAVOR
+ 
+Votacion2
+3
+11
+1997
+2
+Diputados de la votacion
+Juan, Pepito
+Diputados que votan ABSTENCION
+Juan
+Diputados que votan A_FAVOR
+Pepito
+Diputados que votan AUSENCIA
+Diputados que votan EN_CONTRA
+Diputados y votos
+Diputado Juan voto ABSTENCION
+Diputado Pepito voto A_FAVOR
+ 
+ 
+Votacion1
+3
+11
+1997
+2
+Diputados de la votacion
+Cristina, Juan, Pepito
+Diputados que votan ABSTENCION
+Diputados que votan A_FAVOR
+Pepito
+Diputados que votan AUSENCIA
+Juan
+Diputados que votan EN_CONTRA
+Cristina
+Diputados y votos
+Diputado Cristina voto EN_CONTRA
+Diputado Juan voto AUSENCIA
+Diputado Pepito voto A_FAVOR
+ 
+Votacion3
+3
+4
+2005
+2
+Diputados de la votacion
+maria
+Diputados que votan ABSTENCION
+maria
+Diputados que votan A_FAVOR
+Diputados que votan AUSENCIA
+Diputados que votan EN_CONTRA
+Diputados y votos
+Diputado maria voto ABSTENCION
+ 
+Juan,AUSENCIA
+Cristina,EN_CONTRA
+Pepito,A_FAVOR
+ 
+Votacion1
+3
+11
+1997
+2
+Diputados de la votacion
+Pepito
+Diputados que votan ABSTENCION
+Diputados que votan A_FAVOR
+Pepito
+Diputados que votan AUSENCIA
+Diputados que votan EN_CONTRA
+Diputados y votos
+Diputado Pepito voto A_FAVOR
+ 
+Juan,false
+Cristina,false
+ 

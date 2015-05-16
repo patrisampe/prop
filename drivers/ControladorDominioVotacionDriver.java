@@ -6,15 +6,16 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import time.Date;
+import utiles.CodiError;
 import controladores.ControladorDominioDiputado;
 import controladores.ControladorDominioLegislatura;
 import controladores.ControladorDominioVotacion;
 import io.ConsolaEntrada;
-import io.ConsolaSortida;
+import io.ConsolaSalida;
 import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.FicheroEntrada;
+import io.FicheroSalida;
+import io.Salida;
 import dominio.Diputado;
 import dominio.Legislatura;
 import dominio.TipoVoto;
@@ -40,21 +41,19 @@ public class ControladorDominioVotacionDriver {
 			}
 	}
 	
-	public Boolean testError(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
-		if(CDV.getHasError()){
+	public Boolean testError(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
+		if(CDV.hasError()){
 			SF.Write("ERROR. El mensaje y el codigo: ");
-			SF.Write(CDV.getError().getMensajeError());
-			SF.Write(CDV.getError().getCodiError());
-			CDV.netejaError();
-			//SF.Write(CDV.getError().getMensajeError());
-			//SF.Write(CDV.getError().getCodiError());
+			CodiError ce= CDV.getError();
+			SF.Write(ce.getMensajeError());
+			SF.Write(ce.getCodiError());
 			return true;
 		}
 		SF.Write("Todo ha ido bien!");
 		return false;
 	}
 	
-	public void testsetImportanciaVotacion(Entrada EF,Sortida SF, ControladorDominioVotacion CDV){
+	public void testsetImportanciaVotacion(Entrada EF,Salida SF, ControladorDominioVotacion CDV){
 		
 		String nombre=EF.ReadString();
 		Integer imp=EF.ReadInteger();
@@ -62,7 +61,7 @@ public class ControladorDominioVotacionDriver {
 		testError(EF,SF,CDV);
 	}
 	
-	public void testgetImportanciaVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetImportanciaVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		
 		String nombre=EF.ReadString();
 		Integer imp=CDV.getImportanciaVotacion(nombre);
@@ -72,7 +71,7 @@ public class ControladorDominioVotacionDriver {
 		}
 	}
 	
-	public void testsetFechaVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testsetFechaVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrete=EF.ReadString();
 		Integer Day=EF.ReadInteger();
 	    Integer Month=EF.ReadInteger();
@@ -82,7 +81,7 @@ public class ControladorDominioVotacionDriver {
 		testError(EF,SF,CDV);
 	}
 	
-	public void testgetFechaVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetFechaVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrete=EF.ReadString();
 	    Date Data=CDV.getFechaVotacion(nombrete);
 		if(!testError(EF,SF,CDV)){
@@ -93,7 +92,7 @@ public class ControladorDominioVotacionDriver {
 	}
 	
 	
-	public void testgetDipVotacions(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetDipVotacions(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		
 		String nombredip=EF.ReadString();
 		Set<String> dip=CDV.getDiputadosVotacion(nombredip);
@@ -104,7 +103,7 @@ public class ControladorDominioVotacionDriver {
 		}
 	}
 	
-	public void testgetDipVotacionsTV(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetDipVotacionsTV(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		
 		String nombredip=EF.ReadString();
 		Integer id=EF.ReadInteger();
@@ -116,7 +115,7 @@ public class ControladorDominioVotacionDriver {
 		}
 	}
 	
-	public void testesVotanteVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testesVotanteVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrev=EF.ReadString();
 		String nombredip=EF.ReadString();
 	    Boolean b=CDV.esVotanteEnVotacion(nombrev, nombredip);
@@ -125,7 +124,7 @@ public class ControladorDominioVotacionDriver {
 		}
 	}
 	
-	public void testgetVotacionesData(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetVotacionesData(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		
 	    Integer Day=EF.ReadInteger();
 	    Integer Month=EF.ReadInteger();
@@ -142,24 +141,24 @@ public class ControladorDominioVotacionDriver {
 			SF.Write(" ");
 		}
 	}
-	public void testremoveDiputado(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testremoveDiputado(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombredip=EF.ReadString();
 		CDV.removeDiputado(nombredip);
 		testError(EF,SF,CDV);
 	}
 	
-	public void testremoveVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testremoveVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrevot=EF.ReadString();
 		CDV.removeVotacion(nombrevot);
 		testError(EF,SF,CDV);
 	}
 	
-	public void testesVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testesVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrevot=EF.ReadString();
 		SF.Write(CDV.esVotacion(nombrevot));
 	}
 	
-	public void testaddVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testaddVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		VotacionDriver ED=new VotacionDriver();
 		Votacion e=ED.llegirVotacion(EF);
 		CDV.addVotacion(e.getNombre(), e.getFecha(), e.getImportancia(),e.getVotos());
@@ -167,7 +166,7 @@ public class ControladorDominioVotacionDriver {
 		testError(EF,SF,CDV);
 	}
 	
-	public void testgetVotos(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetVotos(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrevot=EF.ReadString();
 		Map<String,TipoVoto> a= CDV.getVotos(nombrevot);
 		if(!testError(EF,SF,CDV)){
@@ -177,7 +176,7 @@ public class ControladorDominioVotacionDriver {
 		}
 	}
 	
-	public void testgetVotosdiputado(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testgetVotosdiputado(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrevot=EF.ReadString();
 		String dip=EF.ReadString();
 		TipoVoto aux= CDV.getVotoDiputado(nombrevot, dip);
@@ -187,7 +186,7 @@ public class ControladorDominioVotacionDriver {
 	}
 	
 	
-	public void testaddDiputadosVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testaddDiputadosVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrevotacion=EF.ReadString();
 		String nombreDiputado=EF.ReadString();
 		Integer tipovoto=EF.ReadInteger();
@@ -195,14 +194,14 @@ public class ControladorDominioVotacionDriver {
 		testError(EF,SF,CDV);
 	}
 	
-	public void testremoveDiputadosVotacion(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testremoveDiputadosVotacion(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		String nombrevotacion=EF.ReadString();;
 		String nombredip=EF.ReadString();
 	    CDV.removeVotoDiputado(nombrevotacion, nombredip);
 		testError(EF,SF,CDV);
 	}
 	
-	public void testescriureControlador(Entrada EF, Sortida SF, ControladorDominioVotacion CDV){
+	public void testescriureControlador(Entrada EF, Salida SF, ControladorDominioVotacion CDV){
 		Set<String> vot=CDV.getVotaciones();
 		int mida=vot.size();
 		SF.Write(mida,vot.toArray(new String[mida]));
@@ -217,11 +216,11 @@ public class ControladorDominioVotacionDriver {
 		// TODO Auto-generated method stub
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		ControladorDominioVotacionDriver DCDV= new ControladorDominioVotacionDriver();
-		Sortida SC = new ConsolaSortida();
+		Salida SC = new ConsolaSalida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
 		ControladorDominioVotacion CDV=ControladorDominioVotacion.getInstance();
 		int a= EF.ReadInt();

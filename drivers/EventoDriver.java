@@ -7,11 +7,11 @@ import java.util.TreeSet;
 import time.Date;
 
 import io.ConsolaEntrada;
-import io.ConsolaSortida;
+import io.ConsolaSalida;
 import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.FicheroEntrada;
+import io.FicheroSalida;
+import io.Salida;
 import dominio.Evento;
 
 /**
@@ -57,7 +57,7 @@ public class EventoDriver {
 		for(int i=0;i<end;++i)e.removeDiputado(dip[i]);
 	}
 	
-	public void esParticipante(Entrada EF,Evento e, Sortida SF){
+	public void esParticipante(Entrada EF,Evento e, Salida SF){
 		
 		int end=EF.ReadInt();
 		String dip[]=EF.ReadString(end);
@@ -68,7 +68,7 @@ public class EventoDriver {
 		
 	}
 	
-	public void escriureEvento(Sortida SF, Evento e){
+	public void escriureEvento(Salida SF, Evento e){
 		SF.Write(e.getNombre());
 		SF.Write(e.getFecha().getDay());
 		SF.Write(e.getFecha().getMonth());
@@ -84,11 +84,11 @@ public class EventoDriver {
 		// TODO Auto-generated method stub
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		EventoDriver DE= new EventoDriver();
-		Sortida SC = new ConsolaSortida();
+		Salida SC = new ConsolaSalida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
 		Evento e= DE.llegirEvento(EF);
 		int a= EF.ReadInt();

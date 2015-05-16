@@ -4,14 +4,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import time.Date;
+import utiles.CodiError;
 import controladores.ControladorDominioDiputado;
 import controladores.ControladorDominioEvento;
 import io.ConsolaEntrada;
-import io.ConsolaSortida;
+import io.ConsolaSalida;
 import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.FicheroEntrada;
+import io.FicheroSalida;
+import io.Salida;
 import dominio.Diputado;
 import dominio.Evento;
 /**
@@ -21,25 +22,25 @@ import dominio.Evento;
  */
 public class ControladorDominioEventoDriver {
 
-	public Boolean testError(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
-		if(CDE.getHasError()){
+	public Boolean testError(Entrada EF, Salida SF, ControladorDominioEvento CDE){
+		if(CDE.hasError()){
 			SF.Write("ERROR");
-			SF.Write(CDE.getError().getMensajeError());
-			CDE.netejaError();
+			CodiError ce=CDE.getError();
+			SF.Write(ce.getMensajeError());
 			return true;
 		}
 		else SF.Write("OK");
 		return false;
 	}
 	
-	public void testaddTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testaddTipoEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		
 		String nombre=EF.ReadString();
 		Integer imp=EF.ReadInteger();
 		CDE.addTipoEvento(nombre, imp);
 		testError(EF,SF,CDE);
 	}
-	public void testsetImportanciaTipoEvento(Entrada EF,Sortida SF, ControladorDominioEvento CDE){
+	public void testsetImportanciaTipoEvento(Entrada EF,Salida SF, ControladorDominioEvento CDE){
 		
 		String nombre=EF.ReadString();
 		Integer imp=EF.ReadInteger();
@@ -47,7 +48,7 @@ public class ControladorDominioEventoDriver {
 		testError(EF,SF,CDE);
 	}
 	
-	public void testgetImportanciaTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testgetImportanciaTipoEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		
 		String nombre=EF.ReadString();
 		Integer imp=CDE.getImportanciaTipoEvento(nombre);
@@ -56,7 +57,7 @@ public class ControladorDominioEventoDriver {
 		}
 	}
 	
-	public void testgetEventos(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testgetEventos(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		
 		String nombre=EF.ReadString();
 		Set<String> ev=CDE.getEventos(nombre);
@@ -66,7 +67,7 @@ public class ControladorDominioEventoDriver {
 			SF.Write(" ");
 		}
 	}
-	public void testgetEventosData(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testgetEventosData(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		
 		String nombre=EF.ReadString();
 	    Integer Day=EF.ReadInteger();
@@ -85,24 +86,24 @@ public class ControladorDominioEventoDriver {
 		}
 	}
 	
-	public void testremoveDiputado(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testremoveDiputado(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombredip=EF.ReadString();
 		CDE.removeDiputado(nombredip);
 		testError(EF,SF,CDE);
 	}
 	
-	public void testremoveTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testremoveTipoEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		CDE.removeTipoEvento(nombrete);
 		testError(EF,SF,CDE);
 	}
 	
-	public void testesTipoEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testesTipoEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		SF.Write(CDE.esTipoEvento(nombrete));
 	}
 	
-	public void testaddEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testaddEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		EventoDriver ED=new EventoDriver();
 		Evento e=ED.llegirEvento(EF);
@@ -110,14 +111,14 @@ public class ControladorDominioEventoDriver {
 		testError(EF,SF,CDE);
 	}
 	
-	public void testremoveEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testremoveEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 		CDE.removeEvento(nombrete, nombreev);
 		testError(EF,SF,CDE);
 	}
 	
-	public void testesEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testesEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 		Boolean b=CDE.esEvento(nombrete, nombreev);
@@ -126,7 +127,7 @@ public class ControladorDominioEventoDriver {
 		}
 	}
 	
-	public void testsetFechaEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testsetFechaEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 		Integer Day=EF.ReadInteger();
@@ -137,7 +138,7 @@ public class ControladorDominioEventoDriver {
 		testError(EF,SF,CDE);
 	}
 	
-	public void testgetFechaEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testgetFechaEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 	    Date Data=CDE.getFechaEvento(nombrete, nombreev);
@@ -148,7 +149,7 @@ public class ControladorDominioEventoDriver {
 		}
 	}
 	
-	public void testgetDiputadosEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testgetDiputadosEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 	    Set<String> diputados=CDE.getDiputadosEvento(nombrete, nombreev);
@@ -158,7 +159,7 @@ public class ControladorDominioEventoDriver {
 		}
 	}
 	
-	public void testaddDiputadosEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testaddDiputadosEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 		String nombredip=EF.ReadString();
@@ -166,7 +167,7 @@ public class ControladorDominioEventoDriver {
 		testError(EF,SF,CDE);
 	}
 	
-	public void testremoveDiputadosEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testremoveDiputadosEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 		String nombredip=EF.ReadString();
@@ -174,7 +175,7 @@ public class ControladorDominioEventoDriver {
 		testError(EF,SF,CDE);
 	}
 	
-	public void testesParticipanteEvento(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testesParticipanteEvento(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		String nombrete=EF.ReadString();
 		String nombreev=EF.ReadString();
 		String nombredip=EF.ReadString();
@@ -184,7 +185,7 @@ public class ControladorDominioEventoDriver {
 		}
 	}
 	
-	public void testescriureControlador(Entrada EF, Sortida SF, ControladorDominioEvento CDE){
+	public void testescriureControlador(Entrada EF, Salida SF, ControladorDominioEvento CDE){
 		Set<String> diputados=CDE.getTipoEvento();
 		int mida=diputados.size();
 		SF.Write(mida,diputados.toArray(new String[mida]));
@@ -199,11 +200,11 @@ public class ControladorDominioEventoDriver {
 		// TODO Auto-generated method stub
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		ControladorDominioEventoDriver DCDE= new ControladorDominioEventoDriver();
-		Sortida SC = new ConsolaSortida();
+		Salida SC = new ConsolaSalida();
 		SC.Write("Recorda: El primer que fem es inicialitzar l'event.");
 		ControladorDominioEvento CDE=ControladorDominioEvento.getInstance();
 		int a= EF.ReadInt();

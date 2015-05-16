@@ -2,11 +2,11 @@ package drivers;
 
 import java.util.Set;
 import io.ConsolaEntrada;
-import io.ConsolaSortida;
+import io.ConsolaSalida;
 import io.Entrada;
-import io.FitxerEntrada;
-import io.FitxerSortida;
-import io.Sortida;
+import io.FicheroEntrada;
+import io.FicheroSalida;
+import io.Salida;
 import dominio.Evento;
 import dominio.TipoEvento;
 /**
@@ -28,36 +28,36 @@ public class TipoEventoDriver {
 	    te.setImportancia(imp);
 	}
 	
-	public void testEsValida(Entrada EF, Sortida SF){
+	public void testEsValida(Entrada EF, Salida SF){
 		
 		 Integer imp=EF.ReadInteger();
 		 SF.Write(TipoEvento.esValidaImportancia(imp));
 	}
-	public void testesEvento(Entrada EF, Sortida SF, TipoEvento te){
+	public void testesEvento(Entrada EF, Salida SF, TipoEvento te){
 		
 		String ev=EF.ReadString();
 		SF.Write(te.esEvento(ev));
 	}
-	public void testremoveEvento(Entrada EF, Sortida SF, TipoEvento te){
+	public void testremoveEvento(Entrada EF, Salida SF, TipoEvento te){
 		
 		String ev=EF.ReadString();
 		te.removeEvento(ev);
 	}
-	public void testaddEvento(Entrada EF, Sortida SF, TipoEvento te){
+	public void testaddEvento(Entrada EF, Salida SF, TipoEvento te){
 		
 		EventoDriver ED= new EventoDriver();
 		Evento e=ED.llegirEvento(EF);
 		te.addEvento(e);
 	}
 	
-	public void testGetEvento(Entrada EF, Sortida SF, TipoEvento te){
+	public void testGetEvento(Entrada EF, Salida SF, TipoEvento te){
 		EventoDriver ED= new EventoDriver();
 		String ev=EF.ReadString();
 		Evento e=te.getEvento(ev);
 		ED.escriureEvento(SF, e);
 	}
 	
-	public void testGetEventos(Entrada EF, Sortida SF,TipoEvento te){
+	public void testGetEventos(Entrada EF, Salida SF,TipoEvento te){
 		EventoDriver ED= new EventoDriver();
 		Set<Evento> e=te.getEventos();
 		for(Evento elem :e){
@@ -65,7 +65,7 @@ public class TipoEventoDriver {
 		}
 	}
 	
-	public void escriureTipoEvento(Sortida SF, TipoEvento te){
+	public void escriureTipoEvento(Salida SF, TipoEvento te){
 		SF.Write(te.getNombre());
 		SF.Write(te.getImportancia());
 		int mida=te.getNombreEventos().size();
@@ -79,11 +79,11 @@ public class TipoEventoDriver {
 		// TODO Auto-generated method stub
 		Entrada EC = new ConsolaEntrada();
 		String Input = EC.ReadString();
-		Entrada EF = new FitxerEntrada(Input);
+		Entrada EF = new FicheroEntrada(Input);
 		String Output = EC.ReadString();
-		Sortida SF = new FitxerSortida(Output);
+		Salida SF = new FicheroSalida(Output);
 		TipoEventoDriver DTE= new TipoEventoDriver();
-		Sortida SC = new ConsolaSortida();
+		Salida SC = new ConsolaSalida();
 		SC.Write("Recorda: Lo primero que hacemos es inicializar tipo evento.");
 		TipoEvento te= DTE.llegirTipoEvento(EF);
 		int a= EF.ReadInt();
