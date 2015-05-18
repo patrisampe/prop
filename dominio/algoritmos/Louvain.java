@@ -8,6 +8,7 @@ import java.util.Vector;
 public class Louvain {
 	private static GrafLouvain G;
 	private static HashSet<HashSet<String> > Comunidades;
+	private static HashMap<String,HashSet<String>> Pertenencia;
 	//Potser cal un diccionari<Node, Punter a Comunitat>. Per quan volem saber a quina comunitat pertany un cert node en un cert moment.
 	//O potser no :)
 	private static Vector<HashMap<String,HashSet<String> > > Historia;
@@ -18,20 +19,31 @@ public class Louvain {
 		Historia = new Vector<HashMap<String,HashSet<String> > >();
 		Comunidades = new HashSet< HashSet<String> >();
 		HashSet<String> Nodes = G.getNodes();
-		Iterator<String> It = Nodes.iterator();
 		HashMap<String,HashSet<String> > Mapa = new HashMap<String, HashSet<String>>();
-		while(It.hasNext()) {
+		for (String node : Nodes) {
 			HashSet<String> primera = new HashSet<String>();
-			String act = new String(It.next());
+			String act = new String(node);
 			primera.add(act);
 			Comunidades.add(primera);
 			Mapa.put(act, primera);
 			
 		}
 		Historia.addElement(Mapa);
+		calcPertenencia();
 	}
 	
-	private static void agregaGraf() {
+	private static void calcPertenencia() {
+		Pertenencia = new HashMap<String,HashSet<String>>();
+		for (HashSet<String> Comunidad : Comunidades) {
+			for (String Node : Comunidad) {
+				Pertenencia.put(Node, Comunidad);
+			}
+		}
+		
+	}
+
+	private static void agregaGraf(long t) {
+		System.out.println("Agregando Grafo "+(System.currentTimeMillis()-t)+"ms");
 		GrafLouvain NouGraf = new GrafLouvain();
 		Iterator<HashSet<String> >  iHS = Comunidades.iterator();
 		HashMap<String, HashSet<String>> Mapa = new HashMap<String, HashSet<String>>();
@@ -43,13 +55,24 @@ public class Louvain {
 				Mapa.put(i.toString(), Comunidad);
 			}
 		}
+		//System.out.println("Nodos decididos, son "+NouGraf.getNodes().size()+" "+(System.currentTimeMillis()-t)+"ms");
 		Historia.addElement(Mapa); //Actualitzem la Història de l'algorisme amb un nou pas
 		HashSet<String> Nodes = new HashSet<String> (Historia.get(Historia.size()-1).keySet()); //Agafa els noms tots els noms que se li ha donat als diversos nodes agregats de comunitats.
 		Comunidades = HSStoHSHSS(Nodes); //Reiniciem les comunitats a comunitats individuals
+		//System.out.println("CalculandoPesos... "+(System.currentTimeMillis()-t)+"ms");
+		//int i = 0;
+		//int j = 0;
 		for (String a : Nodes) { //Omplim d'arestes el NouGraf
+			//++i;
+			//System.out.println(i+" "+j+" "+(System.currentTimeMillis()-t)+"ms");
+			boolean visitado = true;
 			for(String b : Nodes) {
-				if(!NouGraf.existeixAresta(a, b)) {
+				if(visitado) visitado = a != b;
+				if(!visitado && !NouGraf.existeixAresta(a, b)) {
+					//++j;
+					//if (j%100==0) System.out.println(j+" "+a+", "+b+", "+(System.currentTimeMillis()-t)+"ms");
 					Double Pes = G.sumaPesosAdjacents(Historia.get(Historia.size()-1).get(a), Historia.get(Historia.size()-1).get(b));
+					//System.out.println(j+" "+Pes);
 					if (Pes > 0) {
 						NouGraf.addAresta(a, b, Pes);
 						
@@ -59,21 +82,33 @@ public class Louvain {
 			}
 		}
 		G = NouGraf; //Graf actualitzat
+		System.out.println("Calculando Pertenencias... "+(System.currentTimeMillis()-t)+"ms");
+		calcPertenencia();
 	}
 	
 
 	private static boolean IncrementModularity() {
 		HashSet<String> Nodes = G.getNodes();
+		Double m = G.sumaPesos();
 		Boolean optimitzada = true;
 		for (String Node : Nodes) {
+			
 			Boolean sehaincrementado = false;
 			HashSet<String> actual = getComunitat(Node);
 			HashSet<String> maxCom = actual;
 			Double max = 0.0;
+			
+			Double pesReflexiu = 0.0;
+			if(G.existeixAresta(Node, Node)) {
+				pesReflexiu = G.getPes(Node, Node);
+			}
+			Double grauNode = G.sumaPesosAdjacents(Node);
+			Double pesosAdjacentsComunitat = G.sumaPesosAdjacentsInclusiva(actual);
+			Double pesosNodeComunitat = G.sumaPesosAdjacents(Node, actual);
 			for(String nodeAdjacent : G.getAdjacents(Node)) {
 				HashSet<String> aTractar = getComunitat(nodeAdjacent);
 				if (actual == aTractar) continue;
-				Double Inc = ModularityInc(Node, actual, aTractar);
+				Double Inc = ModularityInc(Node, m, pesReflexiu, pesosAdjacentsComunitat, pesosNodeComunitat, grauNode, aTractar);
 				//sC.Write(Inc);
 				if (Inc > max) {
 					//sC.Write(Inc);
@@ -86,6 +121,7 @@ public class Louvain {
 			if (sehaincrementado) {  
 				actual.remove(Node);
 				maxCom.add(Node);
+				Pertenencia.put(Node, maxCom);
 				optimitzada = false;
 				if (actual.size() == 0) Comunidades.remove(actual);
 			}
@@ -93,25 +129,19 @@ public class Louvain {
 		return !optimitzada;
 	}
 	
-	private static Double ModularityInc(String node, HashSet<String> origen,
-			HashSet<String> destino) {
-		Double m = G.sumaPesos();
-		Double pesReflexiu = 0.0;
-		if(G.existeixAresta(node, node)) {
-			pesReflexiu = G.getPes(node, node);
-		}
-		Double grauNode = G.sumaPesosAdjacents(node);
-		Double res = (G.sumaPesosAdjacents(node, destino) - G.sumaPesosAdjacents(node, origen)+pesReflexiu)*2; 
-		res -= (G.sumaPesosAdjacentsInclusiva(destino)-G.sumaPesosAdjacentsInclusiva(origen) + grauNode)*grauNode/m;
+	
+
+private static Double ModularityInc(String node, Double m,
+		Double pesReflexiu, Double sumapesosAdjacentsOrigen, Double sumapesosNodeOrigen, Double grauNode, HashSet<String> destino) {
+		
+		Double res = (G.sumaPesosAdjacents(node, destino) - sumapesosNodeOrigen+pesReflexiu)*2; 
+		res -= (G.sumaPesosAdjacentsInclusiva(destino)-sumapesosAdjacentsOrigen + grauNode)*grauNode/m;
 		res /= 2*m;	
 		return res;
 	}
 
 	private static HashSet<String> getComunitat(String node) {
-		for (HashSet<String> Comunidad : Comunidades) {
-			if (Comunidad.contains(node)) return Comunidad;
-		}
-		return null; //Nunca llegará aquí.
+		return Pertenencia.get(node); 
 		
 	}
 
@@ -164,12 +194,24 @@ public class Louvain {
 		G = new GrafLouvain(Gr);
 		init(G); 
 		boolean modificacion = true;
+		Integer i =0;
+		long t = System.currentTimeMillis();
 		while(Comunidades.size() > 1 && modificacion) {
 			modificacion = false;
-			while(IncrementModularity()) modificacion = true; 
-			agregaGraf();
+			++i;
+			System.out.println("Iteracion "+i.toString()+", "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
+			//Integer j = 0;
+			while(IncrementModularity()) {
+				modificacion = true; 
+				//++j;
+				//System.out.println("Iteracion "+i.toString()+" Incrementro "+j.toString()+". "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
+				
+			}
+			System.out.println("Iteracion "+i.toString()+" finalizada. "+(System.currentTimeMillis()-t)+"ms");
+			agregaGraf(t);
 			
 		}
+		System.out.println("Final, "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
 		//G.print(sC);
 		return retorna(percentatge);
 		

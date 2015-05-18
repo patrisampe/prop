@@ -1,4 +1,4 @@
-24 88
+24 84
 
 Patricia
 Anna
@@ -109,8 +109,5 @@ Yoel Pablo 55,3
 Yoel Marc 44,7
 Yoel Dani 44,8
 Yoel Josep 44,8
-Genis Patricia 40
-Gerard David 40
-Miguel Martin 40
-Ricard Eduard 40
-60
+
+40
