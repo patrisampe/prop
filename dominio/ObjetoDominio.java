@@ -1,20 +1,20 @@
 package dominio;
 
 /**
- * Objeto generico del dominio de datos.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * Objeto genérico del dominio de datos.
+ * @author David Morán
+ * @version 18/05/2015 22:00
  */
 public class ObjetoDominio implements Comparable<ObjetoDominio> {
 	
 	/**
-	 * Crea una instancia de un objeto generico del dominio.
+	 * Crea una instancia de un objeto genérico del dominio.
 	 */
 	protected ObjetoDominio(){
 	}
 	
 	/**
-	 * Consulta el nombre generico de un objeto del dominio.
+	 * Consulta el nombre genérico de un objeto del dominio.
 	 * @return Un <i>String</i> vacio ("").
 	 */
 	public String getNombre(){
@@ -22,7 +22,7 @@ public class ObjetoDominio implements Comparable<ObjetoDominio> {
 	}
 	
 	/**
-	 * Consulta el identificador generico de un objeto del dominio.
+	 * Consulta el identificador genérico de un objeto del dominio.
 	 * @return Un <i>Integer</i> con valor -2.
 	 */
 	public Integer getID(){
@@ -30,14 +30,15 @@ public class ObjetoDominio implements Comparable<ObjetoDominio> {
 	}
 
 	/**
-	 * Consulta el identificador generico de un objeto del dominio.
-	 * @return Un <i>Integer</i> con valor -2.
+	 * Compara dos objetos genéricos del dominio.
+	 * @param o - El objeto a comparar.
+	 * @return El resultado de la comparación entre los dos objetos.
 	 */
 	public int compareTo(ObjetoDominio o) {
-		if (getID() == -2) { //Clau externa -> String
+		if (getID() == -2) { //Clave externa -> String
 			return getNombre().compareTo(o.getNombre());
 		}
-		else {
+		else { //Clave externa -> Integer
 			return getID().compareTo(o.getID());
 		}
 	}

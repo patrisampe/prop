@@ -7,8 +7,8 @@ import time.Date;
 
 /**
  * Periodo de tiempo transcurrido a lo largo de un mandato.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * @author David Morán
+ * @version 18/05/2015 22:00
  */
 public class Legislatura extends ObjetoDominio{
 	
@@ -23,7 +23,7 @@ public class Legislatura extends ObjetoDominio{
 	private Date fechaInicio;
 	
 	/**
-	 * Fecha de finalizacion de la legislatura.
+	 * Fecha de finalización de la legislatura.
 	 */
 	private Date fechaFinal;
 	
@@ -41,7 +41,7 @@ public class Legislatura extends ObjetoDominio{
 	 * Crea una nueva instancia de una legislatura.
 	 * @param identificador - Identificador de la legislatura.
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
-	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
+	 * @param fechaFinal - Fecha de finalización de la legislatura.
 	 */
 	public Legislatura(Integer identificador, Date fechaInicio, Date fechaFinal){
 		this.identificador = identificador;
@@ -51,7 +51,7 @@ public class Legislatura extends ObjetoDominio{
 	}
 	
 	/**
-	 * Crea una nueva instancia de una legislatura sin fecha de finalizacion.
+	 * Crea una nueva instancia de una legislatura sin fecha de finalización.
 	 * @param identificador - Identificador de la legislatura.
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
 	 */
@@ -91,18 +91,18 @@ public class Legislatura extends ObjetoDominio{
 	}
 	
 	/**
-	 * Consulta si la legislatura tiene fecha de finalizacion.
-	 * @return <i>true</i> si la legislatura tiene fecha de finalizacion.
+	 * Consulta si la legislatura tiene fecha de finalización.
+	 * @return <i>true</i> si la legislatura tiene fecha de finalización.
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean hasFechaFinal() {
-		return !fechaFinal.esNull();
+		return !fechaFinal.isNull();
 	}
 	
 	/**
-	 * Consulta la fecha de finalizacion de la legislatura.
-	 * @return La fecha de finalizacion de la legislatura.
+	 * Consulta la fecha de finalización de la legislatura.
+	 * @return La fecha de finalización de la legislatura.
 	 */
 	public Date getFechaFinal() {
 		return new Date(fechaFinal);
@@ -145,15 +145,15 @@ public class Legislatura extends ObjetoDominio{
 	}
 	
 	/**
-	 * Modifica la fecha de finalizacion de la legislatura.
-	 * @param nuevaFecha - La fecha de finalizacion de la legisatura.
+	 * Modifica la fecha de finalización de la legislatura.
+	 * @param nuevaFecha - La fecha de finalización de la legisatura.
 	 */
 	public void setFechaFinal(Date nuevaFecha) {
 		fechaFinal = new Date(nuevaFecha);
 	}
 	
 	/**
-	 * Elimina la fecha de finalizacion de la legislatura.
+	 * Elimina la fecha de finalización de la legislatura.
 	 */
 	public void removeFechaFinal() {
 		fechaFinal = Date.NULL;
@@ -165,14 +165,6 @@ public class Legislatura extends ObjetoDominio{
 	 */
 	public void addDiputado(String nombreDiputado) {
 		diputados.add(nombreDiputado);
-	}
-	
-	/**
-	 * Establece un conjunto de diputados como lista de diputados activos de la legislatura.
-	 * @param diputados - Conjunto de nombres de diputados.
-	 */
-	public void setDiputados(Set<String> diputados) {
-		this.diputados = new TreeSet<String>(diputados);
 	}
 	
 	/**

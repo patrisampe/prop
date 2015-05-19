@@ -3,9 +3,9 @@ package io;
 import java.util.Set;
 
 /**
- * Salida por consola que permite escribir cualquier tipo de dato basico.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * Salida por consola que permite escribir cualquier tipo de dato básico.
+ * @author David Morán
+ * @version 18/5/2015 22:00
  */
 public class ConsolaSalida implements Salida {
 	
@@ -18,91 +18,95 @@ public class ConsolaSalida implements Salida {
 	public void close(){
 	}
 	
-	public void Write(String s){
+	public void write(){
+    	System.out.println();
+	}
+	
+	public void write(String s){
     	System.out.println(s);
 	}
 	
-	public void Write(char c){
+	public void write(char c){
 		System.out.printf("%c%n", c);
 	}
 	
-	public void Write(int n){
+	public void write(int n){
 		System.out.printf("%d%n", n);
 	}
 	
-	public void Write(Integer n){
+	public void write(Integer n){
     	System.out.println(n.toString());
 	}
 	
-	public void Write(Double d){
+	public void write(Double d){
     	System.out.println(d.toString());
 	}
 	
-	public void Write(Boolean b){
+	public void write(Boolean b){
     	System.out.println(b.toString());
 	}
 
-	public void Write(Long l){
+	public void write(Long l){
     	System.out.println(l.toString());
 	}
 	
-	public void Write(int n, char[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.printf("%c, ", a[i]);
+	public void write(char[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.printf("%c, ", a[i]);
 			else System.out.printf("%c%n", a[i]);
 		}
 	}
 	
-	public void Write(int n, int[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.printf("%d, ", a[i]);
+	public void write(int[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.printf("%d, ", a[i]);
 			else System.out.printf("%d%n", a[i]);
 		}
 	}
 	
-	public void Write(int n, Character[] a) {
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.print(a[i] + ", ");
+	public void write(Character[] a) {
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.print(a[i] + ", ");
 			else System.out.println(a[i]);
 		}
 	}
 	
-	public void Write(int n, Integer[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.print(a[i].toString() + ", ");
+	public void write(Integer[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.print(a[i].toString() + ", ");
 			else System.out.println(a[i].toString());
 		}
 	}
 	
-	public void Write(int n, Double[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.print(a[i].toString() + ", ");
+	public void write(Double[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.print(a[i].toString() + ", ");
 			else System.out.println(a[i].toString());
 		}
 	}
 	
-	public void Write(int n, Boolean[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.print(a[i].toString() + ", ");
+	public void write(Boolean[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.print(a[i].toString() + ", ");
 			else System.out.println(a[i].toString());
 		}
 	}
 	
-	public void Write(int n, String[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.print(a[i] + ", ");
+	public void write(String[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.print(a[i] + ", ");
 			else System.out.println(a[i]);
 		}
 	}
 	
-	public void Write(int n, Long[] a){
-		for (int i = 0; i < n; ++i){
-			if (i != n-1) System.out.print(a[i].toString() + ", ");
+	public void write(Long[] a){
+		for (int i = 0; i < a.length; ++i){
+			if (i != a.length-1) System.out.print(a[i].toString() + ", ");
 			else System.out.println(a[i].toString());
 		}
 	}
 	
-	public <T extends Object> void Write(Set<T> set) {
+	public <T extends Object> void write(Set<T> set) {
 		Integer count = 0;
 		for (T toPrint:set){
 			if(count != set.size()-1) System.out.print(toPrint.toString() + ", ");

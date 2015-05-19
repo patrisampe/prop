@@ -9,8 +9,8 @@ import dominio.*;
 
 /**
  * Conjunto abstracto que almacena diferentes objetos del dominio.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * @author David Morán
+ * @version 18/05/2015 22:00
  */
 public class Conjunto<T extends ObjetoDominio> {
 	
@@ -20,7 +20,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	private Map<String, T> conjunto;
 	
 	/**
-	 * Indica si la clave del conjunto abstracto es un numero (<i>true</i>) o un nombre (<i>false</i>).
+	 * Indica si la clave del conjunto abstracto es un número (<i>true</i>) o un nombre (<i>false</i>).
 	 */
 	private final Boolean hasIntegerKey;
 	
@@ -71,16 +71,16 @@ public class Conjunto<T extends ObjetoDominio> {
 	}
 	
 	/**
-	 * Consulta el numero de elementos del conjunto.
-	 * @return El numero de elementos del conjunto.
+	 * Consulta el número de elementos del conjunto.
+	 * @return El número de elementos del conjunto.
 	 */
 	public Integer size(){
 		return conjunto.size();
 	}
 	
 	/**
-	 * Consulta si el conjunto esta vacio.
-	 * @return <i>true</i> si el conjunto esta vacio.
+	 * Consulta si el conjunto esta vacío.
+	 * @return <i>true</i> si el conjunto esta vacío.
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
@@ -208,7 +208,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	}
 	
 	/**
-	 * Realiza la union de dos conjuntos del mismo tipo.
+	 * Realiza la unión de dos conjuntos del mismo tipo.
 	 * @param C1 - Primer conjunto.
 	 * @param C2 - Segundo conjunto.
 	 * @return Conjunto resultante de la union (C1_u_C2).
@@ -224,7 +224,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	}
 	
 	/**
-	 * Realiza la interseccion de dos conjuntos del mismo tipo.
+	 * Realiza la intersección de dos conjuntos del mismo tipo.
 	 * @param C1 - Primer conjunto.
 	 * @param C2 - Segundo conjunto.
 	 * @return Conjunto resultante de la interseccion (C1_n_C2).

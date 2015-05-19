@@ -8,8 +8,8 @@ import java.util.Set;
 
 /**
  * Salida por fichero que permite escribir cualquier tipo de dato basico.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * @author David Morán
+ * @version 18/5/2015 22:00
  */
 public class FicheroSalida implements Salida {
 	
@@ -20,15 +20,12 @@ public class FicheroSalida implements Salida {
 
 	/**
 	 * Crea una nueva salida mediante fichero.
-	 * @param FileName - ruta del fichero de salida.
+	 * @param FileName - ruta relativa del fichero de salida.
 	 */
-	public FicheroSalida(String FileName){
-		File F = new File(FileName);
-		try {
-			BW = new BufferedWriter(new FileWriter(F));
-		} catch (IOException e) {
-			System.out.println("Error en crear el fichero.");
-		}
+	public FicheroSalida(String fileName) throws IOException {
+		File F = new File(fileName);
+		BW = new BufferedWriter(new FileWriter(F));
+
 	}
 	
 	public void close() {
@@ -51,7 +48,15 @@ public class FicheroSalida implements Salida {
 	    }
 	}
 	
-	public void Write(String s){
+	public void write(){
+    	try {
+			BW.write(System.lineSeparator());
+		} catch (IOException e) {
+			System.out.println("Error en la escritura.");
+		}
+	}
+	
+	public void write(String s){
     	try {
 			BW.write(String.format("%s%n", s));
 		} catch (IOException e) {
@@ -59,7 +64,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(char c){
+	public void write(char c){
     	try {
 			BW.write(String.format("%c%n", c));
 		} catch (IOException e) {
@@ -67,7 +72,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n){
+	public void write(int n){
     	try {
 			BW.write(String.format("%d%n", n));
 		} catch (IOException e) {
@@ -75,7 +80,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(Integer n){
+	public void write(Integer n){
     	try {
 			BW.write(String.format("%d%n", n));
 		} catch (IOException e) {
@@ -83,7 +88,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(Double d){
+	public void write(Double d){
     	try {
 			BW.write(d.toString() + System.lineSeparator());
 		} catch (IOException e) {
@@ -91,7 +96,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(Boolean b){
+	public void write(Boolean b){
     	try {
 			BW.write(b.toString() + System.lineSeparator());
 		} catch (IOException e) {
@@ -99,7 +104,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 
-	public void Write(Long l){
+	public void write(Long l){
     	try {
 			BW.write(l.toString() + System.lineSeparator());
 		} catch (IOException e) {
@@ -107,10 +112,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, char[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(char[] a){
+		for (int i = 0; i < a.length; ++i){
 	    	try {
-				if (i != n-1) BW.write(String.format("%c, ", a[i]));
+				if (i != a.length-1) BW.write(String.format("%c, ", a[i]));
 				else BW.write(String.format("%c%n", a[i]));
 			} catch (IOException e) {
 				System.out.println("Error en la escritura.");
@@ -118,10 +123,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, int[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(int[] a){
+		for (int i = 0; i < a.length; ++i){
 	    	try {
-				if (i != n-1) BW.write(String.format("%d, ", a[i]));
+				if (i != a.length-1) BW.write(String.format("%d, ", a[i]));
 				else BW.write(String.format("%d%n", a[i]));
 			} catch (IOException e) {
 				System.out.println("Error en la escritura.");
@@ -129,10 +134,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, Character[] a) {
-		for (int i = 0; i < n; ++i){
+	public void write(Character[] a) {
+		for (int i = 0; i < a.length; ++i){
 			try {
-				if (i != n-1) BW.write(a[i] + ", ");
+				if (i != a.length-1) BW.write(a[i] + ", ");
 				else BW.write(a[i] + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en la escritura.");
@@ -140,10 +145,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, Integer[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(Integer[] a){
+		for (int i = 0; i < a.length; ++i){
 			try {
-				if (i != n-1) BW.write(a[i].toString() + ", ");
+				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en la escritura.");
@@ -151,10 +156,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, Double[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(Double[] a){
+		for (int i = 0; i < a.length; ++i){
 			try {
-				if (i != n-1) BW.write(a[i].toString() + ", ");
+				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en la escritura.");
@@ -162,10 +167,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, Boolean[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(Boolean[] a){
+		for (int i = 0; i < a.length; ++i){
 			try {
-				if (i != n-1) BW.write(a[i].toString() + ", ");
+				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en la escritura.");
@@ -173,10 +178,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 
-	public void Write(int n, String[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(String[] a){
+		for (int i = 0; i < a.length; ++i){
 			try {
-				if (i != n-1) BW.write(a[i] + ", ");
+				if (i != a.length-1) BW.write(a[i] + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en la escritura.");
@@ -184,10 +189,10 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public void Write(int n, Long[] a){
-		for (int i = 0; i < n; ++i){
+	public void write(Long[] a){
+		for (int i = 0; i < a.length; ++i){
 			try {
-				if (i != n-1) BW.write(a[i].toString() + ", ");
+				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
 				System.out.println("Error en la escritura.");
@@ -195,7 +200,7 @@ public class FicheroSalida implements Salida {
 		}
 	}
 	
-	public <T extends Object> void Write(Set<T> set) {
+	public <T extends Object> void write(Set<T> set) {
 		Integer count = 0;
 		for (T toPrint:set){
 			try {

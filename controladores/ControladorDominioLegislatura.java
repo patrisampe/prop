@@ -9,9 +9,9 @@ import utiles.Conjunto;
 import dominio.Legislatura;
 
 /**
- * Controlador de dominio para la gestion tanto en conjunto como individualmente de las legislaturas.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * Controlador de dominio para la gestión tanto en conjunto como individualmente de las legislaturas.
+ * @author David Morán
+ * @version 18/05/2015 22:00
  */
 public class ControladorDominioLegislatura extends ControladorDominio{
 	
@@ -33,7 +33,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 	
 	/**
-	 * Crea una nueva instancia de la classe.
+	 * Crea una nueva instancia de la clase.
 	 * @return Nueva instancia del <i>singletone</i> de la clase.
 	 */
 	public static ControladorDominioLegislatura getInstance() {
@@ -44,19 +44,11 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 	
 	/**
-	 * Consulta el numero de legislaturas existentes en el sistema.
-	 * @return Numero de legislaturas del sistema.
+	 * Consulta el número de legislaturas existentes en el sistema.
+	 * @return Número de legislaturas del sistema.
 	 */
 	public Integer numeroLegislaturas(){
 		return conjuntoLegislaturas.size();
-	}
-	
-	/**
-	 * Introduce en el sistema un conjunto de legislaturas.
-	 * @param legislaturas - conjunto de legislaturas que se desa introducir al sistema.
-	 */
-	public void addAll(Set<Legislatura> legislaturas){
-		conjuntoLegislaturas.addAll(legislaturas);
 	}
 	
 	/**
@@ -80,7 +72,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	 * @param fechaContenida - Fecha de la cual se desea obtener su legislatura.
 	 * @return Array de dos posiciones que contiene las legislaturas anterior [0] y siguiente [1].
 	 * <p>
-	 * En caso que la fecha este contenida en una legislatura, los dos valores de la array contendran la legislatura.
+	 * En caso que la fecha este contenida en una legislatura, los dos valores de la array contendrán la legislatura.
 	 * <p>
 	 * En caso que la fecha sea anterior a la primera legislatura, devuelve el valor -1 como anterior legislatura.
 	 * <p>
@@ -118,8 +110,8 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 
 	/**
-	 * Consulta el identificador de la legislatura que contiene el mayor ID (la legislatura mas actual).
-	 * @return Identificador de la legislatura mas actual del sistema.
+	 * Consulta el identificador de la legislatura que contiene el mayor ID (la legislatura más actual).
+	 * @return Identificador de la legislatura más actual del sistema.
 	 */
 	public Integer getIDLast() {
 		int n = conjuntoLegislaturas.size();
@@ -129,7 +121,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 
 	/**
-	 * Consulta los limites en que se pueden modificar las fechas de una legislatura.
+	 * Consulta los límites en que se pueden modificar las fechas de una legislatura.
 	 * @param identificadorLegislatura - Identificador de la legislatura deseada.
 	 * @return Intervalo de fechas en los que se puede modificar la legislatura.
 	 */
@@ -148,10 +140,10 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 	
 	/**
-	 * Introduce en el sistema una legislatura a partir de sus datos.
+	 * Añade al sistema una legislatura a partir de sus datos.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
-	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
+	 * @param fechaFinal - Fecha de finalización de la legislatura.
 	 */
 	public void addLegislatura(Integer identificadorLegislatura, Date fechaInicio, Date fechaFinal) {
 		if (existsLegislatura(identificadorLegislatura)) {
@@ -189,17 +181,14 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 					error.addClauExterna(identificadorLegislatura);
 					error.addClauExterna(fechaFinal.toString());
 				}
-				else {
-					Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio, fechaFinal);
-					conjuntoLegislaturas.add(L);
-				}
+				else conjuntoLegislaturas.add(new Legislatura(identificadorLegislatura, fechaInicio, fechaFinal));
 			}
 		}
 	}
 
 	
 	/**
-	 * Introduce en el sistema una legislatura a partir de sus datos.
+	 * Añade al sistema una legislatura a partir de sus datos.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param fechaInicio - Fecha de inicio de la legislatura.
 	 */
@@ -222,10 +211,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 				error.addClauExterna(fechaInicio.toString());
 				error.addClauExterna(idC);
 			}
-			else {
-				Legislatura L = new Legislatura(identificadorLegislatura, fechaInicio);
-				conjuntoLegislaturas.add(L);
-			}
+			else conjuntoLegislaturas.add(new Legislatura(identificadorLegislatura, fechaInicio));
 		} 
 	}
 	
@@ -243,7 +229,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	/**
 	 * Elimina del sistema la legislatura indicada.
 	 * <p>
-	 * Este metodo tiene efectos colaterales en todas las estructuras del sistema que contengan informacion acerca de la legislatura indicada.
+	 * Este método tiene efectos colaterales en todas las estructuras del sistema que contengan información acerca de la legislatura indicada.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
 	public void removeLegislatura(Integer identificadorLegislatura) {
@@ -287,9 +273,9 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 	
 	/**
-	 * Modifica la fecha de finalizacion de una legislatura.
+	 * Modifica la fecha de finalización de una legislatura.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
-	 * @param fechaFinal - Fecha de finalizacion de la legislatura.
+	 * @param fechaFinal - Fecha de finalización de la legislatura.
 	 */
 	public void setFechaFinal(Integer identificadorLegislatura, Date fechaFinal) {
 		if (!existsLegislatura(identificadorLegislatura)) {
@@ -333,9 +319,9 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 	
 	/**
-	 * Consulta la fecha finalizacion de una legislatura.
+	 * Consulta la fecha finalización de una legislatura.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
-	 * @return Fecha de finalizacion de la legislatura.
+	 * @return Fecha de finalización de la legislatura.
 	 */
 	public Date getFechaFinal(Integer identificadorLegislatura) {
 		if (!existsLegislatura(identificadorLegislatura)) {
@@ -352,9 +338,9 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 
 	/**
-	 * Consulta si existe finalizacion de una legislatura.
+	 * Consulta si existe finalización de una legislatura.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
-	 * @return <i>true</i> si la legislatura indicada tiene fecha de finalizacion.
+	 * @return <i>true</i> si la legislatura indicada tiene fecha de finalización.
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
@@ -369,7 +355,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 
 	
 	/**
-	 * Elimina la fecha de finalizacion de una legislatura.
+	 * Elimina la fecha de finalización de una legislatura.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
 	public void removeFechaFinal(Integer identificadorLegislatura) {
@@ -395,7 +381,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	/**
 	 * Introduce un diputado en la lista de diputados activos de una legislatura.
 	 * <p>
-	 * Este metodo garantiza que la legislatura sera introducida (si no lo ha sido ya) en la lista de legislaturas activas del diputado.
+	 * Este metodo garantiza que la legislatura será introducida (si no lo ha sido ya) en la lista de legislaturas activas del diputado.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
@@ -420,39 +406,6 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 				CDD.addLegistura(nombreDiputado, identificadorLegislatura);
 			catchError(CDD);
 		}
-	}
-	
-	
-	/**
-	 * Establece un conjunto de diputados como lista de diputados activos de una legislatura.
-	 * <p>
-	 * Este metodo garantiza que la legislatura sera introducida (si no lo ha sido ya) en las listas de legislaturas activas de los diputados.
-	 * @param identificadorLegislatura - Identificador de la legislatura.
-	 * @param diputados - Conjunto de identificadores de diputados.
-	 */
-	public void setDiputados(Integer identificadorLegislatura, Set<String> diputados) {
-		ControladorDominioDiputado CDD = ControladorDominioDiputado.getInstance();
-		if (!existsLegislatura(identificadorLegislatura)) {
-			error.setCodiError(17);
-			error.addClauExterna(identificadorLegislatura);
-		}
-		else {
-			for (String nombreDiputado:diputados) {
-				if (!CDD.existsDiputado(nombreDiputado)) {
-					error.setCodiError(3);
-					error.addClauExterna(nombreDiputado);
-					return;
-				}
-				else if (existsDiputado(identificadorLegislatura, nombreDiputado)) {
-					error.setCodiError(20);
-					error.addClauExterna(nombreDiputado);
-					error.addClauExterna(identificadorLegislatura);
-					return;
-				}
-			}
-			conjuntoLegislaturas.get(identificadorLegislatura).setDiputados(diputados);
-		}
-
 	}
 	
 	/**
@@ -489,7 +442,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	/**
 	 * Elimina un diputado de la lista de diputados activos de una legislatura.
 	 * <p>
-	 * Este metodo garantiza que la legislatura sera eliminada (si no lo ha sido ya) de la lista de legislaturas activas del diputado.
+	 * Este metodo garantiza que la legislatura será eliminada (si no lo ha sido ya) de la lista de legislaturas activas del diputado.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
@@ -519,7 +472,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	/**
 	 * Elimina todos los diputados de la lista de diputados activos de una legislatura.
 	 * <p>
-	 * Este metodo garantiza que todas las legislaturas seran eliminadas (si no lo ha sido ya) de las listas de legislaturas activas de todos los diputados.
+	 * Este metodo garantiza que la legislatura será eliminada (si no lo ha sido ya) de las listas de legislaturas activas de todos los diputados.
  	 * @param identificadorLegislatura - Identificador de la legislatura.
  	 */
 	public void removeDiputados(Integer identificadorLegislatura) {
@@ -538,7 +491,7 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	/**
 	 * Elimina un diputado de las listas de diputados activos de todas las legislaturas.
 	 * <p>
-	 * Este metodo garantiza que todas las legislaturas seran eliminadas (si no lo han sido ya) de la listas de legislaturas activas del diputado.
+	 * Este metodo garantiza que todas las legislaturas serán eliminadas (si no lo han sido ya) de la listas de legislaturas activas del diputado.
 	 * @param nombreDiputado - Nombre del diputado.
 	 */
 	public void removeDiputadoFromLegislaturas(String nombreDiputado) {

@@ -6,8 +6,8 @@ import time.*;
 
 /**
  * Representante de un estado que ocupa un cargo publico en el senado.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * @author David Morán
+ * @version 18/05/2015 22:00
  */
 public class Diputado extends ObjetoDominio {
 	
@@ -17,7 +17,7 @@ public class Diputado extends ObjetoDominio {
 	private String nombre;
 	
 	/**
-	 * Nombre del partido politico al cual pertenece el diputado.
+	 * Nombre del partido político al cual pertenece el diputado.
 	 */
 	private String partidoPolitico;
 	
@@ -45,7 +45,7 @@ public class Diputado extends ObjetoDominio {
 	/**
 	 * Crea una nueva instancia de un diputado.
 	 * @param nombre - Nombre del diputado.
-	 * @param partidoPolitico - Partido politico al cual pertenece el diputado.
+	 * @param partidoPolitico - Partido político al cual pertenece el diputado.
 	 * @param estado - Estado al cual representa el diputado.
 	 * @param fechaDeNacimiento - Fecha de nacimiento del diputado.
 	 */
@@ -79,8 +79,8 @@ public class Diputado extends ObjetoDominio {
 	}
 	
 	/**
-	 * Consulta el partido politico del diputado.
-	 * @return El partido politico del diputado.
+	 * Consulta el partido político del diputado.
+	 * @return El partido político del diputado.
 	 */
 	public String getPartidoPolitico(){
 		return partidoPolitico;
@@ -131,8 +131,8 @@ public class Diputado extends ObjetoDominio {
 	}
 
 	/**
-	 * Modifica el partido politico del diputado.
-	 * @param nuevoPartido - El partido politico del diputado.
+	 * Modifica el partido político del diputado.
+	 * @param nuevoPartido - El partido político del diputado.
 	 */
 	public void setPartidoPolitico(String nuevoPartido){
 		if (!nuevoPartido.isEmpty()) partidoPolitico = nuevoPartido;
@@ -151,23 +151,15 @@ public class Diputado extends ObjetoDominio {
 	 * @param nuevaFecha - La fecha de nacimiento del diputado.
 	 */
 	public void setFechaNacimiento(Date nuevaFecha) {
-		if (nuevaFecha.esValida()) fechaDeNacimiento = new Date(nuevaFecha);
+		fechaDeNacimiento = new Date(nuevaFecha);
 	}
 	
 	/**
-	 * Introduce la legislatura en la lista de legislaturas activas del diputado.
+	 * Añade la legislatura a la lista de legislaturas activas del diputado.
 	 * @param identificadorLegislatura - Identificador de la legislatura.
 	 */
 	public void addLegistura(Integer identificadorLegislatura) {
 		legislaturas.add(identificadorLegislatura);
-	}
-	
-	/**
-	 * Establece un conjunto de legislaturas como lista de leguslaturas activas del diputado.
-	 * @param legislaturas - Conjunto de identificadores de legislaturas.
-	 */
-	public void setLegisturas(Set<Integer> legislaturas) {
-		this.legislaturas = new TreeSet<Integer>(legislaturas);
 	}
 	
 	/**
