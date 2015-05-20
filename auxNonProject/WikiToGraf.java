@@ -1,10 +1,10 @@
 package auxNonProject;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 import dominio.algoritmos.Graf;
 import dominio.algoritmos.Louvain;
-import drivers.GrafLouvainDriver;
 import io.*;
 /**
  * Convierte el grafo de la wikipedia en uno para juegos de prueba standard.
@@ -12,11 +12,11 @@ import io.*;
  *
  */
 public class WikiToGraf {
-	public static Graf ReadGraf(int n) {
+	public static Graf ReadGraf(int n) throws IOException {
 		Graf G = new Graf();
 		Entrada EF = new FicheroEntrada("auxNonProject/cats.txt");
 		for (int i = 0; i < n; ++i) {
-			add(G,EF.ReadString(),EF.ReadString(),conseguirImportancia(EF.ReadString()),EF.ReadString(),EF.ReadString());
+			add(G,EF.readString(),EF.readString(),conseguirImportancia(EF.readString()),EF.readString(),EF.readString());
 		}
 		EF.close();
 		return G;
@@ -41,18 +41,18 @@ public class WikiToGraf {
 		if (!g.existeixNode(node1)) g.addNode(node1);
 		
 	}
-	public static void main (String args[]) {
+	public static void main (String args[]) throws IOException {
 		Salida SF = new FicheroSalida("auxNonProject/wikipedia.txt");
 		Salida SC = new ConsolaSalida();
-		SC.Write("Fitxers Oberts, procedim a la lectura del Graf.");
+		SC.write("Fitxers Oberts, procedim a la lectura del Graf.");
 		Graf G = ReadGraf(95114); //95114
-		SC.Write("Lectura Completada, procedim a l'execucio.");
+		SC.write("Lectura Completada, procedim a l'execucio.");
 		HashSet<HashSet<String>> comunidades = Louvain.executa(G, 20); 
-		SC.Write("Execucio completada, procedim a imprimir les comunitats.");
+		SC.write("Execucio completada, procedim a imprimir les comunitats.");
 		Integer i = 1;
 		for(HashSet<String> comunidad : comunidades) {
-			SF.Write("Comunidad "+i.toString()+":");
-			SF.Write(comunidad);
+			SF.write("Comunidad "+i.toString()+":");
+			SF.write(comunidad);
 			++i;
 		}
 		SF.close();

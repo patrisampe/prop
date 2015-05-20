@@ -27,6 +27,8 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected ControladorDominioEvento cEv;
 	protected ControladorDominioVotacion cVot;
 	
+	protected Graf G;
+	
 	/**
 	 * Creadora por defecto.
 	 */
@@ -36,7 +38,6 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		cEv = ControladorDominioEvento.getInstance();
 		cVot = ControladorDominioVotacion.getInstance();
 	}
-	
 	
 	protected Map<String, Integer> prepararImportancias(
 			Map<String, Integer> importanciaModificada) {
