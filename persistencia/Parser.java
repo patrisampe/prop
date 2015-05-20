@@ -1,0 +1,327 @@
+package persistencia;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+import io.*;
+import time.Date;
+import dominio.*;
+import exceptions.FileChecksumException;
+import exceptions.FileFormatException;
+
+/**
+ * Conjunto de métodos para el formateo utilizados en lectura i escritura de ficheros.
+ * @author David Morán
+ * @version 18/5/2015 22:00
+ */
+public class Parser {
+	
+	/**
+	 * Constructor privado, la clase no puede ser instanciada.
+	 */
+	private Parser(){
+	}
+	
+	/**
+	 * Codifica un Diputado en un StreamObject para su posterior almacenamiento.
+	 * @param D - Diputado a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Diputado D){
+		StreamObject stream = new StreamObject(D.getClass().getSimpleName());
+		stream.add(D.getNombre());
+		stream.add(D.getPartidoPolitico());
+		stream.add(D.getEstado());
+		stream.add(D.getFechaDeNacimiento());
+		stream.add(D.getLegislaturas());		
+		return stream;
+	}
+	
+	/**
+	 * Extrae el diputado contenido en un StreamObject.
+	 * @param diputado - StreamObject con la información a extraer.
+	 * @return El Diputado conetnido en el StreamObject.
+	 */
+	public static Diputado parseDiputado(StreamObject diputado){
+		if (!diputado.getNombre().equals(Diputado.class.getSimpleName())) return Diputado.NULL;
+		if (diputado.size() != 6) return Diputado.NULL;
+		Diputado D = new Diputado(
+								diputado.elementAt(1),
+								diputado.elementAt(2),
+								diputado.elementAt(3),
+								Date.parseDate(diputado.elementAt(4)));
+		for (String s:diputado.setAt(5)) {
+			D.addLegistura(Integer.parseInt(s));
+		}
+		return D;
+	}
+	
+	
+	/**
+	 * Codifica un Evento en un StreamObject para su posterior almacenamiento.
+	 * @param E - Evento a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Evento E){
+		StreamObject stream = new StreamObject(E.getClass().getSimpleName());
+		stream.add(E.getNombre());
+		stream.add(E.getFecha());
+		stream.add(E.getdiputados());
+		return stream;
+	}
+	
+	/**
+	 * Extrae el evento contenido en un StreamObject.
+	 * @param evento - StreamObject con la información a extraer.
+	 * @return El evento conetnido en el StreamObject.
+	 */
+	public static Evento parseEvento(StreamObject evento){
+		if (!evento.getNombre().equals(Evento.class.getSimpleName())) return Evento.NULL;
+		if (evento.size() != 4) return Evento.NULL;
+		Evento E = new Evento(
+							evento.elementAt(1),
+							Date.parseDate(evento.elementAt(2)),
+							new HashSet<String>());
+		for (String s:evento.setAt(3)) {
+			E.addDiputado(s);
+		}
+		return E;
+	}
+	
+	/**
+	 * Codifica un Grupo Afín Por Diputado en un StreamObject para su posterior almacenamiento.
+	 * @param G - Grupo a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(GrupoAfinPorDiputado G){
+		StreamObject stream = new StreamObject(G.getClass().getSimpleName());
+		stream.add(G.getID());
+		stream.add(G.getFechaInicio());
+		stream.add(G.getFechaFin());
+		stream.add(G.getDiputados());
+		return stream;
+	}
+	
+	/**
+	 * Extrae el Grupo Afín Por Diputado contenido en un StreamObject.
+	 * @param grupo - StreamObject con la información a extraer.
+	 * @return El grupo conetnido en el StreamObject.
+	 */
+	public static GrupoAfinPorDiputado parseGrupoAfinPorDiputado(StreamObject grupo){
+		if (!grupo.getNombre().equals(GrupoAfinPorDiputado.class.getSimpleName())) return GrupoAfinPorDiputado.NULL;
+		if (grupo.size() != 5) return GrupoAfinPorDiputado.NULL;
+		GrupoAfinPorDiputado G = new GrupoAfinPorDiputado(
+									Integer.parseInt(grupo.elementAt(1)),
+									Date.parseDate(grupo.elementAt(2)),
+									Date.parseDate(grupo.elementAt(3)));
+		for (String s:grupo.setAt(4)) {
+			G.addDiputado(s);
+		}
+		return G;
+	}
+	
+	
+	/**
+	 * Codifica un Grupo Afín Por Período en un StreamObject para su posterior almacenamiento.
+	 * @param G - Grupo a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(GrupoAfinPorPeriodo G){
+		StreamObject stream = new StreamObject(G.getClass().getSimpleName());
+		stream.add(G.getID());
+		stream.add(G.getDiputados());
+		return stream;
+	}
+	
+	/**
+	 * Extrae el Grupo Afín Por Período contenido en un StreamObject.
+	 * @param grupo - StreamObject con la información a extraer.
+	 * @return El grupo conetnido en el StreamObject.
+	 */
+	public static GrupoAfinPorPeriodo parseGrupoAfinPorPeriodo(StreamObject grupo){
+		if (!grupo.getNombre().equals(GrupoAfinPorPeriodo.class.getSimpleName())) return GrupoAfinPorPeriodo.NULL;
+		if (grupo.size() != 3) return GrupoAfinPorPeriodo.NULL;
+		GrupoAfinPorPeriodo G = new GrupoAfinPorPeriodo(
+									Integer.parseInt(grupo.elementAt(1)));
+		for (String s:grupo.setAt(2)) {
+			G.addDiputado(s);
+		}
+		return G;
+	}
+	
+	/**
+	 * Codifica una Legislatura en un StreamObject para su posterior almacenamiento.
+	 * @param L - Legislatura a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Legislatura L){
+		StreamObject stream = new StreamObject(L.getClass().getSimpleName());
+		stream.add(L.getID());
+		stream.add(L.getFechaInicio());
+		stream.add(L.getFechaFinal());
+		stream.add(L.getDiputados());
+		return stream;
+	}
+	
+	/**
+	 * Extrae la legislatura contenido en un StreamObject.
+	 * @param legislatura - StreamObject con la información a extraer.
+	 * @return La Legislatura conetnido en el StreamObject.
+	 */
+	public static Legislatura parseLegislatura(StreamObject legislatura){
+		if (!legislatura.getNombre().equals(Diputado.class.getSimpleName())) return Legislatura.NULL;
+		if (legislatura.size() != 5) return Legislatura.NULL;
+		Date fechaFin = Date.parseDate(legislatura.elementAt(3));
+		Legislatura L;
+		if (fechaFin.isNull()) L = new Legislatura(
+								Integer.parseInt(legislatura.elementAt(1)),
+								Date.parseDate(legislatura.elementAt(2)));
+		else L = new Legislatura(
+								Integer.parseInt(legislatura.elementAt(1)),
+								Date.parseDate(legislatura.elementAt(2)),
+								fechaFin);
+		for (String s:legislatura.setAt(4)) {
+			L.addDiputado(s);
+		}
+		return L;
+	}
+	
+	/*
+	public static ParserStream toParserStream(ResultadoDeBusquedaPorDiputado R){
+		String stream = R.getClass().getCanonicalName() + ":";
+		stream = stream	+ R.getNombre() + ";";
+		//No se quins atributs es volen salvar...
+		return stream;
+	}
+
+	public static ParserStream toParserStream(ResultadoDeBusquedaPorPeriodo R){
+		String stream = R.getClass().getCanonicalName() + ":";
+		stream = stream	+ R.getNombre() + ";";
+		//No se quins atributs es volen salvar...
+		return stream;
+	}
+	
+	*/
+
+	/**
+	 * Codifica un Tipo de Evento en un StreamObject para su posterior almacenamiento.
+	 * @param T - TipoEvento a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(TipoEvento T){
+		StreamObject stream = new StreamObject(T.getClass().getSimpleName());
+		stream.add(T.getNombre());
+		stream.add(T.getImportancia());
+		Set<StreamObject> set = new HashSet<StreamObject>();
+		for (Evento e:T.getEventos()) set.add(encode(e));
+		stream.addObject(set);
+		return stream;
+	}
+	
+	/**
+	 * Extrae el Tipo de Evento contenido en un StreamObject.
+	 * @param tipoEvento - StreamObject con la información a extraer.
+	 * @return El TipoEvento conetnido en el StreamObject.
+	 */
+	public static TipoEvento parseTipoEvento(StreamObject tipoEvento){
+		if (!tipoEvento.getNombre().equals(TipoEvento.class.getSimpleName())) return TipoEvento.NULL;
+		if (tipoEvento.size() != 4) return TipoEvento.NULL;
+		TipoEvento T = new TipoEvento(
+								tipoEvento.elementAt(1),
+								Integer.parseInt(tipoEvento.elementAt(2)));
+		
+		for (StreamObject SO:tipoEvento.setObjectAt(3)) {
+			T.addEvento(parseEvento(SO));
+		}
+		return T;
+	}
+	
+	/*
+	
+	public static ParserStream toParserStream(Votacion V){
+		String stream = V.getClass().getCanonicalName() + ":";
+		stream = stream	+ V.getNombre() + ";";
+		stream = stream	+ V.getImportancia() + ";";
+		stream = stream	+ V.getFecha().toString() + ";";
+		Set<String> S = V.getDiputados();
+		stream = stream + S.size() + ":";
+		for (String s:S) stream = stream + s + ";";
+		stream = stream + ";";
+		Map<String, TipoVoto> M = V.getVotos();
+		stream = stream + M.size() + ":";
+		for (String s:M.keySet()) stream = stream + s + ";" + M.get(s) + ";";
+		//No se com es veuen les enumeracions :(
+		return stream;
+	}
+	
+	*/
+	
+	public static void main (String args[]) {
+		Salida S = new ConsolaSalida();
+		Diputado D = new Diputado("David Moran", "Los mejores", "Barbera del Valles", Date.parseDate("17/10/1995"));
+		Diputado D2 = new Diputado("Anna Margalef", "Los mejores", "Barcelona", Date.parseDate("24/2/1996"));
+		
+		for (Integer i = 1; i < 100; i *= 2) D.addLegistura(i);
+		for (Integer i = 100; i > 0; i /= 2) D2.addLegistura(i);
+		StreamObject SO = encode(D);
+		StreamObject SO2 = encode(D2);
+		
+		
+		StreamContainer SC = new StreamContainer("Diputados test");
+		SC.add(SO);
+		SC.add(SO2);
+		StreamContainer SC2 = new StreamContainer("Diputados test2");
+		SC2.add(SO2);
+		SC2.add(SO);
+
+		StreamFile SF = new StreamFile();
+		SF.add(SC);
+		SF.add(SC2);
+
+		try {
+			SF.print(new FicheroSalida("test.txt"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+		
+		StreamFile SFres = new StreamFile();
+		try {
+			SFres.read(new FicheroEntrada("test.txt"));
+		} catch (FileNotFoundException e) {
+			S.write("Fichero inexistente.");
+			return;
+		} catch (FileFormatException e) {
+			S.write(e.getMessage());
+			return;
+		} catch (FileChecksumException e) {
+			S.write(e.getMessage());
+			return;
+		}
+		
+		StreamContainer SCres = SFres.elementAt(1); //1..n contenidors al fitxer
+		StreamObject SOres = SCres.elementAt(1); //1..n objectes al contenidor (0 és el nom)
+		Diputado Dres = Parser.parseDiputado(SOres); //1 Diputado a l'objecte
+		
+		Diputado Dres2 = Parser.parseDiputado(SFres.elementAt(1, 2));
+		
+		S.write("Nombre: " + Dres.getNombre());
+		S.write("Partido: " + Dres.getPartidoPolitico());
+		S.write("Estado: " + Dres.getEstado());
+		S.write("Fecha: " + Dres.getFechaDeNacimiento().toString());
+		S.write("Legislaturas:");
+		for(Integer i:Dres.getLegislaturas()) S.write(i);
+
+		S.write("Nombre: " + Dres2.getNombre());
+		S.write("Partido: " + Dres2.getPartidoPolitico());
+		S.write("Estado: " + Dres2.getEstado());
+		S.write("Fecha: " + Dres2.getFechaDeNacimiento().toString());
+		S.write("Legislaturas:");
+		for(Integer i:Dres2.getLegislaturas()) S.write(i);
+	}
+
+}

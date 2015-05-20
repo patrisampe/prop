@@ -6,9 +6,9 @@ import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 
 /**
- * Conjunto abstracto auxilitar que almacena grupos afines por diputado y por periodo.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * Conjunto abstracto auxiliar que almacena grupos afines por diputado y por período.
+ * @author David Morán
+ * @version 18/05/2015 22:00
  */
 public class ConjuntoGrupoAfin {
 	
@@ -40,16 +40,16 @@ public class ConjuntoGrupoAfin {
 	}
 	
 	/**
-	 * Consulta el numero de elementos del conjunto.
-	 * @return El numero de elementos del conjunto.
+	 * Consulta el número de elementos del conjunto.
+	 * @return El número de elementos del conjunto.
 	 */
 	public Integer size(){
 		return conjuntoPorDiputado.size() + conjuntoPorPeriodo.size();
 	}
 	
 	/**
-	 * Consulta si el conjunto esta vacio.
-	 * @return <i>true</i> si el conjunto esta vacio.
+	 * Consulta si el conjunto está vacío.
+	 * @return <i>true</i> si el conjunto está vacío.
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
@@ -107,7 +107,7 @@ public class ConjuntoGrupoAfin {
 	}
 	
 	/**
-	 * Introduce un elemento al conjunto.
+	 * Añade un elemento al conjunto.
 	 * @param objeto - Elemento a introducir.
 	 */
 	public void add(GrupoAfinPorDiputado objeto) {
@@ -115,7 +115,7 @@ public class ConjuntoGrupoAfin {
 	}
 	
 	/**
-	 * Introduce un elemento al conjunto.
+	 * Añade un elemento al conjunto.
 	 * @param objeto - Elemento a introducir.
 	 */
 	public void add(GrupoAfinPorPeriodo objeto) {

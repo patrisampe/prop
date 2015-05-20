@@ -8,11 +8,11 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-
+//TODO fitxer sense mes entrada?
 /**
- * Entrada por fichero que permite leer cualquier tipo de dato basico.
- * @author David Moran
- * @version 11/05/2015 14:00
+ * Entrada por fichero que permite leer cualquier tipo de dato básico.
+ * @author David Morán
+ * @version 18/5/2015 22:00
  */
 public class FicheroEntrada implements Entrada {
 	
@@ -23,15 +23,12 @@ public class FicheroEntrada implements Entrada {
 
 	/**
 	 * Crea una nueva entrada mediante fichero.
-	 * @param FileName - ruta del fichero de entrada.
+	 * @param FileName - ruta relativa del fichero de entrada.
 	 */
-	public FicheroEntrada(String FileName){
-		File F = new File(FileName);
-		try {
-			sc = new Scanner(F);
-		} catch (FileNotFoundException e) {
-			System.out.println("Fichero inexistente.");
-		}
+	public FicheroEntrada(String fileName) throws FileNotFoundException {
+		File F = new File(fileName);
+		sc = new Scanner(F);
+
 	}
 	
 	public void close() {
@@ -46,31 +43,31 @@ public class FicheroEntrada implements Entrada {
 	    }
 	}
 	
-	public String ReadString(){
+	public String readString(){
     	return (sc.hasNext() ? sc.next() : "");
 	}
 	
-	public String ReadLine(){
+	public String readLine(){
     	return (sc.hasNextLine() ? sc.nextLine() : "");
 	}
 	
-	public char ReadChar(){
+	public char readChar(){
     	return (sc.hasNextByte() ? (char) sc.nextByte() : ' ');
 	}
 	
-	public int ReadInt(){
+	public int readInt(){
     	return (sc.hasNextInt() ? sc.nextInt() : -1);
 	}
 	
-	public Character ReadCharacter(){
+	public Character readCharacter(){
     	return (sc.hasNextByte() ? Character.valueOf((char) sc.nextByte()) : ' ');
 	}
 	
-	public Integer ReadInteger(){
+	public Integer readInteger(){
     	return (sc.hasNextInt() ? Integer.valueOf(sc.nextInt()) : -1);
 	}
 	
-	public Double ReadDouble(){
+	public Double readDouble(){
 		try {
 			return sc.nextDouble();
 		} catch (InputMismatchException e) {
@@ -80,15 +77,15 @@ public class FicheroEntrada implements Entrada {
 		}
 	}
 	
-	public Boolean ReadBoolean(){
+	public Boolean readBoolean(){
     	return (sc.hasNextBoolean() ? sc.nextBoolean() : false);
 	}
 	
-	public Long ReadLong(){
+	public Long readLong(){
     	return (sc.hasNextLong() ? sc.nextLong() : -1);
 	}
 	
-	public char[] ReadChar(int n){
+	public char[] readChar(int n){
 		char[] out = new char[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextByte()) out[i] = (char) sc.nextByte();
@@ -96,7 +93,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public int[] ReadInt(int n){
+	public int[] readInt(int n){
 		int[] out = new int[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextInt()) out[i] = sc.nextInt();
@@ -104,7 +101,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public Character[] ReadCharacter(int n) {
+	public Character[] readCharacter(int n) {
 		Character[] out = new Character[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextByte()) out[i] = Character.valueOf((char) sc.nextByte());
@@ -113,7 +110,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public Integer[] ReadInteger(int n){
+	public Integer[] readInteger(int n){
 		Integer[] out = new Integer[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextInt()) out[i] = sc.nextInt();
@@ -122,7 +119,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 
-	public Double[] ReadDouble(int n){
+	public Double[] readDouble(int n){
 		Double[] out = new Double[n];
 		for (int i = 0; i < n; ++i){
 			try {
@@ -136,7 +133,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public Boolean[] ReadBoolean(int n){
+	public Boolean[] readBoolean(int n){
 		Boolean[] out = new Boolean[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextBoolean()) out[i] = sc.nextBoolean();
@@ -145,7 +142,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 
-	public String[] ReadString(int n){
+	public String[] readString(int n){
 		String[] out = new String[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out[i] = sc.next();
@@ -154,7 +151,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public Long[] ReadLong(int n){
+	public Long[] readLong(int n){
 		Long[] out = new Long[n];
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNextInt()) out[i] = sc.nextLong();
@@ -163,7 +160,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public Set<String> ReadSetString(int n){
+	public Set<String> readSetString(int n){
 		Set<String> out = new TreeSet<String>();
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out.add(sc.next());
@@ -172,7 +169,7 @@ public class FicheroEntrada implements Entrada {
     	return out;
 	}
 	
-	public Set<Integer> ReadSetInteger(int n){
+	public Set<Integer> readSetInteger(int n){
 		Set<Integer> out = new TreeSet<Integer>();
 		for (int i = 0; i < n; ++i){
 			if (sc.hasNext()) out.add(Integer.valueOf(sc.nextInt()));
