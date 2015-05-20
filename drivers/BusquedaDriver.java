@@ -3,9 +3,12 @@ package drivers;
 import io.*;
 import time.*;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+
 
 
 
@@ -33,7 +36,7 @@ import dominio.TipoVoto;
 public class BusquedaDriver {
 	
 		
-	public static void main (String args[]) {
+	public static void main (String args[]) throws IOException {
 		ControladorDominioBusquedaPorDiputado PorDip = new ControladorDominioBusquedaPorDiputado();
 		ControladorDominioBusquedaPorPeriodo PorPer  = new ControladorDominioBusquedaPorPeriodo();
 		ControladorDominioVotacion cVot = ControladorDominioVotacion.getInstance();
@@ -41,118 +44,118 @@ public class BusquedaDriver {
 		ControladorDominioDiputado cDip = ControladorDominioDiputado.getInstance();
 		ControladorDominioLegislatura cLeg = ControladorDominioLegislatura.getInstance();
 		Entrada EC = new ConsolaEntrada();
-		String Input = EC.ReadString();
+		String Input = EC.readString();
 		Entrada EF = new FicheroEntrada(Input);
-		String Output = EC.ReadString();
+		String Output = EC.readString();
 		Salida SF = new FicheroSalida(Output);
 		Salida SC = new ConsolaSalida();
-		int a= EF.ReadInt();
+		int a= EF.readInt();
 		while(a!=-1) {
 			switch(a) {
 			 case 1: 
-				 SF.Write("Periodo Standard");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaStandard(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), ReadMap(EF), EF.ReadInteger()));
-				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
+				 SF.write("Periodo Standard");
+				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaStandard(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), ReadMap(EF), EF.readInteger()));
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
 				 break;
 			 case 2: 
-				 SF.Write("Diputado Standard");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaStandard(ReadAlgoritmo(EF), EF.ReadInteger(), ReadMap(EF), EF.ReadInteger(), EF.ReadString()));
-				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 SF.write("Diputado Standard");
+				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaStandard(ReadAlgoritmo(EF), EF.readInteger(), ReadMap(EF), EF.readInteger(), EF.readString()));
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
 				 break;
 			 case 3: 
-				 SF.Write("Periodo Partido");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
-				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
+				 SF.write("Periodo Partido");
+				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.readInteger()));
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
 				 break;
 			 case 4: 
-				 SF.Write("Diputado Partido");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), EF.ReadInteger(), EF.ReadInteger(), EF.ReadString()));
-				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 SF.write("Diputado Partido");
+				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), EF.readInteger(), EF.readInteger(), EF.readString()));
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
 				 break;
 			 case 5:
-				 SF.Write("Periodo Estado");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaEstado(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
-				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
+				 SF.write("Periodo Estado");
+				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaEstado(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.readInteger()));
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
 				 break;
 			 case 6:
-				 SF.Write("Diputado Estado");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaEstado(ReadAlgoritmo(EF), EF.ReadInteger(), EF.ReadInteger(), EF.ReadString()));
-				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 SF.write("Diputado Estado");
+				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaEstado(ReadAlgoritmo(EF), EF.readInteger(), EF.readInteger(), EF.readString()));
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
 				 break;
 			 case 7:
-				 SF.Write("Periodo Nombre");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.ReadInteger()));
-				 if (PorPer.hasError()) SC.Write(PorPer.getError().getMensajeError());
+				 SF.write("Periodo Nombre");
+				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.readInteger()));
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
 				 break;
 			 case 8:
-				 SF.Write("Diputado Nombre");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), EF.ReadInteger(), EF.ReadInteger(), EF.ReadString()));
-				 if (PorDip.hasError()) SC.Write(PorDip.getError().getMensajeError());
+				 SF.write("Diputado Nombre");
+				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), EF.readInteger(), EF.readInteger(), EF.readString()));
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
 
 				 break;
 			 case 9:
-				 SC.Write("Lectura");
+				 SC.write("Lectura");
 				 ReadAndAddDeTodo(SC, EF, cVot, cLeg, cDip, cEv);
 				 break;
 			 default: 
-				 SC.Write(" Comanda incorrecta. Per a tancar -1 ");
-				 SC.Write(a);
+				 SC.write(" Comanda incorrecta. Per a tancar -1 ");
+				 SC.write(a);
 				 break;
 				 }
-				a=EF.ReadInt();
+				a=EF.readInt();
 		}
 		EF.close();
 		SF.close();
 	}
 	
 	private static void ReadAndAddDeTodo(Salida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) {
-		String s = eF.ReadString();
+		String s = eF.readString();
 		while (!s.equals("FIN")) {
-			sC.Write(s);
+			sC.write(s);
 			if (s.equals("DIPUTADO")) {
-				cDip.addDiputado(eF.ReadString(), eF.ReadString(), eF.ReadString(), DateIntervalDriver.ReadDate(eF));
-				if (cDip.hasError()) sC.Write(cDip.getError().getMensajeError());
+				cDip.addDiputado(eF.readString(), eF.readString(), eF.readString(), DateIntervalDriver.ReadDate(eF));
+				if (cDip.hasError()) sC.write(cDip.getError().getMensajeError());
 			}
 			else if (s.equals("EVENTO")) {
-				cEv.addEvento(eF.ReadString(), eF.ReadString(), DateIntervalDriver.ReadDate(eF), eF.ReadSetString(eF.ReadInt()));
-				if (cEv.hasError()) sC.Write(cEv.getError().getMensajeError());
+				cEv.addEvento(eF.readString(), eF.readString(), DateIntervalDriver.ReadDate(eF), eF.readSetString(eF.readInt()));
+				if (cEv.hasError()) sC.write(cEv.getError().getMensajeError());
 			}
 			else if (s.equals("TIPOEVENTO")) {
-				cEv.addTipoEvento(eF.ReadString(), eF.ReadInteger());
-				if (cEv.hasError()) sC.Write(cEv.getError().getMensajeError());
+				cEv.addTipoEvento(eF.readString(), eF.readInteger());
+				if (cEv.hasError()) sC.write(cEv.getError().getMensajeError());
 			}
 			else if (s.equals("LEGISLATURA")) {
-				Integer identificador = eF.ReadInteger();
+				Integer identificador = eF.readInteger();
 				Date fechaIni = DateIntervalDriver.ReadDate(eF);
 				Date fechaFin = DateIntervalDriver.ReadDate(eF);
 				cLeg.addLegislatura(identificador, fechaIni, fechaFin);
-				if (cLeg.hasError()) sC.Write(cLeg.getError().getMensajeError());
-				Integer n = eF.ReadInteger();
+				if (cLeg.hasError()) sC.write(cLeg.getError().getMensajeError());
+				Integer n = eF.readInteger();
 				for (int i = 0; i < n; ++i) {
-					cLeg.addDiputado(identificador, eF.ReadString());
-					if (cLeg.hasError()) sC.Write(cLeg.getError().getMensajeError());
+					cLeg.addDiputado(identificador, eF.readString());
+					if (cLeg.hasError()) sC.write(cLeg.getError().getMensajeError());
 				}
 			}
 			else if (s.equals("VOTACION")) {
-				cVot.addVotacion(eF.ReadString(), DateIntervalDriver.ReadDate(eF), eF.ReadInteger(), ReadMapVotos(eF));
-				if (cVot.hasError()) sC.Write(cVot.getError().getMensajeError());
+				cVot.addVotacion(eF.readString(), DateIntervalDriver.ReadDate(eF), eF.readInteger(), ReadMapVotos(eF));
+				if (cVot.hasError()) sC.write(cVot.getError().getMensajeError());
 
 			}
-			s = eF.ReadString();
+			s = eF.readString();
 		}
 	}
 
 	private static Map<String, TipoVoto> ReadMapVotos(Entrada eF) {
 		Map<String,TipoVoto> ret = new TreeMap<String,TipoVoto>();
-		int iteraciones = eF.ReadInt();
+		int iteraciones = eF.readInt();
 		for (int i = 0; i < iteraciones; ++i) {
-			ret.put(eF.ReadString(), ReadTipoVoto(eF));
+			ret.put(eF.readString(), ReadTipoVoto(eF));
 		}
 		return ret;
 	}
 
 	private static TipoVoto ReadTipoVoto(Entrada eF) {
-		String s = eF.ReadString();
+		String s = eF.readString();
 		if (s.equals("A_FAVOR")) return TipoVoto.A_FAVOR;
 		if (s.equals("EN_CONTRA")) return TipoVoto.EN_CONTRA;
 		if (s.equals("ABSTENCION")) return TipoVoto.ABSTENCION;
@@ -161,14 +164,14 @@ public class BusquedaDriver {
 	}
 
 	public static void PrintGrupPeriodo(Salida SF, GrupoAfinPorPeriodo grupAfi) {
-		SF.Write(grupAfi.getID());
+		SF.write(grupAfi.getID());
 		Set<String> diputados = grupAfi.getDiputados();
-		SF.Write(diputados);
+		SF.write(diputados);
 	}
 	
 	public static void PrintConjGrupPeriodo(Salida sF,
 			ConjuntoGrupoAfin conjuntoGrupoAfin) {
-		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
+		sF.write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
 		for (GrupoAfinPorPeriodo g : conjuntoGrupoAfin.getAllPorPeriodo()) {
 			PrintGrupPeriodo(sF, g);
 		}
@@ -176,16 +179,16 @@ public class BusquedaDriver {
 	}
 	
 	public static void PrintGrupDiputado(Salida SF, GrupoAfinPorDiputado grupAfi) {
-		SF.Write(grupAfi.getID());
-		SF.Write(grupAfi.getFechaInicio().toString());
-		SF.Write(grupAfi.getFechaFin().toString());
+		SF.write(grupAfi.getID());
+		SF.write(grupAfi.getFechaInicio().toString());
+		SF.write(grupAfi.getFechaFin().toString());
 		Set<String> diputados = grupAfi.getDiputados();
-		SF.Write(diputados);
+		SF.write(diputados);
 	}
 	
 	public static void PrintConjGrupDiputado(Salida sF,
 			ConjuntoGrupoAfin conjuntoGrupoAfin) {
-		sF.Write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
+		sF.write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
 		for (GrupoAfinPorDiputado g : conjuntoGrupoAfin.getAllPorDiputado()) {
 			PrintGrupDiputado(sF, g);
 		}
@@ -194,15 +197,15 @@ public class BusquedaDriver {
 
 	public static Map<String, Integer> ReadMap(Entrada eF) {
 		Map<String,Integer> ret = new TreeMap<String,Integer>();
-		int iteraciones = eF.ReadInt();
+		int iteraciones = eF.readInt();
 		for (int i = 0; i < iteraciones; ++i) {
-			ret.put(eF.ReadString(), eF.ReadInteger());
+			ret.put(eF.readString(), eF.readInteger());
 		}
 		return ret;
 	}
 
 	public static TipoAlgoritmo ReadAlgoritmo(Entrada eF) {
-		String Alg = eF.ReadString();
+		String Alg = eF.readString();
 		if (Alg.equals("Louvain")) return TipoAlgoritmo.Louvain;
 		if (Alg.equalsIgnoreCase("CliquePercolation")) return TipoAlgoritmo.CliquePercolation;
 		if (Alg.equals("GirvanNewmann")) return TipoAlgoritmo.GirvanNewmann;
