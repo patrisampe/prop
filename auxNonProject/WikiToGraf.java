@@ -45,7 +45,7 @@ public class WikiToGraf {
 		Salida SF = new FicheroSalida("auxNonProject/wikipedia.txt");
 		Salida SC = new ConsolaSalida();
 		SC.Write("Fitxers Oberts, procedim a la lectura del Graf.");
-		Graf G = ReadGraf(50000); //95114
+		Graf G = ReadGraf(95114); //95114
 		SC.Write("Lectura Completada, procedim a l'execucio.");
 		HashSet<HashSet<String>> comunidades = Louvain.executa(G, 20); 
 		SC.Write("Execucio completada, procedim a imprimir les comunitats.");

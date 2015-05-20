@@ -16,6 +16,34 @@ public class Graf {
 	protected Map<Integer,String> DiccionariInvers;
 	protected LlistaAdjacencia llista;
 	
+	protected class Aresta {
+		private String node1;
+		private String node2;
+		private Double pes;
+		private Aresta(String node1, String node2, Double pes) {
+			this.node1 = node1;
+			this.node2 = node2;
+			this.pes = pes;
+		}
+		public String getNode1() {
+			return node1;
+		}
+		private void setNode1(String node1) {
+			this.node1 = node1;
+		}
+		public String getNode2() {
+			return node2;
+		}
+		private void setNode2(String node2) {
+			this.node2 = node2;
+		}
+		public Double getPes() {
+			return pes;
+		}
+		private void setPes(Double pes) {
+			this.pes = pes;
+		}
+	}
 	protected class LlistaAdjacencia {
 		private ArrayList< HashMap<Integer,Double> > lista;
 		/**
@@ -293,5 +321,16 @@ public class Graf {
 		return Cjt;
 	}
 		
-	
+	public HashSet<Aresta> getArestes() {
+		HashSet<Aresta> ret = new HashSet<Aresta>();
+		for (int i = 0; i < llista.size(); ++i) {
+			String node1 = DiccionariInvers.get(i);
+			for (Integer j : llista.adjacents(i).keySet()) {
+				if (i <= j) ret.add(new Aresta(node1, DiccionariInvers.get(j), llista.get(i, j)));
+			}
+		}
+		
+		return ret;
+		
+	}
 }

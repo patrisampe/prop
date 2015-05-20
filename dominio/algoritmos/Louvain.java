@@ -47,12 +47,13 @@ public class Louvain {
 		GrafLouvain NouGraf = new GrafLouvain();
 		Iterator<HashSet<String> >  iHS = Comunidades.iterator();
 		HashMap<String, HashSet<String>> Mapa = new HashMap<String, HashSet<String>>();
-		
+		HashMap<HashSet<String>, String> auxMap = new HashMap<HashSet<String>, String>();
 		for (Integer i = 0; iHS.hasNext(); ++i) {
-			HashSet<String> Comunidad = new HashSet<String>(iHS.next()); 
+			HashSet<String> Comunidad = iHS.next(); 
 			if (Comunidad.size() > 0) {
 				NouGraf.addNode(i.toString());
 				Mapa.put(i.toString(), Comunidad);
+				auxMap.put(Comunidad, i.toString());
 			}
 		}
 		//System.out.println("Nodos decididos, son "+NouGraf.getNodes().size()+" "+(System.currentTimeMillis()-t)+"ms");
@@ -62,24 +63,12 @@ public class Louvain {
 		//System.out.println("CalculandoPesos... "+(System.currentTimeMillis()-t)+"ms");
 		//int i = 0;
 		//int j = 0;
-		for (String a : Nodes) { //Omplim d'arestes el NouGraf
-			//++i;
-			//System.out.println(i+" "+j+" "+(System.currentTimeMillis()-t)+"ms");
-			boolean visitado = true;
-			for(String b : Nodes) {
-				if(visitado) visitado = a != b;
-				if(!visitado && !NouGraf.existeixAresta(a, b)) {
-					//++j;
-					//if (j%100==0) System.out.println(j+" "+a+", "+b+", "+(System.currentTimeMillis()-t)+"ms");
-					Double Pes = G.sumaPesosAdjacents(Historia.get(Historia.size()-1).get(a), Historia.get(Historia.size()-1).get(b));
-					//System.out.println(j+" "+Pes);
-					if (Pes > 0) {
-						NouGraf.addAresta(a, b, Pes);
-						
-					}
-				}
-				
-			}
+		for (Graf.Aresta a :  G.getArestes()) {
+			String c1 = auxMap.get(getComunitat(a.getNode1()));
+			String c2 = auxMap.get(getComunitat(a.getNode2()));
+			if (!NouGraf.existeixAresta(c1, c2)) NouGraf.addAresta(c1, c2, a.getPes());
+			else NouGraf.setPes(c1, c2, NouGraf.getPes(c1, c2)+a.getPes());
+			if(c1.equals(c2) && !a.getNode1().equals(a.getNode2())) NouGraf.setPes(c1, c2, NouGraf.getPes(c1, c2)+a.getPes());
 		}
 		G = NouGraf; //Graf actualitzat
 		System.out.println("Calculando Pertenencias... "+(System.currentTimeMillis()-t)+"ms");
