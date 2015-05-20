@@ -6,6 +6,7 @@ import io.Salida;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import exceptions.ContainerFormatException;
@@ -230,7 +231,12 @@ public class StreamFile {
 	 * @param E - Entrada de donde se desea leer el contenido.
 	 */
 	public void read(Entrada E) throws FileFormatException, FileChecksumException {
-		String info_aux = E.readLine();
+		String info_aux = "";
+		try {
+			info_aux = E.readLine();
+		} catch (NoSuchElementException e) {
+			throw new FileFormatException(1, e.getMessage());
+		}
 		//TODO si la entrada es buida, throw exception
 		int checksum;
 		String checksum_aux = "";
@@ -263,8 +269,12 @@ public class StreamFile {
 		}
 		String[] containers = new String[n-1];
 		for (Integer i = 0; i < n-1; ++i) {
-			containers[i] = E.readLine();
-			if (containers[i] == "") throw new FileFormatException(1, "El numero de lineas es menor del esperado.");
+			try {
+				containers[i] = E.readLine();
+			} catch (NoSuchElementException e) {
+				throw new FileFormatException(i+2, "El numero de lineas es menor del esperado.");
+			}
+
 		}
 
 		if (checksum != checksum(containers)) throw new FileChecksumException(checksum(containers), Integer.valueOf(checksum));

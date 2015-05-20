@@ -14,15 +14,15 @@ public class Date{
 	/**
 	 * Día de la fecha.
 	 */
-	private Integer Day;
+	private Integer day;
 	/**
 	 * Mes de la fecha.
 	 */
-	private Integer Month;
+	private Integer month;
 	/**
 	 * Año de la fecha.
 	 */
-	private Integer Year;
+	private Integer year;
 	
 	/**
 	 * Diccionario de traducción de mes(Numero) a mes(Palabra).
@@ -36,18 +36,30 @@ public class Date{
 	
 	/**
 	 * Crea una nueva fecha.
-	 * @param Day - Día.
-	 * @param Month - Mes.
-	 * @param Year - Año.
+	 * @param day - Día.
+	 * @param month - Mes.
+	 * @param year - Año.
 	 */
-	public Date(Integer Day, Integer Month, Integer Year){
-		this.Day = Day;
-		this.Month = Month;
-		this.Year = Year;
+	public Date(Integer day, Integer month, Integer year){
+		this.day = day;
+		this.month = month;
+		this.year = year;
 		if (!isValida()){
-			this.Day = -1;
-			this.Month = -1;
-			this.Year = -1;
+			this.day = -1;
+			this.month = -1;
+			this.year = -1;
+		}
+	}
+	
+	public Date(String date){
+		Date parsed = parseDate(date);
+		day = parsed.day;
+		month = parsed.month;
+		year = parsed.year;
+		if (!isValida()){
+			day = -1;
+			month = -1;
+			year = -1;
 		}
 	}
 	
@@ -56,9 +68,9 @@ public class Date{
 	 * @param D - Data a copiar.
 	 */
 	public Date(Date D){
-			this.Day = D.Day;
-			this.Month = D.Month;
-			this.Year = D.Year;
+			this.day = D.day;
+			this.month = D.month;
+			this.year = D.year;
 	}
 	
 	/**
@@ -87,7 +99,7 @@ public class Date{
 	 * @return El día.
 	 */
 	public Integer getDay(){
-		return Day;
+		return day;
 	}
 
 	/**
@@ -95,7 +107,7 @@ public class Date{
 	 * @return El mes.
 	 */
 	public Integer getMonth(){
-		return Month;
+		return month;
 	}
 	
 	/**
@@ -103,7 +115,7 @@ public class Date{
 	 * @return El año.
 	 */
 	public Integer getYear(){
-		return Year;
+		return year;
 	}
 	
 	/**
@@ -113,13 +125,13 @@ public class Date{
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean isValida(){
-		if (Day > 31 || Day < 1) return false;
-		if (Month > 12 || Month < 1) return false;
-		if ((Month == 4 || Month == 6 || Month == 9 || Month == 11)
-			 && Day == 31) return false;
-		if (Month == 2) { //Febrer
-			if (Day > 29) return false;
-			if (!isBisiesto(Year) && Day > 28) return false;
+		if (day > 31 || day < 1) return false;
+		if (month > 12 || month < 1) return false;
+		if ((month == 4 || month == 6 || month == 9 || month == 11)
+			 && day == 31) return false;
+		if (month == 2) { //Febrer
+			if (day > 29) return false;
+			if (!isBisiesto(year) && day > 28) return false;
 		}
 		return true;
 	}
@@ -140,10 +152,10 @@ public class Date{
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
-	public static Boolean isBisiesto(Integer Year){
-		if (Year%4 != 0) return false;
-		if (Year%100 != 0) return true;
-		if (Year%400 == 0) return true;
+	public static Boolean isBisiesto(Integer year){
+		if (year%4 != 0) return false;
+		if (year%100 != 0) return true;
+		if (year%400 == 0) return true;
 		return false;
 	}
 
@@ -154,13 +166,13 @@ public class Date{
 	public String toString(){
 		if (isNull()) return "NULL";
 		String out = "";
-		if (Day < 10) out += "0";
-		out += Day.toString();
+		if (day < 10) out += "0";
+		out += day.toString();
 		out += "/";
-		if (Month < 10) out += "0";
-		out += Month.toString();
+		if (month < 10) out += "0";
+		out += month.toString();
 		out += "/";
-		out += Year.toString();
+		out += year.toString();
 		return out;
 	}
 	 
@@ -171,12 +183,12 @@ public class Date{
 	public String toNamedString(){
 		if (isNull()) return "NULL";
 		String out = "";
-		if (Day < 10) out += "0";
-		out += Day.toString();
+		if (day < 10) out += "0";
+		out += day.toString();
 		out += "/";
-		out += Meses.get(Month);
+		out += Meses.get(month);
 		out += "/";
-		out += Year.toString();
+		out += year.toString();
 		return out;
 	}
 	
@@ -188,7 +200,7 @@ public class Date{
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean equals(Date D){
-		return (Day == D.Day && Month == D.Month && Year == D.Year);
+		return (day == D.day && month == D.month && year == D.year);
 	}
 	
 	/**
@@ -202,53 +214,53 @@ public class Date{
 	 */
 	public Integer compareTo(Date D){
 		if (isNull() || D.isNull()) return 0;
-		if (Year > D.Year) return 1;
-		if (Year < D.Year) return -1;
-		if (Month > D.Month) return 1;
-		if (Month < D.Month) return -1;
-		if (Day > D.Day) return 1;
-		if (Day < D.Day) return -1;
+		if (year > D.year) return 1;
+		if (year < D.year) return -1;
+		if (month > D.month) return 1;
+		if (month < D.month) return -1;
+		if (day > D.day) return 1;
+		if (day < D.day) return -1;
 		return 0;
 	}
 	
 	/**
 	 * Modifica el día.
-	 * @param Day - nuevo día.
+	 * @param day - nuevo día.
 	 */
-	public Boolean setDay(Integer Day){
-		Integer temp = this.Day;
-		this.Day = Day;
+	public Boolean setDay(Integer day){
+		Integer temp = this.day;
+		this.day = day;
 		if (isValida()) return true;
 		else {
-			this.Day = temp;
+			this.day = temp;
 			return false;
 		}
 	}
 	
 	/**
 	 * Modifica el mes.
-	 * @param Day - nuevo mes.
+	 * @param day - nuevo mes.
 	 */
-	public Boolean setMonth(Integer Month){
-		Integer temp = this.Month;
-		this.Month = Month;
+	public Boolean setMonth(Integer month){
+		Integer temp = this.month;
+		this.month = month;
 		if (isValida()) return true;
 		else {
-			this.Month = temp;
+			this.month = temp;
 			return false;
 		}
 	}
 	
 	/**
 	 * Modifica el año.
-	 * @param Year - nuevo año.
+	 * @param year - nuevo año.
 	 */
-	public Boolean setYear(Integer Year){
-		Integer temp = this.Year;
-		this.Year = Year;
+	public Boolean setYear(Integer year){
+		Integer temp = this.year;
+		this.year = year;
 		if (isValida()) return true;
 		else {
-			this.Year = temp;
+			this.year = temp;
 			return false;
 		}
 	}
@@ -258,30 +270,30 @@ public class Date{
 	 * @return Nueva fecha.
 	 */
 	public Date incremento(){
-		++Day;
-		if (Day > 31) {
-			Day = 1;
-			++Month;
-			if (Month > 12) {
-				Month = 1;
-				++Year;
+		++day;
+		if (day > 31) {
+			day = 1;
+			++month;
+			if (month > 12) {
+				month = 1;
+				++year;
 			}
 		}
-		else if ((Month == 4 || Month == 6 || Month == 9 || Month == 11)
-				 && Day == 31) {
-			Day = 1;
-			++Month;
+		else if ((month == 4 || month == 6 || month == 9 || month == 11)
+				 && day == 31) {
+			day = 1;
+			++month;
 		}
-		else if (Month == 2){
-			if (isBisiesto(Year))
-				if (Day == 30) {
-					Day = 1;
-					++Month;
+		else if (month == 2){
+			if (isBisiesto(year))
+				if (day == 30) {
+					day = 1;
+					++month;
 				}
 			else
-				if (Day == 29) {
-					Day = 1;
-					++Month;
+				if (day == 29) {
+					day = 1;
+					++month;
 				}
 		}		
 		return this;

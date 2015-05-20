@@ -195,7 +195,7 @@ public class StreamContainer {
 		}
 
 		S = S.substring(i, S.length());
-		if (S.length() < V.lastElement()) throw new ContainerFormatException(-1, "");
+		if (S.length() < V.lastElement()) throw new ContainerFormatException(-1, "Longitud del contenedor incorrecta.");
 		StreamContainer SC = new StreamContainer(S, V);
 		for (Integer k = 1; k < V.size(); ++k) {
 			try {
