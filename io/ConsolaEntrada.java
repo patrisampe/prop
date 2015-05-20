@@ -1,7 +1,8 @@
 package io;
 
-import java.util.HashSet;
+import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -37,83 +38,189 @@ public class ConsolaEntrada implements Entrada {
 	    }
 	}
 	
-	public String readString(){
-    	return (sc.hasNext() ? sc.next() : "");
+	public String readString() throws IOException{
+		try {
+			return sc.next();
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		}
 	}
 	
-	public String readLine(){
-    	return (sc.hasNextLine() ? sc.nextLine() : "");
+	public String readLine() throws IOException{
+		try {
+			return sc.nextLine();
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		}
 	}
 	
-	public char readChar(){
-    	return (sc.hasNextByte() ? (char) sc.nextByte() : ' ');
+	public char readChar() throws IOException{
+		try {
+	    	return (char) sc.nextByte();
+		} catch (InputMismatchException  e) {
+			throw new IOException("Formato de entrada incorrecto.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		}
 	}
 	
-	public int readInt(){
-    	return (sc.hasNextInt() ? sc.nextInt() : -1);
+	public int readInt() throws IOException{
+		try {
+	    	return sc.nextInt();
+		} catch (InputMismatchException  e) {
+			throw new IOException("Formato de entrada incorrecto.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		}
 	}
 	
-	public Character readCharacter(){
-    	return (sc.hasNextByte() ? Character.valueOf((char) sc.nextByte()) : ' ');
+	public Character readCharacter() throws IOException{
+		try {
+	    	return Character.valueOf((char) sc.nextByte());
+		} catch (InputMismatchException  e) {
+			throw new IOException("Formato de entrada incorrecto.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		}
 	}
 	
-	public Integer readInteger(){
-    	return (sc.hasNextInt() ? Integer.valueOf(sc.nextInt()) : -1);
+	public Integer readInteger() throws IOException{
+		try {
+	    	return Integer.valueOf(sc.nextInt());
+		} catch (InputMismatchException  e) {
+			throw new IOException("Formato de entrada incorrecto.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		}
 	}
 	
-	public Double readDouble(){
+	public Double readDouble() throws IOException{
 		try {
 			return sc.nextDouble();
 		} catch (InputMismatchException e) {
 			String S = sc.next();
 			S.replace('.', ',');
-			return Double.parseDouble(S);
+			try {
+				return Double.parseDouble(S);
+			} catch (NumberFormatException e2) {
+				throw new IOException("Formato de entrada incorrecto.");
+			}
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
 		}
 	}
 	
-	public Boolean readBoolean(){
-    	return (sc.hasNextBoolean() ? sc.nextBoolean() : false);
+	public Boolean readBoolean() throws IOException{
+		try {
+	    	return sc.nextBoolean();
+		} catch (InputMismatchException  e) {
+			throw new IOException("Formato de entrada incorrecto.");
+		} catch (IllegalStateException e) {
+			throw new IOException("Entrada cerrada.");
+		} catch (NoSuchElementException e) {
+			throw new IOException("Fin de la entrada.");
+		}
 	}
 	
 	public Long readLong(){
-    	return (sc.hasNextLong() ? sc.nextLong() : -1);
+    	return sc.nextLong();
 	}
 	
-	public char[] readChar(int n){
+	public String[] readString(int n) throws IOException{
+		String[] out = new String[n];
+		for (int i = 0; i < n; ++i){
+			try {
+				out[i] = sc.next();
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
+		}
+    	return out;
+	}
+	
+	public char[] readChar(int n) throws IOException{
 		char[] out = new char[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextByte()) out[i] = (char) sc.nextByte();
+			try {
+				out[i] = (char) sc.nextByte();
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 	
-	public int[] readInt(int n){
+	public int[] readInt(int n) throws IOException{
 		int[] out = new int[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextInt()) out[i] = sc.nextInt();
+			try {
+				out[i] = sc.nextInt();
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 	
-	public Character[] readCharacter(int n) {
+	public Character[] readCharacter(int n) throws IOException {
 		Character[] out = new Character[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextByte()) out[i] = Character.valueOf((char) sc.nextByte());
-			else return new Character[0];
+			try {
+				out[i] = Character.valueOf((char) sc.nextByte());
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 	
-	public Integer[] readInteger(int n){
+	public Integer[] readInteger(int n) throws IOException{
 		Integer[] out = new Integer[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextInt()) out[i] = sc.nextInt();
-			else return new Integer[0];
+			try {
+				out[i] = sc.nextInt();
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 
-	public Double[] readDouble(int n){
+	public Double[] readDouble(int n) throws IOException{
 		Double[] out = new Double[n];
 		for (int i = 0; i < n; ++i){
 			try {
@@ -121,53 +228,80 @@ public class ConsolaEntrada implements Entrada {
 			} catch (InputMismatchException e) {
 				String S = sc.next();
 				S.replace('.', ',');
-				out[i] = Double.parseDouble(S);
+				try {
+					out[i] = Double.parseDouble(S);
+				} catch (NumberFormatException e2) {
+					throw new IOException("Formato de entrada incorrecto.");
+				}
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
 			}
 		}
     	return out;
 	}
 	
-	public Boolean[] readBoolean(int n){
+	public Boolean[] readBoolean(int n) throws IOException{
 		Boolean[] out = new Boolean[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextBoolean()) out[i] = sc.nextBoolean();
-			else return new Boolean[0];
-		}
-    	return out;
-	}
-
-	public String[] readString(int n){
-		String[] out = new String[n];
-		for (int i = 0; i < n; ++i){
-			if (sc.hasNext()) out[i] = sc.next();
-			else return new String[0];
+			try {
+				out[i] = sc.nextBoolean();
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 	
-	public Long[] readLong(int n){
+	public Long[] readLong(int n) throws IOException{
 		Long[] out = new Long[n];
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNextInt()) out[i] = sc.nextLong();
-			else return new Long[0];
+			try {
+				out[i] = sc.nextLong();
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 	
-	public Set<String> readSetString(int n){
+	public Set<String> readSetString(int n) throws IOException{
 		Set<String> out = new TreeSet<String>();
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNext()) out.add(sc.next());
-			else return new HashSet<String>();
+			try {
+				out.add(sc.next());
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}
 	
-	public Set<Integer> readSetInteger(int n){
+	public Set<Integer> readSetInteger(int n) throws IOException{
 		Set<Integer> out = new TreeSet<Integer>();
 		for (int i = 0; i < n; ++i){
-			if (sc.hasNext()) out.add(Integer.valueOf(sc.nextInt()));
-			else return new HashSet<Integer>();
+			try {
+				out.add(Integer.valueOf(sc.nextInt()));
+			} catch (InputMismatchException  e) {
+				throw new IOException("Formato de entrada incorrecto.");
+			} catch (IllegalStateException e) {
+				throw new IOException("Entrada cerrada.");
+			} catch (NoSuchElementException e) {
+				throw new IOException("Fin de la entrada.");
+			}
 		}
     	return out;
 	}

@@ -4,13 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 import io.*;
 import time.Date;
 import dominio.*;
 import exceptions.FileChecksumException;
 import exceptions.FileFormatException;
+import exceptions.ObjectFormatException;
 
 /**
  * Conjunto de métodos para el formateo utilizados en lectura i escritura de ficheros.
@@ -46,8 +46,8 @@ public class Parser {
 	 * @return El Diputado conetnido en el StreamObject.
 	 */
 	public static Diputado parseDiputado(StreamObject diputado){
-		if (!diputado.getNombre().equals(Diputado.class.getSimpleName())) return Diputado.NULL;
-		if (diputado.size() != 6) return Diputado.NULL;
+		if (!diputado.getNombre().equals(Diputado.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (diputado.size() != 6) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		Diputado D = new Diputado(
 								diputado.elementAt(1),
 								diputado.elementAt(2),
@@ -79,8 +79,8 @@ public class Parser {
 	 * @return El evento conetnido en el StreamObject.
 	 */
 	public static Evento parseEvento(StreamObject evento){
-		if (!evento.getNombre().equals(Evento.class.getSimpleName())) return Evento.NULL;
-		if (evento.size() != 4) return Evento.NULL;
+		if (!evento.getNombre().equals(Evento.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (evento.size() != 4) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		Evento E = new Evento(
 							evento.elementAt(1),
 							Date.parseDate(evento.elementAt(2)),
@@ -111,8 +111,8 @@ public class Parser {
 	 * @return El grupo conetnido en el StreamObject.
 	 */
 	public static GrupoAfinPorDiputado parseGrupoAfinPorDiputado(StreamObject grupo){
-		if (!grupo.getNombre().equals(GrupoAfinPorDiputado.class.getSimpleName())) return GrupoAfinPorDiputado.NULL;
-		if (grupo.size() != 5) return GrupoAfinPorDiputado.NULL;
+		if (!grupo.getNombre().equals(GrupoAfinPorDiputado.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (grupo.size() != 5) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		GrupoAfinPorDiputado G = new GrupoAfinPorDiputado(
 									Integer.parseInt(grupo.elementAt(1)),
 									Date.parseDate(grupo.elementAt(2)),
@@ -142,8 +142,8 @@ public class Parser {
 	 * @return El grupo conetnido en el StreamObject.
 	 */
 	public static GrupoAfinPorPeriodo parseGrupoAfinPorPeriodo(StreamObject grupo){
-		if (!grupo.getNombre().equals(GrupoAfinPorPeriodo.class.getSimpleName())) return GrupoAfinPorPeriodo.NULL;
-		if (grupo.size() != 3) return GrupoAfinPorPeriodo.NULL;
+		if (!grupo.getNombre().equals(GrupoAfinPorPeriodo.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (grupo.size() != 3) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		GrupoAfinPorPeriodo G = new GrupoAfinPorPeriodo(
 									Integer.parseInt(grupo.elementAt(1)));
 		for (String s:grupo.setAt(2)) {
@@ -172,8 +172,8 @@ public class Parser {
 	 * @return La Legislatura conetnido en el StreamObject.
 	 */
 	public static Legislatura parseLegislatura(StreamObject legislatura){
-		if (!legislatura.getNombre().equals(Diputado.class.getSimpleName())) return Legislatura.NULL;
-		if (legislatura.size() != 5) return Legislatura.NULL;
+		if (!legislatura.getNombre().equals(Diputado.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (legislatura.size() != 5) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		Date fechaFin = Date.parseDate(legislatura.elementAt(3));
 		Legislatura L;
 		if (fechaFin.isNull()) L = new Legislatura(
@@ -227,8 +227,9 @@ public class Parser {
 	 * @return El TipoEvento conetnido en el StreamObject.
 	 */
 	public static TipoEvento parseTipoEvento(StreamObject tipoEvento){
-		if (!tipoEvento.getNombre().equals(TipoEvento.class.getSimpleName())) return TipoEvento.NULL;
-		if (tipoEvento.size() != 4) return TipoEvento.NULL;
+		if (!tipoEvento.getNombre().equals(TipoEvento.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (tipoEvento.size() != 4) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
+		
 		TipoEvento T = new TipoEvento(
 								tipoEvento.elementAt(1),
 								Integer.parseInt(tipoEvento.elementAt(2)));
@@ -263,11 +264,29 @@ public class Parser {
 		Salida S = new ConsolaSalida();
 		Diputado D = new Diputado("David Moran", "Los mejores", "Barbera del Valles", Date.parseDate("17/10/1995"));
 		Diputado D2 = new Diputado("Anna Margalef", "Los mejores", "Barcelona", Date.parseDate("24/2/1996"));
-		
+
 		for (Integer i = 1; i < 100; i *= 2) D.addLegistura(i);
 		for (Integer i = 100; i > 0; i /= 2) D2.addLegistura(i);
+		
+		
+		Set<String> set = new HashSet<String>();
+		set.add("David Morán");
+		set.add("Anna Margalef");
+		
+		Set<Evento> setE = new HashSet<Evento>();
+		
+		setE.add(new Evento("reunio", new Date("1/1/2001"), set));
+		setE.add(new Evento("acte", new Date("2/2/2002"), set));
+		setE.add(new Evento("cosa extranya", new Date("31/12/1999"), set));
+		
+		
+		TipoEvento TE = new TipoEvento("test TipoEvento", 4);
+		for (Evento e:setE) TE.addEvento(e);
+		
+		
 		StreamObject SO = encode(D);
 		StreamObject SO2 = encode(D2);
+		StreamObject SO3 = encode(TE);
 		
 		
 		StreamContainer SC = new StreamContainer("Diputados test");
@@ -276,10 +295,14 @@ public class Parser {
 		StreamContainer SC2 = new StreamContainer("Diputados test2");
 		SC2.add(SO2);
 		SC2.add(SO);
+		StreamContainer SC3 = new StreamContainer("TipoEvento test");
+		SC3.add(SO3);
 
+		
 		StreamFile SF = new StreamFile();
 		SF.add(SC);
 		SF.add(SC2);
+		SF.add(SC3);
 
 		try {
 			SF.print(new FicheroSalida("test.txt"));
@@ -308,6 +331,7 @@ public class Parser {
 		Diputado Dres = Parser.parseDiputado(SOres); //1 Diputado a l'objecte
 		
 		Diputado Dres2 = Parser.parseDiputado(SFres.elementAt(1, 2));
+		TipoEvento TEres = Parser.parseTipoEvento(SFres.elementAt(3, 1));
 		
 		S.write("Nombre: " + Dres.getNombre());
 		S.write("Partido: " + Dres.getPartidoPolitico());
@@ -322,6 +346,17 @@ public class Parser {
 		S.write("Fecha: " + Dres2.getFechaDeNacimiento().toString());
 		S.write("Legislaturas:");
 		for(Integer i:Dres2.getLegislaturas()) S.write(i);
+		
+		S.write("Nombre: " + TEres.getNombre());
+		S.write("Importancia: " + TEres.getImportancia());
+		S.write("Eventos:");
+		for(Evento e:TEres.getEventos()) {
+			S.write("Nombre: " + e.getNombre());
+			S.write("Fecha: " + e.getFecha().toString());
+			S.write("Participantes:");
+			for (String s:e.getdiputados()) S.write(s);
+		}
+
 	}
 
 }

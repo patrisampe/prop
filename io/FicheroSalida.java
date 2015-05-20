@@ -21,11 +21,11 @@ public class FicheroSalida implements Salida {
 	/**
 	 * Crea una nueva salida mediante fichero.
 	 * @param FileName - ruta relativa del fichero de salida.
+	 * @throws IOException 
 	 */
-	public FicheroSalida(String fileName) throws IOException {
+	public FicheroSalida(String fileName) throws IOException  {
 		File F = new File(fileName);
 		BW = new BufferedWriter(new FileWriter(F));
-
 	}
 	
 	public void close() {
@@ -48,166 +48,166 @@ public class FicheroSalida implements Salida {
 	    }
 	}
 	
-	public void write(){
+	public void write() throws IOException {
     	try {
 			BW.write(System.lineSeparator());
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(String s){
+	public void write(String s) throws IOException {
     	try {
 			BW.write(String.format("%s%n", s));
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(char c){
+	public void write(char c) throws IOException {
     	try {
 			BW.write(String.format("%c%n", c));
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(int n){
+	public void write(int n) throws IOException {
     	try {
 			BW.write(String.format("%d%n", n));
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(Integer n){
+	public void write(Integer n) throws IOException {
     	try {
 			BW.write(String.format("%d%n", n));
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(Double d){
+	public void write(Double d) throws IOException {
     	try {
 			BW.write(d.toString() + System.lineSeparator());
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(Boolean b){
+	public void write(Boolean b) throws IOException {
     	try {
 			BW.write(b.toString() + System.lineSeparator());
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 
-	public void write(Long l){
+	public void write(Long l) throws IOException {
     	try {
 			BW.write(l.toString() + System.lineSeparator());
 		} catch (IOException e) {
-			System.out.println("Error en la escritura.");
+			throw new IOException("Error en la escritura.");
 		}
 	}
 	
-	public void write(char[] a){
+	public void write(char[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 	    	try {
 				if (i != a.length-1) BW.write(String.format("%c, ", a[i]));
 				else BW.write(String.format("%c%n", a[i]));
 			} catch (IOException e) {
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public void write(int[] a){
+	public void write(int[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 	    	try {
 				if (i != a.length-1) BW.write(String.format("%d, ", a[i]));
 				else BW.write(String.format("%d%n", a[i]));
 			} catch (IOException e) {
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public void write(Character[] a) {
+	public void write(Character[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 			try {
 				if (i != a.length-1) BW.write(a[i] + ", ");
 				else BW.write(a[i] + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public void write(Integer[] a){
+	public void write(Integer[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 			try {
 				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public void write(Double[] a){
+	public void write(Double[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 			try {
 				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public void write(Boolean[] a){
+	public void write(Boolean[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 			try {
 				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 
-	public void write(String[] a){
+	public void write(String[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 			try {
 				if (i != a.length-1) BW.write(a[i] + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public void write(Long[] a){
+	public void write(Long[] a) throws IOException {
 		for (int i = 0; i < a.length; ++i){
 			try {
 				if (i != a.length-1) BW.write(a[i].toString() + ", ");
 				else BW.write(a[i].toString() + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 		}
 	}
 	
-	public <T extends Object> void write(Set<T> set) {
+	public <T extends Object> void write(Set<T> set) throws IOException {
 		Integer count = 0;
 		for (T toPrint:set){
 			try {
 				if(count != set.size()-1) BW.write(toPrint.toString() + ", ");
 				else BW.write(toPrint.toString() + System.lineSeparator());
 			} catch (IOException e){
-				System.out.println("Error en la escritura.");
+				throw new IOException("Error en la escritura.");
 			}
 			++count;
 		}

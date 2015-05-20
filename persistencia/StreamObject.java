@@ -222,7 +222,7 @@ public class StreamObject {
 			++j;
 		}
 		++j;
-		Integer n = Integer.parseInt(aux); //Nombre d'elements del set
+		Integer n = Integer.parseInt(aux);
 		for (Integer k = 0; k < n; ++k){
 			Integer jaux = j;
 			while (set.charAt(j-1) != ';' || set.charAt(j) != ';') ++j;
@@ -291,7 +291,7 @@ public class StreamObject {
 			++i;
 		}
 		S = S.substring(i, S.length());
-		if (S.length() < V.lastElement()) throw new ObjectFormatException(false, "");
+		if (S.length() < V.lastElement()) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		return new StreamObject(S, V);
 	}
 }
