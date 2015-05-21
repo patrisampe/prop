@@ -125,6 +125,16 @@ public class StreamObject {
 	}
 	
 	/**
+	 * Añade un nuevo atributo multivaluado.
+	 * @param set - Set a insertar.
+	 */
+	public <T extends Object> void add(T[] array){
+		indices.add(contenido.length());
+		contenido = contenido + array.length + ':';
+		for (T t:array) contenido = contenido + t.toString() + ";";
+	}
+	
+	/**
 	 * Añade un nuevo StreamObject.
 	 * @param o - Objeto a insertar.
 	 */
@@ -194,6 +204,37 @@ public class StreamObject {
 				++j;
 			}
 			out.add(aux);
+			++j;
+		}
+		return out;
+	}
+	
+	/**
+	 * Consulta un elemento multivaluado del objeto.
+	 * @param i - Posicion del elemento a consultar.
+	 * @return Un array de Strings con la información contenida.
+	 */
+	public String[] arrayAt(Integer i){
+		String[] out = new String[0];
+		String array = elementAt(i);
+		if (array.isEmpty()) return out;
+		
+		String aux = "";
+		Integer j = 0;
+		while (array.charAt(j) != ':') {
+			aux += array.charAt(j);
+			++j;
+		}
+		++j;
+		Integer n = Integer.parseInt(aux);
+		out = new String[n];
+		for (Integer k = 0; k < n; ++k){
+			aux = "";
+			while (array.charAt(j) != ';') {
+				aux += array.charAt(j);
+				++j;
+			}
+			out[k] = aux;
 			++j;
 		}
 		return out;

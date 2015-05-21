@@ -3,10 +3,10 @@ package persistencia;
 import io.Entrada;
 import io.Salida;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import exceptions.ContainerFormatException;
@@ -221,8 +221,12 @@ public class StreamFile {
 		
 		Integer checksum = checksum(containers);
 		
-		S.write(Integer.toHexString(checksum).toUpperCase() + ';' + (contenido.size()+2) + ';' + info);
-		for (String cont:containers) S.write(cont);
+		try {
+			S.write(Integer.toHexString(checksum).toUpperCase() + ';' + (contenido.size()+2) + ';' + info);
+			for (String cont:containers) S.write(cont);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 		S.close();
 	}
 	
@@ -234,105 +238,126 @@ public class StreamFile {
 		String info_aux = "";
 		try {
 			info_aux = E.readLine();
-		} catch (NoSuchElementException e) {
+		} catch (IOException e) {
 			throw new FileFormatException(1, e.getMessage());
 		}
-		//TODO si la entrada es buida, throw exception
-		int checksum;
-		String checksum_aux = "";
-		String index_aux = "";
-		Integer index = 0;
-		Integer n;
-		String n_aux = "";
+		
+		//TODO ENCODING DEL FICHERO
+		String encoding = "";
 		Integer j = 0;
 
-		//TRADUCIMOS LA PRIMERE LINEA: INFORMACION DEL FICHERO
 		while (info_aux.charAt(j) != ';') {
-			checksum_aux += info_aux.charAt(j);
+			encoding += info_aux.charAt(j);
 			++j;
 		}
 		++j;
-		try {
-			checksum = Integer.parseInt(checksum_aux, 16);
-		} catch (NumberFormatException e) {
-			throw new FileFormatException(1, e.getMessage());
-		}
-		while (info_aux.charAt(j) != ';') {
-			n_aux += info_aux.charAt(j);
-			++j;
-		}
-		++j;
-		try {
-			n = Integer.parseInt(n_aux);
-		} catch (NumberFormatException e) {
-			throw new FileFormatException(1, e.getMessage());
-		}
-		String[] containers = new String[n-1];
-		for (Integer i = 0; i < n-1; ++i) {
-			try {
-				containers[i] = E.readLine();
-			} catch (NoSuchElementException e) {
-				throw new FileFormatException(i+2, "El numero de lineas es menor del esperado.");
-			}
-
-		}
-
-		if (checksum != checksum(containers)) throw new FileChecksumException(checksum(containers), Integer.valueOf(checksum));
-		//TRADUCIMOS LA PRIMERE LINEA: INFORMACION DEL FICHERO
-
-		//TRADUCIMOS LA SEGUNDA LINEA: EL INDICE DEL FICHERO
-		j = 0;
-		index_aux = "";
-		while (containers[0].charAt(j) != ':') {
-			index_aux += containers[0].charAt(j);
-			++j;
-		}
-		++j;
-		try {
-			index = Integer.parseInt(index_aux);
-		} catch (NumberFormatException e) {
-			throw new FileFormatException(2, e.getMessage());
-		}
-		Map<String, Integer> indices = new HashMap<String, Integer>();
-		for (Integer k = 0; k < index; ++k) {
-			index_aux = "";
-			String aux = "";
-			while (containers[0].charAt(j) != ':') {
-				aux += containers[0].charAt(j);
+		
+		switch(encoding){
+		case "nuestro":
+			int checksum;
+			String checksum_aux = "";
+			String index_aux = "";
+			Integer index = 0;
+			Integer n;
+			String n_aux = "";
+	
+			//TRADUCIMOS LA PRIMERE LINEA: INFORMACION DEL FICHERO
+			while (info_aux.charAt(j) != ';') {
+				checksum_aux += info_aux.charAt(j);
 				++j;
 			}
 			++j;
-			while (containers[0].charAt(j) != ';') {
+			try {
+				checksum = Integer.parseInt(checksum_aux, 16);
+			} catch (NumberFormatException e) {
+				throw new FileFormatException(1, e.getMessage());
+			}
+			while (info_aux.charAt(j) != ';') {
+				n_aux += info_aux.charAt(j);
+				++j;
+			}
+			++j;
+			try {
+				n = Integer.parseInt(n_aux);
+			} catch (NumberFormatException e) {
+				throw new FileFormatException(1, e.getMessage());
+			}
+			//TRADUCIMOS LA PRIMERE LINEA: INFORMACION DEL FICHERO
+	
+			//VALIDAMOS EL CHECKSUM Y LEEMOS EL RESTO DEL FICHERO
+			String[] containers = new String[n-1];
+			for (Integer i = 0; i < n-1; ++i) {
+				try {
+					containers[i] = E.readLine();
+				} catch (IOException e) {
+					throw new FileFormatException(i+2, e.getMessage());
+				}
+			}
+			if (checksum != checksum(containers)) throw new FileChecksumException(checksum(containers), Integer.valueOf(checksum));
+			//VALIDAMOS EL CHECKSUM Y LEEMOS EL RESTO DEL FICHERO
+	
+			//TRADUCIMOS LA SEGUNDA LINEA: EL INDICE DEL FICHERO
+			j = 0;
+			index_aux = "";
+			while (containers[0].charAt(j) != ':') {
 				index_aux += containers[0].charAt(j);
 				++j;
 			}
 			++j;
 			try {
-				indices.put(aux, Integer.parseInt(index_aux));
+				index = Integer.parseInt(index_aux);
 			} catch (NumberFormatException e) {
 				throw new FileFormatException(2, e.getMessage());
 			}
-		}
-		//TRADUCIMOS LA SEGUNDA LINEA: EL INDICE DEL FICHERO
-
-		//TRADUCIMOS LAS OTRAS LINEAS: EL CONTENIDO DEL FICHERO
-		Vector<StreamContainer> contenido = new Vector<StreamContainer>();
-		for (Integer i = 1; i < n-1; ++i) {
-			StreamContainer SC;
-			try {
-				SC = StreamContainer.convert(containers[i]);
-			} catch (ContainerFormatException e) {
-				throw new FileFormatException(i+2, e.getMessage());
+			Map<String, Integer> indices = new HashMap<String, Integer>();
+			for (Integer k = 0; k < index; ++k) {
+				index_aux = "";
+				String aux = "";
+				while (containers[0].charAt(j) != ':') {
+					aux += containers[0].charAt(j);
+					++j;
+				}
+				++j;
+				while (containers[0].charAt(j) != ';') {
+					index_aux += containers[0].charAt(j);
+					++j;
+				}
+				++j;
+				try {
+					indices.put(aux, Integer.parseInt(index_aux));
+				} catch (NumberFormatException e) {
+					throw new FileFormatException(2, e.getMessage());
+				}
 			}
-			contenido.add(SC);
+			//TRADUCIMOS LA SEGUNDA LINEA: EL INDICE DEL FICHERO
+	
+			//TRADUCIMOS LAS OTRAS LINEAS: EL CONTENIDO DEL FICHERO
+			Vector<StreamContainer> contenido = new Vector<StreamContainer>();
+			for (Integer i = 1; i < n-1; ++i) {
+				StreamContainer SC;
+				try {
+					SC = StreamContainer.convert(containers[i]);
+				} catch (ContainerFormatException e) {
+					throw new FileFormatException(i+2, e.getMessage());
+				}
+				contenido.add(SC);
+			}
+	
+			//TRADUCIMOS LAS OTRAS LINEAS: EL CONTENIDO DEL FICHERO
+			
+			this.contenido = contenido;
+			this.indices = indices;
+			this.info =  "" + message1 + ' ' + message2;
+			E.close();
+			
+			break;
+		case "easy":
+			
+			break;
+		default:
+			
+			break;
 		}
-
-		//TRADUCIMOS LAS OTRAS LINEAS: EL CONTENIDO DEL FICHERO
-		
-		this.contenido = contenido;
-		this.indices = indices;
-		this.info =  "" + message1 + ' ' + message2;
-		E.close();
 	}
 		
 	/**
