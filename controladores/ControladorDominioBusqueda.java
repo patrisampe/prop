@@ -26,9 +26,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected ControladorDominioLegislatura cLeg;
 	protected ControladorDominioEvento cEv;
 	protected ControladorDominioVotacion cVot;
-	
-	protected Graf G;
-	
+		
 	/**
 	 * Creadora por defecto.
 	 */
