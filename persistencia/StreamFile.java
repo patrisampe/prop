@@ -486,7 +486,11 @@ public class StreamFile {
 	 * @param E - Entrada por la que se desea leer los datos.
 	 */
 	private void leerS(Entrada E) throws FileFormatException {
-		StreamContainer SC = new StreamContainer("Import");
+		StreamContainer[] SC = new StreamContainer[4];
+		SC[0] = new StreamContainer("Import Legislaturas");
+		SC[1] = new StreamContainer("Import Diputados");
+		SC[2] = new StreamContainer("Import Votaciones");
+		SC[3] = new StreamContainer("Import Eventos");
 		Boolean fi = false;
 		Integer j = 1;
 		String linea = "";
@@ -528,26 +532,7 @@ public class StreamFile {
 					set = new HashSet<String>();
 					for (Integer i = 0; i < n; ++i) set.add(atribs[i+6]);
 					SO.add(set);		
-					SC.add(SO);
-				break;
-				case "Evento":
-					try {
-						n = Integer.parseInt(atribs[3]);
-					} catch (NumberFormatException e) {
-						E.close();
-						throw new FileFormatException(j, e.getMessage());
-					}
-					if (atribs.length != n+4) {
-						E.close();
-						throw new FileFormatException(j, "Numero de atributos incorrecto.");
-					}
-					SO = new StreamObject("Evento");
-					SO.add(atribs[1]);
-					SO.add(atribs[2]);
-					set = new HashSet<String>();
-					for (Integer i = 0; i < n; ++i) set.add(atribs[i+4]);
-					SO.add(set);		
-					SC.add(SO);
+					SC[1].add(SO);
 				break;
 				case "Legislatura":
 					if (atribs.length != 4) {
@@ -558,7 +543,7 @@ public class StreamFile {
 					SO.add(atribs[1]);
 					SO.add(atribs[2]);
 					SO.add(atribs[3]);
-					SC.add(SO);
+					SC[0].add(SO);
 				break;
 				case "TipoEvento":
 					try {
@@ -600,7 +585,7 @@ public class StreamFile {
 						evento.add(set);
 						SO.addObject(evento);
 					}
-					SC.add(SO);
+					SC[3].add(SO);
 				break;
 				case "Votacion":
 					try {
@@ -623,7 +608,7 @@ public class StreamFile {
 					for (Integer i = 0; i < n; ++i) votos[i] = atribs[5+n+i];
 					SO.add(diputados);
 					SO.add(votos);
-					SC.add(SO);
+					SC[2].add(SO);
 				break;
 				default:
 					E.close();
@@ -637,7 +622,7 @@ public class StreamFile {
 				fi = true;
 			}
 		}
-		add(SC);
+		for (StreamContainer sc:SC) add(sc);
 	}
 
 }
