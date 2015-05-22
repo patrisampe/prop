@@ -108,9 +108,10 @@ public class StreamContainer {
 	 * Consulta un elemento del contenedor.
 	 * @param i - Posicion del elemento deseado.
 	 * @return El StreamObject situado en la posición indicada.
+	 * @throws ContainerFormatException 
 	 */
-	public StreamObject elementAt(Integer i){
-		if (i >= indices.size() || i <= 0) return StreamObject.NULL;
+	public StreamObject elementAt(Integer i) throws ContainerFormatException{
+		if (i >= indices.size() || i <= 0) throw new ContainerFormatException("El objeto indicado no es valido.");
 		Integer inicio = indices.elementAt(i);
 		if (i == indices.size()-1)
 			return StreamObject.convert(contenido.substring(inicio, contenido.length()));
@@ -123,26 +124,19 @@ public class StreamContainer {
 	 * @param i - Posición del elemento deseado en el contenedor.
 	 * @param j - Posición del atributo deseado en el objeto.
 	 * @return El atributo situado en la posición indicada.
+	 * @throws ContainerFormatException 
 	 */
-	public String elementAt(Integer i, Integer j) {
+	public String elementAt(Integer i, Integer j) throws ContainerFormatException {
 		return elementAt(i).elementAt(j);
 	}
 	
 	/**
 	 * Elimina todos los elementos del conjunto, excepto su nombre.
 	 */
-	public StreamContainer clear(){
-		String name = "";
-		Integer i = 0;
-		while (contenido.charAt(i) != ':') {
-			name += contenido.charAt(i);
-			++i;
-		}
-		name += ':';
-		contenido = name;
+	public void clear(){
+		contenido = getName() + ':';
 		indices.clear();
 		indices.add(0);
-		return this;
 	}
 	
 	/**
@@ -172,6 +166,7 @@ public class StreamContainer {
 		while (S.charAt(i) != ':') {
 			aux += S.charAt(i);
 			++i;
+			if (i >= S.length()) throw new ContainerFormatException("Formato de contenedor invalido.");
 		}
 		Integer n;
 		try {
@@ -185,6 +180,7 @@ public class StreamContainer {
 			while (S.charAt(i) != ';') {
 				aux += S.charAt(i);
 				++i;
+				if (i >= S.length()) throw new ContainerFormatException("Formato de contenedor invalido.");
 			}
 			try {
 				V.add(Integer.parseInt(aux));
@@ -192,6 +188,7 @@ public class StreamContainer {
 				throw new ContainerFormatException(e.getMessage());
 			}
 			++i;
+			if (i >= S.length()) throw new ContainerFormatException("Formato de contenedor invalido.");
 		}
 
 		S = S.substring(i, S.length());

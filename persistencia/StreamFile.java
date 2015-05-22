@@ -158,10 +158,11 @@ public class StreamFile {
 	 * Consulta un elemento del fichero.
 	 * @param i - Posición del elemento deseado.
 	 * @return El StreamContainer situado en la posición indicada.
+	 * @throws FileFormatException 
 	 */
-	public StreamContainer elementAt(Integer i) {
+	public StreamContainer elementAt(Integer i) throws FileFormatException {
 		--i;
-		if (i >= contenido.size() || i < 0) return StreamContainer.NULL;
+		if (i >= contenido.size() || i < 0) throw new FileFormatException(i, "Linea invalida.");
 		else return contenido.elementAt(i);
 	}
 	
@@ -170,9 +171,14 @@ public class StreamFile {
 	 * @param i - Posición del elemento deseado en el fichero.
 	 * @param j - Posición del elemento deseado en el contenedor.
 	 * @return El StreamObject situado en la posición indicada.
+	 * @throws FileFormatException 
 	 */
-	public StreamObject elementAt(Integer i, Integer j) {
-		return elementAt(i).elementAt(j);
+	public StreamObject elementAt(Integer i, Integer j) throws FileFormatException {
+		try {
+			return elementAt(i).elementAt(j);
+		} catch (ContainerFormatException e) {
+			throw new FileFormatException(i, e.getMessage());
+		}
 	}
 	
 	/**
@@ -181,29 +187,34 @@ public class StreamFile {
 	 * @param j - Posición del elemento deseado en el contenedor.
 	 * @param k - Posición del atributo deseado en el contenedor.
 	 * @return El StreamObject situado en la posición indicada.
+	 * @throws FileFormatException 
 	 */
-	public String elementAt(Integer i, Integer j, Integer k) {
-		return elementAt(i).elementAt(j, k);
+	public String elementAt(Integer i, Integer j, Integer k) throws FileFormatException {
+		try {
+			return elementAt(i).elementAt(j, k);
+		} catch (ContainerFormatException e) {
+			throw new FileFormatException(i, e.getMessage());
+		}
 	}
 	
 	/**
 	 * Consulta un elemento del fichero.
 	 * @param name - Nombre del elemento deseado.
 	 * @return El StreamContainer con el nombre indicado.
+	 * @throws FileFormatException 
 	 */
-	public StreamContainer get(String name){
-		if (!indices.containsKey(name)) return StreamContainer.NULL;
+	public StreamContainer get(String name) throws FileFormatException{
+		if (!indices.containsKey(name)) throw new FileFormatException(-1, "Nombre inexistente.");
 		else return contenido.elementAt(indices.get(name));
 	}
 	
 	/**
 	 * Elimina todos los elementos del fichero, excepto la informacion.
 	 */
-	public StreamFile clear(){
+	public void clear(){
 		indices = new HashMap<String, Integer>();
 		contenido = new Vector<StreamContainer>();
 		info = "" + message1 + ' ' + message2;
-		return this;
 	}
 	
 	/**
@@ -224,7 +235,7 @@ public class StreamFile {
 		Integer checksum = checksum(containers);
 		
 		try {
-			S.write("Encoding Format:CIOF;"
+			S.write("File Encoding Format:CIOF;"
 					+ Integer.toHexString(checksum).toUpperCase() + ';'
 					+ (contenido.size()+2) + ';'
 					+ info);
@@ -248,6 +259,11 @@ public class StreamFile {
 			throw new FileFormatException(1, e.getMessage());
 		}
 		
+		if (info_aux.isEmpty()) {
+			E.close();
+			throw new FileFormatException(1, "Formato de archivo incorrecto.");
+		}
+		
 		String encoding = "";
 		Integer j = 0;
 
@@ -255,6 +271,10 @@ public class StreamFile {
 			encoding += info_aux.charAt(j);
 			if (info_aux.charAt(j) == ':') encoding = "";
 			++j;
+			if (j >= info_aux.length()){
+				E.close();
+				throw new FileFormatException(1, "Formato de archivo incorrecto.");
+			}
 		}
 		++j;
 		
@@ -326,9 +346,17 @@ public class StreamFile {
 		String n_aux = "";
 	
 		//TRADUCIMOS LA PRIMERE LINEA: INFORMACION DEL FICHERO
+		if (j >= info_aux.length()){
+			E.close();
+			throw new FileFormatException(1, "Formato de archivo incorrecto.");
+		}
 		while (info_aux.charAt(j) != ';') {
 			checksum_aux += info_aux.charAt(j);
 			++j;
+			if (j >= info_aux.length()){
+				E.close();
+				throw new FileFormatException(1, "Formato de archivo incorrecto.");
+			}
 		}
 		++j;
 		try {
@@ -337,11 +365,18 @@ public class StreamFile {
 			E.close();
 			throw new FileFormatException(1, e.getMessage());
 		}
+		if (j >= info_aux.length()){
+			E.close();
+			throw new FileFormatException(1, "Formato de archivo incorrecto.");
+		}
 		while (info_aux.charAt(j) != ';') {
 			n_aux += info_aux.charAt(j);
 			++j;
-		}
-		++j;
+			if (j >= info_aux.length()){
+				E.close();
+				throw new FileFormatException(1, "Formato de archivo incorrecto.");
+			}
+		}		
 		try {
 			n = Integer.parseInt(n_aux);
 		} catch (NumberFormatException e) {
@@ -369,9 +404,17 @@ public class StreamFile {
 		//TRADUCIMOS LA SEGUNDA LINEA: EL INDICE DEL FICHERO
 		j = 0;
 		index_aux = "";
+		if (containers[0].isEmpty()){
+			E.close();
+			throw new FileFormatException(2, "Formato de archivo incorrecto.");
+		}
 		while (containers[0].charAt(j) != ':') {
 			index_aux += containers[0].charAt(j);
 			++j;
+			if (j >= containers[0].length()){
+				E.close();
+				throw new FileFormatException(2, "Formato de archivo incorrecto.");
+			}
 		}
 		++j;
 		try {
@@ -384,16 +427,31 @@ public class StreamFile {
 		for (Integer k = 0; k < index; ++k) {
 			index_aux = "";
 			String aux = "";
+			if (j >= containers[0].length()){
+				E.close();
+				throw new FileFormatException(2, "Formato de archivo incorrecto.");
+			}
 			while (containers[0].charAt(j) != ':') {
 				aux += containers[0].charAt(j);
 				++j;
+				if (j >= containers[0].length()){
+					E.close();
+					throw new FileFormatException(2, "Formato de archivo incorrecto.");
+				}
 			}
 			++j;
+			if (j >= containers[0].length()){
+				E.close();
+				throw new FileFormatException(2, "Formato de archivo incorrecto.");
+			}
 			while (containers[0].charAt(j) != ';') {
 				index_aux += containers[0].charAt(j);
 				++j;
+				if (j >= containers[0].length()){
+					E.close();
+					throw new FileFormatException(2, "Formato de archivo incorrecto.");
+				}
 			}
-			++j;
 			try {
 				indices.put(aux, Integer.parseInt(index_aux));
 			} catch (NumberFormatException e) {

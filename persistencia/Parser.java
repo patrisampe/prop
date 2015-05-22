@@ -377,11 +377,21 @@ public class Parser {
 				for (Integer j = 1; j < SF.elementAt(i).size(); ++j) {
 					S.write("Clase " + SF.elementAt(i, j).getNombre());
 					for (Integer k = 1; k < SF.elementAt(i, j).size(); ++k) {
-						S.write(SF.elementAt(i, j, k));
+						String out = SF.elementAt(i, j, k);
+						if (out.contains("Evento")) {
+							StreamObject SO = StreamObject.convert(out);
+							S.write("Clase " + SO.getNombre());
+							for (Integer l = 1; l < SO.size(); ++l) {
+								S.write(SO.elementAt(l));
+							}
+						}
+						else S.write(out);
 					}
 				}
 			}
 		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (FileFormatException e) {
 			System.out.println(e.getMessage());
 		}
 
