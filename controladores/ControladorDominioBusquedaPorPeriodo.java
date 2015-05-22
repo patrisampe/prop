@@ -2,7 +2,6 @@ package controladores;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import time.*;
 import utiles.ConjuntoGrupoAfin;
@@ -17,7 +16,53 @@ import dominio.algoritmos.*;
  */
 public class ControladorDominioBusquedaPorPeriodo extends
 		ControladorDominioBusqueda {
+	private Graf G;
+	private DateInterval Periodo;
 	
+	public void nuevaBusqueda(DateInterval Periodo) {
+		if (Periodo.equals(DateInterval.NULL)) error.setCodiError(38);
+		else {
+			this.Periodo = Periodo;
+			G = new Graf((HashSet<String>) prepararDiputados(Periodo));
+		}
+	}
+	
+	public void addCriterioStandard(Map<String, Integer> ImportanciaModificada, Double ponderacion) {
+		DateInterval PeriodoVotaciones = new DateInterval(cLeg.getFechaInicio(cLeg.getID(Periodo.getInicio())), cLeg.getFechaFinal(cLeg.getID(Periodo.getFin())));
+		if (catchError(cLeg)) return;
+		addCriterioStandard(G, prepararImportancias(ImportanciaModificada), prepararEventos(Periodo), prepararVotaciones(PeriodoVotaciones), ponderacion);
+	}
+	
+	public void addCriterioPartidoPolitico(Double ponderacion) {
+		addCriterioPartidoPolitico(G, ponderacion);
+	}
+
+
+	public void addCriterioEstado(Double ponderacion) {
+		addCriterioEstado(G, ponderacion);
+	}
+
+	public void addCriterioNombresParecidos(Double ponderacion) {
+		addCriterioNombresParecidos(G, ponderacion);
+	}
+	
+	public ConjuntoGrupoAfin ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje) {
+		HashSet<HashSet<String> > hs = ejecutar(G,algoritmo,porcentaje);
+		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
+		Integer idgrupo = 1;
+		for (HashSet<String> Comunidad : hs) {
+			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo(idgrupo++);
+			for (String Diputado : Comunidad) {
+				ga.addDiputado(Diputado);
+			}
+			s.add(ga);
+		}
+		return s;
+	}
+
+	
+	
+
 	/**
 	 * Realiza una nueva b�squeda usando el criterio est�ndar: Teniendo en cuenta Eventos y Votaciones, 
 	 * para los diputados activos en alg�n momento del periodo especificado, Eventos dentro del periodo y Votaciones
@@ -28,7 +73,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 */ 
-	public ConjuntoGrupoAfin NuevaBusquedaStandard(TipoAlgoritmo algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaStandard(TipoAlgoritmo algoritmo, DateInterval Periodo, Map<String, Integer> ImportanciaModificada, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(Periodo);
 		if (this.hasError()) return null;
 		
@@ -45,7 +90,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		Map<String, Set<String> > votacionesSimp = prepararVotaciones(PeriodoVotaciones); 
 		/*for (Set<String> tipoEvento : tiposYeventos.values()) {
 			System.out.println(tipoEvento);
-		}*/
+		}*//*
 		Graf G = construirGrafo(idDiputados,importancias,tiposYeventos,votacionesSimp);
 		if (this.hasError()) return null;
 		//System.out.println((new GrafLouvain(G)).sumaPesos());
@@ -53,7 +98,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 			System.out.println("Adyacentes a "+nodo);
 			for (String adj : G.getAdjacents(nodo)) System.out.print(adj+", ");
 			System.out.println("");
-		}*/
+		}*//*
 			
 		
 		return ejecutarYretornar(G,algoritmo,porcentaje);
@@ -66,7 +111,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
 		if (this.hasError()) return null;
 		//for (String nodo : idDiputados) System.out.println(nodo);
@@ -81,7 +126,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaEstado(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaEstado(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
 		if (this.hasError()) return null;
 		Graf G = construirGrafoEstado(idDiputados);
@@ -96,30 +141,15 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 * @param porcentaje Porcentaje de afinidad deseado.
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, DateInterval periodo, Integer porcentaje) {
 		Set<String> idDiputados = prepararDiputados(periodo);
 		if (this.hasError()) return null;
 		Graf G = construirGrafoNombresParecidos(idDiputados);
 		return ejecutarYretornar(G,algoritmo,porcentaje);
 	}
+	*/
 
 
-	private ConjuntoGrupoAfin ejecutarYretornar(Graf g, TipoAlgoritmo algoritmo, Integer porcentaje) {
-		HashSet<HashSet<String> > hs = ejecutar(g,algoritmo,porcentaje);
-		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
-		//for (String nodo : g.getNodes()) System.out.println(nodo);
-		Integer idgrupo = 1;
-		for (HashSet<String> Comunidad : hs) {
-			//System.out.println("hellooooooooooooow");
-			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo(idgrupo++);
-			for (String Diputado : Comunidad) {
-				//System.out.println(Diputado);
-				ga.addDiputado(Diputado);
-			}
-			s.add(ga);
-		}
-		return s;
-	}
 
 
 }

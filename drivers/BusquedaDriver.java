@@ -108,7 +108,7 @@ public class BusquedaDriver {
 		SF.close();
 	}
 	
-	private static void ReadAndAddDeTodo(Salida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) {
+	private static void ReadAndAddDeTodo(Salida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) throws IOException {
 		String s = eF.readString();
 		while (!s.equals("FIN")) {
 			sC.write(s);
@@ -145,7 +145,7 @@ public class BusquedaDriver {
 		}
 	}
 
-	private static Map<String, TipoVoto> ReadMapVotos(Entrada eF) {
+	private static Map<String, TipoVoto> ReadMapVotos(Entrada eF) throws IOException {
 		Map<String,TipoVoto> ret = new TreeMap<String,TipoVoto>();
 		int iteraciones = eF.readInt();
 		for (int i = 0; i < iteraciones; ++i) {
@@ -154,7 +154,7 @@ public class BusquedaDriver {
 		return ret;
 	}
 
-	private static TipoVoto ReadTipoVoto(Entrada eF) {
+	private static TipoVoto ReadTipoVoto(Entrada eF) throws IOException {
 		String s = eF.readString();
 		if (s.equals("A_FAVOR")) return TipoVoto.A_FAVOR;
 		if (s.equals("EN_CONTRA")) return TipoVoto.EN_CONTRA;
@@ -163,14 +163,14 @@ public class BusquedaDriver {
 		return null;
 	}
 
-	public static void PrintGrupPeriodo(Salida SF, GrupoAfinPorPeriodo grupAfi) {
+	public static void PrintGrupPeriodo(Salida SF, GrupoAfinPorPeriodo grupAfi) throws IOException {
 		SF.write(grupAfi.getID());
 		Set<String> diputados = grupAfi.getDiputados();
 		SF.write(diputados);
 	}
 	
 	public static void PrintConjGrupPeriodo(Salida sF,
-			ConjuntoGrupoAfin conjuntoGrupoAfin) {
+			ConjuntoGrupoAfin conjuntoGrupoAfin) throws IOException {
 		sF.write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
 		for (GrupoAfinPorPeriodo g : conjuntoGrupoAfin.getAllPorPeriodo()) {
 			PrintGrupPeriodo(sF, g);
@@ -178,7 +178,7 @@ public class BusquedaDriver {
 		
 	}
 	
-	public static void PrintGrupDiputado(Salida SF, GrupoAfinPorDiputado grupAfi) {
+	public static void PrintGrupDiputado(Salida SF, GrupoAfinPorDiputado grupAfi) throws IOException {
 		SF.write(grupAfi.getID());
 		SF.write(grupAfi.getFechaInicio().toString());
 		SF.write(grupAfi.getFechaFin().toString());
@@ -187,7 +187,7 @@ public class BusquedaDriver {
 	}
 	
 	public static void PrintConjGrupDiputado(Salida sF,
-			ConjuntoGrupoAfin conjuntoGrupoAfin) {
+			ConjuntoGrupoAfin conjuntoGrupoAfin) throws IOException {
 		sF.write("El numero de grupos es: " + conjuntoGrupoAfin.size().toString());
 		for (GrupoAfinPorDiputado g : conjuntoGrupoAfin.getAllPorDiputado()) {
 			PrintGrupDiputado(sF, g);
@@ -195,7 +195,7 @@ public class BusquedaDriver {
 		
 	}
 
-	public static Map<String, Integer> ReadMap(Entrada eF) {
+	public static Map<String, Integer> ReadMap(Entrada eF) throws IOException {
 		Map<String,Integer> ret = new TreeMap<String,Integer>();
 		int iteraciones = eF.readInt();
 		for (int i = 0; i < iteraciones; ++i) {
@@ -204,7 +204,7 @@ public class BusquedaDriver {
 		return ret;
 	}
 
-	public static TipoAlgoritmo ReadAlgoritmo(Entrada eF) {
+	public static TipoAlgoritmo ReadAlgoritmo(Entrada eF) throws IOException {
 		String Alg = eF.readString();
 		if (Alg.equals("Louvain")) return TipoAlgoritmo.Louvain;
 		if (Alg.equalsIgnoreCase("CliquePercolation")) return TipoAlgoritmo.CliquePercolation;
