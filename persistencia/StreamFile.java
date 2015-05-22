@@ -218,7 +218,7 @@ public class StreamFile {
 	}
 	
 	/**
-	 * Escribe el contenido en un fichero.
+	 * Escribe el contenido en un fichero en formato CIOF.
 	 * @param S - Salida por la que se desea escribir el contenido.
 	 */
 	public void print(Salida S) {
@@ -280,10 +280,10 @@ public class StreamFile {
 		
 		switch(encoding){
 		case "CIOF":
-			leerA(E, info_aux, j);
+			leerC(E, info_aux, j);
 			break;
 		case "SIOF":
-			leerB(E);
+			leerS(E);
 			break;
 		default:
 			E.close();
@@ -337,7 +337,7 @@ public class StreamFile {
 	 * @param info_aux - String con la informacion de la primera línea.
 	 * @param j - Numero de caracter por el que hay que empezar a leer la primera línea.
 	 */
-	private void leerA(Entrada E, String info_aux, Integer j) throws FileFormatException, FileChecksumException {
+	private void leerC(Entrada E, String info_aux, Integer j) throws FileFormatException, FileChecksumException {
 		int checksum;
 		String checksum_aux = "";
 		String index_aux = "";
@@ -485,7 +485,7 @@ public class StreamFile {
 	 * Integra los datos de un fichero SIOF (Simple Imput/Output Format) en el StreamFile.
 	 * @param E - Entrada por la que se desea leer los datos.
 	 */
-	private void leerB(Entrada E) throws FileFormatException {
+	private void leerS(Entrada E) throws FileFormatException {
 		StreamContainer SC = new StreamContainer("Import");
 		Boolean fi = false;
 		Integer j = 1;
