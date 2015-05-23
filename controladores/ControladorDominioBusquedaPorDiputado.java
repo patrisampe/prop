@@ -44,6 +44,13 @@ public class ControladorDominioBusquedaPorDiputado extends
 		}
 	}
 	
+	/**
+	 * Añade pesos por el criterio estándar: Teniendo en cuenta Eventos y Votaciones, 
+	 * para los diputados activos en algún momento del periodo especificado, Eventos dentro del periodo y Votaciones
+	 * dentro de las legislaturas que incluyan el periodo.
+	 * @param ImportanciaModificada modificacion de la importancia de los eventos
+	 * @param ponderacion del criterio	 
+	 */
 	public void addCriterioStandard(Map<String, Integer> ImportanciaModificada, Double ponderacion) {
 		Iterator<Graf> sgIt = sg.iterator();
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
@@ -57,6 +64,11 @@ public class ControladorDominioBusquedaPorDiputado extends
 			addCriterioStandard(sgIt.next(), prepararImportancias(ImportanciaModificada), prepararEventos(Periodo), prepararVotaciones(Periodo), ponderacion);
 		}
 	}
+	
+	/**
+	 * Añade pesos por el Partido Político de los diputados
+	 * @param ponderacion del criterio
+	 */
 	public void addCriterioPartidoPolitico(Double ponderacion) {
 		for (Graf g : sg) {
 			addCriterioPartidoPolitico(g, ponderacion);
@@ -64,18 +76,31 @@ public class ControladorDominioBusquedaPorDiputado extends
 	}
 
 
+	/**
+	 * Añade pesos por el Estado de los diputados
+	 * @param ponderacion del criterio
+	 */
 	public void addCriterioEstado(Double ponderacion) {
 		for (Graf g : sg) {
 			addCriterioEstado(g, ponderacion);
 		}
 	}
 
+	/**
+	 * Añade pesos por parecido de nombre entre los diputados
+	 * @param ponderacion del criterio
+	 */
 	public void addCriterioNombresParecidos(Double ponderacion) {
 		for (Graf g : sg) {
 			addCriterioNombresParecidos(g, ponderacion);
 		}
 	}
 	
+	/**
+	 * Ejecuta la búsqueda por diputado con los Grafos construidos y el lapso antes especificado.
+	 * @param algoritmo Algoritmo de la búsqueda
+	 * @param porcentaje Indice de afinidad.
+	 */
 	public void ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje, String DiputadoRelevante) {
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;

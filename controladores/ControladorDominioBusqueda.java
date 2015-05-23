@@ -35,6 +35,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	 * Creadora por defecto.
 	 */
 	public ControladorDominioBusqueda() {
+		super();
 		cDip = ControladorDominioDiputado.getInstance();
 		cLeg = ControladorDominioLegislatura.getInstance();
 		cEv = ControladorDominioEvento.getInstance();
