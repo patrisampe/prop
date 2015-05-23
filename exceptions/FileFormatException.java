@@ -38,7 +38,7 @@ public class FileFormatException extends Exception {
 	 * @return El String que contiene el mensaje de error.
 	 */
 	public String getMessage() {
-		return "Error de formato el la linea " + lineaDeFallo + " del fichero."
+		return "Error de formato en la linea " + lineaDeFallo + " del fichero."
 				+ (!otherInfo.isEmpty()?System.lineSeparator():"") + otherInfo;
 	}
 	

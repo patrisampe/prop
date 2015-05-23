@@ -36,7 +36,7 @@ public class ControladorDominio {
 	public CodiError getError() {
 		if (this.hasError()) {
 			CodiError error = this.error;
-			this.error.netejaCodiError();;
+			this.error.netejaCodiError();
 			return error;
 		}
 		return null;

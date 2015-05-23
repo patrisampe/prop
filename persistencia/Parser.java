@@ -1,7 +1,7 @@
 package persistencia;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -81,10 +81,12 @@ public class Parser {
 	public static Evento parseEvento(StreamObject evento){
 		if (!evento.getNombre().equals(Evento.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
 		if (evento.size() != 4) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
-		Evento E = new Evento(
+		/*Evento E = new Evento(
 							evento.elementAt(1),
-							Date.parseDate(evento.elementAt(2)),
-							new HashSet<String>());
+							Date.parseDate(evento.elementAt(2)));
+							TODO
+							*/
+		Evento E = new Evento(evento.elementAt(1), Date.parseDate(evento.elementAt(2)), new HashSet<String>());
 		for (String s:evento.setAt(3)) {
 			E.addDiputado(s);
 		}
@@ -162,14 +164,13 @@ public class Parser {
 		stream.add(L.getID());
 		stream.add(L.getFechaInicio());
 		stream.add(L.getFechaFinal());
-		stream.add(L.getDiputados());
 		return stream;
 	}
 	
 	/**
-	 * Extrae la legislatura contenido en un StreamObject.
+	 * Extrae la legislatura contenida en un StreamObject.
 	 * @param legislatura - StreamObject con la información a extraer.
-	 * @return La Legislatura conetnido en el StreamObject.
+	 * @return La Legislatura conetnida en el StreamObject.
 	 */
 	public static Legislatura parseLegislatura(StreamObject legislatura){
 		if (!legislatura.getNombre().equals(Diputado.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
@@ -183,12 +184,11 @@ public class Parser {
 								Integer.parseInt(legislatura.elementAt(1)),
 								Date.parseDate(legislatura.elementAt(2)),
 								fechaFin);
-		for (String s:legislatura.setAt(4)) {
-			L.addDiputado(s);
-		}
 		return L;
 	}
 	
+	
+	//TODO
 	/*
 	public static ParserStream toParserStream(ResultadoDeBusquedaPorDiputado R){
 		String stream = R.getClass().getCanonicalName() + ":";
@@ -240,121 +240,176 @@ public class Parser {
 		return T;
 	}
 	
-	/*
-	
-	public static ParserStream toParserStream(Votacion V){
-		String stream = V.getClass().getCanonicalName() + ":";
-		stream = stream	+ V.getNombre() + ";";
-		stream = stream	+ V.getImportancia() + ";";
-		stream = stream	+ V.getFecha().toString() + ";";
-		Set<String> S = V.getDiputados();
-		stream = stream + S.size() + ":";
-		for (String s:S) stream = stream + s + ";";
-		stream = stream + ";";
-		Map<String, TipoVoto> M = V.getVotos();
-		stream = stream + M.size() + ":";
-		for (String s:M.keySet()) stream = stream + s + ";" + M.get(s) + ";";
-		//No se com es veuen les enumeracions :(
+	/**
+	 * Codifica una Votacion en un StreamObject para su posterior almacenamiento.
+	 * @param V - Votacion a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Votacion V){
+		StreamObject stream = new StreamObject(V.getClass().getSimpleName());
+		stream.add(V.getNombre());
+		stream.add(V.getFecha());
+		stream.add(V.getImportancia());
+		Set<String> set = V.getDiputados();
+		String[] diputados = new String[set.size()];
+		String[] votos = new String[set.size()];
+		Integer i = 0;
+		for (String s:set) {
+			diputados[i] = s;
+			votos[i] = V.getVoto(s).toString(); //TODO
+			++i;
+		}
+		stream.add(diputados);
+		stream.add(votos);
 		return stream;
 	}
 	
-	*/
+	/**
+	 * Extrae la Votacion contenida en un StreamObject.
+	 * @param votacion - StreamObject con la información a extraer.
+	 * @return La Votacion conetnida en el StreamObject.
+	 */
+	public static Votacion parseVotacion(StreamObject votacion){
+		if (!votacion.getNombre().equals(TipoEvento.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
+		if (votacion.size() != 4) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
+		/*
+		Votacion V = new Votacion(
+								votacion.elementAt(1),
+								Date.parseDate(votacion.elementAt(2)),
+								Integer.parseInt(votacion.elementAt(3)));
+		TODO
+		 */
+		Votacion V = new Votacion(
+								votacion.elementAt(1),
+								Date.parseDate(votacion.elementAt(2)),
+								Integer.parseInt(votacion.elementAt(3)),
+								new HashMap<String,TipoVoto>());
+
+		String[] diputados = votacion.arrayAt(4);
+		String[] votos = votacion.arrayAt(5);
+		if (diputados.length != diputados.length) throw new ObjectFormatException(false, "Formato de objeto incorrecto.");
+		//for (Integer i = 0; i < diputados.length; ++i) V.setaddVoto(diputados[i], votos[i]); TODO
+		for (Integer i = 0; i < diputados.length; ++i) {
+			TipoVoto voto;
+			switch(votos[i]) {
+			case "ABSTENCION":
+				voto = TipoVoto.ABSTENCION;
+				break;
+			case "EN_CONTRA":
+				voto = TipoVoto.EN_CONTRA;
+				break;
+			case "A_FAVOR":
+				voto = TipoVoto.A_FAVOR;
+				break;
+			default:
+				voto = TipoVoto.AUSENCIA;
+				break;
+			}
+			V.setaddVoto(diputados[i], voto);
+		}
+		return V;
+	}
 	
 	public static void main (String args[]) {
+		Entrada E = new ConsolaEntrada();
 		Salida S = new ConsolaSalida();
-		Diputado D = new Diputado("David Moran", "Los mejores", "Barbera del Valles", Date.parseDate("17/10/1995"));
-		Diputado D2 = new Diputado("Anna Margalef", "Los mejores", "Barcelona", Date.parseDate("24/2/1996"));
-
-		for (Integer i = 1; i < 100; i *= 2) D.addLegistura(i);
-		for (Integer i = 100; i > 0; i /= 2) D2.addLegistura(i);
-		
-		
-		Set<String> set = new HashSet<String>();
-		set.add("David Morán");
-		set.add("Anna Margalef");
-		
-		Set<Evento> setE = new HashSet<Evento>();
-		
-		setE.add(new Evento("reunio", new Date("1/1/2001"), set));
-		setE.add(new Evento("acte", new Date("2/2/2002"), set));
-		setE.add(new Evento("cosa extranya", new Date("31/12/1999"), set));
-		
-		
-		TipoEvento TE = new TipoEvento("test TipoEvento", 4);
-		for (Evento e:setE) TE.addEvento(e);
-		
-		
-		StreamObject SO = encode(D);
-		StreamObject SO2 = encode(D2);
-		StreamObject SO3 = encode(TE);
-		
-		
-		StreamContainer SC = new StreamContainer("Diputados test");
-		SC.add(SO);
-		SC.add(SO2);
-		StreamContainer SC2 = new StreamContainer("Diputados test2");
-		SC2.add(SO2);
-		SC2.add(SO);
-		StreamContainer SC3 = new StreamContainer("TipoEvento test");
-		SC3.add(SO3);
-
-		
-		StreamFile SF = new StreamFile();
-		SF.add(SC);
-		SF.add(SC2);
-		SF.add(SC3);
-
+		Entrada F1 = new ConsolaEntrada();
+		Entrada F2 = new ConsolaEntrada();
+		Boolean file = true;
 		try {
-			SF.print(new FicheroSalida("test.txt"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			S.write("Introduce el nombre del fichero SIOF.");
+			String aux = E.readString();
+			if (!aux.equalsIgnoreCase("null")) {
+				F1 = new FicheroEntrada(aux);
+			}
+			else file = false;
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			file = false;
 		}
 		
+		if (file) {
+			StreamFile SF = new StreamFile();
+			try {
+				SF.read(F1);
+			} catch (FileFormatException | FileChecksumException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return;
+			}
+			try {
+				S.write("Fichero SIOF leido con exito.");
+			} catch (IOException e) {
+				e.getMessage();
+			}
+
+			
+			try {
+				S.write("Introduce el nombre del fichero de salida.");
+				SF.print(new FicheroSalida(E.readString()));
+				S.write("Fichero CIOF creado con exito.");
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return;
+			}
+		}
 		
-		
-		StreamFile SFres = new StreamFile();
 		try {
-			SFres.read(new FicheroEntrada("test.txt"));
-		} catch (FileNotFoundException e) {
-			S.write("Fichero inexistente.");
+			S.write("Introduce el nombre del fichero CIOF.");
+			String aux = E.readString();
+			if (!aux.equalsIgnoreCase("null")) F2 = new FicheroEntrada(aux);
+			else return;
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+		StreamFile SF = new StreamFile();
+		try {
+			SF.read(F2);
+		} catch (FileFormatException | FileChecksumException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+		
+		try {
+			S.write("Fichero CIOF leido con exito.");
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+		try {
+			for (Integer i = 1; i <= SF.size(); ++i) {
+				S.write("Contenedor " + SF.elementAt(i).getName());
+				for (Integer j = 1; j < SF.elementAt(i).size(); ++j) {
+					S.write("Clase " + SF.elementAt(i, j).getNombre());
+					for (Integer k = 1; k < SF.elementAt(i, j).size(); ++k) {
+						String out = SF.elementAt(i, j, k);
+						if (out.contains("Evento:")) {
+							StreamObject SO = SF.elementAt(i, j).objectAt(k);
+							S.write("Clase " + SO.getNombre());
+							for (Integer l = 1; l < SO.size(); ++l) {
+								S.write(SO.elementAt(l));
+							}
+						}
+						else S.write(out);
+					}
+				}
+			}
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
 			return;
 		} catch (FileFormatException e) {
-			S.write(e.getMessage());
-			return;
-		} catch (FileChecksumException e) {
-			S.write(e.getMessage());
+			System.out.println(e.getMessage());
 			return;
 		}
 		
-		StreamContainer SCres = SFres.elementAt(1); //1..n contenidors al fitxer
-		StreamObject SOres = SCres.elementAt(1); //1..n objectes al contenidor (0 és el nom)
-		Diputado Dres = Parser.parseDiputado(SOres); //1 Diputado a l'objecte
-		
-		Diputado Dres2 = Parser.parseDiputado(SFres.elementAt(1, 2));
-		TipoEvento TEres = Parser.parseTipoEvento(SFres.elementAt(3, 1));
-		
-		S.write("Nombre: " + Dres.getNombre());
-		S.write("Partido: " + Dres.getPartidoPolitico());
-		S.write("Estado: " + Dres.getEstado());
-		S.write("Fecha: " + Dres.getFechaDeNacimiento().toString());
-		S.write("Legislaturas:");
-		for(Integer i:Dres.getLegislaturas()) S.write(i);
-
-		S.write("Nombre: " + Dres2.getNombre());
-		S.write("Partido: " + Dres2.getPartidoPolitico());
-		S.write("Estado: " + Dres2.getEstado());
-		S.write("Fecha: " + Dres2.getFechaDeNacimiento().toString());
-		S.write("Legislaturas:");
-		for(Integer i:Dres2.getLegislaturas()) S.write(i);
-		
-		S.write("Nombre: " + TEres.getNombre());
-		S.write("Importancia: " + TEres.getImportancia());
-		S.write("Eventos:");
-		for(Evento e:TEres.getEventos()) {
-			S.write("Nombre: " + e.getNombre());
-			S.write("Fecha: " + e.getFecha().toString());
-			S.write("Participantes:");
-			for (String s:e.getdiputados()) S.write(s);
+		try {
+			S.write("Fichero leido con exito.");
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			return;
 		}
 
 	}

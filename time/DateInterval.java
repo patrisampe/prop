@@ -75,8 +75,8 @@ public class DateInterval {
 	 */
 	public Boolean contains(Date D) {
 		return ((Inicio.compareTo(D) <= 0 && Fin.compareTo(D) >= 0) ||
-				(Inicio.compareTo(D) <= 0 && Fin.esNull()) ||
-				(Inicio.esNull() && Fin.compareTo(D) >= 0));
+				(Inicio.compareTo(D) <= 0 && Fin.isNull()) ||
+				(Inicio.isNull() && Fin.compareTo(D) >= 0));
 	}
 	
 	/**
@@ -88,8 +88,8 @@ public class DateInterval {
 	 */
 	public Boolean contains(DateInterval DI) {
 		return ((contains(DI.Inicio) && contains(DI.Fin)) ||
-				(contains(DI.Inicio) && DI.Fin.esNull()) || 
-				(DI.Inicio.esNull() && contains(DI.Fin)));
+				(contains(DI.Inicio) && DI.Fin.isNull()) || 
+				(DI.Inicio.isNull() && contains(DI.Fin)));
 	}
 	
 	/**
@@ -138,14 +138,14 @@ public class DateInterval {
 	 */
 	public void setInicio(Date Ini) {
 		
-		if (Fin.esNull() || Ini.compareTo(Fin) <= 0) Inicio = Ini;
+		if (Fin.isNull() || Ini.compareTo(Fin) <= 0) Inicio = Ini;
 	} 
 	
 	/**
 	 * Modifica la fecha de fin del intervalo.
 	 */
 	public void setFin(Date Final) {
-		if (Inicio.esNull() || Inicio.compareTo(Final) <= 0) Fin = Final;
+		if (Inicio.isNull() || Inicio.compareTo(Final) <= 0) Fin = Final;
 	}
 	
 	/**

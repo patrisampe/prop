@@ -125,6 +125,16 @@ public class StreamObject {
 	}
 	
 	/**
+	 * Añade un nuevo atributo multivaluado.
+	 * @param set - Set a insertar.
+	 */
+	public <T extends Object> void add(T[] array){
+		indices.add(contenido.length());
+		contenido = contenido + array.length + ':';
+		for (T t:array) contenido = contenido + t.toString() + ";";
+	}
+	
+	/**
 	 * Añade un nuevo StreamObject.
 	 * @param o - Objeto a insertar.
 	 */
@@ -149,7 +159,7 @@ public class StreamObject {
 	 * @return Un String con la información contenida.
 	 */
 	public String elementAt(Integer i){
-		if (i >= indices.size() || i <= 0) return "";
+		if (i >= indices.size() || i <= 0) throw new ObjectFormatException(false, "El atributo indicado no es valido.");
 		Integer inicio = indices.elementAt(i);
 		if (i == indices.size()-1)
 			return contenido.substring(inicio, contenido.length());
@@ -177,13 +187,14 @@ public class StreamObject {
 	public Set<String> setAt(Integer i){
 		Set<String> out = new HashSet<String>();
 		String set = elementAt(i);
-		if (set.isEmpty()) return out;
+		if (set.isEmpty()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
 		
 		String aux = "";
 		Integer j = 0;
 		while (set.charAt(j) != ':') {
 			aux += set.charAt(j);
 			++j;
+			if (j >= set.length()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
 		}
 		++j;
 		Integer n = Integer.parseInt(aux);
@@ -192,8 +203,42 @@ public class StreamObject {
 			while (set.charAt(j) != ';') {
 				aux += set.charAt(j);
 				++j;
+				if (j >= set.length()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
 			}
 			out.add(aux);
+			++j;
+		}
+		return out;
+	}
+	
+	/**
+	 * Consulta un elemento multivaluado del objeto.
+	 * @param i - Posicion del elemento a consultar.
+	 * @return Un array de Strings con la información contenida.
+	 */
+	public String[] arrayAt(Integer i){
+		String[] out = new String[0];
+		String array = elementAt(i);
+		if (array.isEmpty()) return out;
+		
+		String aux = "";
+		Integer j = 0;
+		while (array.charAt(j) != ':') {
+			aux += array.charAt(j);
+			++j;
+			if (j >= array.length()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
+		}
+		++j;
+		Integer n = Integer.parseInt(aux);
+		out = new String[n];
+		for (Integer k = 0; k < n; ++k){
+			aux = "";
+			while (array.charAt(j) != ';') {
+				aux += array.charAt(j);
+				++j;
+				if (j >= array.length()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
+			}
+			out[k] = aux;
 			++j;
 		}
 		return out;
@@ -211,7 +256,7 @@ public class StreamObject {
 	 * Añade un nuevo set de StreamObject.
 	 * @param set - Set a insertar.
 	 */
-	public Set<StreamObject> setObjectAt(Integer i){
+	public Set<StreamObject> setObjectAt(Integer i) {
 		String set = elementAt(i);
 		Set<StreamObject> out = new HashSet<StreamObject>();
 		
@@ -220,12 +265,16 @@ public class StreamObject {
 		while (set.charAt(j) != ':') {
 			aux += set.charAt(j);
 			++j;
+			if (j >= set.length()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
 		}
 		++j;
 		Integer n = Integer.parseInt(aux);
 		for (Integer k = 0; k < n; ++k){
 			Integer jaux = j;
-			while (set.charAt(j-1) != ';' || set.charAt(j) != ';') ++j;
+			while (set.charAt(j-1) != ';' || set.charAt(j) != ';'){
+				++j;
+				if (j >= set.length()) throw new ObjectFormatException(false, "El atributo indicado no es un conjunto valido.");
+			}
 			out.add(StreamObject.convert(set.substring(jaux, j)));
 			++j;
 		}
@@ -261,7 +310,7 @@ public class StreamObject {
 	 * @param S - El String a decodificar.
 	 * @return El StreamObject decodificado.
 	 */
-	public static StreamObject convert(String S) throws ObjectFormatException {
+	public static StreamObject convert(String S) {
 		if (S.isEmpty()) throw new ObjectFormatException(false, "String vacio.");
 		Integer i = 0;
 		Vector<Integer> V = new Vector<Integer>();
@@ -269,6 +318,7 @@ public class StreamObject {
 		while (S.charAt(i) != ':') {
 			aux += S.charAt(i);
 			++i;
+			if (i >= S.length()) throw new ObjectFormatException(true, "Formato de objeto invalido.");
 		}
 		Integer n;
 		try {
@@ -282,6 +332,7 @@ public class StreamObject {
 			while (S.charAt(i) != ';') {
 				aux += S.charAt(i);
 				++i;
+				if (i >= S.length()) throw new ObjectFormatException(false, "Formato de objeto invalido.");
 			}
 			try {
 				V.add(Integer.parseInt(aux));
@@ -289,6 +340,7 @@ public class StreamObject {
 				throw new ObjectFormatException(true, e.getMessage());
 			}
 			++i;
+			if (i >= S.length()) throw new ObjectFormatException(false, "Formato de objeto invalido.");
 		}
 		S = S.substring(i, S.length());
 		if (S.length() < V.lastElement()) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
