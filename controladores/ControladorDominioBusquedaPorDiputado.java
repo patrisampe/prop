@@ -76,24 +76,24 @@ public class ControladorDominioBusquedaPorDiputado extends
 		}
 	}
 	
-	public ConjuntoGrupoAfin ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje, String DiputadoRelevante) {
+	public void ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje, String DiputadoRelevante) {
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		Iterator<Graf> sgIt = sg.iterator();
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
-			if (catchError(cLeg)) return null;
+			if (catchError(cLeg)) return;
 			Integer legislaturaInicial = It.next();
 			Integer legislaturaFinal = null;
 			if(lapso == 1) legislaturaFinal = legislaturaInicial;
 			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
 			DateInterval Periodo = new DateInterval(cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
-			if (this.hasError()) return null;
+			if (this.hasError()) return;
 			ejecutar(sgIt.next(),ga,algoritmo, porcentaje, DiputadoRelevante);
 			s.add(ga);
 		}
 		
-		return s;
+		result = s;
 }
 	
 	/**

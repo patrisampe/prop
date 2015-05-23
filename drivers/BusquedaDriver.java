@@ -44,54 +44,100 @@ public class BusquedaDriver {
 		ControladorDominioDiputado cDip = ControladorDominioDiputado.getInstance();
 		ControladorDominioLegislatura cLeg = ControladorDominioLegislatura.getInstance();
 		Entrada EC = new ConsolaEntrada();
-		String Input = EC.readString();
-		Entrada EF = new FicheroEntrada(Input);
-		String Output = EC.readString();
-		Salida SF = new FicheroSalida(Output);
+		Entrada EF = new FicheroEntrada("jocproves/jocProvaBusqueda.txt");
+		Salida SF = new FicheroSalida("jocproves/sortidajocProvaBusqueda.txt");
 		Salida SC = new ConsolaSalida();
 		int a= EF.readInt();
+		TipoAlgoritmo ta = null;
+		if(a>=0 && a < 9) ta = ReadAlgoritmo(EF);
 		while(a!=-1) {
 			switch(a) {
 			 case 1: 
 				 SF.write("Periodo Standard");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaStandard(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), ReadMap(EF), EF.readInteger()));
+				 PorPer.nuevaBusqueda(DateIntervalDriver.ReadDateInterval(EF));
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
+				 PorPer.addCriterioStandard(ReadMap(EF), 1.0);
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
+				 PorPer.ejecutar(ta, EF.readInt());
+				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
+				 PrintConjGrupPeriodo(SC,PorPer.getResult());
 				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
 				 break;
 			 case 2: 
 				 SF.write("Diputado Standard");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaStandard(ReadAlgoritmo(EF), EF.readInteger(), ReadMap(EF), EF.readInteger(), EF.readString()));
+				 PorDip.NuevaBusqueda(EF.readInteger());
 				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PorDip.addCriterioStandard(ReadMap(EF), 1.0);
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PorDip.ejecutar(ta, EF.readInteger(), EF.readString());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());			 
 				 break;
 			 case 3: 
 				 SF.write("Periodo Partido");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.readInteger()));
-				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
+				 PorPer.nuevaBusqueda(DateIntervalDriver.ReadDateInterval(EF));
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PorPer.addCriterioPartidoPolitico(1.0);
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PorPer.ejecutar(ta, EF.readInteger());
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
 				 break;
 			 case 4: 
 				 SF.write("Diputado Partido");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaPartidoPolitico(ReadAlgoritmo(EF), EF.readInteger(), EF.readInteger(), EF.readString()));
+				 PorDip.NuevaBusqueda(EF.readInteger());
 				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PorDip.addCriterioPartidoPolitico(1.0);
+				 PorDip.ejecutar(ta, EF.readInteger(), EF.readString());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());			 
 				 break;
 			 case 5:
 				 SF.write("Periodo Estado");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaEstado(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.readInteger()));
-				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
+				 PorPer.nuevaBusqueda(DateIntervalDriver.ReadDateInterval(EF));
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PorPer.addCriterioEstado(1.0);
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PorPer.ejecutar(ta, EF.readInteger());
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
 				 break;
 			 case 6:
 				 SF.write("Diputado Estado");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaEstado(ReadAlgoritmo(EF), EF.readInteger(), EF.readInteger(), EF.readString()));
+				 PorDip.NuevaBusqueda(EF.readInteger());
 				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PorDip.addCriterioEstado(1.0);
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PorDip.ejecutar(ta, EF.readInteger(), EF.readString());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());			 
 				 break;
 			 case 7:
 				 SF.write("Periodo Nombre");
-				 PrintConjGrupPeriodo(SF,PorPer.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), DateIntervalDriver.ReadDateInterval(EF), EF.readInteger()));
-				 if (PorPer.hasError()) SC.write(PorPer.getError().getMensajeError());
+				 PorPer.nuevaBusqueda(DateIntervalDriver.ReadDateInterval(EF));
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PorPer.addCriterioNombresParecidos(1.0);
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PorPer.ejecutar(ta, EF.readInteger());
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorPer.hasError()) SC.write(PorDip.getError().getMensajeError());		
 				 break;
 			 case 8:
 				 SF.write("Diputado Nombre");
-				 PrintConjGrupDiputado(SF, PorDip.NuevaBusquedaNombresParecidos(ReadAlgoritmo(EF), EF.readInteger(), EF.readInteger(), EF.readString()));
+				 PorDip.NuevaBusqueda(EF.readInteger());
 				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
-
+				 PorDip.addCriterioNombresParecidos(1.0);
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PorDip.ejecutar(ta, EF.readInteger(), EF.readString());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());
+				 PrintConjGrupPeriodo(SC,PorDip.getResult());
+				 if (PorDip.hasError()) SC.write(PorDip.getError().getMensajeError());			 
 				 break;
 			 case 9:
 				 SC.write("Lectura");

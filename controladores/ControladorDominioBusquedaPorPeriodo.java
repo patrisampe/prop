@@ -46,7 +46,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 		addCriterioNombresParecidos(G, ponderacion);
 	}
 	
-	public ConjuntoGrupoAfin ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje) {
+	public void ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje) {
 		HashSet<HashSet<String> > hs = ejecutar(G,algoritmo,porcentaje);
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
@@ -57,7 +57,7 @@ public class ControladorDominioBusquedaPorPeriodo extends
 			}
 			s.add(ga);
 		}
-		return s;
+		result = s;
 	}
 
 	

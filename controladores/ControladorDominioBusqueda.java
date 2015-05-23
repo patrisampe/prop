@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import time.DateInterval;
+import utiles.ConjuntoGrupoAfin;
 import dominio.*;
 import dominio.algoritmos.Clique;
 import dominio.algoritmos.Graf;
@@ -26,7 +27,10 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected ControladorDominioLegislatura cLeg;
 	protected ControladorDominioEvento cEv;
 	protected ControladorDominioVotacion cVot;
-		
+	
+	protected ConjuntoGrupoAfin result; 
+
+	
 	/**
 	 * Creadora por defecto.
 	 */
@@ -37,6 +41,10 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		cVot = ControladorDominioVotacion.getInstance();
 	}
 	
+	public ConjuntoGrupoAfin getResult() {
+		return result;
+	}
+ 	
 	protected Map<String, Integer> prepararImportancias(
 			Map<String, Integer> importanciaModificada) {
 		Map<String, Integer> res = new TreeMap<String,Integer>(); 

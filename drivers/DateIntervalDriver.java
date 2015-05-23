@@ -9,14 +9,14 @@ import time.DateInterval;
 public class DateIntervalDriver {
 	private static DateInterval DI;
 	
-	public static DateInterval ReadDateInterval(Entrada eF) {
+	public static DateInterval ReadDateInterval(Entrada eF) throws IOException {
 		DateInterval D = new DateInterval();
 		D.setInicio(ReadDate(eF));
 		D.setFin(ReadDate(eF));
 		return D;
 	}
 	
-	public static Date ReadDate(Entrada eF) {
+	public static Date ReadDate(Entrada eF) throws IOException {
 		return new Date(eF.readInteger(),eF.readInteger(),eF.readInteger());
 	}
 	
