@@ -1,5 +1,6 @@
 package controladores;
 
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Map;
 import java.util.Vector;
@@ -19,7 +20,7 @@ import utiles.ConjuntoGrupoAfin;
  * @version 1.0 Mayo 2015 
  * @author Miguel Angel Aranda
  */
-public class ControladorDominioResultado {
+public class ControladorDominioResultado extends ControladorDominio {
 	
 	/**
 	 * Instancia <i>singletone</i> de la clase.
@@ -37,21 +38,11 @@ public class ControladorDominioResultado {
 	private ResultadoDeBusqueda ultimoResultado;
 	
 	/**
-	 * Codigo de error del ultimo metodo ejecutado.
-	 */
-	private CodiError error;
-	/**
-	 * Indica si se ha producido un error en el ultimo metodo ejecutado.
-	 */
-	private Boolean hasError;
-
-	/**
 	 * Crea una nuevo controlador de dominio de resultados.
 	 */
 	private ControladorDominioResultado() {
 		conjuntoResultados = new Conjunto<ResultadoDeBusqueda>(ResultadoDeBusqueda.class);
 		ultimoResultado = null;
-		hasError = false;
 	}
 	
 	/**
@@ -72,12 +63,10 @@ public class ControladorDominioResultado {
 	 */
 	private Boolean nombreResultadoDisponible(String nombre) {
 		if (conjuntoResultados.exists(nombre)) {
-			hasError = true;
 			error = new CodiError(32);
 			error.addClauExterna(nombre);
 			return false;
 		}
-		hasError = false;
 		return true;
 	}
 	
@@ -91,12 +80,10 @@ public class ControladorDominioResultado {
 	private Boolean existeDiputado(String nombre) {
 		ControladorDominioDiputado controladorD = ControladorDominioDiputado.getInstance();
 		if (controladorD.existsDiputado(nombre)) {
-			hasError = true;
 			error = new CodiError(3);
 			error.addClauExterna(nombre);
 			return true;
 		}
-		hasError = false;
 		return false;
 	}
 	
@@ -109,12 +96,10 @@ public class ControladorDominioResultado {
 	 */
 	private Boolean existeNombreResultado(String nombre) {
 		if (!conjuntoResultados.exists(nombre)) {
-			hasError = true;
 			error = new CodiError(31);
 			error.addClauExterna(nombre);
 			return false;
 		}
-		hasError = false;
 		return true;
 	}
 	
@@ -128,13 +113,11 @@ public class ControladorDominioResultado {
 	 */
 	private Boolean existeGrupoAfin(String nombreResultado, Integer ID) {
 		if (!conjuntoResultados.get(nombreResultado).existeGrupo(ID)) {
-			hasError = true;
 			error = new CodiError(31);
 			error.addClauExterna(ID);
 			error.addClauExterna(nombreResultado);
 			return false;
 		}
-		hasError = false;
 		return true;
 	}
 	
@@ -146,11 +129,9 @@ public class ControladorDominioResultado {
 	 */
 	private Boolean ultimaBusquedaCorrecta() {
 		if (ultimoResultado == null) {
-			hasError = true;
 			error = new CodiError(35);
 			return false;
 		}
-		hasError = false;
 		return true;
 	}
 	
@@ -162,22 +143,30 @@ public class ControladorDominioResultado {
 	 * @param periodo - Intervalo entre dos fechas a tener en cuenta en la busqueda.
 	 * @param criterio - Criterio relevante para la busqueda de grupos afines.
 	 */
-	public void nuevoResultadoPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Criterio criterio) {
+	public void nuevoResultadoPorPeriodo(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Map<Criterio,Double> criterios) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) { 
-			hasError = true;
 			error = new CodiError(30);
 		}
 		else {
 			ControladorDominioBusquedaPorPeriodo controlDomBus = new ControladorDominioBusquedaPorPeriodo();
-			ConjuntoGrupoAfin resultado;
-			switch (criterio.hashCode()) {
-				case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, periodo, importancia, indiceAfinidad);break;
-				case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, periodo, indiceAfinidad);break;
-				case 2:		resultado = controlDomBus.NuevaBusquedaPartidoPolitico(algoritmo, periodo, indiceAfinidad);break;
-				case 3:		resultado = controlDomBus.NuevaBusquedaNombresParecidos(algoritmo, periodo, indiceAfinidad);break;
-				default:	resultado = null; break;
+			
+			controlDomBus.nuevaBusqueda(periodo);
+			if(catchError(controlDomBus)) return;
+			for (Entry<Criterio, Double> criterio : criterios.entrySet()) {
+				switch (criterio.getKey().hashCode()) {
+					case 0:		controlDomBus.addCriterioStandard(importancia, criterio.getValue());break;
+					case 1:		controlDomBus.addCriterioEstado(criterio.getValue());break;
+					case 2:		controlDomBus.addCriterioPartidoPolitico(criterio.getValue());;break;
+					case 3:		controlDomBus.addCriterioNombresParecidos(criterio.getValue());break;
+					default:	break; //TODO quizá hacer saltar un error
+				}
+				if(catchError(controlDomBus)) return;
 			}
-			ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado, criterio);
+			controlDomBus.ejecutar(algoritmo, indiceAfinidad);
+			if(catchError(controlDomBus)) return;
+			ConjuntoGrupoAfin resultado = controlDomBus.getResult();
+			if(catchError(controlDomBus)) return;
+			ultimoResultado = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado, criterios);
 		}
 	}
 
@@ -190,26 +179,32 @@ public class ControladorDominioResultado {
 	 * @param diputadoRelevante - Diputado en torno al cual se desean encontrar comunidades.
 	 * @param criterio - Criterio relevante para la busqueda de grupos afines.
 	 */
-	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Criterio criterio) {
+	public void nuevoResultadoPorDiputado(Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Map<Criterio,Double> criterios) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) {
-			hasError = true;
 			error = new CodiError(30);
 		}
 		else if (lapsoDeTiempo < 1) {
-			hasError = true;
 			error = new CodiError(34);
 		}
 		else if (existeDiputado(diputadoRelevante)) {
 			ControladorDominioBusquedaPorDiputado controlDomBus = new ControladorDominioBusquedaPorDiputado();
-			ConjuntoGrupoAfin resultado;
-			switch (criterio.hashCode()) {
-			case 0:		resultado = controlDomBus.NuevaBusquedaStandard(algoritmo, lapsoDeTiempo, importancia, indiceAfinidad, diputadoRelevante); break;
-			case 1:		resultado = controlDomBus.NuevaBusquedaEstado(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
-			case 2:		resultado = controlDomBus.NuevaBusquedaPartidoPolitico(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
-			case 3:		resultado = controlDomBus.NuevaBusquedaNombresParecidos(algoritmo, lapsoDeTiempo, indiceAfinidad, diputadoRelevante); break;
-			default:	resultado = null; break;
+			controlDomBus.NuevaBusqueda(lapsoDeTiempo);
+			if(catchError(controlDomBus)) return;
+			for (Entry<Criterio, Double> criterio : criterios.entrySet()) {
+				switch (criterio.getKey().hashCode()) {
+					case 0:		controlDomBus.addCriterioStandard(importancia, criterio.getValue());break;
+					case 1:		controlDomBus.addCriterioEstado(criterio.getValue());break;
+					case 2:		controlDomBus.addCriterioPartidoPolitico(criterio.getValue());;break;
+					case 3:		controlDomBus.addCriterioNombresParecidos(criterio.getValue());break;
+					default:	break; //TODO quizá hacer saltar un error
+				}
+				if(catchError(controlDomBus)) return;
 			}
-			ultimoResultado = new ResultadoDeBusquedaPorDiputado("Provisional", indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante, criterio);
+			controlDomBus.ejecutar(algoritmo, indiceAfinidad, diputadoRelevante);
+			if(catchError(controlDomBus)) return;
+			ConjuntoGrupoAfin resultado = controlDomBus.getResult();
+			if(catchError(controlDomBus)) return;
+			ultimoResultado = new ResultadoDeBusquedaPorDiputado("Provisional", indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante, criterios);
 		}
 	}
 	
@@ -402,23 +397,4 @@ public class ControladorDominioResultado {
 	public String getAlgoritmo(String nombre) {
 		return conjuntoResultados.get(nombre).getAlgoritmo().toString();
 	}
-	
-	/**
-	 * Comprueba si se ha producido un error en la ultima llamada a un metodo de la clase.
-	 * @return <i>true</i> si se ha producido un error en la ultima llamada.
-	 * <br>
-	 * <i>false</i> en cualquier otro caso..
-	 */
-	public Boolean hasError() {
-		return hasError;
-	}
-	
-	/**
-	 * Suministra el codigo de error del ultimo metodo utilizado.
-	 * @return el codigo de error obtenido.
-	 */
-	public CodiError getError(){
-		return error;
-	}
-	
 }
