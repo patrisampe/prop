@@ -17,7 +17,11 @@ public class DateIntervalDriver {
 	}
 	
 	public static Date ReadDate(Entrada eF) throws IOException {
-		return new Date(eF.readInteger(),eF.readInteger(),eF.readInteger());
+		Integer i1 = eF.readInteger();
+		Integer i2 = eF.readInteger();
+		Integer i3 = eF.readInteger();
+
+		return new Date(i1,i2,i3);
 	}
 	
 	

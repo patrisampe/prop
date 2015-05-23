@@ -2,6 +2,7 @@ package controladores;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -31,7 +32,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 */
 	public void NuevaBusqueda(Integer lapso) {
 		this.lapso = lapso;
-		sg = new TreeSet<Graf> ();
+		sg = new LinkedHashSet<Graf> ();
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
 			if (catchError(cLeg)) return;
 			Integer legislaturaInicial = It.next();
