@@ -157,21 +157,6 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		}
 	}
 	
-	/*protected Graf construirGrafoNombresParecidos(Set<String> idDiputados) {
-		Graf g = new Graf((HashSet<String>) idDiputados);
-		for (String diputado1 : idDiputados) {
-			for (String diputado2 : idDiputados) {
-				Double peso = 0.0;
-				if (!diputado1.equals(diputado2)) peso = parecidoStrings(diputado1, diputado2);
-				if (peso > 0.0) {
-					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
-					else g.addAresta(diputado1, diputado2, peso/2);
-				}
-			}
-		}
-		return g;
-	}*/
-	
 	protected static Double parecidoStrings(String diputado1, String diputado2) {
 		Double res = 0.0;
 		int largestlength = diputado1.length();
@@ -218,25 +203,6 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		return mapa;
 	}
 	
-	/*protected Graf construirGrafo(Set<String> idDiputados,
-			Map<String, Integer> importancias,
-			Map<String, Set<String>> tiposYeventos,
-			Map<String, Set<String>> votacionesSimp) {
-		Graf G = new Graf((HashSet<String>) idDiputados);
-		for (String tipoEvento : tiposYeventos.keySet()) {
-			for(String evento : tiposYeventos.get(tipoEvento)) {
-				interrelacionar(G, cEv.getDiputadosEvento(tipoEvento, evento), (Double) importancias.get(tipoEvento).doubleValue());
-				if (catchError(cEv)) return null;
-			}
-		}
-		for (String votacionSimp : votacionesSimp.keySet()) {
-			String votacion = votacionSimp.substring(0, votacionSimp.length()-10);
-			//System.out.println(votacionSimp+" ---> "+votacion+ "Importancia: "+cVot.getImportanciaVotacion(votacion).toString());
-			interrelacionar(G, votacionesSimp.get(votacionSimp), (Double) cVot.getImportanciaVotacion(votacion).doubleValue());
-			if (catchError(cVot)) return null;
-		}
-		return G;
-	}*/
 	
 	protected void addCriterioStandard(Graf G,
 			Map<String, Integer> importancias,
