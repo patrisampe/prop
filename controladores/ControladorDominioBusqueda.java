@@ -147,7 +147,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
 				Double peso = 0.0;
-				if (!diputado1.equals(diputado2)) peso = parecidoStrings(diputado1, diputado2);
+				if (!diputado1.equals(diputado2)) peso = 100/((double) LevenshteinDistance(diputado1.toCharArray(), diputado2.toCharArray()));
 				if (peso > 0.0) {
 					peso *= ponderacion;
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
@@ -288,5 +288,31 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		return hs;
 	}
 	
+	private int LevenshteinDistance(char s1[], char s2[]) {
+		int d[][] = new int[s1.length+1][s2.length+1];
+	 
+	   for (int i = 0; i < s1.length; ++i) d[i][0] = i;
+	   for (int j = 0; j < s2.length; ++j) d[0][j] = j;
+
+	   for (int i = 1; i < s1.length; ++i) {
+		   for (int j = 1; j < s2.length; ++j) {
+	           int cost;
+			   if (s1[i] == s2[j]) cost = 0;
+	           else cost = 1;
+	           d[i][j] = min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + cost );
+		   }
+	   }
+	 
+	   return d[s1.length][s2.length];
+	}
+
+	private int min(int i, int j, int k) {
+		return min(i,min(j,k));
+	}
+
+	private int min(int i, int j) {
+		if (i < j) return i;
+		return j;
+	}
 
 }
