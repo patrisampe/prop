@@ -346,8 +346,7 @@ public class Parser {
 				e.printStackTrace();
 				return;
 			}
-			
-			Integer m = 0;
+			Integer m = 1;
 			String[] names = new String[0];
 
 			try {
@@ -360,9 +359,10 @@ public class Parser {
 				}
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 				return;
 			}
-			
+
 			StreamFile SF = new StreamFile();
 			for (Integer i = 1; i <= m; ++i) {
 				try {
@@ -392,6 +392,7 @@ public class Parser {
 				F2 = new FicheroEntrada(aux + ".txt");
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 				return;
 			}
 			StreamFile SF = new StreamFile();
@@ -407,6 +408,7 @@ public class Parser {
 				S.write("Fichero CIOF leido con exito.");
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 				return;
 			}
 			try {
