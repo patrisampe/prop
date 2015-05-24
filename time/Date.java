@@ -267,9 +267,8 @@ public class Date{
 
 	/**
 	 * Incrementa la fecha en un día.
-	 * @return Nueva fecha.
 	 */
-	public Date incremento(){
+	public void incremento(){
 		++day;
 		if (day > 31) {
 			day = 1;
@@ -296,32 +295,27 @@ public class Date{
 					++month;
 				}
 		}		
-		return this;
 	}
 	
 	/**
 	 * Incrementa la fecha <i>n</i> días.
 	 * @param n - numero de días a incrementar.
-	 * @return Nueva fecha.
 	 */
-	public Date incremento(Integer n){
+	public void incremento(Integer n){
 		for (int i = 0; i < n; ++i){
 			incremento();
 		}
-		return this;
 	}
 	
 	/**
 	 * Incrementa la fecha tantos días como la longitud del intérvalo.
 	 * @param DI - intérvalo de fechas con la longitud a avanzar.
-	 * @return Nueva fecha.
 	 */
-	public Date incremento(DateInterval DI){
+	public void incremento(DateInterval DI){
 		int n = DI.days();
 		for (int i = 0; i < n; ++i){
 			incremento();
 		}
-		return this;
 	}
 	
 	/**
@@ -353,7 +347,9 @@ public class Date{
 		if (D1.compareTo(D2) > 0) return Date.mediana(D2, D1);
 		DateInterval DI = new DateInterval(D1, D2);
 		Integer dias = DI.days()/2;
-		return (new Date(D1)).incremento(dias);
+		Date D = new Date (D1);
+		D.incremento(dias);
+		return D;
 	}
 	
 }
