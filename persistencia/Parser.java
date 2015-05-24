@@ -1,7 +1,6 @@
 package persistencia;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -81,12 +80,10 @@ public class Parser {
 	public static Evento parseEvento(StreamObject evento){
 		if (!evento.getNombre().equals(Evento.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
 		if (evento.size() != 4) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
-		/*Evento E = new Evento(
+		Evento E = new Evento(
 							evento.elementAt(1),
 							Date.parseDate(evento.elementAt(2)));
-							TODO
-							*/
-		Evento E = new Evento(evento.elementAt(1), Date.parseDate(evento.elementAt(2)), new HashSet<String>());
+							
 		for (String s:evento.setAt(3)) {
 			E.addDiputado(s);
 		}
@@ -172,7 +169,7 @@ public class Parser {
 	 * @param legislatura - StreamObject con la información a extraer.
 	 * @return La Legislatura conetnida en el StreamObject.
 	 */
-	public static Legislatura parseLegislatura(StreamObject legislatura){
+	public static Legislatura parseLegislatura(StreamObject legislatura) {
 		if (!legislatura.getNombre().equals(Diputado.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
 		if (legislatura.size() != 5) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
 		Date fechaFin = Date.parseDate(legislatura.elementAt(3));
@@ -256,7 +253,7 @@ public class Parser {
 		Integer i = 0;
 		for (String s:set) {
 			diputados[i] = s;
-			votos[i] = V.getVoto(s).toString(); //TODO
+			votos[i] = Votacion.convert(V.getVoto(s));
 			++i;
 		}
 		stream.add(diputados);
@@ -272,41 +269,17 @@ public class Parser {
 	public static Votacion parseVotacion(StreamObject votacion){
 		if (!votacion.getNombre().equals(TipoEvento.class.getSimpleName())) throw new ObjectFormatException(false, "Clase del objeto incorrecta.");
 		if (votacion.size() != 4) throw new ObjectFormatException(false, "Longitud del objeto incorrecta.");
-		/*
 		Votacion V = new Votacion(
 								votacion.elementAt(1),
 								Date.parseDate(votacion.elementAt(2)),
 								Integer.parseInt(votacion.elementAt(3)));
-		TODO
-		 */
-		Votacion V = new Votacion(
-								votacion.elementAt(1),
-								Date.parseDate(votacion.elementAt(2)),
-								Integer.parseInt(votacion.elementAt(3)),
-								new HashMap<String,TipoVoto>());
+
 
 		String[] diputados = votacion.arrayAt(4);
 		String[] votos = votacion.arrayAt(5);
 		if (diputados.length != diputados.length) throw new ObjectFormatException(false, "Formato de objeto incorrecto.");
-		//for (Integer i = 0; i < diputados.length; ++i) V.setaddVoto(diputados[i], votos[i]); TODO
-		for (Integer i = 0; i < diputados.length; ++i) {
-			TipoVoto voto;
-			switch(votos[i]) {
-			case "ABSTENCION":
-				voto = TipoVoto.ABSTENCION;
-				break;
-			case "EN_CONTRA":
-				voto = TipoVoto.EN_CONTRA;
-				break;
-			case "A_FAVOR":
-				voto = TipoVoto.A_FAVOR;
-				break;
-			default:
-				voto = TipoVoto.AUSENCIA;
-				break;
-			}
-			V.setaddVoto(diputados[i], voto);
-		}
+		for (Integer i = 0; i < diputados.length; ++i) V.setaddVoto(diputados[i], Votacion.convert(votos[i]));
+
 		return V;
 	}
 	
@@ -322,7 +295,7 @@ public class Parser {
 		
 		try {
 			S.write("Introduce la comanda deseada.");
-			S.write("1: SIOF -> CIOF");			
+			S.write("1: SIOF -> CIOF");	
 			S.write("2: CIOF -> SYSTEM");
 			choose = E.readInteger();
 		} catch (IOException e) {
@@ -363,7 +336,7 @@ public class Parser {
 				return;
 			}
 
-			StreamFile SF = new StreamFile();
+			ControladorFichero SF = new ControladorFichero();
 			for (Integer i = 1; i <= m; ++i) {
 				try {
 					if (multi) SF.read(new FicheroEntrada(names[i-1] + ".txt"));
@@ -380,10 +353,7 @@ public class Parser {
 				SF.clear();
 			}
 		}
-		
 		else {
-		
-		
 			try {
 				S.write("Introduce el nombre del fichero CIOF.");
 				String aux = E.readString();
@@ -395,7 +365,7 @@ public class Parser {
 				e.printStackTrace();
 				return;
 			}
-			StreamFile SF = new StreamFile();
+			ControladorFichero SF = new ControladorFichero();
 			try {
 				SF.read(F2);
 			} catch (FileFormatException | FileChecksumException e) {
