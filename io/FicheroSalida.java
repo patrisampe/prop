@@ -31,6 +31,7 @@ public class FicheroSalida implements Salida {
 	public void close() {
 	    if (BW != null) {
 	        try {
+		    	BW.flush();
 				BW.close();
 			} catch (IOException e) {
 				System.out.println("Error en cerrar el fichero.");

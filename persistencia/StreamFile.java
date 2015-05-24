@@ -486,13 +486,12 @@ public class StreamFile {
 	 * @param E - Entrada por la que se desea leer los datos.
 	 */
 	private void leerS(Entrada E) throws FileFormatException {
-		StreamContainer[] SC = new StreamContainer[4];
-		SC[0] = new StreamContainer("Import Legislaturas");
-		SC[1] = new StreamContainer("Import Diputados");
-		SC[2] = new StreamContainer("Import Votaciones");
-		SC[3] = new StreamContainer("Import Eventos");
+		Vector<StreamContainer> SC = new Vector<StreamContainer>();
+		SC.add(new StreamContainer("Import 0"));
+
 		Boolean fi = false;
 		Integer j = 1;
+		Integer index = 0;
 		String linea = "";
 		try {
 			linea = E.readLine();
@@ -501,6 +500,10 @@ public class StreamFile {
 		}
 		while (!fi) {
 			++j;
+			if (j%10 == 0) {
+				++index;
+				SC.add(new StreamContainer("Import " + (index-1)));
+			}
 			if (!linea.isEmpty() && linea.charAt(0) != '#') {
 				Integer n = -1;
 				StreamObject SO;
@@ -532,7 +535,7 @@ public class StreamFile {
 					set = new HashSet<String>();
 					for (Integer i = 0; i < n; ++i) set.add(atribs[i+6]);
 					SO.add(set);		
-					SC[1].add(SO);
+					SC.elementAt(index).add(SO);
 				break;
 				case "Legislatura":
 					if (atribs.length != 4) {
@@ -543,7 +546,7 @@ public class StreamFile {
 					SO.add(atribs[1]);
 					SO.add(atribs[2]);
 					SO.add(atribs[3]);
-					SC[0].add(SO);
+					SC.elementAt(index).add(SO);
 				break;
 				case "TipoEvento":
 					try {
@@ -585,7 +588,9 @@ public class StreamFile {
 						evento.add(set);
 						SO.addObject(evento);
 					}
-					SC[3].add(SO);
+					++index;
+					SC.add(new StreamContainer("Import " + index));
+					SC.elementAt(index).add(SO);
 				break;
 				case "Votacion":
 					try {
@@ -608,8 +613,10 @@ public class StreamFile {
 					for (Integer i = 0; i < n; ++i) votos[i] = atribs[5+n+i];
 					SO.add(diputados);
 					SO.add(votos);
-					SC[2].add(SO);
-				break;
+					++index;
+					SC.add(new StreamContainer("Import " + index));
+					SC.elementAt(index).add(SO);
+					break;
 				default:
 					E.close();
 					throw new FileFormatException(j, "Formato de objeto no soportado.");

@@ -315,103 +315,135 @@ public class Parser {
 		Salida S = new ConsolaSalida();
 		Entrada F1 = new ConsolaEntrada();
 		Entrada F2 = new ConsolaEntrada();
-		Boolean file = true;
+		String FI_aux = "";
+		String FO_aux = "";
+		Integer choose = -1;
+		Boolean multi = false;
+		
 		try {
-			S.write("Introduce el nombre del fichero SIOF.");
-			String aux = E.readString();
-			if (!aux.equalsIgnoreCase("null")) {
-				F1 = new FicheroEntrada(aux);
-			}
-			else file = false;
+			S.write("Introduce la comanda deseada.");
+			S.write("1: SIOF -> CIOF");			
+			S.write("2: CIOF -> SYSTEM");
+			choose = E.readInteger();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
-			file = false;
+			return;
 		}
 		
-		if (file) {
+		if (choose == 1) {
+			try {
+				S.write("Introduce el nombre del fichero.");
+				FI_aux = E.readString();
+				if (FI_aux.endsWith(".txt"))
+					FI_aux = FI_aux.substring(0, FI_aux.length()-4);
+				F1 = new FicheroEntrada(FI_aux + ".txt");
+				S.write("Introduce el nombre del fichero de salida.");
+				FO_aux = E.readString();
+				if (FO_aux.endsWith(".txt"))
+					FO_aux = FO_aux.substring(0, FO_aux.length()-4);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return;
+			}
+			Integer m = 1;
+			String[] names = new String[0];
+
+			try {
+				String L1 = F1.readLine();
+				if (L1.contains("MSIOF")) {
+					multi = true;
+					m = Integer.parseInt(F1.readLine());
+					names = new String[m];
+					for (Integer i = 0; i < m; ++i) names[i] = F1.readLine();
+				}
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return;
+			}
+
+			StreamFile SF = new StreamFile();
+			for (Integer i = 1; i <= m; ++i) {
+				try {
+					if (multi) SF.read(new FicheroEntrada(names[i-1] + ".txt"));
+					else SF.read(new FicheroEntrada(FI_aux + ".txt"));
+					S.write("Fichero SIOF leido con exito.");
+					if (multi) SF.print(new FicheroSalida(FO_aux + i + ".txt"));
+					else SF.print(new FicheroSalida(FO_aux + ".txt"));
+					S.write("Fichero CIOF creado con exito.");
+				} catch (FileFormatException | FileChecksumException | IOException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+					return;
+				}
+				SF.clear();
+			}
+		}
+		
+		else {
+		
+		
+			try {
+				S.write("Introduce el nombre del fichero CIOF.");
+				String aux = E.readString();
+				if (aux.endsWith(".txt"))
+					aux = aux.substring(0, aux.length()-4);
+				F2 = new FicheroEntrada(aux + ".txt");
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return;
+			}
 			StreamFile SF = new StreamFile();
 			try {
-				SF.read(F1);
+				SF.read(F2);
 			} catch (FileFormatException | FileChecksumException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 				return;
 			}
-			try {
-				S.write("Fichero SIOF leido con exito.");
-			} catch (IOException e) {
-				e.getMessage();
-			}
-
 			
 			try {
-				S.write("Introduce el nombre del fichero de salida.");
-				SF.print(new FicheroSalida(E.readString()));
-				S.write("Fichero CIOF creado con exito.");
+				S.write("Fichero CIOF leido con exito.");
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 				e.printStackTrace();
 				return;
 			}
-		}
-		
-		try {
-			S.write("Introduce el nombre del fichero CIOF.");
-			String aux = E.readString();
-			if (!aux.equalsIgnoreCase("null")) F2 = new FicheroEntrada(aux);
-			else return;
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return;
-		}
-		StreamFile SF = new StreamFile();
-		try {
-			SF.read(F2);
-		} catch (FileFormatException | FileChecksumException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			return;
-		}
-		
-		try {
-			S.write("Fichero CIOF leido con exito.");
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return;
-		}
-		try {
-			for (Integer i = 1; i <= SF.size(); ++i) {
-				S.write("Contenedor " + SF.elementAt(i).getName());
-				for (Integer j = 1; j < SF.elementAt(i).size(); ++j) {
-					S.write("Clase " + SF.elementAt(i, j).getNombre());
-					for (Integer k = 1; k < SF.elementAt(i, j).size(); ++k) {
-						String out = SF.elementAt(i, j, k);
-						if (out.contains("Evento:")) {
-							StreamObject SO = SF.elementAt(i, j).objectAt(k);
-							S.write("Clase " + SO.getNombre());
-							for (Integer l = 1; l < SO.size(); ++l) {
-								S.write(SO.elementAt(l));
+			try {
+				for (Integer i = 1; i <= SF.size(); ++i) {
+					S.write("Contenedor " + SF.elementAt(i).getName());
+					for (Integer j = 1; j < SF.elementAt(i).size(); ++j) {
+						S.write("Clase " + SF.elementAt(i, j).getNombre());
+						for (Integer k = 1; k < SF.elementAt(i, j).size(); ++k) {
+							String out = SF.elementAt(i, j, k);
+							if (out.contains("Evento:")) {
+								StreamObject SO = SF.elementAt(i, j).objectAt(k);
+								S.write("Clase " + SO.getNombre());
+								for (Integer l = 1; l < SO.size(); ++l) {
+									S.write(SO.elementAt(l));
+								}
 							}
+							else S.write(out);
 						}
-						else S.write(out);
 					}
 				}
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				return;
+			} catch (FileFormatException e) {
+				System.out.println(e.getMessage());
+				return;
 			}
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return;
-		} catch (FileFormatException e) {
-			System.out.println(e.getMessage());
-			return;
+			
+			try {
+				S.write("Fichero leido con exito.");
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				return;
+			}
 		}
-		
-		try {
-			S.write("Fichero leido con exito.");
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-			return;
-		}
-
 	}
 
 }

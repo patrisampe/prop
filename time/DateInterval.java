@@ -74,6 +74,7 @@ public class DateInterval {
 	 * <i>false</i> en cualquier otro caso.
 	 */
 	public Boolean contains(Date D) {
+		if (D.isNull()) return false;
 		return ((Inicio.compareTo(D) <= 0 && Fin.compareTo(D) >= 0) ||
 				(Inicio.compareTo(D) <= 0 && Fin.isNull()) ||
 				(Inicio.isNull() && Fin.compareTo(D) >= 0));
