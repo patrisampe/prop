@@ -57,6 +57,7 @@ public class CodiError {
 		Diccionario.put(36, "En la votacion %1 el diputado %2 no esta de baja");
 		Diccionario.put(37, "La votacion %1 no pertenece a ninguna legislatura");
 		Diccionario.put(38, "Periodo no valido");
+		Diccionario.put(39, "%1 no es un tipo de voto correcto");
         return Collections.unmodifiableMap(Diccionario);
 	}
 	/**
@@ -66,6 +67,7 @@ public class CodiError {
 		codiError = 0;
 		clauExterna = new Vector<String>();
 	}
+
 	/**
 	 * Crear un CodiError con codiError=numError
 	 * @param numError
@@ -73,6 +75,11 @@ public class CodiError {
 	public CodiError(Integer numError) {
 		codiError = numError;
 		clauExterna = new Vector<String>();
+	}
+	
+	public CodiError(Integer n,Vector<String> v){
+		codiError=n;
+		clauExterna=v;
 	}
 	/**
 	 * Et permet tornar a utilitzar el mateix codi error, ja que torna a incialitzar tots els camps

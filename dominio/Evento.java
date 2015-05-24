@@ -28,6 +28,19 @@ public class Evento extends ObjetoDominio{
 		diputados=new TreeSet<String>(Diputados);
 	}
 	/**
+	 * Crea un nuevo Evento
+	 * @param Nombre - Nombre del evento que se crea
+	 * @param data 
+	 * 	- Data en que se realiza el evento. 
+	 * <dd><b>Precondition:</b><dd> data tiene de ser una Data valida
+	 * @param Diputados - Conjunto de Diputados que participan en el evento
+	 */
+	public Evento(String Nombre, Date data){
+		nombre=Nombre;
+		fecha=data;
+		diputados=new TreeSet<String>();
+	}
+	/**
 	 * Copia un Evento y le pone otro nombre
 	 * @param Nombre - Nombre del evento que se crea
 	 * @param E - Evento que se quiere copiar

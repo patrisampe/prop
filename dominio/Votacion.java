@@ -38,7 +38,21 @@ public class Votacion extends ObjetoDominio {
 		this.importancia = importancia;
 		votos =new TreeMap<String,TipoVoto>(nvotos);
 	}
-	
+	/**
+	 * Crea una nueva Votacion
+	 * @param Nombre - Nombre de la votacion que se crea
+	 * @param fecha
+	 * 	- Data en que se realiza la votacion 
+	 * <dd><b>Precondition:</b><dd> data tiene de ser una Data valida
+	 * @param importancia - Importancia del Evento
+	 *  <dd><b>Precondition:</b><dd> tiene de ser una importancia valida
+	 */
+	public Votacion(String nombre, Date fecha, Integer importancia) {
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.importancia = importancia;
+		votos =new TreeMap<String,TipoVoto>();
+	}
 	
 	/**
 	 * Copia una Votacion y le pone otro nombre
@@ -113,6 +127,25 @@ public class Votacion extends ObjetoDominio {
 		return votos.get(nombreDiputado);
 	}
 	
+	public static TipoVoto convert(String tipovoto){
+		switch(tipovoto){
+		case "A FAVOR":
+			return TipoVoto.A_FAVOR;
+		case "ABSTENCION":
+			return TipoVoto.ABSTENCION;
+		case "AUSENCIA":
+			return TipoVoto.AUSENCIA;
+		case "EN CONTRA":
+			return TipoVoto.EN_CONTRA;
+		default:
+			return TipoVoto.ERROR;
+		}
+	}
+	
+	public static String convert(TipoVoto tipovoto){
+		return tipovoto.toString();
+	}
+	
 	/**
 	 * Devuelve los diputados que ha votado en dicha Votacion
 	 * @return diputados que han votado
@@ -159,6 +192,7 @@ public class Votacion extends ObjetoDominio {
 	 * Inserta o modifica una nueva diputado-voto
 	 * @param nombreDiputado - Diputado que ha votado
 	 * @param voto -Lo que ha votado el diputado
+	 * Precondition: El nombreDiputado ha de ser activo en la legislatura que se ha hecho la votacion
 	 */
 	public void setaddVoto(String nombreDiputado, TipoVoto voto){
 		votos.put(nombreDiputado, voto);
@@ -178,7 +212,7 @@ public class Votacion extends ObjetoDominio {
 	public int compareTo(Votacion V) {
 		return fecha.compareTo(V.getFecha());
 	}
-	
+
 }
 
 

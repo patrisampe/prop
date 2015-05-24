@@ -304,6 +304,30 @@ public class ControladorDominioVotacion extends ControladorDominio {
 					}
 			}
 		}
+		
+		
+		
+		/**
+		 * Inserta o modifica un vot, es decir, una pareja: Diputado y lo que ha votado en esa votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- nombreVotacion es una Votacion <br>
+		 * 2- nombreDiputado no es un Diputado <br>
+		 * 3- nombreDiputado no es un Diputaado activo durante la realizacion de la votacion <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
+		 * @param nombreVotacion
+		 * @param nombreDiputado
+		 * @param voto - lo que ha votado el Diputado con nombreDiputado, si no es un Tipo de Vot correcte salta error
+		 */
+		public void setAddVoto(String nombreVotacion, String nombreDiputado, String voto)
+		{
+			TipoVoto aux=Votacion.convert(voto);
+			if(aux==TipoVoto.ERROR){
+				error.setCodiError(39);
+				error.addClauExterna(voto);
+			}
+			else
+			setAddVoto(nombreVotacion,nombreDiputado,aux);
+		}
 	   /**
 	    * Elimina el diputado de la votacion, y en consequencia su voto
 	    * Causas por las que no se realiza la operacion y se captura el error:<br>
