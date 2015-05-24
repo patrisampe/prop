@@ -36,8 +36,8 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param diputadoRelevante - El nombre del diputado sobre el que se ha realizado la busqueda
 	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoGrupoAfin gruposAfines, String diputadoRelevante, Criterio criterio) {
-			super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterio);
+	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoGrupoAfin gruposAfines, String diputadoRelevante, Map<Criterio,Double> criterios) {
+			super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterios);
 			this.gruposAfines = new ConjuntoGrupoAfin(gruposAfines);
 			this.lapsoDeTiempo = lapsoDeTiempo;
 			this.diputadoRelevante = diputadoRelevante;

@@ -56,6 +56,7 @@ public class CodiError {
 		Diccionario.put(35, "No se ha realizado ninguna busqueda");
 		Diccionario.put(36, "En la votacion %1 el diputado %2 no esta de baja");
 		Diccionario.put(37, "La votacion %1 no pertenece a ninguna legislatura");
+		Diccionario.put(38, "Periodo no valido");
         return Collections.unmodifiableMap(Diccionario);
 	}
 	/**

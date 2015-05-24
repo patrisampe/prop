@@ -2,6 +2,7 @@ package controladores;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,6 +21,106 @@ import dominio.algoritmos.Graf;
 public class ControladorDominioBusquedaPorDiputado extends
 		ControladorDominioBusqueda {
 	
+	private Set<Graf> sg;
+	
+	private Integer lapso;
+	
+	/**
+	 * Inicializa una nueva búsqueda por Diputado.
+	 * @param lapso
+	 */
+	public void NuevaBusqueda(Integer lapso) {
+		this.lapso = lapso;
+		sg = new LinkedHashSet<Graf> ();
+		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return;
+			Integer legislaturaInicial = It.next();
+			Integer legislaturaFinal = null;
+			if(lapso == 1) legislaturaFinal = legislaturaInicial;
+			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
+			if (catchError(cLeg)) return;
+			sg.add(new Graf((HashSet<String>)prepararDiputados(legislaturaInicial,legislaturaFinal)));
+			if (this.hasError()) return;
+		}
+	}
+	
+	/**
+	 * Añade pesos por el criterio estándar: Teniendo en cuenta Eventos y Votaciones, 
+	 * para los diputados activos en algún momento del periodo especificado, Eventos dentro del periodo y Votaciones
+	 * dentro de las legislaturas que incluyan el periodo.
+	 * @param ImportanciaModificada modificacion de la importancia de los eventos
+	 * @param ponderacion del criterio	 
+	 */
+	public void addCriterioStandard(Map<String, Integer> ImportanciaModificada, Double ponderacion) {
+		Iterator<Graf> sgIt = sg.iterator();
+		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return;
+			Integer legislaturaInicial = It.next();
+			Integer legislaturaFinal = null;
+			if(lapso == 1) legislaturaFinal = legislaturaInicial;
+			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
+			DateInterval Periodo = new DateInterval(cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
+			if (catchError(cLeg)) return;
+			addCriterioStandard(sgIt.next(), prepararImportancias(ImportanciaModificada), prepararEventos(Periodo), prepararVotaciones(Periodo), ponderacion);
+		}
+	}
+	
+	/**
+	 * Añade pesos por el Partido Político de los diputados
+	 * @param ponderacion del criterio
+	 */
+	public void addCriterioPartidoPolitico(Double ponderacion) {
+		for (Graf g : sg) {
+			addCriterioPartidoPolitico(g, ponderacion);
+		}
+	}
+
+
+	/**
+	 * Añade pesos por el Estado de los diputados
+	 * @param ponderacion del criterio
+	 */
+	public void addCriterioEstado(Double ponderacion) {
+		for (Graf g : sg) {
+			addCriterioEstado(g, ponderacion);
+		}
+	}
+
+	/**
+	 * Añade pesos por parecido de nombre entre los diputados
+	 * @param ponderacion del criterio
+	 */
+	public void addCriterioNombresParecidos(Double ponderacion) {
+		for (Graf g : sg) {
+			addCriterioNombresParecidos(g, ponderacion);
+		}
+	}
+	
+	/**
+	 * Ejecuta la búsqueda por diputado con los Grafos construidos y el lapso antes especificado.
+	 * @param algoritmo Algoritmo de la búsqueda
+	 * @param porcentaje Indice de afinidad.
+	 */
+	public void ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje, String DiputadoRelevante) {
+		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
+		Integer idgrupo = 1;
+		Iterator<Graf> sgIt = sg.iterator();
+		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
+			if (catchError(cLeg)) return;
+			Integer legislaturaInicial = It.next();
+			Integer legislaturaFinal = null;
+			if(lapso == 1) legislaturaFinal = legislaturaInicial;
+			else for (Integer i = 1; i < lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
+			DateInterval Periodo = new DateInterval(cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
+			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
+			if (this.hasError()) return;
+			ejecutar(sgIt.next(),ga,algoritmo, porcentaje, DiputadoRelevante);
+			s.add(ga);
+		}
+		
+		result = s;
+}
+	
 	/**
 	 * Realiza una nueva b�squeda durante toda la historia fij�ndose en la evoluci�n de un diputado concreto
 	 * usando el criterio est�ndar: Teniendo en cuenta Eventos y Votaciones, 
@@ -32,23 +133,13 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * @param DiputadoRelevante Diputado cuya evoluci�n buscamos.
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaStandard(TipoAlgoritmo Algoritmo, Integer Lapso, Map<String, Integer> ImportanciaModificada, Integer porcentaje, String DiputadoRelevante) {
 		Map<String,Integer> importancias = prepararImportancias(ImportanciaModificada);
 		if (this.hasError()) return null;
-		
-		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
-		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
-			if (catchError(cLeg)) return null;
-			Integer legislaturaInicial = It.next();
-			Integer legislaturaFinal = null;
-			if(Lapso == 1) legislaturaFinal = legislaturaInicial;
-			else for (Integer i = 1; i < Lapso && It.hasNext(); ++i) legislaturaFinal = It.next();
-			DateInterval Periodo = new DateInterval( cLeg.getFechaInicio(legislaturaInicial), cLeg.getFechaFinal(legislaturaFinal));
-			if (catchError(cLeg)) return null;
-			Set<String> idDiputados = prepararDiputados(legislaturaInicial,legislaturaFinal);
-			if (this.hasError()) return null;
 
+		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
+		
  			Map<String, Set<String> > tiposYeventos = prepararEventos(Periodo); 
  			if (this.hasError()) return null;
 
@@ -67,7 +158,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 		
 		return s;
 		
-	}
+	}*/
 
 	/**
 	 * Realiza una nueva b�squeda durante toda la historia fij�ndose en la evoluci�n de un diputado concreto
@@ -78,7 +169,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 * @param diputadoRelevante Diputado cuya evoluci�n buscamos.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaEstado(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaEstado(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
@@ -103,7 +194,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 		}
 		
 		return s;
-	}
+	}*/
 	
 	/**
 	 * Realiza una nueva b�squeda durante toda la historia fij�ndose en la evoluci�n de un diputado concreto
@@ -115,7 +206,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * @param diputadoRelevante Diputado cuya evoluci�n buscamos.
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaNombresParecidos(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
@@ -140,7 +231,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 		}
 		
 		return s;
-	}
+	}*/
 	
 	/**
 	 * Realiza una nueva b�squeda durante toda la historia fij�ndose en la evoluci�n de un diputado concreto
@@ -152,7 +243,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * @return Conjunto de Grupos Afines resultantes de la b�squeda.
 	 * @param diputadoRelevante Diputado cuya evoluci�n buscamos.
 	 */
-	public ConjuntoGrupoAfin NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
+	/*public ConjuntoGrupoAfin NuevaBusquedaPartidoPolitico(TipoAlgoritmo algoritmo, Integer lapso, Integer porcentaje, String diputadoRelevante) {
 		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
@@ -177,7 +268,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 		}
 		
 		return s;
-	}
+	}*/
 
 	private void ejecutar(Graf g, GrupoAfinPorDiputado ga,
 			TipoAlgoritmo algoritmo, Integer porcentaje,

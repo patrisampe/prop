@@ -117,7 +117,8 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 		int n = conjuntoLegislaturas.size();
 		Integer[] a = new Integer[n];
 		conjuntoLegislaturas.getIntegerKeys().toArray(a);
-		return a[n-1];
+		if (n != 0) return a[n-1];
+		else return -1;
 	}
 
 	/**

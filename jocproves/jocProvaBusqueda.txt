@@ -40,7 +40,7 @@ FIN
 
 7 Louvain 1 1 2014 1 1 2022 50
 7 CliquePercolation 1 1 2014 1 1 2022 70
-7 GirvanNewmann 1 1 2014 1 1 2022 90
+7 CliquePercolation 1 1 2014 1 1 2022 90
 5 Louvain 1 1 2014 1 1 2022 30
 3 Louvain 1 1 2014 1 1 2022 30
 
@@ -52,6 +52,6 @@ FIN
 
 1 Louvain 1 1 2014 1 1 2022 0 50
 1 CliquePercolation 1 1 2014 1 1 2022 0 50
-1 GirvanNewmann 1 1 2014 1 1 2022 0 50
+1 CliquePercolation 1 1 2014 1 1 2022 0 50
 
 -1

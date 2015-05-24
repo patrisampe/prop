@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import time.DateInterval;
+import utiles.ConjuntoGrupoAfin;
 import dominio.*;
 import dominio.algoritmos.Clique;
 import dominio.algoritmos.Graf;
@@ -27,18 +28,24 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected ControladorDominioEvento cEv;
 	protected ControladorDominioVotacion cVot;
 	
-	protected Graf G;
+	protected ConjuntoGrupoAfin result; 
+
 	
 	/**
 	 * Creadora por defecto.
 	 */
 	public ControladorDominioBusqueda() {
+		super();
 		cDip = ControladorDominioDiputado.getInstance();
 		cLeg = ControladorDominioLegislatura.getInstance();
 		cEv = ControladorDominioEvento.getInstance();
 		cVot = ControladorDominioVotacion.getInstance();
 	}
 	
+	public ConjuntoGrupoAfin getResult() {
+		return result;
+	}
+ 	
 	protected Map<String, Integer> prepararImportancias(
 			Map<String, Integer> importanciaModificada) {
 		Map<String, Integer> res = new TreeMap<String,Integer>(); 
@@ -76,7 +83,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		return prepararDiputados(legislaturaInicio, legislaturaFin);
 	}
 	
-	protected Graf construirGrafoPP(Set<String> idDiputados) {
+	/*protected Graf construirGrafoPP(Set<String> idDiputados) {
 		Graf g = new Graf((HashSet<String>) idDiputados);
 		Double peso = 5.0;
 		for (String diputado1 : idDiputados) {
@@ -89,9 +96,39 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 			}
 		}
 		return g;
+	}*/
+	
+	protected void addCriterioPartidoPolitico(Graf g, Double ponderacion) {
+		Set<String> idDiputados = g.getNodes();
+		Double peso = 5.0*ponderacion;
+		for (String diputado1 : idDiputados) {
+			for (String diputado2 : idDiputados) {
+				if (cDip.getPartidoPolitico(diputado1).equals(cDip.getPartidoPolitico(diputado2)) && !diputado1.equals(diputado2)) {
+					if (catchError(cDip)) return;
+					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
+					else g.addAresta(diputado1, diputado2, peso/2);
+				}
+			}
+		}
+		
 	}
 	
-	protected Graf construirGrafoEstado(Set<String> idDiputados) {
+	protected void addCriterioEstado(Graf g, Double ponderacion) {
+		Set<String> idDiputados = g.getNodes();
+		Double peso = 5.0*ponderacion;
+		for (String diputado1 : idDiputados) {
+			for (String diputado2 : idDiputados) {
+				if (cDip.getEstado(diputado1).equals(cDip.getEstado(diputado2)) && !diputado1.equals(diputado2)) {
+					if (catchError(cDip)) return;
+					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
+					else g.addAresta(diputado1, diputado2, peso/2);
+				}
+			}
+		}
+		
+	}
+	
+	/*protected Graf construirGrafoEstado(Set<String> idDiputados) {
 		Graf g = new Graf((HashSet<String>) idDiputados);
 		Double peso = 5.0;
 		for (String diputado1 : idDiputados) {
@@ -104,25 +141,24 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 			}
 		}
 		return g;
-	}
+	}*/
 	
-
-	protected Graf construirGrafoNombresParecidos(Set<String> idDiputados) {
-		Graf g = new Graf((HashSet<String>) idDiputados);
+	protected void addCriterioNombresParecidos(Graf g, Double ponderacion) {
+		Set<String> idDiputados = g.getNodes();
 		for (String diputado1 : idDiputados) {
 			for (String diputado2 : idDiputados) {
 				Double peso = 0.0;
-				if (!diputado1.equals(diputado2)) peso = parecidoStrings(diputado1, diputado2);
+				if (!diputado1.equals(diputado2)) peso = 100/((double) LevenshteinDistance(diputado1.toCharArray(), diputado2.toCharArray()));
 				if (peso > 0.0) {
+					peso *= ponderacion;
 					if (g.existeixAresta(diputado1, diputado2)) g.setPes(diputado1, diputado2, g.getPes(diputado1, diputado2)+peso/2);
 					else g.addAresta(diputado1, diputado2, peso/2);
 				}
 			}
 		}
-		return g;
 	}
 	
-	protected Double parecidoStrings(String diputado1, String diputado2) {
+	protected static Double parecidoStrings(String diputado1, String diputado2) {
 		Double res = 0.0;
 		int largestlength = diputado1.length();
 		int shortestlength = diputado2.length();
@@ -168,27 +204,27 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		return mapa;
 	}
 	
-	protected Graf construirGrafo(Set<String> idDiputados,
+	
+	protected void addCriterioStandard(Graf G,
 			Map<String, Integer> importancias,
 			Map<String, Set<String>> tiposYeventos,
-			Map<String, Set<String>> votacionesSimp) {
-		Graf G = new Graf((HashSet<String>) idDiputados);
+			Map<String, Set<String>> votacionesSimp, Double ponderacion) {
 		for (String tipoEvento : tiposYeventos.keySet()) {
 			for(String evento : tiposYeventos.get(tipoEvento)) {
-				interrelacionar(G, cEv.getDiputadosEvento(tipoEvento, evento), (Double) importancias.get(tipoEvento).doubleValue());
-				if (catchError(cEv)) return null;
+				interrelacionar(G, cEv.getDiputadosEvento(tipoEvento, evento), (Double) importancias.get(tipoEvento).doubleValue()*ponderacion);
+				if (catchError(cEv)) return;
 			}
 		}
 		for (String votacionSimp : votacionesSimp.keySet()) {
 			String votacion = votacionSimp.substring(0, votacionSimp.length()-10);
 			//System.out.println(votacionSimp+" ---> "+votacion+ "Importancia: "+cVot.getImportanciaVotacion(votacion).toString());
-			interrelacionar(G, votacionesSimp.get(votacionSimp), (Double) cVot.getImportanciaVotacion(votacion).doubleValue());
-			if (catchError(cVot)) return null;
+			interrelacionar(G, votacionesSimp.get(votacionSimp), (Double) cVot.getImportanciaVotacion(votacion).doubleValue()*ponderacion);
+			if (catchError(cVot)) return;
 		}
-		return G;
+		
 	}
 	
-	protected void interrelacionar(Graf g, Set<String> diputadosRelacionados,
+	protected static void interrelacionar(Graf g, Set<String> diputadosRelacionados,
 			Double peso) {
 		for (String diputado1 : diputadosRelacionados) {
 			for (String diputado2 : diputadosRelacionados) {
@@ -203,7 +239,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	}
 
 
-	protected HashSet<HashSet<String>> ejecutar(Graf g, TipoAlgoritmo algoritmo,
+	protected static HashSet<HashSet<String>> ejecutar(Graf g, TipoAlgoritmo algoritmo,
 			Integer porcentaje) {
 		HashSet<HashSet<String>> hs = new HashSet<HashSet<String>>();
 		if (algoritmo == TipoAlgoritmo.CliquePercolation) {
@@ -219,5 +255,31 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		return hs;
 	}
 	
+	private int LevenshteinDistance(char s1[], char s2[]) {
+		int d[][] = new int[s1.length+1][s2.length+1];
+	 
+	   for (int i = 0; i < s1.length; ++i) d[i][0] = i;
+	   for (int j = 0; j < s2.length; ++j) d[0][j] = j;
+
+	   for (int i = 1; i < s1.length; ++i) {
+		   for (int j = 1; j < s2.length; ++j) {
+	           int cost;
+			   if (s1[i] == s2[j]) cost = 0;
+	           else cost = 1;
+	           d[i][j] = min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + cost );
+		   }
+	   }
+	 
+	   return d[s1.length][s2.length];
+	}
+
+	private int min(int i, int j, int k) {
+		return min(i,min(j,k));
+	}
+
+	private int min(int i, int j) {
+		if (i < j) return i;
+		return j;
+	}
 
 }

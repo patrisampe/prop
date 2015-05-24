@@ -9,15 +9,19 @@ import time.DateInterval;
 public class DateIntervalDriver {
 	private static DateInterval DI;
 	
-	public static DateInterval ReadDateInterval(Entrada eF) {
+	public static DateInterval ReadDateInterval(Entrada eF) throws IOException {
 		DateInterval D = new DateInterval();
 		D.setInicio(ReadDate(eF));
 		D.setFin(ReadDate(eF));
 		return D;
 	}
 	
-	public static Date ReadDate(Entrada eF) {
-		return new Date(eF.readInteger(),eF.readInteger(),eF.readInteger());
+	public static Date ReadDate(Entrada eF) throws IOException {
+		Integer i1 = eF.readInteger();
+		Integer i2 = eF.readInteger();
+		Integer i3 = eF.readInteger();
+
+		return new Date(i1,i2,i3);
 	}
 	
 	

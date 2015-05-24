@@ -43,7 +43,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	/**
 	 * Indica el criterio de búsqueda que se ha empleado.
 	 */
-	private Criterio criterio;
+	private Map<Criterio,Double> criterios;
 	
 	/**
 	 * Conjunto de grupos afines.
@@ -57,14 +57,15 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param algoritmo - Algoritmo utilizado para obtener el resultado.
 	 * @param importancia - Importancias temporales introducidas por el usuario.
 	 * @param modificado - Importancias temporales introducidas por el usuario.
+	 * @param criterios 
 	 */
-	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Criterio criterio) {
+	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Map<Criterio, Double> criterios) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
 		this.algoritmo = algoritmo;
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
-		this.criterio = criterio;
+		this.criterios = criterios;
 		this.gruposAfines = new ConjuntoGrupoAfin();
 	}
 	
@@ -187,7 +188,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @return Criterio de búsqueda.
 	 */
 	public String getCriterio() {
-		return this.criterio.toString();
+		return this.criterios.toString();
 	}
 	
 	/**

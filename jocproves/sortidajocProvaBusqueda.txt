@@ -1,0 +1,116 @@
+Periodo Nombre
+El numero de grupos es: 9
+1
+Bono
+2
+Chaves
+3
+Rajoy
+4
+Zapatero
+5
+Aznar
+6
+Duran
+7
+Saenz
+8
+Camacho
+9
+Sanchez
+Periodo Nombre
+El numero de grupos es: 1
+1
+Aznar, Bono, Camacho, Chaves, Duran, Rajoy, Saenz, Sanchez, Zapatero
+Periodo Nombre
+El numero de grupos es: 1
+1
+Aznar, Bono, Camacho, Chaves, Duran, Rajoy, Saenz, Sanchez, Zapatero
+Periodo Estado
+El numero de grupos es: 6
+1
+Rajoy
+2
+Sanchez, Zapatero
+3
+Aznar
+4
+Saenz
+5
+Camacho, Duran
+6
+Bono, Chaves
+Periodo Partido
+El numero de grupos es: 3
+1
+Bono, Chaves, Sanchez, Zapatero
+2
+Aznar, Camacho, Rajoy, Saenz
+3
+Duran
+Diputado Nombre
+El numero de grupos es: 2
+2
+01/01/2014
+01/01/2018
+Rajoy
+3
+02/01/2018
+01/01/2022
+Rajoy
+Diputado Estado
+El numero de grupos es: 2
+2
+01/01/2014
+01/01/2018
+Rajoy
+3
+02/01/2018
+01/01/2022
+Rajoy
+Diputado Partido
+El numero de grupos es: 2
+2
+01/01/2014
+01/01/2018
+Aznar, Camacho, Rajoy
+3
+02/01/2018
+01/01/2022
+Camacho, Rajoy, Saenz
+Diputado Standard
+El numero de grupos es: 2
+2
+01/01/2014
+01/01/2018
+Aznar, Camacho, Rajoy
+3
+02/01/2018
+01/01/2022
+Bono, Camacho, Rajoy, Saenz, Sanchez
+Periodo Standard
+El numero de grupos es: 2
+1
+Aznar, Camacho, Rajoy, Saenz
+2
+Bono, Chaves, Duran, Sanchez, Zapatero
+Periodo Standard
+El numero de grupos es: 4
+1
+Duran, Zapatero
+2
+Aznar, Camacho, Rajoy, Saenz
+3
+Chaves
+4
+Bono, Sanchez
+Periodo Standard
+El numero de grupos es: 4
+1
+Duran, Zapatero
+2
+Aznar, Camacho, Rajoy, Saenz
+3
+Chaves
+4
+Bono, Sanchez

@@ -30,8 +30,8 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado.
 	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoGrupoAfin gruposAfines, Criterio criterio) {
-		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterio);
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoGrupoAfin gruposAfines, Map<Criterio,Double> criterios) {
+		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterios);
 		this.gruposAfines = new ConjuntoGrupoAfin(gruposAfines);
 		this.periodo = new DateInterval(periodo);
 	}
