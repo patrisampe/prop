@@ -378,8 +378,8 @@ public class ControladorDominioResultado extends ControladorDominio {
 	 * Suministra el criterio empleado en la busqueda.
 	 * @return Criterio de búsqueda.
 	 */
-	public String getCriterio(String name) {
-		return conjuntoResultados.get(name).getCriterio();
+	public String getCriterios(String name) {
+		return conjuntoResultados.get(name).getCriterios();
 	}
 	
 	/**

@@ -187,8 +187,8 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Suministra el criterio empleado en la busqueda.
 	 * @return Criterio de búsqueda.
 	 */
-	public String getCriterio() {
-		return this.criterios.toString();
+	public Map<Criterio, Double> getCriterios() {
+		return this.criterios;
 	}
 	
 	/**
