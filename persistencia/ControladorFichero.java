@@ -21,7 +21,7 @@ import time.Date;
  * @author David Moran
  * @version 18/5/2015 22:00
  * */
-public class StreamFile {
+public class ControladorFichero {
 
 	/**
 	 * String que contiene la primera línea del fichero.
@@ -41,7 +41,7 @@ public class StreamFile {
 	/**
 	 * Instancia nula de la clase.
 	 */
-	public static final StreamFile NULL = new StreamFile();
+	public static final ControladorFichero NULL = new ControladorFichero();
 
 	/**
 	 * Calendario utilizado para calcular la fecha actual.
@@ -68,22 +68,22 @@ public class StreamFile {
 											+ ':' + (calendar.get(13) > 10?"":'0') + calendar.get(13);
 	
 	/**
-	 * Crea un nuevo StreamFile.
+	 * Crea un nuevo ControladorFichero.
 	 */
-	public StreamFile(){
+	public ControladorFichero(){
 		indices = new HashMap<String, Integer>();
 		contenido = new Vector<StreamContainer>();
 		info = "" + message1 + ' ' + message2;
 	}
 	
 	/**
-	 * Crea un nuevo StreamFile copia de otro StreamFile.
-	 * @param SF - StreamFile a ser copiado.
+	 * Crea un nuevo ControladorFichero copia de otro ControladorFichero.
+	 * @param CF - ControladorFichero a ser copiado.
 	 */
-	public StreamFile(StreamFile SF){
-		indices = SF.indices;
-		contenido = SF.contenido;
-		info = SF.info;
+	public ControladorFichero(ControladorFichero CF){
+		indices = CF.indices;
+		contenido = CF.contenido;
+		info = CF.info;
 	}
 	
 	/**
@@ -101,8 +101,8 @@ public class StreamFile {
 	 * <br>
 	 * <i>false</i> en cualquier otro caso.
 	 */
-	public Boolean equals(StreamFile SF){
-		return contenido.equals(SF.contenido);
+	public Boolean equals(ControladorFichero CF){
+		return contenido.equals(CF.contenido);
 	}
 	
 	/**
@@ -186,7 +186,7 @@ public class StreamFile {
 	 * @param i - Posición del elemento deseado en el fichero.
 	 * @param j - Posición del elemento deseado en el contenedor.
 	 * @param k - Posición del atributo deseado en el contenedor.
-	 * @return El StreamObject situado en la posición indicada.
+	 * @return El atributo situado en la posición indicada.
 	 * @throws FileFormatException 
 	 */
 	public String elementAt(Integer i, Integer j, Integer k) throws FileFormatException {
@@ -332,7 +332,7 @@ public class StreamFile {
 	}
 	
 	/**
-	 * Integra los datos de un fichero CIOF (Complex Imput/Output Format) en el StreamFile.
+	 * Integra los datos de un fichero CIOF (Complex Imput/Output Format) en el ControladorFichero.
 	 * @param E - Entrada por la que se desea leer los datos.
 	 * @param info_aux - String con la informacion de la primera línea.
 	 * @param j - Numero de caracter por el que hay que empezar a leer la primera línea.
@@ -482,7 +482,7 @@ public class StreamFile {
 	}
 	
 	/**
-	 * Integra los datos de un fichero SIOF (Simple Imput/Output Format) en el StreamFile.
+	 * Integra los datos de un fichero SIOF (Simple Imput/Output Format) en el ControladorFichero.
 	 * @param E - Entrada por la que se desea leer los datos.
 	 */
 	private void leerS(Entrada E) throws FileFormatException {
