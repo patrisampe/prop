@@ -58,6 +58,8 @@ public class CodiError {
 		Diccionario.put(37, "La votacion %1 no pertenece a ninguna legislatura");
 		Diccionario.put(38, "Periodo no valido");
 		Diccionario.put(39, "%1 no es un tipo de voto correcto");
+		Diccionario.put(40, "Se intenta leer el la %1 %2, pero no tiene un formato correcto.");
+		
         return Collections.unmodifiableMap(Diccionario);
 	}
 	/**
