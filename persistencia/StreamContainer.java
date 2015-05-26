@@ -57,11 +57,25 @@ public class StreamContainer {
 	}
 	
 	/**
-	 * Consulta el número de elementos del contenedor.
+	 * Consulta el número de elementos del contenedor (incluyendo el nombre).
 	 * @return El número de elementos del contenedor.
 	 */
 	public Integer size() {
 		return indices.size();
+	}
+	
+	/**
+	 * Consulta la longitud (en carácteres) del contenedor.
+	 * @return La longitud del contenedor.
+	 */
+	public Integer length() {
+		Integer l = 0;
+		l += Integer.valueOf(indices.size()).toString().length();
+		l = l + indices.size() + 1;
+		for (Integer i = 0; i < indices.size(); ++i)
+			l += indices.elementAt(i).toString().length();
+		l += contenido.length();
+		return l;
 	}
 	
 	/**

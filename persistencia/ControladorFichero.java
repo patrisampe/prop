@@ -1,8 +1,10 @@
 package persistencia;
 
 import io.Entrada;
+import io.FicheroEntrada;
 import io.Salida;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -91,7 +93,18 @@ public class ControladorFichero {
 	 * @return El numero de líneas del fichero.
 	 */
 	public Integer size() {
-		return indices.size();
+		return contenido.size();
+	}
+	
+	/**
+	 * Consulta la longitud (en carácteres) del fichero (sin contar saltos de línea ni la cabezera).
+	 * @return La longitud del contenido del fichero.
+	 */
+	public Integer length() {
+		Integer l = 0;
+		for (Integer i = 0; i <= contenido.size(); ++i)
+			l += contenido.elementAt(i).length();
+		return l;
 	}
 	
 	/**
@@ -244,6 +257,14 @@ public class ControladorFichero {
 			System.out.println(e.getMessage());
 		}
 		S.close();
+	}
+	
+	/**
+	 * Carga el contenido de un fichero.
+	 * @param path - Ruta donde se encuentra el fichero que se desea abrir.
+	 */
+	public void read(String path) throws FileFormatException, FileChecksumException, FileNotFoundException {
+		read(new FicheroEntrada(path));
 	}
 	
 	/**
