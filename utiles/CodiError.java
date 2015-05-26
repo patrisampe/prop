@@ -60,6 +60,8 @@ public class CodiError {
 		Diccionario.put(39, "%1 no es un tipo de voto correcto");
 		Diccionario.put(40, "Se intenta leer el la %1 %2, pero no tiene un formato correcto.");
 		Diccionario.put(41, "El fichero %1 tiene un formato incorrecto.");
+		Diccionario.put(42, "Formato Incorrecto");
+		Diccionario.put(43, "No se ha encontrado el fichero %1.");
 		
         return Collections.unmodifiableMap(Diccionario);
 	}
