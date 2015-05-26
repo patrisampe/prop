@@ -70,7 +70,28 @@ public class ControladorDominioEvento extends ControladorDominio {
 			 return false;
 		}
 		
+		/**
+		 * Limpia el conjunto del Controlador
+		 */
+		public void clear(){
+			conjuntoTipoEvento.clear();
+		}
+		/**
+		 * 
+		 * @return devuelve todo el contenido del controlador
+		 */
+		public Set<TipoEvento> getAll(){
+			return conjuntoTipoEvento.getAll();
+		}
 		
+		/**
+		 * 
+		 * @param nombreTipoEvento: nombre de la TipoEvento
+		 * @return devuelve la Votacion correspondiente del nombreTipoEvento
+		 */
+		public TipoEvento get(String nombreTipoEvento){
+			return conjuntoTipoEvento.get(nombreTipoEvento);
+		}
 		/**
 		 * Comprueva si el Tipo Evento existe, sino captura Excepcion
 		 * Tambien comprueva si el evento es de ese Tipo Evento, sino captura Error

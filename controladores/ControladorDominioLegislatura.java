@@ -44,6 +44,23 @@ public class ControladorDominioLegislatura extends ControladorDominio{
 	}
 	
 	/**
+	 * Limpia el conjunto del Controlador
+	 */
+	public void clear(){
+		conjuntoLegislaturas.clear();
+	}
+	
+	/**
+	 * 
+	 * @param nombreTipoEvento: nombre de la idLegislatura
+	 * @return devuelve la Votacion correspondiente del idLegislatura
+	 */
+	public Legislatura get(Integer idLegislatura){
+		return conjuntoLegislaturas.get(idLegislatura);
+	}
+	
+	
+	/**
 	 * Consulta el número de legislaturas existentes en el sistema.
 	 * @return Número de legislaturas del sistema.
 	 */
