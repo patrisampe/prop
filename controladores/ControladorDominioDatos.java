@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import exceptions.FileFormatException;
@@ -68,7 +69,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	public void cargarDominio() {
 		limpiarDominio();
 		for (String fichero : ficheros) {
-			cargarFichero(fichero);	
+			cargarFichero(rutaPersistencia+fichero);	
 		}
 	}
 	
@@ -222,6 +223,13 @@ public class ControladorDominioDatos extends ControladorDominio {
 	}
 
 	private void addVotacion(StreamObject votacion) {
+		if (votacion.size() != 5) {
+			CodiError e = new CodiError(40);
+			e.addClauExterna(votacion.getNombre());
+			e.addClauExterna(votacion.elementAt(1));
+			log.addError(e);
+			return;
+		}
 		Map<String,TipoVoto> map = new HashMap<String,TipoVoto>();
 		String[] diputados = votacion.arrayAt(3);
 		String[] votos = votacion.arrayAt(4);
@@ -236,6 +244,20 @@ public class ControladorDominioDatos extends ControladorDominio {
 			map.put(diputados[i], stringToVoto(votos[i]));
 		}
 		cVot.addVotacion(votacion.elementAt(1), Date.parseDate(votacion.elementAt(2)), Integer.parseInt(votacion.elementAt(3)),map);	
+		if (cVot.hasError()) {
+			CodiError err = cVot.getError();
+			if (err.getCodiError() == 23) {
+				log.addW("La votacion ya existia, sobreescribimos y hacemos merge de los votos.");
+				cVot.setFechaVotacion(votacion.elementAt(1), Date.parseDate(votacion.elementAt(2)));
+				cVot.setImportanciaVotacion(votacion.elementAt(1),Integer.parseInt(votacion.elementAt(3)));
+				for (Entry<String,TipoVoto> e : map.entrySet()) {
+					cVot.setAddVoto(votacion.elementAt(1), e.getKey(), e.getValue());
+					if (cVot.hasError()) {
+						log.addError(cVot.getError());
+					}
+				}
+			}
+		}
 	}
 
 	private TipoVoto stringToVoto(String s) {
@@ -264,22 +286,35 @@ public class ControladorDominioDatos extends ControladorDominio {
 
 	public void salvarDominio() {
 		ficheros = new HashSet<String>();
-		for (String fichero : ficheros) {
-			ControladorFichero f = new ControladorFichero();
-			f.read(fichero);
-			salvarDatos(f);
-			f.print(fichero);
-		}
-		changeBase();
+		int i = 0;
+		int j = 0;
+		StreamContainer sc = new StreamContainer("Dominio "+(++j));
+		//TODO
+		ControladorFichero sf = new ControladorFichero();
+		cRes.
+		updateBase();
 		cargarDominio();
 	}
-
-	private void salvarDatos(ControladorFichero antiguo) {
-		for (int i = 0; i < antiguo.size(); ++i) {
-			//TODO ModificarCosillas
-		}
-	}
 	
+	private void updateBase() {
+		StreamContainer sc = new StreamContainer("Rutas");
+		for(String fichero : ficheros) {
+			StreamObject so = new StreamObject("Fichero");
+			so.add(fichero);
+			sc.add(so);
+		}
+		readFicheros();
+		base.clear();
+		base.add(sc);
+		base.print(rutaPersistencia+ficheroBase);
+		for(String fichero : ficheros) {
+			ControladorFichero.erase(rutaPersistencia+fichero);
+		}
+		cargarDominio();
+		
+		
+	}
+
 	public void leerFichero(String fichero) {
 		leyendo = true;
 		salvarDominio();
@@ -305,10 +340,16 @@ public class ControladorDominioDatos extends ControladorDominio {
 		cRes.clear();
 	}
 
-	public void ImportarDatos(String fichero) {
+	public void importarDatos(String fichero) {
 		salvarDominio();
 		cargarFichero(fichero);
+		//TODO
 	}
+	
+	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
+		//TODO
+	}
+	public void 
 	
 	public ImportLog getLog() {
 		if (leyendo) return log;
@@ -324,7 +365,11 @@ public class ControladorDominioDatos extends ControladorDominio {
 /*
  * Necesitamos:
  * 
+ * read y print con parametro String
+ * 
  * clear() en cada controlador.
+ * 
+ * empty() o getAll() en cada controlador.
  * 
  * Decidir políticas de Import (Qué hacer si ya existe lo que queremos añadir, se modifica o se descarta).
  *  
