@@ -24,7 +24,11 @@ public class ControladorDominioDatos extends ControladorDominio {
 	
 	private Set<String> ficheros;
 	
+	private ArrayList<StreamObject> temp;
+	
 	private static final String ficheroBase = "base.txt";
+	
+	private static final String ficheroTemp = "temp.txt";
 	
 	private static final String rutaPersistencia = "save/";
 	
@@ -85,7 +89,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	}
 	
 	private void cargarDatos(ControladorFichero sf) throws FileFormatException {
-		for (int i = 0; i < sf.size(); ++i) {
+		for (int i = 0; i < sf.size(); ++i) { 
 			for (int j = 0; j < sf.elementAt(i).size(); ++j) {
 				StreamObject so = sf.elementAt(i, j);
 				String nombre = so.getNombre();
@@ -273,7 +277,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		cDip.addDiputado(diputado.elementAt(1), diputado.elementAt(2), diputado.elementAt(3), Date.parseDate(diputado.elementAt(4)));
 		if (cDip.hasError()) {
 			CodiError err = cDip.getError();
-			if (err.getCodiError() == 4) { 
+			if (err.getCodiError() == 4) {
 				log.addW("Se ha sobreescrito.");
 				cDip.setPartidoPolitico(diputado.elementAt(1), diputado.elementAt(2));
 				cDip.setEstado(diputado.elementAt(1), diputado.elementAt(3));
@@ -291,7 +295,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		StreamContainer sc = new StreamContainer("Dominio "+(++j));
 		//TODO
 		ControladorFichero sf = new ControladorFichero();
-		cRes.
+		
 		updateBase();
 		cargarDominio();
 	}

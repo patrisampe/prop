@@ -12,6 +12,7 @@ public class ImportLog {
 		private String warning;
 		private CodiError error;
 		private Integer state;
+		private Integer object;
 		
 		private Entry() {
 			state = 0;
@@ -63,17 +64,28 @@ public class ImportLog {
 			return true;
 		}
 		public CodiError getError() {
-			if (state != 5) return null;
+			if (state != 6) return null;
 			return error;
 		}
 		public boolean setError(CodiError error) {
 			this.error = error;
-			state = 5;
+			state = 6;
 			return true;
 		}
 		public Integer getState() {
 			return state;
 		}
+		public Integer getObject() {
+			if (state != 5) return null;
+			return object;
+		}
+		public boolean setObject(Integer object) {
+			if (state != 4) return false;
+			this.object = object;
+			state = 5;
+			return true;
+		}
+		
 	}
 	
 	private ArrayList<Entry> log;
@@ -104,6 +116,10 @@ public class ImportLog {
 	
 	public void addW(String s) {
 		ongoing.setWarning(s);
+	}
+	
+	public void addWObject(Integer i) {
+		ongoing.setObject(i);
 	}
 	
 	public void addError(CodiError c) {
