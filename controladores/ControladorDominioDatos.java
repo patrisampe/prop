@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import exceptions.FileChecksumException;
 import exceptions.FileFormatException;
 import persistencia.*;
 import dominio.*;
@@ -21,6 +22,8 @@ public class ControladorDominioDatos extends ControladorDominio {
 	private ImportLog log;
 	
 	private Boolean leyendo;
+	
+	private String fLeyendo;
 	
 	private Set<String> ficheros;
 	
@@ -77,7 +80,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		}
 	}
 	
-	private void cargarFichero(String fichero) {
+	private void cargarFichero(String fichero){
 		try {
 			ControladorFichero f = new ControladorFichero();
 			f.read(fichero);
@@ -85,63 +88,77 @@ public class ControladorDominioDatos extends ControladorDominio {
 		}catch(FileNotFoundException e) {
 			error = new CodiError(43);
 			error.addClauExterna(fichero);
-		}		
+		} catch (FileFormatException e) {
+			error = new CodiError(41);
+			error.addClauExterna(fichero);
+		} catch (FileChecksumException e) {
+			error = new CodiError(44);
+			error.addClauExterna(fichero);
+		}
 	}
 	
 	private void cargarDatos(ControladorFichero sf) throws FileFormatException {
 		for (int i = 0; i < sf.size(); ++i) { 
 			for (int j = 0; j < sf.elementAt(i).size(); ++j) {
+				log.add(i);
+				log.add(j);
 				StreamObject so = sf.elementAt(i, j);
-				String nombre = so.getNombre();
-				log.add(so.getNombre());
-				log.add(so.elementAt(1));
-				if(nombre.equals("Diputado")) {
-					addDiputado(so);
-					if (cDip.hasError()) log.addError(cDip.getError());
-				}
-				else if(nombre.equals("Votacion")) {
-					addVotacion(so);
-					if (cVot.hasError()) log.addError(cVot.getError());
-				}
-				else if(nombre.equals("TipoEvento")) {
-					addTipoEvento(so);
-					if (cEv.hasError()) log.addError(cEv.getError());
-				}
-				else if(nombre.equals("ResultadoPorDiputado")) {
-					addResultadoPorDiputado(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("ResultadoPorPeriodo")) {
-					addResultadoPorPeriodo(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("GrupoAfinPorPeriodo")) {
-					addGrupoAfinPorPeriodo(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("GrupoAfinPorDiputado")) {
-					addGrupoAfinPorDiputado(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("Evento")) {
-					addEvento(so);
-					if (cEv.hasError()) log.addError(cEv.getError());
-				}
-				else if(nombre.equals("Legislatura")) {
-					addLegislatura(so);
-					if (cEv.hasError()) log.addError(cLeg.getError());
-				}
-				else if(nombre.equals("Fichero")) {
-					try {
-						addFichero(so);
-					}catch (FileFormatException e) {
-						log.addError(new CodiError(42));
-					}
-				}
+				cargarDatos(so);
+				log.ok();
 			}
 		}
 	}
 	
+	private void cargarDatos(StreamObject so) {
+		String nombre = so.getNombre();
+		log.add(so.getNombre());
+		log.add(so.elementAt(1));
+		if(nombre.equals("Diputado")) {
+			addDiputado(so);
+			if (cDip.hasError()) log.addError(cDip.getError());
+		}
+		else if(nombre.equals("Votacion")) {
+			addVotacion(so);
+			if (cVot.hasError()) log.addError(cVot.getError());
+		}
+		else if(nombre.equals("TipoEvento")) {
+			addTipoEvento(so);
+			if (cEv.hasError()) log.addError(cEv.getError());
+		}
+		else if(nombre.equals("ResultadoPorDiputado")) {
+			addResultadoPorDiputado(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("ResultadoPorPeriodo")) {
+			addResultadoPorPeriodo(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("GrupoAfinPorPeriodo")) {
+			addGrupoAfinPorPeriodo(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("GrupoAfinPorDiputado")) {
+			addGrupoAfinPorDiputado(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("Evento")) {
+			addEvento(so);
+			if (cEv.hasError()) log.addError(cEv.getError());
+		}
+		else if(nombre.equals("Legislatura")) {
+			addLegislatura(so);
+			if (cEv.hasError()) log.addError(cLeg.getError());
+		}
+		else if(nombre.equals("Fichero")) {
+			try {
+				addFichero(so);
+			}catch (FileFormatException e) {
+				log.addError(new CodiError(42));
+			}
+		}
+		
+	}
+
 	private void addLegislatura(StreamObject so) {
 		Integer id = Integer.parseInt(so.elementAt(1));
 		cLeg.addLegislatura(id, Date.parseDate(so.elementAt(2)), Date.parseDate(so.elementAt(3)));
@@ -149,6 +166,12 @@ public class ControladorDominioDatos extends ControladorDominio {
 			CodiError err = cLeg.getError();
 			if (err.getCodiError() == 16) {
 				log.addW("La legislatura ya existia, se sobreescribe y se mezclan los diputados");
+				cLeg.setFechaInicio(id, Date.parseDate(so.elementAt(2)));
+				cLeg.setFechaFinal(id, Date.parseDate(so.elementAt(3)));
+				if (cLeg.hasError()) {
+					log.addError(cLeg.getError());
+					return;
+				}
 			}
 			else log.addError(err);
 		}
@@ -251,7 +274,6 @@ public class ControladorDominioDatos extends ControladorDominio {
 		if (cVot.hasError()) {
 			CodiError err = cVot.getError();
 			if (err.getCodiError() == 23) {
-				log.addW("La votacion ya existia, sobreescribimos y hacemos merge de los votos.");
 				cVot.setFechaVotacion(votacion.elementAt(1), Date.parseDate(votacion.elementAt(2)));
 				cVot.setImportanciaVotacion(votacion.elementAt(1),Integer.parseInt(votacion.elementAt(3)));
 				for (Entry<String,TipoVoto> e : map.entrySet()) {
@@ -321,18 +343,41 @@ public class ControladorDominioDatos extends ControladorDominio {
 
 	public void leerFichero(String fichero) {
 		leyendo = true;
+		fLeyendo = fichero;
 		salvarDominio();
 		log.clear();
-		cargarFichero(fichero);
+		cargarFichero(fLeyendo);
 	}
 	
-	public void integrarFichero() {
+	public Set<CodiError> integrarFichero(ArrayList<Integer> aIntegrar) {
 		leyendo = false;
+		ControladorFichero sf = new ControladorFichero();
+		sf.read(fLeyendo);
+		recargarDominio();
+		log.clearErrors();
+		for (Integer inte : aIntegrar) {
+			cargarDatos(sf.elementAt(log.getContainer(inte), log.getObject(inte)));
+		}
+		Set<CodiError> se = log.getErrors();
+		if (!se.isEmpty()) {
+			recargarDominio();
+		}
+		log.clear();
+		return se;
+	}
+	
+	public Set<CodiError> integrarFichero() {
+		leyendo = false;
+		Set<CodiError> se = log.getErrors();
+		if (!se.isEmpty()) {
+			recargarDominio();
+		}
+		log.clear();
+		return se;
 	}
 	
 	public void noIntegrarFichero() {
-		limpiarDominio();
-		cargarDominio();
+		recargarDominio();
 		leyendo = false;
 	}
 	
@@ -343,17 +388,26 @@ public class ControladorDominioDatos extends ControladorDominio {
 		cVot.clear();
 		cRes.clear();
 	}
+	
+	private void recargarDominio() {
+		limpiarDominio();
+		cargarDominio();
+	}
 
-	public void importarDatos(String fichero) {
+	public Set<CodiError> importarDatos(String fichero) {
+		log.clear();
 		salvarDominio();
 		cargarFichero(fichero);
-		//TODO
+		Set<CodiError> se = log.getErrors(); 
+		if (!se.isEmpty()) {
+			recargarDominio();
+		}
+		return se;
 	}
 	
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
 		//TODO
 	}
-	public void 
 	
 	public ImportLog getLog() {
 		if (leyendo) return log;
