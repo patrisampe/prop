@@ -46,6 +46,35 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		return result;
 	}
  	
+	/**
+	 * Limpia el conjunto del Controlador
+	 */
+	public void clear(){
+		result.clear();
+	}
+	/**
+	 * 
+	 * @return devuelve todo el contenido del controlador(si es un Resultado de Busqueda por diputado)
+	 */
+	public Set<GrupoAfinPorDiputado> getAllDip(){
+		return result.getAllPorDiputado();
+	}
+	
+	/**
+	 * 
+	 * @return devuelve todo el contenido del controlador(si es un Resultado de Busqueda por Periodo)
+	 */
+	public Set<GrupoAfinPorPeriodo> getAllPer(){
+		return result.getAllPorPeriodo();
+	}
+	
+	public GrupoAfinPorDiputado getDip(Integer id){
+		return result.getPorDiputado(id);
+	}
+	public GrupoAfinPorPeriodo getPer(Integer id){
+		return result.getPorPeriodo(id);
+	}
+	
 	protected Map<String, Integer> prepararImportancias(
 			Map<String, Integer> importanciaModificada) {
 		Map<String, Integer> res = new TreeMap<String,Integer>(); 

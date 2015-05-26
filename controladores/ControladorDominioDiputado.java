@@ -59,6 +59,23 @@ public class ControladorDominioDiputado extends ControladorDominio {
 		return conjuntoDiputados.getAll();
 	}
 	
+	
+	/**
+	 * Limpia el conjunto del Controlador
+	 */
+	public void clear(){
+		conjuntoDiputados.clear();
+	}
+
+	/**
+	 * 
+	 * @param nombreDiputado: nombre del Diputado
+	 * @return devuelve la Votacion correspondiente del nombreDiputado
+	 */
+	public Diputado get(String nombreDiputado){
+		return conjuntoDiputados.get(nombreDiputado);
+	}
+	
 	/**
 	 * Consulta los nombres de los diputados existentes en el sistema.
 	 * @return Conjunto de nombres diputados del sistema.

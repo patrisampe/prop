@@ -3,9 +3,12 @@ package controladores;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.Vector;
 
 import dominio.Criterio;
+import dominio.GrupoAfinPorDiputado;
+import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
 import dominio.ResultadoDeBusquedaPorPeriodo;
 import dominio.ResultadoDeBusquedaPorDiputado;
@@ -36,7 +39,8 @@ public class ControladorDominioResultado extends ControladorDominio {
 	 * Ultimo resultado de busqueda sin almacenar en el sistema.
 	 */
 	private ResultadoDeBusqueda ultimoResultado;
-	
+	private ResultadoDeBusquedaPorDiputado ultimoResultadoDip;
+	private ResultadoDeBusquedaPorPeriodo ultimoResultadoPer;
 	/**
 	 * Crea una nuevo controlador de dominio de resultados.
 	 */
@@ -136,6 +140,29 @@ public class ControladorDominioResultado extends ControladorDominio {
 	}
 	
 	/**
+	 * Limpia el conjunto del Controlador
+	 */
+	public void clear(){
+		conjuntoResultados.clear();
+	}
+	/**
+	 * 
+	 * @return devuelve todo el contenido del controlador
+	 */
+	public Set<ResultadoDeBusqueda> getAll(){
+		return conjuntoResultados.getAll();
+	}
+	
+	/**
+	 * 
+	 * @param nombreResultado: nombre del nombreResultado
+	 * @return devuelve Resultado correspondiente del nombreResultado
+	 */
+	public ResultadoDeBusqueda get(String nombreResultado){
+		return conjuntoResultados.get(nombreResultado);
+	}
+	
+	/**
 	 * Crea un nuevo resultado de busqueda por periodo llamando al controlador del dominio de busqueda por periodo y lo almacena en ultimoResultado.
 	 * @param indiceAfinidad - Valor del porcentaje de afinidad que se desea obtener en la busqueda.
 	 * @param algoritmo - Algoritmo que se desea utilizar para realizar la busqueda.
@@ -208,6 +235,47 @@ public class ControladorDominioResultado extends ControladorDominio {
 		}
 	}
 	
+	public void nuevoResultadoPorDiputadoSinBusqueda(String nombre,Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Map<Criterio,Double> criterios) {
+		if (indiceAfinidad < 0 || indiceAfinidad > 100) {
+			error = new CodiError(30);
+		}
+		else if (lapsoDeTiempo < 1) {
+			error = new CodiError(34);
+		}
+		else if (existeDiputado(diputadoRelevante)) {
+			ConjuntoGrupoAfin resultado = new ConjuntoGrupoAfin();
+			ultimoResultadoDip = new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante, criterios);
+		}
+	}
+	
+	public void addGrupoResultadoDiputados(String nombreRes,Integer ID, Date fechaInicio, Date fechaFin,TreeSet<String> dip) {
+		GrupoAfinPorDiputado gad= new GrupoAfinPorDiputado(ID,fechaInicio,fechaFin); 
+		ultimoResultadoDip.addGrupo(gad);
+	}
+	
+	public void addUltimoResultadoDiputados(String nombreRes) {
+		conjuntoResultados.add(ultimoResultadoDip);
+	}
+	
+
+	public void nuevoResultadoPorPeriodoSinBusqueda(String nombreResultado,Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Map<Criterio,Double> criterios) {
+		if (indiceAfinidad < 0 || indiceAfinidad > 100) { 
+			error = new CodiError(30);
+		}
+		else {
+			ConjuntoGrupoAfin resultado = new ConjuntoGrupoAfin();
+			ultimoResultadoPer = new ResultadoDeBusquedaPorPeriodo("Provisional", indiceAfinidad, algoritmo, importancia, false, periodo, resultado, criterios);
+		}
+	}
+	
+	public void addGrupoResultadoPeriodo(String nombreRes,Integer ID) {
+		GrupoAfinPorPeriodo gap= new GrupoAfinPorPeriodo(ID); 
+		ultimoResultadoPer.addGrupo(gap);
+	}
+	
+	public void addUltimoResultadoPeriodo() {
+		conjuntoResultados.add(ultimoResultadoPer);
+	}
 	/**
 	 * Registra el resultado de la variable ultimoResultado en el conjunto de resultados para que quede registrado en el sistema.
 	 * @param nombre - Nombre con el cual se registra el resultado.
@@ -379,7 +447,7 @@ public class ControladorDominioResultado extends ControladorDominio {
 	 * @return Criterio de búsqueda.
 	 */
 	public String getCriterios(String name) {
-		return conjuntoResultados.get(name).getCriterios();
+		return conjuntoResultados.get(name).getCriterios().toString();
 	}
 	
 	/**

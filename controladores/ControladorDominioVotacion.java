@@ -65,6 +65,29 @@ public class ControladorDominioVotacion extends ControladorDominio {
 		}
 		
 		/**
+		 * Limpia el conjunto del Controlador
+		 */
+		public void clear(){
+			conjuntoVotacion.clear();
+		}
+		/**
+		 * 
+		 * @return devuelve todo el contenido del controlador
+		 */
+		public Set<Votacion> getAll(){
+			return conjuntoVotacion.getAll();
+		}
+		
+		/**
+		 * 
+		 * @param nombreVotacion: nombre de la votacion
+		 * @return devuelve la Votacion correspondiente del nombreVotacion
+		 */
+		public Votacion get(String nombreVotacion){
+			return conjuntoVotacion.get(nombreVotacion);
+		}
+		
+		/**
 		 * Modifica la fecha de la Votacion
 		 * Causas por las que no se realiza la operacion y se captura el error:<br>
 	     * 1- nombreVotacion no es una Votacion
@@ -405,6 +428,33 @@ public class ControladorDominioVotacion extends ControladorDominio {
 			return res;
 		}
 		
+		public Set<String> getDiputadosLegislaturaVotacion(String nombreVotacion){
+			
+			ControladorDominioLegislatura CDL= ControladorDominioLegislatura.getInstance();
+			Integer leg=CDL.getID(conjuntoVotacion.get(nombreVotacion).getFecha());
+			if(leg!=-1){
+				return CDL.getDiputados(leg);
+			}
+			else{
+				error.addClauExterna(nombreVotacion);
+				error.setCodiError(37);
+				return new TreeSet<String>();
+			}
+		
+	}
+	
+	
+	public void completar(String nombreVotacion){
+		Set<String> dip=getDiputadosLegislaturaVotacion(nombreVotacion);
+		Votacion aux=conjuntoVotacion.get(nombreVotacion);
+		Set<String> dipuVot=aux.getDiputados();
+		for(String elem :dip){
+				if(!dipuVot.contains(elem)){
+					aux.setaddVoto(elem, TipoVoto.AUSENCIA);
+				}
+		}
+				
+	}
 	
 		
 		
