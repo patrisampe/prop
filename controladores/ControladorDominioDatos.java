@@ -65,6 +65,12 @@ public class ControladorDominioDatos extends ControladorDominio {
 			}
 		}catch(FileNotFoundException e) {
 			System.out.println("No se encuentra el fichero "+ficheroBase+". Procedemos a crearlo." );
+		} catch (FileFormatException e) {
+			System.out.println("Error de formato en el fichero "+ficheroBase+". Procedemos a eliminarlo." );
+			ControladorFichero.erase(rutaPersistencia+ficheroBase);
+		} catch (FileChecksumException e) {
+			System.out.println("Error de c en el fichero "+ficheroBase+". Procedemos a eliminarlo." );
+			ControladorFichero.erase(rutaPersistencia+ficheroBase);
 		}		
 	}
 
@@ -319,7 +325,6 @@ public class ControladorDominioDatos extends ControladorDominio {
 		ControladorFichero sf = new ControladorFichero();
 		
 		updateBase();
-		cargarDominio();
 	}
 	
 	private void updateBase() {
@@ -352,28 +357,45 @@ public class ControladorDominioDatos extends ControladorDominio {
 	public Set<CodiError> integrarFichero(ArrayList<Integer> aIntegrar) {
 		leyendo = false;
 		ControladorFichero sf = new ControladorFichero();
-		sf.read(fLeyendo);
+		try {
+			sf.read(fLeyendo);
+		}catch(FileNotFoundException e) {
+			error = new CodiError(43);
+			error.addClauExterna(fLeyendo);
+		} catch (FileFormatException e) {
+			error = new CodiError(41);
+			error.addClauExterna(fLeyendo);
+		} catch (FileChecksumException e) {
+			error = new CodiError(44);
+			error.addClauExterna(fLeyendo);
+		}
 		recargarDominio();
 		log.clearErrors();
 		for (Integer inte : aIntegrar) {
-			cargarDatos(sf.elementAt(log.getContainer(inte), log.getObject(inte)));
+			try {
+				cargarDatos(sf.elementAt(log.getContainer(inte), log.getObject(inte)));
+			} catch (FileFormatException e) {
+				error = new CodiError(41);
+				error.addClauExterna(fLeyendo);
+				break;
+			}
 		}
+		return validaImport();
+	}
+	
+	private Set<CodiError> validaImport() {
 		Set<CodiError> se = log.getErrors();
+		if (this.hasError()) se.add(this.getError());
 		if (!se.isEmpty()) {
 			recargarDominio();
 		}
 		log.clear();
 		return se;
 	}
-	
+
 	public Set<CodiError> integrarFichero() {
 		leyendo = false;
-		Set<CodiError> se = log.getErrors();
-		if (!se.isEmpty()) {
-			recargarDominio();
-		}
-		log.clear();
-		return se;
+		return validaImport();
 	}
 	
 	public void noIntegrarFichero() {
@@ -398,11 +420,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		log.clear();
 		salvarDominio();
 		cargarFichero(fichero);
-		Set<CodiError> se = log.getErrors(); 
-		if (!se.isEmpty()) {
-			recargarDominio();
-		}
-		return se;
+		return validaImport();
 	}
 	
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {

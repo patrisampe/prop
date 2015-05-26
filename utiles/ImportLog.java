@@ -1,6 +1,8 @@
 package utiles;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 
@@ -96,6 +98,9 @@ public class ImportLog {
 			state = 3;
 			return true;
 		}
+		public void clearError() {
+			state = 6;
+		}
 		
 	}
 	
@@ -184,15 +189,33 @@ public class ImportLog {
 		saveEntry();
 		log = new ArrayList<Entry>();
 	}
-}
-	public String getFile(Integer i) {
-		return log.get(i).getFile();
-	}
+
 	public Integer getContainer(Integer i) {
 		return log.get(i).getContainer();
 	}
 	public Integer getObject(Integer i) {
 		return log.get(i).getObject();
 	}
+
+	public void clearErrors() {
+		for (int i = 0; i < size(); ++i) {
+			log.get(i).clearError();
+		}
+	}
+
+	public Set<CodiError> getErrors() {
+		Set<CodiError> se = new LinkedHashSet<CodiError>();
+		for (int i = 0; i < size(); ++i) {
+			if(hasError(i)) se.add(getError(i));
+		}
+		return se;
+	}
+
+	private CodiError getError(int i) {
+		if(hasError(i)) return log.get(i).getError();
+		return null;
+	}
+
+
 }
 	
