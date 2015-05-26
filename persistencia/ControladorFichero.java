@@ -2,8 +2,10 @@ package persistencia;
 
 import io.Entrada;
 import io.FicheroEntrada;
+import io.FicheroSalida;
 import io.Salida;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
@@ -228,6 +230,15 @@ public class ControladorFichero {
 		indices = new HashMap<String, Integer>();
 		contenido = new Vector<StreamContainer>();
 		info = "" + message1 + ' ' + message2;
+	}
+	
+	/**
+	 * Escribe el contenido en un fichero en formato CIOF.
+	 * @param path - Ruta donde se encuentra el fichero que se desea escribir.
+	 * @throws IOException 
+	 */
+	public void print(String path) throws IOException {
+		print(new FicheroSalida(path));
 	}
 	
 	/**
@@ -652,5 +663,10 @@ public class ControladorFichero {
 		}
 		for (StreamContainer sc:SC) add(sc);
 	}
-
+	
+	public static void erase(String path) {
+		File fichero = new File(path);
+		fichero.delete();
+	}
+	
 }
