@@ -168,14 +168,15 @@ public class ControladorDominioResultado extends ControladorDominio {
 	
 	public Set<ResultadoDeBusquedaPorPeriodo> getAllPorPeriodo(){
 		Set<ResultadoDeBusqueda> rdb= conjuntoResultados.getAll();
-		Set<ResultadoDeBusquedaPorPeriodo> rdbd= new TreeSet<ResultadoDeBusquedaPorPeriodo>();
-		for(ResultadoDeBusqueda elem:rdb){
+		Set<ResultadoDeBusquedaPorPeriodo> rdbp= new TreeSet<ResultadoDeBusquedaPorPeriodo>();
+		for(ResultadoDeBusqueda elem:rdp){
 			if(elem.getClass()==ResultadoDeBusquedaPorPeriodo.class){
 				ResultadoDeBusquedaPorPeriodo aux=(ResultadoDeBusquedaPorPeriodo)elem;
-				rdbd.add(aux);
+				rdbp.add(aux);
 			}
+			
 		}
-		return rdbd;
+		return rdbp;
 	}
 	
 	/**
