@@ -149,8 +149,33 @@ public class ControladorDominioResultado extends ControladorDominio {
 	 * 
 	 * @return devuelve todo el contenido del controlador
 	 */
-	public Set<ResultadoDeBusqueda> getAll(){
+	public Set<ResultadoDeBusqueda> getAll(){	
 		return conjuntoResultados.getAll();
+	}
+	
+	
+	public Set<ResultadoDeBusquedaPorDiputado> getAllPorDiputado(){
+		Set<ResultadoDeBusqueda> rdb= conjuntoResultados.getAll();
+		Set<ResultadoDeBusquedaPorDiputado> rdbd= new TreeSet<ResultadoDeBusquedaPorDiputado>();
+		for(ResultadoDeBusqueda elem:rdb){
+			if(elem.getClass()==ResultadoDeBusquedaPorDiputado.class){
+				ResultadoDeBusquedaPorDiputado aux=(ResultadoDeBusquedaPorDiputado)elem;
+				rdbd.add(aux);
+			}
+		}
+		return rdbd;
+	}
+	
+	public Set<ResultadoDeBusquedaPorPeriodo> getAllPorPeriodo(){
+		Set<ResultadoDeBusqueda> rdb= conjuntoResultados.getAll();
+		Set<ResultadoDeBusquedaPorPeriodo> rdbd= new TreeSet<ResultadoDeBusquedaPorPeriodo>();
+		for(ResultadoDeBusqueda elem:rdb){
+			if(elem.getClass()==ResultadoDeBusquedaPorPeriodo.class){
+				ResultadoDeBusquedaPorPeriodo aux=(ResultadoDeBusquedaPorPeriodo)elem;
+				rdbd.add(aux);
+			}
+		}
+		return rdbd;
 	}
 	
 	/**
