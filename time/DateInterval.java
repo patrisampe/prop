@@ -216,5 +216,11 @@ public class DateInterval {
 	private static Date max(Date D1, Date D2) {
 		return D1.compareTo(D2) >= 0 ? D1 : D2;
 	}
+
+	public static DateInterval parseDateInterval(String s) {
+		String d1 = s.substring(0, 10);
+		String d2 = s.substring(13, 23);
+		return new DateInterval(Date.parseDate(d1), Date.parseDate(d2));
+	}
 		
 }

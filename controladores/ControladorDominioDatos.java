@@ -1,11 +1,15 @@
 package controladores;
 
+import io.Entrada;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -15,6 +19,7 @@ import exceptions.FileFormatException;
 import persistencia.*;
 import dominio.*;
 import time.Date;
+import time.DateInterval;
 import utiles.CodiError;
 import utiles.ExportSet;
 import utiles.ImportLog;
@@ -211,13 +216,19 @@ public class ControladorDominioDatos extends ControladorDominio {
 	}
 
 	private void addResultadoPorPeriodo(StreamObject so) {
-		// TODO Auto-generated method stub
-		
+		Map<String,Integer> importancias = new LinkedHashMap<String,Integer>();
+		Map<Criterio,Double> criterios = new LinkedHashMap<Criterio,Double>();
+		//TODO
+		cRes.nuevoResultadoPorPeriodoSinBusqueda(so.elementAt(1), Integer.parseInt(so.elementAt(2)), stringToAlgoritmo(so.elementAt(3)), importancias, DateInterval.parseDateInterval(so.elementAt(5)), criterios);
+		if (cRes.hasError()) log.addError(cRes.getError());
 	}
 
 	private void addResultadoPorDiputado(StreamObject so) {
-		// TODO Auto-generated method stub
-		cRes.nuevoResultadoPorDiputadoSinBusqueda(nombre, indiceAfinidad, algoritmo, importancia, lapsoDeTiempo, diputadoRelevante, criterios);
+		Map<String,Integer> importancias = new LinkedHashMap<String,Integer>();
+		Map<Criterio,Double> criterios = new LinkedHashMap<Criterio,Double>();
+		//TODO
+		cRes.nuevoResultadoPorDiputadoSinBusqueda(so.elementAt(1), Integer.parseInt(so.elementAt(2)), stringToAlgoritmo(so.elementAt(3)), importancias, Integer.parseInt(so.elementAt(5)), so.elementAt(6), criterios);
+		if (cRes.hasError()) log.addError(cRes.getError());
 	}
 
 	private void addFichero(StreamObject fichero) throws FileFormatException {
@@ -508,7 +519,8 @@ public class ControladorDominioDatos extends ControladorDominio {
 	
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
 		ControladorFichero sf = new ControladorFichero();
-		StreamContainer sc = new StreamContainer("Export");
+		int i = 0;
+		StreamContainer sc = new StreamContainer("Export"+(++i));
 		for (ExportSet e : l) {
 			switch (e.getType()) {
 			case "Diputado":
@@ -535,6 +547,10 @@ public class ControladorDominioDatos extends ControladorDominio {
 			case "GrupoAfinPorPeriodo":
 				//TODO
 				break;
+			}
+			if (sc.size() > lineaSize*3/2) {
+				sf.add(sc);
+				sc = new StreamContainer("Export"+(++i));
 			}
 		}
 	}
@@ -652,6 +668,14 @@ public class ControladorDominioDatos extends ControladorDominio {
 		stream.add(G.getFechaFin());
 		stream.add(G.getDiputados());
 		return stream;
+	}
+	
+	public TipoAlgoritmo stringToAlgoritmo(String Alg) {
+		if (Alg.equals("Louvain")) return TipoAlgoritmo.Louvain;
+		if (Alg.equals("CliquePercolation")) return TipoAlgoritmo.CliquePercolation;
+		if (Alg.equals("GirvanNewmann")) return TipoAlgoritmo.GirvanNewmann;
+		this.error = new CodiError(42);
+		return null;
 	}
 	
 	
