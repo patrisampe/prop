@@ -235,7 +235,7 @@ public class ControladorFichero {
 	/**
 	 * Escribe el contenido en un fichero en formato CIOF.
 	 * @param path - Ruta donde se encuentra el fichero que se desea escribir.
-	 * @throws IOException 
+	 * @throws IOException Si el fichero indicado por <i>path</i> no se puede utilizar.
 	 */
 	public void print(String path) throws IOException {
 		print(new FicheroSalida(path));
