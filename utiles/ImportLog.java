@@ -1,89 +1,105 @@
 package utiles;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 
 public class ImportLog {
 	public class Entry {
+		private Integer container;
+		private Integer object;
 		private String type;
 		private String foreignKey;
 		private String foreingKey2;
 		private String warning;
 		private CodiError error;
 		private Integer state;
-		private Integer object;
 		
 		private Entry() {
-			state = 0;
+			state = 1;
 		}
 		public boolean isSuccesful() {
-			return state < 4 && state >= 2;
+			return state < 7 && state >= 5;
 		}
 		public boolean hasWarning() {
-			return state == 4;
+			return state == 7;
 		}
 		public boolean hasError() {
-			return state == 5;
+			return state == 8;
 		}
 		public String getType() {
 			return type;
 		}
 		public boolean setType(String type) {
-			if (state > 0) return false;
+			if (state > 3) return false;
 			this.type = type;
-			state = 1;
+			state = 4;
 			return true;
 		}
 		public String getForeignKey() {
 			return foreignKey;
 		}
 		public boolean setForeignKey(String foreignKey) {
-			if (state != 1) return false;
+			if (state != 4) return false;
 			this.foreignKey = foreignKey;
-			state = 2;
+			state = 5;
 			return true;
 		}
 		public String getForeingKey2() {
 			return foreingKey2;
 		}
 		public boolean setForeingKey2(String foreingKey2) {
-			if (state != 2) return false;
+			if (state != 5) return false;
 			this.foreingKey2 = foreingKey2;
-			state = 3;
+			state = 6;
 			return true;
 		}
 		public String getWarning() {
-			if (state != 4) return null;
+			if (state != 7) return null;
 			return warning;
 		}
 		public boolean setWarning(String warning) {
-			if (state > 4) return false;
+			if (state > 7) return false;
 			this.warning = warning;
-			state = 4;
+			state = 7;
 			return true;
 		}
 		public CodiError getError() {
-			if (state != 6) return null;
+			if (state != 8) return null;
 			return error;
 		}
 		public boolean setError(CodiError error) {
 			this.error = error;
-			state = 6;
+			state = 8;
 			return true;
 		}
 		public Integer getState() {
 			return state;
 		}
+		public Integer getContainer() {
+			if (state <= 1) return null;
+			return container;
+		}
+		public boolean setContainer(Integer container) {
+			if(state > 1) return false;
+			this.container = container;
+			state = 2;
+			return true;
+		}
 		public Integer getObject() {
-			if (state != 5) return null;
+			if (state <= 1) return null;
 			return object;
 		}
 		public boolean setObject(Integer object) {
-			if (state != 4) return false;
+			if (state > 2) return false;
 			this.object = object;
-			state = 5;
+			state = 3;
 			return true;
+		}
+		public void clearError() {
+			state = 6;
 		}
 		
 	}
@@ -100,6 +116,13 @@ public class ImportLog {
 		return log.size();
 	}
 	
+	public void add(Integer n) {
+		if(ongoing.setContainer(n));
+		else if (ongoing.setObject(n));
+		else {
+			add(n.toString());
+		}
+	}
 	public void add(String s) {
 		if (ongoing.setType(s));
 		else if(ongoing.setForeignKey(s));
@@ -116,10 +139,6 @@ public class ImportLog {
 	
 	public void addW(String s) {
 		ongoing.setWarning(s);
-	}
-	
-	public void addWObject(Integer i) {
-		ongoing.setObject(i);
 	}
 	
 	public void addError(CodiError c) {
@@ -166,9 +185,37 @@ public class ImportLog {
 	public boolean hasWarning(Integer i) {
 		return log.get(i).hasWarning();
 	}
-
 	public void clear() {
 		saveEntry();
 		log = new ArrayList<Entry>();
 	}
+
+	public Integer getContainer(Integer i) {
+		return log.get(i).getContainer();
+	}
+	public Integer getObject(Integer i) {
+		return log.get(i).getObject();
+	}
+
+	public void clearErrors() {
+		for (int i = 0; i < size(); ++i) {
+			log.get(i).clearError();
+		}
+	}
+
+	public Set<CodiError> getErrors() {
+		Set<CodiError> se = new LinkedHashSet<CodiError>();
+		for (int i = 0; i < size(); ++i) {
+			if(hasError(i)) se.add(getError(i));
+		}
+		return se;
+	}
+
+	private CodiError getError(int i) {
+		if(hasError(i)) return log.get(i).getError();
+		return null;
+	}
+
+
 }
+	

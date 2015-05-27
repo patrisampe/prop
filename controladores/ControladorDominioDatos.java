@@ -1,6 +1,7 @@
 package controladores;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,11 +10,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import exceptions.FileChecksumException;
 import exceptions.FileFormatException;
 import persistencia.*;
 import dominio.*;
 import time.Date;
 import utiles.CodiError;
+import utiles.ExportSet;
 import utiles.ImportLog;
 
 public class ControladorDominioDatos extends ControladorDominio {
@@ -22,15 +25,21 @@ public class ControladorDominioDatos extends ControladorDominio {
 	
 	private Boolean leyendo;
 	
+	private String fLeyendo;
+	
 	private Set<String> ficheros;
 	
 	private ArrayList<StreamObject> temp;
 	
-	private static final String ficheroBase = "base.txt";
+	private static final String ext = ".ciof";
 	
-	private static final String ficheroTemp = "temp.txt";
+	private static final String ficheroBase = "base"+ext;
 	
 	private static final String rutaPersistencia = "save/";
+	
+	private static final Integer ficheroSize = 10000;
+	
+	private static final Integer lineaSize = 300;
 	
 	private static ControladorFichero base;
 	
@@ -62,6 +71,12 @@ public class ControladorDominioDatos extends ControladorDominio {
 			}
 		}catch(FileNotFoundException e) {
 			System.out.println("No se encuentra el fichero "+ficheroBase+". Procedemos a crearlo." );
+		} catch (FileFormatException e) {
+			System.out.println("Error de formato en el fichero "+ficheroBase+". Procedemos a eliminarlo." );
+			ControladorFichero.erase(rutaPersistencia+ficheroBase);
+		} catch (FileChecksumException e) {
+			System.out.println("Error de c en el fichero "+ficheroBase+". Procedemos a eliminarlo." );
+			ControladorFichero.erase(rutaPersistencia+ficheroBase);
 		}		
 	}
 
@@ -77,7 +92,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		}
 	}
 	
-	private void cargarFichero(String fichero) {
+	private void cargarFichero(String fichero){
 		try {
 			ControladorFichero f = new ControladorFichero();
 			f.read(fichero);
@@ -85,63 +100,77 @@ public class ControladorDominioDatos extends ControladorDominio {
 		}catch(FileNotFoundException e) {
 			error = new CodiError(43);
 			error.addClauExterna(fichero);
-		}		
+		} catch (FileFormatException e) {
+			error = new CodiError(41);
+			error.addClauExterna(fichero);
+		} catch (FileChecksumException e) {
+			error = new CodiError(44);
+			error.addClauExterna(fichero);
+		}
 	}
 	
 	private void cargarDatos(ControladorFichero sf) throws FileFormatException {
 		for (int i = 0; i < sf.size(); ++i) { 
 			for (int j = 0; j < sf.elementAt(i).size(); ++j) {
+				log.add(i);
+				log.add(j);
 				StreamObject so = sf.elementAt(i, j);
-				String nombre = so.getNombre();
-				log.add(so.getNombre());
-				log.add(so.elementAt(1));
-				if(nombre.equals("Diputado")) {
-					addDiputado(so);
-					if (cDip.hasError()) log.addError(cDip.getError());
-				}
-				else if(nombre.equals("Votacion")) {
-					addVotacion(so);
-					if (cVot.hasError()) log.addError(cVot.getError());
-				}
-				else if(nombre.equals("TipoEvento")) {
-					addTipoEvento(so);
-					if (cEv.hasError()) log.addError(cEv.getError());
-				}
-				else if(nombre.equals("ResultadoPorDiputado")) {
-					addResultadoPorDiputado(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("ResultadoPorPeriodo")) {
-					addResultadoPorPeriodo(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("GrupoAfinPorPeriodo")) {
-					addGrupoAfinPorPeriodo(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("GrupoAfinPorDiputado")) {
-					addGrupoAfinPorDiputado(so);
-					if (cRes.hasError()) log.addError(cRes.getError());
-				}
-				else if(nombre.equals("Evento")) {
-					addEvento(so);
-					if (cEv.hasError()) log.addError(cEv.getError());
-				}
-				else if(nombre.equals("Legislatura")) {
-					addLegislatura(so);
-					if (cEv.hasError()) log.addError(cLeg.getError());
-				}
-				else if(nombre.equals("Fichero")) {
-					try {
-						addFichero(so);
-					}catch (FileFormatException e) {
-						log.addError(new CodiError(42));
-					}
-				}
+				cargarDatos(so);
+				log.ok();
 			}
 		}
 	}
 	
+	private void cargarDatos(StreamObject so) {
+		String nombre = so.getNombre();
+		log.add(so.getNombre());
+		log.add(so.elementAt(1));
+		if(nombre.equals("Diputado")) {
+			addDiputado(so);
+			if (cDip.hasError()) log.addError(cDip.getError());
+		}
+		else if(nombre.equals("Votacion")) {
+			addVotacion(so);
+			if (cVot.hasError()) log.addError(cVot.getError());
+		}
+		else if(nombre.equals("TipoEvento")) {
+			addTipoEvento(so);
+			if (cEv.hasError()) log.addError(cEv.getError());
+		}
+		else if(nombre.equals("ResultadoPorDiputado")) {
+			addResultadoPorDiputado(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("ResultadoPorPeriodo")) {
+			addResultadoPorPeriodo(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("GrupoAfinPorPeriodo")) {
+			addGrupoAfinPorPeriodo(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("GrupoAfinPorDiputado")) {
+			addGrupoAfinPorDiputado(so);
+			if (cRes.hasError()) log.addError(cRes.getError());
+		}
+		else if(nombre.equals("Evento")) {
+			addEvento(so);
+			if (cEv.hasError()) log.addError(cEv.getError());
+		}
+		else if(nombre.equals("Legislatura")) {
+			addLegislatura(so);
+			if (cEv.hasError()) log.addError(cLeg.getError());
+		}
+		else if(nombre.equals("Fichero")) {
+			try {
+				addFichero(so);
+			}catch (FileFormatException e) {
+				log.addError(new CodiError(42));
+			}
+		}
+		
+	}
+
 	private void addLegislatura(StreamObject so) {
 		Integer id = Integer.parseInt(so.elementAt(1));
 		cLeg.addLegislatura(id, Date.parseDate(so.elementAt(2)), Date.parseDate(so.elementAt(3)));
@@ -149,6 +178,12 @@ public class ControladorDominioDatos extends ControladorDominio {
 			CodiError err = cLeg.getError();
 			if (err.getCodiError() == 16) {
 				log.addW("La legislatura ya existia, se sobreescribe y se mezclan los diputados");
+				cLeg.setFechaInicio(id, Date.parseDate(so.elementAt(2)));
+				cLeg.setFechaFinal(id, Date.parseDate(so.elementAt(3)));
+				if (cLeg.hasError()) {
+					log.addError(cLeg.getError());
+					return;
+				}
 			}
 			else log.addError(err);
 		}
@@ -182,7 +217,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 
 	private void addResultadoPorDiputado(StreamObject so) {
 		// TODO Auto-generated method stub
-		cRes.addResultadoPorDiputado(nombre, indiceAfinidad, algoritmo, importancia, lapsoDeTiempo, diputadoRelevante, modificado, criterios);	
+		cRes.nuevoResultadoPorDiputadoSinBusqueda(nombre, indiceAfinidad, algoritmo, importancia, lapsoDeTiempo, diputadoRelevante, criterios);
 	}
 
 	private void addFichero(StreamObject fichero) throws FileFormatException {
@@ -251,7 +286,6 @@ public class ControladorDominioDatos extends ControladorDominio {
 		if (cVot.hasError()) {
 			CodiError err = cVot.getError();
 			if (err.getCodiError() == 23) {
-				log.addW("La votacion ya existia, sobreescribimos y hacemos merge de los votos.");
 				cVot.setFechaVotacion(votacion.elementAt(1), Date.parseDate(votacion.elementAt(2)));
 				cVot.setImportanciaVotacion(votacion.elementAt(1),Integer.parseInt(votacion.elementAt(3)));
 				for (Entry<String,TipoVoto> e : map.entrySet()) {
@@ -290,16 +324,87 @@ public class ControladorDominioDatos extends ControladorDominio {
 
 	public void salvarDominio() {
 		ficheros = new HashSet<String>();
-		int i = 0;
-		int j = 0;
-		StreamContainer sc = new StreamContainer("Dominio "+(++j));
-		//TODO
+		Integer i = 0;
+		Integer j = 0;
 		ControladorFichero sf = new ControladorFichero();
+		StreamContainer sc = new StreamContainer("Dominio"+(++j));
+		for (Diputado d : cDip.getAll()) {
+			sc.add(encode(d));
+			adjust(i,j,sc,sf);
+		}
 		
+		for (Legislatura l : cLeg.getAll()) {
+			sc.add(encode(l));
+			adjust(i,j,sc,sf);
+		}
+		
+		for (TipoEvento t : cEv.getAll()) {
+			sc.add(encode(t));
+			adjust(i,j,sc,sf);
+			for (Evento e : t.getEventos()) {
+				sc.add(encode(e, t.getNombre()));
+				adjust(i,j,sc,sf);
+			}
+		}
+		
+		for (Votacion v : cVot.getAll()) {
+			sc.add(encode(v));
+			adjust(i,j,sc,sf);
+		}
+		
+		for (ResultadoDeBusquedaPorDiputado r : cRes.getAllPorDiputado()) {
+			sc.add(encode(r));
+			adjust(i,j,sc,sf);
+			for (GrupoAfinPorDiputado g : r.getGruposAfinesPorDiputado()) {
+				sc.add(encode(g, r.getNombre()));
+				adjust(i,j,sc,sf);
+			}
+		}
+		
+		for (ResultadoDeBusquedaPorPeriodo r : cRes.getAllPorPeriodo()) {
+			sc.add(encode(r));
+			adjust(i,j,sc,sf);
+			for (GrupoAfinPorPeriodo g : r.getGruposAfinesPorPeriodo()) {
+				sc.add(encode(g, r.getNombre()));
+				adjust(i,j,sc,sf);
+			}
+		}
 		updateBase();
-		cargarDominio();
 	}
 	
+	private StreamObject encode(ResultadoDeBusquedaPorDiputado r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private StreamObject encode(ResultadoDeBusquedaPorPeriodo r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void adjust(Integer i, Integer j, StreamContainer sc,
+			ControladorFichero sf) {
+		if (sc.length() > lineaSize/2*3) {
+			sf.add(sc);
+			sc = new StreamContainer("Dominio"+(++j));
+		}
+		
+		if (sf.length() > ficheroSize/2*3){
+			sf.add(sc);
+			sc = new StreamContainer("Dominio"+(++j));
+			String fichero = "save"+(++i)+ext;
+			j = 0;
+			try {
+				sf.print(rutaPersistencia+fichero);
+				ficheros.add(fichero);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	private void updateBase() {
 		StreamContainer sc = new StreamContainer("Rutas");
 		for(String fichero : ficheros) {
@@ -310,7 +415,12 @@ public class ControladorDominioDatos extends ControladorDominio {
 		readFicheros();
 		base.clear();
 		base.add(sc);
-		base.print(rutaPersistencia+ficheroBase);
+		try {
+			base.print(rutaPersistencia+ficheroBase);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(String fichero : ficheros) {
 			ControladorFichero.erase(rutaPersistencia+fichero);
 		}
@@ -321,18 +431,58 @@ public class ControladorDominioDatos extends ControladorDominio {
 
 	public void leerFichero(String fichero) {
 		leyendo = true;
+		fLeyendo = fichero;
 		salvarDominio();
 		log.clear();
-		cargarFichero(fichero);
+		cargarFichero(fLeyendo);
 	}
 	
-	public void integrarFichero() {
+	public Set<CodiError> integrarFichero(ArrayList<Integer> aIntegrar) {
 		leyendo = false;
+		ControladorFichero sf = new ControladorFichero();
+		try {
+			sf.read(fLeyendo);
+		}catch(FileNotFoundException e) {
+			error = new CodiError(43);
+			error.addClauExterna(fLeyendo);
+		} catch (FileFormatException e) {
+			error = new CodiError(41);
+			error.addClauExterna(fLeyendo);
+		} catch (FileChecksumException e) {
+			error = new CodiError(44);
+			error.addClauExterna(fLeyendo);
+		}
+		recargarDominio();
+		log.clearErrors();
+		for (Integer inte : aIntegrar) {
+			try {
+				cargarDatos(sf.elementAt(log.getContainer(inte), log.getObject(inte)));
+			} catch (FileFormatException e) {
+				error = new CodiError(41);
+				error.addClauExterna(fLeyendo);
+				break;
+			}
+		}
+		return validaImport();
+	}
+	
+	private Set<CodiError> validaImport() {
+		Set<CodiError> se = log.getErrors();
+		if (this.hasError()) se.add(this.getError());
+		if (!se.isEmpty()) {
+			recargarDominio();
+		}
+		log.clear();
+		return se;
+	}
+
+	public Set<CodiError> integrarFichero() {
+		leyendo = false;
+		return validaImport();
 	}
 	
 	public void noIntegrarFichero() {
-		limpiarDominio();
-		cargarDominio();
+		recargarDominio();
 		leyendo = false;
 	}
 	
@@ -343,17 +493,51 @@ public class ControladorDominioDatos extends ControladorDominio {
 		cVot.clear();
 		cRes.clear();
 	}
+	
+	private void recargarDominio() {
+		limpiarDominio();
+		cargarDominio();
+	}
 
-	public void importarDatos(String fichero) {
+	public Set<CodiError> importarDatos(String fichero) {
+		log.clear();
 		salvarDominio();
 		cargarFichero(fichero);
-		//TODO
+		return validaImport();
 	}
 	
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
-		//TODO
+		ControladorFichero sf = new ControladorFichero();
+		StreamContainer sc = new StreamContainer("Export");
+		for (ExportSet e : l) {
+			switch (e.getType()) {
+			case "Diputado":
+				sc.add(encode(cDip.get(e.getForeignKey())));
+				break;
+			case "TipoEvento": 
+				sc.add(encode(cEv.get(e.getForeignKey())));
+				break;
+			case "Evento":
+				sc.add(encode(cEv.get(e.getForeingKey2()).getEvento(e.getForeignKey()), e.getForeingKey2()));
+				break;
+			case "Votacion":
+				sc.add(encode(cVot.get(e.getForeignKey())));
+				break;
+			case "ResultadoDeBusquedaPorDiputado": 
+				sc.add(encode( (ResultadoDeBusquedaPorDiputado) cRes.get(e.getForeignKey())));
+				break;
+			case "ResultadoDeBusquedaPorPeriodo":
+				sc.add(encode( (ResultadoDeBusquedaPorPeriodo) cRes.get(e.getForeignKey())));
+				break;
+			case "GrupoAfinPorDiputado":
+				//TODO
+				break;
+			case "GrupoAfinPorPeriodo":
+				//TODO
+				break;
+			}
+		}
 	}
-	public void 
 	
 	public ImportLog getLog() {
 		if (leyendo) return log;
@@ -362,6 +546,114 @@ public class ControladorDominioDatos extends ControladorDominio {
 	public ImportLog getLogForDebugging() {
 		return log;
 	}
+	
+	/**
+	 * Codifica una Legislatura en un StreamObject para su posterior almacenamiento.
+	 * @param L - Legislatura a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Legislatura L){
+		StreamObject stream = new StreamObject(L.getClass().getSimpleName());
+		stream.add(L.getID());
+		stream.add(L.getFechaInicio());
+		stream.add(L.getFechaFinal());
+		return stream;
+	}
+	
+	/**
+	 * Codifica un Evento en un StreamObject para su posterior almacenamiento.
+	 * @param E - Evento a codificar.
+	 * @param tipoEvento - tipo de Evento al que pertenece E.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Evento E, String tipoEvento){
+		StreamObject stream = new StreamObject(E.getClass().getSimpleName());
+		stream.add(tipoEvento);
+		stream.add(E.getNombre());
+		stream.add(E.getFecha());
+		stream.add(E.getdiputados());
+		return stream;
+	}
+	
+	/**
+	 * Codifica un Diputado en un StreamObject para su posterior almacenamiento.
+	 * @param D - Diputado a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Diputado D){
+		StreamObject stream = new StreamObject(D.getClass().getSimpleName());
+		stream.add(D.getNombre());
+		stream.add(D.getPartidoPolitico());
+		stream.add(D.getEstado());
+		stream.add(D.getFechaDeNacimiento());
+		stream.add(D.getLegislaturas());		
+		return stream;
+	}
+	
+	/**
+	 * Codifica un Tipo de Evento en un StreamObject para su posterior almacenamiento.
+	 * @param T - TipoEvento a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(TipoEvento T){
+		StreamObject stream = new StreamObject(T.getClass().getSimpleName());
+		stream.add(T.getNombre());
+		stream.add(T.getImportancia());
+		return stream;
+	}
+	
+	/**
+	 * Codifica una Votacion en un StreamObject para su posterior almacenamiento.
+	 * @param V - Votacion a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(Votacion V){
+		StreamObject stream = new StreamObject(V.getClass().getSimpleName());
+		stream.add(V.getNombre());
+		stream.add(V.getFecha());
+		stream.add(V.getImportancia());
+		Set<String> set = V.getDiputados();
+		String[] diputados = new String[set.size()];
+		String[] votos = new String[set.size()];
+		Integer i = 0;
+		for (String s:set) {
+			diputados[i] = s;
+			votos[i] = Votacion.convert(V.getVoto(s));
+			++i;
+		}
+		stream.add(diputados);
+		stream.add(votos);
+		return stream;
+	}
+	
+	/**
+	 * Codifica un Grupo Afín Por Período en un StreamObject para su posterior almacenamiento.
+	 * @param G - Grupo a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(GrupoAfinPorPeriodo G, String nombreResultado){
+		StreamObject stream = new StreamObject(G.getClass().getSimpleName());
+		stream.add(nombreResultado);
+		stream.add(G.getID());
+		stream.add(G.getDiputados());
+		return stream;
+	}
+	
+	/**
+	 * Codifica un Grupo Afín Por Diputado en un StreamObject para su posterior almacenamiento.
+	 * @param G - Grupo a codificar.
+	 * @return Un StreamObject que contiene el objeto a codificar.
+	 */
+	public static StreamObject encode(GrupoAfinPorDiputado G, String nombreResultado){
+		StreamObject stream = new StreamObject(G.getClass().getSimpleName());
+		stream.add(G.getID());
+		stream.add(nombreResultado);
+		stream.add(G.getFechaInicio());
+		stream.add(G.getFechaFin());
+		stream.add(G.getDiputados());
+		return stream;
+	}
+	
 	
 }
 
