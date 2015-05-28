@@ -733,17 +733,3 @@ public class ControladorDominioDatos extends ControladorDominio {
 	
 }
 
-
-/*
- * Necesitamos:
- * 
- * read y print con parametro String
- * 
- * clear() en cada controlador.
- * 
- * empty() o getAll() en cada controlador.
- * 
- * Decidir políticas de Import (Qué hacer si ya existe lo que queremos añadir, se modifica o se descarta).
- *  
- * 
- * */
