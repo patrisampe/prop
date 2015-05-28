@@ -61,11 +61,20 @@ public class ControladorDominioDiputado extends ControladorDominio {
 	}
 	
 	/**
+	 * Consulta un diputado existente en el sistema.
+	 * @param nombreDiputado - Nombre del diputado que se desea consultar.
+	 * @return Diputado con el nombre indicado.
+	 */
+	public Diputado get(String nombreDiputado) {
+		return new Diputado(nombreDiputado, conjuntoDiputados.get(nombreDiputado));
+	}
+	
+	/**
 	 * Consulta los diputados existentes en el sistema.
 	 * @return Conjunto de diputados del sistema.
 	 */
 	public Set<Diputado> getAll() {
-		return conjuntoDiputados.getAll();
+		return new TreeSet<Diputado>(conjuntoDiputados.getAll());
 	}
 	
 	/**

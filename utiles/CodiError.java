@@ -63,6 +63,7 @@ public class CodiError {
 		Diccionario.put(42, "Formato Incorrecto");
 		Diccionario.put(43, "No se ha encontrado el fichero %1.");
 		Diccionario.put(44, "Error de checksum en el fichero %1.");
+		Diccionario.put(44, "No se ha podido imprimir en la ruta %1.");
 		
         return Collections.unmodifiableMap(Diccionario);
 	}

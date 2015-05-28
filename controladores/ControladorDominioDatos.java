@@ -1,11 +1,15 @@
 package controladores;
 
+import io.Entrada;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -15,10 +19,16 @@ import exceptions.FileFormatException;
 import persistencia.*;
 import dominio.*;
 import time.Date;
+import time.DateInterval;
 import utiles.CodiError;
 import utiles.ExportSet;
 import utiles.ImportLog;
 
+/**
+ * 
+ * @author Yoel Cabo
+ *
+ */
 public class ControladorDominioDatos extends ControladorDominio {
 	
 	private ImportLog log;
@@ -146,14 +156,17 @@ public class ControladorDominioDatos extends ControladorDominio {
 			if (cRes.hasError()) log.addError(cRes.getError());
 		}
 		else if(nombre.equals("GrupoAfinPorPeriodo")) {
+			log.add(so.elementAt(2));
 			addGrupoAfinPorPeriodo(so);
 			if (cRes.hasError()) log.addError(cRes.getError());
 		}
 		else if(nombre.equals("GrupoAfinPorDiputado")) {
+			log.add(so.elementAt(2));
 			addGrupoAfinPorDiputado(so);
 			if (cRes.hasError()) log.addError(cRes.getError());
 		}
 		else if(nombre.equals("Evento")) {
+			log.add(so.elementAt(2));
 			addEvento(so);
 			if (cEv.hasError()) log.addError(cEv.getError());
 		}
@@ -201,23 +214,55 @@ public class ControladorDominioDatos extends ControladorDominio {
 	}
 
 	private void addGrupoAfinPorDiputado(StreamObject so) {
-		// TODO Auto-generated method stub
-		
+		cRes.addGrupoResultadoDiputados(so.elementAt(2), Integer.parseInt(so.elementAt(1)), Date.parseDate(so.elementAt(3)),  Date.parseDate(so.elementAt(4)), so.setAt(5));
+		if (cRes.hasError()) log.addError(cRes.getError());
+
 	}
 
 	private void addGrupoAfinPorPeriodo(StreamObject so) {
-		// TODO Auto-generated method stub
-		
+		cRes.addGrupoResultadoPeriodo(so.elementAt(2), Integer.parseInt(so.elementAt(1)), so.setAt(3));
+		if (cRes.hasError()) log.addError(cRes.getError());
 	}
 
 	private void addResultadoPorPeriodo(StreamObject so) {
-		// TODO Auto-generated method stub
-		
+		Map<String,Integer> importancias = new LinkedHashMap<String,Integer>();
+		Map<Criterio,Double> criterios = new LinkedHashMap<Criterio,Double>();
+		String[] impKey = so.arrayAt(4);
+		String[] impValue = so.arrayAt(5);
+		String[] critKey = so.arrayAt(7);
+		String[] critValue = so.arrayAt(8);
+		if (impKey.length != impValue.length || critKey.length != critValue.length) {
+			this.error = new CodiError(42);
+			return;
+		}
+		for (int i = 0; i < impKey.length; ++i) {
+			importancias.put(impKey[i], Integer.parseInt(impValue[i]));
+		}
+		for (int i = 0; i < critKey.length; ++i) {
+			criterios.put(Criterio.valueOf(critKey[i]), Double.parseDouble(critValue[i]));
+		}
+		cRes.nuevoResultadoPorPeriodoSinBusqueda(so.elementAt(1), Integer.parseInt(so.elementAt(2)), TipoAlgoritmo.valueOf(so.elementAt(3)), importancias, DateInterval.parseDateInterval(so.elementAt(6)), criterios);
+		if (cRes.hasError()) log.addError(cRes.getError());
 	}
 
 	private void addResultadoPorDiputado(StreamObject so) {
-		// TODO Auto-generated method stub
-		cRes.nuevoResultadoPorDiputadoSinBusqueda(nombre, indiceAfinidad, algoritmo, importancia, lapsoDeTiempo, diputadoRelevante, criterios);
+		Map<String,Integer> importancias = new LinkedHashMap<String,Integer>();
+		Map<Criterio,Double> criterios = new LinkedHashMap<Criterio,Double>();
+		String[] impKey = so.arrayAt(4);
+		String[] impValue = so.arrayAt(5);
+		String[] critKey = so.arrayAt(8);
+		String[] critValue = so.arrayAt(9);
+		if (impKey.length != impValue.length || critKey.length != critValue.length) {
+			this.error = new CodiError(42);
+		}
+		for (int i = 0; i < impKey.length; ++i) {
+			importancias.put(impKey[i], Integer.parseInt(impValue[i]));
+		}
+		for (int i = 0; i < critKey.length; ++i) {
+			criterios.put(Criterio.valueOf(critKey[i]), Double.parseDouble(critValue[i]));
+		}
+		cRes.nuevoResultadoPorDiputadoSinBusqueda(so.elementAt(1), Integer.parseInt(so.elementAt(2)), TipoAlgoritmo.valueOf(so.elementAt(3)), importancias, Integer.parseInt(so.elementAt(6)), so.elementAt(7), criterios);
+		if (cRes.hasError()) log.addError(cRes.getError());
 	}
 
 	private void addFichero(StreamObject fichero) throws FileFormatException {
@@ -331,55 +376,81 @@ public class ControladorDominioDatos extends ControladorDominio {
 		for (Diputado d : cDip.getAll()) {
 			sc.add(encode(d));
 			adjust(i,j,sc,sf);
+			if (this.hasError()) return;
 		}
 		
 		for (Legislatura l : cLeg.getAll()) {
 			sc.add(encode(l));
 			adjust(i,j,sc,sf);
+			if (this.hasError()) return;
 		}
 		
 		for (TipoEvento t : cEv.getAll()) {
 			sc.add(encode(t));
 			adjust(i,j,sc,sf);
+			if (this.hasError()) return;
 			for (Evento e : t.getEventos()) {
 				sc.add(encode(e, t.getNombre()));
 				adjust(i,j,sc,sf);
+				if (this.hasError()) return;
 			}
 		}
 		
 		for (Votacion v : cVot.getAll()) {
 			sc.add(encode(v));
 			adjust(i,j,sc,sf);
+			if (this.hasError()) return;
 		}
 		
 		for (ResultadoDeBusquedaPorDiputado r : cRes.getAllPorDiputado()) {
 			sc.add(encode(r));
 			adjust(i,j,sc,sf);
+			if (this.hasError()) return;
 			for (GrupoAfinPorDiputado g : r.getGruposAfinesPorDiputado()) {
 				sc.add(encode(g, r.getNombre()));
 				adjust(i,j,sc,sf);
+				if (this.hasError()) return;
 			}
 		}
 		
 		for (ResultadoDeBusquedaPorPeriodo r : cRes.getAllPorPeriodo()) {
 			sc.add(encode(r));
 			adjust(i,j,sc,sf);
+			if (this.hasError()) return;
 			for (GrupoAfinPorPeriodo g : r.getGruposAfinesPorPeriodo()) {
 				sc.add(encode(g, r.getNombre()));
 				adjust(i,j,sc,sf);
+				if (this.hasError()) return;
 			}
 		}
 		updateBase();
 	}
 	
-	private StreamObject encode(ResultadoDeBusquedaPorDiputado r) {
-		// TODO Auto-generated method stub
-		return null;
+	private StreamObject encode(ResultadoDeBusquedaPorPeriodo r) {
+		StreamObject so = new StreamObject("ResultadoDeBusquedaPorPeriodo");
+		so.add(r.getNombre());
+		so.add(r.getIndiceAfinidad());
+		so.add(r.getAlgoritmo().toString());
+		so.add(r.getImportancias().keySet().toArray());
+		so.add(r.getImportancias().values().toArray());
+		so.add(r.getPeriodo());
+		so.add(r.getCriterios().keySet().toArray());
+		so.add(r.getCriterios().values().toArray());
+		return so;
 	}
 
-	private StreamObject encode(ResultadoDeBusquedaPorPeriodo r) {
-		// TODO Auto-generated method stub
-		return null;
+	private StreamObject encode(ResultadoDeBusquedaPorDiputado r) {
+		StreamObject so = new StreamObject("ResultadoDeBusquedaPorDiputado");
+		so.add(r.getNombre());
+		so.add(r.getIndiceAfinidad());
+		so.add(r.getAlgoritmo().toString());
+		so.add(r.getImportancias().keySet().toArray());
+		so.add(r.getImportancias().values().toArray());
+		so.add(r.getLapsoDetiempo());
+		so.add(r.getDiputadoRelevante());
+		so.add(r.getCriterios().keySet().toArray());
+		so.add(r.getCriterios().values().toArray());
+		return so;
 	}
 
 	private void adjust(Integer i, Integer j, StreamContainer sc,
@@ -398,8 +469,8 @@ public class ControladorDominioDatos extends ControladorDominio {
 				sf.print(rutaPersistencia+fichero);
 				ficheros.add(fichero);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				error = new CodiError(45);
+				error.addClauExterna(rutaPersistencia+fichero);
 			}
 		}
 		
@@ -418,8 +489,9 @@ public class ControladorDominioDatos extends ControladorDominio {
 		try {
 			base.print(rutaPersistencia+ficheroBase);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			error = new CodiError(45);
+			error.addClauExterna(rutaPersistencia+ficheroBase);
+			return;
 		}
 		for(String fichero : ficheros) {
 			ControladorFichero.erase(rutaPersistencia+fichero);
@@ -508,7 +580,8 @@ public class ControladorDominioDatos extends ControladorDominio {
 	
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
 		ControladorFichero sf = new ControladorFichero();
-		StreamContainer sc = new StreamContainer("Export");
+		int i = 0;
+		StreamContainer sc = new StreamContainer("Export"+(++i));
 		for (ExportSet e : l) {
 			switch (e.getType()) {
 			case "Diputado":
@@ -530,11 +603,15 @@ public class ControladorDominioDatos extends ControladorDominio {
 				sc.add(encode( (ResultadoDeBusquedaPorPeriodo) cRes.get(e.getForeignKey())));
 				break;
 			case "GrupoAfinPorDiputado":
-				//TODO
+				sc.add(encode(((GrupoAfinPorDiputado)cRes.getGrupo(e.getForeignKey(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
 				break;
 			case "GrupoAfinPorPeriodo":
-				//TODO
+				sc.add(encode(((GrupoAfinPorPeriodo)cRes.getGrupo(e.getForeignKey(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
 				break;
+			}
+			if (sc.size() > lineaSize*3/2) {
+				sf.add(sc);
+				sc = new StreamContainer("Export"+(++i));
 			}
 		}
 	}
@@ -552,7 +629,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param L - Legislatura a codificar.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(Legislatura L){
+	private static StreamObject encode(Legislatura L){
 		StreamObject stream = new StreamObject(L.getClass().getSimpleName());
 		stream.add(L.getID());
 		stream.add(L.getFechaInicio());
@@ -566,10 +643,10 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param tipoEvento - tipo de Evento al que pertenece E.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(Evento E, String tipoEvento){
+	private static StreamObject encode(Evento E, String tipoEvento){
 		StreamObject stream = new StreamObject(E.getClass().getSimpleName());
-		stream.add(tipoEvento);
 		stream.add(E.getNombre());
+		stream.add(tipoEvento);
 		stream.add(E.getFecha());
 		stream.add(E.getdiputados());
 		return stream;
@@ -580,7 +657,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param D - Diputado a codificar.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(Diputado D){
+	private static StreamObject encode(Diputado D){
 		StreamObject stream = new StreamObject(D.getClass().getSimpleName());
 		stream.add(D.getNombre());
 		stream.add(D.getPartidoPolitico());
@@ -595,7 +672,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param T - TipoEvento a codificar.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(TipoEvento T){
+	private static StreamObject encode(TipoEvento T){
 		StreamObject stream = new StreamObject(T.getClass().getSimpleName());
 		stream.add(T.getNombre());
 		stream.add(T.getImportancia());
@@ -607,7 +684,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param V - Votacion a codificar.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(Votacion V){
+	private static StreamObject encode(Votacion V){
 		StreamObject stream = new StreamObject(V.getClass().getSimpleName());
 		stream.add(V.getNombre());
 		stream.add(V.getFecha());
@@ -631,10 +708,10 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param G - Grupo a codificar.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(GrupoAfinPorPeriodo G, String nombreResultado){
+	private static StreamObject encode(GrupoAfinPorPeriodo G, String nombreResultado){
 		StreamObject stream = new StreamObject(G.getClass().getSimpleName());
-		stream.add(nombreResultado);
 		stream.add(G.getID());
+		stream.add(nombreResultado);
 		stream.add(G.getDiputados());
 		return stream;
 	}
@@ -644,7 +721,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 	 * @param G - Grupo a codificar.
 	 * @return Un StreamObject que contiene el objeto a codificar.
 	 */
-	public static StreamObject encode(GrupoAfinPorDiputado G, String nombreResultado){
+	private static StreamObject encode(GrupoAfinPorDiputado G, String nombreResultado){
 		StreamObject stream = new StreamObject(G.getClass().getSimpleName());
 		stream.add(G.getID());
 		stream.add(nombreResultado);
@@ -654,20 +731,5 @@ public class ControladorDominioDatos extends ControladorDominio {
 		return stream;
 	}
 	
-	
 }
 
-
-/*
- * Necesitamos:
- * 
- * read y print con parametro String
- * 
- * clear() en cada controlador.
- * 
- * empty() o getAll() en cada controlador.
- * 
- * Decidir políticas de Import (Qué hacer si ya existe lo que queremos añadir, se modifica o se descarta).
- *  
- * 
- * */

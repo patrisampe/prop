@@ -175,6 +175,8 @@ public class BusquedaDriver {
 		}
 		EF.close();
 		SF.close();
+		ControladorDominioDatos cDat = ControladorDominioDatos.getInstance();
+		cDat.
 	}
 	
 	private static void ReadAndAddDeTodo(Salida sC, Entrada eF, ControladorDominioVotacion cVot, ControladorDominioLegislatura cLeg, ControladorDominioDiputado cDip, ControladorDominioEvento cEv) throws IOException {
