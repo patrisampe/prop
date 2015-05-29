@@ -26,7 +26,6 @@ public class ControladorDominioEvento extends ControladorDominio {
 	   protected ControladorDominioEvento(){
 		   super();
 		   conjuntoTipoEvento=  new Conjunto<TipoEvento>(TipoEvento.class);
-		   error = new CodiError();
 	   }
 	   
 	   /**

@@ -5,7 +5,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import utiles.ConjuntoGrupoAfin;
+import utiles.ConjuntoDoble;
+
+
 
 /**
  * Resultado obtenido por la busqueda por diputado de grupos afines entre diputados.
@@ -36,9 +38,13 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @param diputadoRelevante - El nombre del diputado sobre el que se ha realizado la busqueda
 	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoGrupoAfin gruposAfines, String diputadoRelevante, Map<Criterio,Double> criterios) {
+	private ResultadoDeBusquedaPorDiputado(String nombre){
+		super(nombre);
+	}
+	public static final ResultadoDeBusquedaPorDiputado NULL= new ResultadoDeBusquedaPorDiputado("NULL");
+	
+	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> gruposAfines, String diputadoRelevante, Map<Criterio,Double> criterios) {
 			super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterios);
-			this.gruposAfines = new ConjuntoGrupoAfin(gruposAfines);
 			this.lapsoDeTiempo = lapsoDeTiempo;
 			this.diputadoRelevante = diputadoRelevante;
 	}
@@ -47,7 +53,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorDiputado nuevoGrupo) {
-		gruposAfines.add(nuevoGrupo);
+		gruposAfines.addD(nuevoGrupo);
 	}
 	
 	/**

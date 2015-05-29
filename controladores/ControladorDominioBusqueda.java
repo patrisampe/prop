@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import time.DateInterval;
-import utiles.ConjuntoGrupoAfin;
+import utiles.ConjuntoDoble;
 import dominio.*;
 import dominio.algoritmos.Clique;
 import dominio.algoritmos.Graf;
@@ -28,7 +28,7 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 	protected ControladorDominioEvento cEv;
 	protected ControladorDominioVotacion cVot;
 	
-	protected ConjuntoGrupoAfin result; 
+	protected ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> result; 
 
 	
 	/**
@@ -40,9 +40,10 @@ public abstract class ControladorDominioBusqueda extends ControladorDominio {
 		cLeg = ControladorDominioLegislatura.getInstance();
 		cEv = ControladorDominioEvento.getInstance();
 		cVot = ControladorDominioVotacion.getInstance();
+		result=new ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo>(GrupoAfinPorDiputado.class,GrupoAfinPorPeriodo.class);
 	}
 	
-	public ConjuntoGrupoAfin getResult() {
+	public ConjuntoDoble<GrupoAfinPorDiputado, GrupoAfinPorPeriodo> getResult() {
 		return result;
 	}
  	

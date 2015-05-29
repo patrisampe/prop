@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.DateInterval;
-import utiles.ConjuntoGrupoAfin;
+import utiles.ConjuntoDoble;
 
 /**
  * Resultado obtenido por la busqueda por periodo de grupos afines entre diputados.
@@ -30,17 +30,22 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado.
 	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoGrupoAfin gruposAfines, Map<Criterio,Double> criterios) {
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> gruposAfines, Map<Criterio,Double> criterios) {
 		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterios);
-		this.gruposAfines = new ConjuntoGrupoAfin(gruposAfines);
 		this.periodo = new DateInterval(periodo);
 	}
+	
+	private ResultadoDeBusquedaPorPeriodo(String nombre){
+		super(nombre);
+	}
+	public static final ResultadoDeBusquedaPorPeriodo NULL= new ResultadoDeBusquedaPorPeriodo("NULL");
+	
 	
 	/**
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorPeriodo nuevoGrupo) {
-		gruposAfines.add(nuevoGrupo);
+		gruposAfines.addP(nuevoGrupo);
 	}
 	
 	/**

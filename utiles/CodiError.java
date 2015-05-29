@@ -64,6 +64,10 @@ public class CodiError {
 		Diccionario.put(43, "No se ha encontrado el fichero %1.");
 		Diccionario.put(44, "Error de checksum en el fichero %1.");
 		Diccionario.put(44, "No se ha podido imprimir en la ruta %1.");
+		Diccionario.put(45, "El Resultado de busqueda con nombre %1 no existe");
+		Diccionario.put(46, "El Resultado de busqueda con nombre %1 no es del tipo Resultado de Busqueda Por Diputado");
+		Diccionario.put(47, "El Resultado de busqueda con nombre %1 no es del tipo Resultado de Busqueda Por Periodo");
+		
 		
         return Collections.unmodifiableMap(Diccionario);
 	}

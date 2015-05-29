@@ -7,8 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import time.*;
-import utiles.ConjuntoGrupoAfin;
+import utiles.ConjuntoDoble;
 import dominio.GrupoAfinPorDiputado;
+import dominio.GrupoAfinPorPeriodo;
 import dominio.TipoAlgoritmo;
 import dominio.algoritmos.Graf;
 
@@ -102,7 +103,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	 * @param porcentaje Indice de afinidad.
 	 */
 	public void ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje, String DiputadoRelevante) {
-		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
+		ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> s= new ConjuntoDoble(GrupoAfinPorDiputado.class,GrupoAfinPorPeriodo.class);
 		Integer idgrupo = 1;
 		Iterator<Graf> sgIt = sg.iterator();
 		for (Iterator<Integer> It = cLeg.getIDs().iterator();It.hasNext();) {
@@ -115,7 +116,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 			GrupoAfinPorDiputado ga = new GrupoAfinPorDiputado(++idgrupo, Periodo.getInicio(), Periodo.getFin());
 			if (this.hasError()) return;
 			ejecutar(sgIt.next(),ga,algoritmo, porcentaje, DiputadoRelevante);
-			s.add(ga);
+			s.addD(ga);
 		}
 		
 		result = s;

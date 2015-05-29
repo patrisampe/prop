@@ -143,6 +143,7 @@ public class Conjunto<T extends ObjetoDominio> {
 	public void add(T objeto) {
 		if (!hasIntegerKey) conjunto.put(objeto.getNombre(), objeto);
 		else conjunto.put(objeto.getID().toString(), objeto);
+		
 	}
 	
 	/**

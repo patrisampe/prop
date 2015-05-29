@@ -7,7 +7,7 @@ import time.Date;
  * @author Miguel Angel Aranda
  * @version 1.0 Mayo 2015
  */
-public class GrupoAfinPorDiputado extends GrupoAfin {
+public class GrupoAfinPorDiputado extends GrupoAfin{
 	
 	/**
 	 * Fecha de inicio de la busqueda.

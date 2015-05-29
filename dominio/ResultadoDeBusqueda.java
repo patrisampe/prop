@@ -6,8 +6,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import utiles.ConjuntoGrupoAfin;
-
+import utiles.ConjuntoDoble;
 /**
  * Resultado obtenido por la busqueda de grupos afines entre diputados (Clase abstracta).
  * @author Miguel Angel Aranda
@@ -48,7 +47,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	/**
 	 * Conjunto de grupos afines.
 	 */
-	protected ConjuntoGrupoAfin gruposAfines;
+	protected ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> gruposAfines;
 	
 	/**
 	 * Constructor de la clase resultado de busqueda.
@@ -59,6 +58,11 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @param modificado - Importancias temporales introducidas por el usuario.
 	 * @param criterios 
 	 */
+	
+	protected ResultadoDeBusqueda(String nombre){
+		this.nombre=nombre;
+	}
+	
 	public ResultadoDeBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Map<Criterio, Double> criterios) {
 		this.nombre = new String(nombre);
 		this.indiceAfinidad = new Integer(indiceAfinidad);
@@ -66,7 +70,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
 		this.criterios = criterios;
-		this.gruposAfines = new ConjuntoGrupoAfin();
+		this.gruposAfines = new ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo>(GrupoAfinPorDiputado.class,GrupoAfinPorPeriodo.class);
 	}
 	
 	/**
@@ -195,8 +199,8 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
 	 * @return Conjunto de grupos afines.
 	 */
-	public ConjuntoGrupoAfin getGruposAfines() {
-		return new ConjuntoGrupoAfin(this.gruposAfines);
+	public ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> getGruposAfines() {
+		return gruposAfines;
 	}
 	
 	/**
