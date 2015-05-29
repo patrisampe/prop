@@ -1,12 +1,13 @@
 package dominio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import utiles.ConjuntoDoble;
+import utiles.ConjuntoGrupoAfin;;
 /**
  * Resultado obtenido por la busqueda de grupos afines entre diputados (Clase abstracta).
  * @author Miguel Angel Aranda
@@ -47,7 +48,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	/**
 	 * Conjunto de grupos afines.
 	 */
-	protected ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> gruposAfines;
+	protected ConjuntoGrupoAfin gruposAfines;
 	
 	/**
 	 * Constructor de la clase resultado de busqueda.
@@ -70,7 +71,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		this.importancia = new TreeMap<String,Integer>(importancia);
 		this.modificado = new Boolean(modificado);
 		this.criterios = criterios;
-		this.gruposAfines = new ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo>(GrupoAfinPorDiputado.class,GrupoAfinPorPeriodo.class);
+		this.gruposAfines = new ConjuntoGrupoAfin();
 	}
 	
 	/**
@@ -121,6 +122,22 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	}
 	
 	/**
+	 * Suministra los identificadores de los grupos afines de un resultado por diputado.
+	 * @return Nombre del resultado.
+	 */
+	public ArrayList<Integer> getIDsPorDiputado() {
+		return new ArrayList<>(gruposAfines.getKeysPorDiputado());
+	}
+	
+	/**
+	 * Suministra los identificadores de los grupos afines de un resultado por Periodo.
+	 * @return Nombre del resultado.
+	 */
+	public ArrayList<Integer> getIDsPorPeriodo() {
+		return new ArrayList<>(gruposAfines.getKeysPorPeriodo());
+	}
+	
+/**
 	 * Suministra el valor del indice de afinidad utilizado en la busqueda.
 	 * @return Indice de afinidad.
 	 */
@@ -199,7 +216,7 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
 	 * @return Conjunto de grupos afines.
 	 */
-	public ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> getGruposAfines() {
+	public ConjuntoGrupoAfin getGruposAfines() {
 		return gruposAfines;
 	}
 	
@@ -244,6 +261,13 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 	 * @return El nombre de la subclase.
 	 */
 	public abstract String getTipoResultado();
+	
+	/**
+	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
+         * @param identificador
+	 * @return Los nombres de todos los diputados separados por grupos.
+	 */
+	public abstract Set<String> getResultado(Integer identificador);
 	
 	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.

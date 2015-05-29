@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import utiles.ConjuntoDoble;
+import utiles.ConjuntoGrupoAfin;;
 
 
 
@@ -43,7 +43,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	}
 	public static final ResultadoDeBusquedaPorDiputado NULL= new ResultadoDeBusquedaPorDiputado("NULL");
 	
-	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> gruposAfines, String diputadoRelevante, Map<Criterio,Double> criterios) {
+	public ResultadoDeBusquedaPorDiputado(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, Integer lapsoDeTiempo, ConjuntoGrupoAfin gruposAfines, String diputadoRelevante, Map<Criterio,Double> criterios) {
 			super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterios);
 			this.lapsoDeTiempo = lapsoDeTiempo;
 			this.diputadoRelevante = diputadoRelevante;
@@ -53,7 +53,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorDiputado nuevoGrupo) {
-		gruposAfines.addD(nuevoGrupo);
+		gruposAfines.add(nuevoGrupo);
 	}
 	
 	/**
@@ -112,6 +112,19 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 	 * @return Los nombres de todos los diputados separados por grupos.
 	 */
 	@Override
+	public Set<String> getResultado(Integer identificador) {
+            for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado()) {
+                if (grup.getID().equals(identificador))
+                    return grup.getDiputados();
+            }
+            return null;
+	}
+	
+	/**
+	 * Suministra un conjunto de cadenas de texto con todos los nombres de los resultados.
+	 * @return Los nombres de todos los diputados separados por grupos.
+	 */
+	@Override
 	public Vector<Set<String>> getResultado() {
 		Vector<Set<String>> listaResultado = new Vector<Set<String>>();
 		for (GrupoAfinPorDiputado grup:gruposAfines.getAllPorDiputado()) {
@@ -124,7 +137,7 @@ public class ResultadoDeBusquedaPorDiputado extends ResultadoDeBusqueda {
 		return listaResultado;
 	}
 	
-		/**
+	/**
 	 * Suministra una cadena de texto con el nombre del diputado relevante para la busqueda.
 	 * @return El nombre del diputado utilizado para la busqueda.
 	 */

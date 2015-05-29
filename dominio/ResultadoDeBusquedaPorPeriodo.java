@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Vector;
 
 import time.DateInterval;
-import utiles.ConjuntoDoble;
+import utiles.ConjuntoGrupoAfin;;
 
 /**
  * Resultado obtenido por la busqueda por periodo de grupos afines entre diputados.
@@ -30,7 +30,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * @param gruposAfines - Conjunto de los grupos afines que forman el resultado.
 	 * @param criterio - Indica el criterio de búsqueda que se ha utilizado.
 	 */
-	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> gruposAfines, Map<Criterio,Double> criterios) {
+	public ResultadoDeBusquedaPorPeriodo(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Boolean modificado, DateInterval periodo, ConjuntoGrupoAfin gruposAfines, Map<Criterio,Double> criterios) {
 		super(nombre, indiceAfinidad, algoritmo, importancia, modificado, criterios);
 		this.periodo = new DateInterval(periodo);
 	}
@@ -45,7 +45,7 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 	 * Añade un nuevo grupo al conjunto de grupos afines.
 	 */
 	public void addGrupo(GrupoAfinPorPeriodo nuevoGrupo) {
-		gruposAfines.addP(nuevoGrupo);
+		gruposAfines.add(nuevoGrupo);
 	}
 	
 	/**
@@ -99,6 +99,19 @@ public class ResultadoDeBusquedaPorPeriodo extends ResultadoDeBusqueda {
 		return "Búsqueda por periodo";
 	}
 
+	/**
+	 * Suministra un conjunto de cadenas de texto con todos los nommbres de los resultados.
+	 * @return El periodo utilizado en la busqueda.
+	 */
+	@Override
+	public Set<String> getResultado(Integer identificador) {
+            for (GrupoAfinPorPeriodo grup:gruposAfines.getAllPorPeriodo()) {
+                if (grup.getID().equals(identificador))
+                    return grup.getDiputados();
+            }
+            return null;
+	}
+	
 	/**
 	 * Suministra un conjunto de cadenas de texto con todos los nommbres de los resultados.
 	 * @return El periodo utilizado en la busqueda.

@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import time.*;
-import utiles.ConjuntoDoble;
+import utiles.ConjuntoGrupoAfin;
 import dominio.*;
 import dominio.algoritmos.*;
 
@@ -74,14 +74,14 @@ public class ControladorDominioBusquedaPorPeriodo extends
 	 */
 	public void ejecutar(TipoAlgoritmo algoritmo, Integer porcentaje) {
 		HashSet<HashSet<String> > hs = ejecutar(G,algoritmo,porcentaje);
-		ConjuntoDoble<GrupoAfinPorDiputado,GrupoAfinPorPeriodo> s = new ConjuntoDoble(GrupoAfinPorDiputado.class,GrupoAfinPorPeriodo.class);
+		ConjuntoGrupoAfin s = new ConjuntoGrupoAfin();
 		Integer idgrupo = 1;
 		for (HashSet<String> Comunidad : hs) {
 			GrupoAfinPorPeriodo ga = new GrupoAfinPorPeriodo(idgrupo++);
 			for (String Diputado : Comunidad) {
 				ga.addDiputado(Diputado);
 			}
-			s.addP(ga);
+			s.add(ga);
 		}
 		result = s;
 	}
