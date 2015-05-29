@@ -27,7 +27,7 @@ public class ControladorDominioBusquedaPorDiputado extends
 	private Integer lapso;
 	
 	/**
-	 * Inicializa una nueva búsqueda por Diputado.
+	 * Inicializa una nueva búsqueda por Diputado .
 	 * @param lapso
 	 */
 	public void NuevaBusqueda(Integer lapso) {
