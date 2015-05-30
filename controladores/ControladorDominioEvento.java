@@ -410,7 +410,10 @@ public class ControladorDominioEvento extends ControladorDominio {
 	      }
 	   }
 	   
-	   
+	   /**
+	    * Devuelve Conjunto de Conjunto de la informacion de cada Tipo Evento(nombre,importancia)
+	    * @return Conjunto de Conjunto de la informacion de cada Tipo Evento(nombre,importancia)
+	    */
 		public Set<TreeSet<String>> getlistatipo(){
 			Set<TreeSet<String>> res= new TreeSet<TreeSet<String>>();
 			for(TipoEvento elem:conjuntoTipoEvento.getAll()){
@@ -421,7 +424,11 @@ public class ControladorDominioEvento extends ControladorDominio {
 			}
 			return res;
 		}
-		
+		/**
+		 * Devuelve Conjunto de Conjunto de la informacion de cada Evento del tipo de Evento identificado por nombreTipoEvento(nombre,fecha)
+		 * @param nombreTipoEvento es el nombre del Tipo de Evento.
+		 * @return Conjunto de Conjunto de la informacion de cada Evento (nombre,fecha)
+		 */
 		public Set<TreeSet<String>> getlistalevento(String nombreTipoEvento){
 			Set<TreeSet<String>> res= new TreeSet<TreeSet<String>>();
 			

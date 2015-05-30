@@ -155,7 +155,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 		 * @return diputados que han votado en la votacion. Si hay Error, set vacio
 		 */
 		public Set<String> getDiputadosVotacion(String nombreVotacion){
-			
+			completar(nombreVotacion);
 			if(comprovaExsitenciaVotacion(nombreVotacion))return conjuntoVotacion.get(nombreVotacion).getDiputados();
 			return new TreeSet<String>();
 		}
@@ -415,7 +415,10 @@ public class ControladorDominioVotacion extends ControladorDominio {
 			 }
 		
 		}
-		
+		/**
+		 * Devuelve un Conjunto de Conjunto de la informacion de cada Votacio(nombre,importancia y fecha)
+		 * @return Conjunto de Conjunto de la informacion de cada Votacio(nombre,importancia y fecha)
+		 */
 		public Set<TreeSet<String>> getlistall(){
 			Set<TreeSet<String>> res= new TreeSet<TreeSet<String>>();
 			for(Votacion elem:conjuntoVotacion.getAll()){
@@ -428,6 +431,14 @@ public class ControladorDominioVotacion extends ControladorDominio {
 			return res;
 		}
 		
+		/**
+		 * Muestra los diputados que estan vigentes en la legislatura en la que esta la votacion
+		 * Causas por las que no se realiza la operacion y se captura el error:<br>
+		 * 1- La Votacion no se ha hecho en ninguna legislatura <br>
+		 * <dd><b>Precondition:</b><dd> Tienes de haber limpiado el error
+		 * @param nombreVotacion es el nombre de la Votacion que queremos consultar
+		 * @return diputados que estan vigentes en la legislatura en la que esta la votacion
+		 */
 		public Set<String> getDiputadosLegislaturaVotacion(String nombreVotacion){
 			
 			ControladorDominioLegislatura CDL= ControladorDominioLegislatura.getInstance();
@@ -444,7 +455,7 @@ public class ControladorDominioVotacion extends ControladorDominio {
 	}
 	
 	
-	public void completar(String nombreVotacion){
+	private void completar(String nombreVotacion){
 		Set<String> dip=getDiputadosLegislaturaVotacion(nombreVotacion);
 		Votacion aux=conjuntoVotacion.get(nombreVotacion);
 		Set<String> dipuVot=aux.getDiputados();
