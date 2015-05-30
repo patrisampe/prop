@@ -5,15 +5,19 @@ import java.util.Set;
 import dominio.ResultadoDeBusqueda;
 import dominio.ResultadoDeBusquedaPorDiputado;
 import dominio.ResultadoDeBusquedaPorPeriodo;
-
+/**
+ * Conjunto abstracto auxiliar que almacena resultados de Busqueda por diputado y por período.
+ * @author patricia
+ *
+ */
 public class ConjuntoResultadoDeBusqueda {
 	/**
-	 * Conjunto donde se almacenan los grupos afines por diputado.
+	 * Conjunto donde se almacenan los resultados de busqueda por diputado.
 	 */
 	private Conjunto<ResultadoDeBusquedaPorDiputado> conjuntoPorDiputado;
 	
 	/**
-	 * Conjunto donde se almacenan los grupos afines por periodo.
+	 * Conjunto donde se almacenan los resultados de busqueda por periodo.
 	 */
 	private Conjunto<ResultadoDeBusquedaPorPeriodo> conjuntoPorPeriodo;
 	
@@ -70,23 +74,23 @@ public class ConjuntoResultadoDeBusqueda {
 	}
 	
 	/**
-	 * Consulta los grupos afines por diputado.
-	 * @return Set que contiene todos los grupos afines por diputado.
+	 * Consulta los resultados de busqueda por diputado.
+	 * @return Set que contiene todos los resultados de busqueda por diputado.
 	 */
 	public Set<ResultadoDeBusquedaPorDiputado> getAllPorDiputado() {
 		return conjuntoPorDiputado.getAll();
 	}
 	
 	/**
-	 * Consulta los grupos afines por periodo.
-	 * @return Set que contiene todos los grupos afines por periodo.
+	 * Consulta los resultados de busqueda por periodo.
+	 * @return Set que contiene todos los resultados de busqueda por periodo.
 	 */
 	public Set<ResultadoDeBusquedaPorPeriodo> getAllPorPeriodo() {
 		return conjuntoPorPeriodo.getAll();
 	}
 	
 	/**
-	 * Consulta los identificadores de los grupos afines por diputado.
+	 * Consulta los identificadores de los resultados de busqueda por diputado.
 	 * @return Las claves del conjunto.
 	 */
 	public Set<String> getKeysPorDiputado() {
@@ -94,7 +98,7 @@ public class ConjuntoResultadoDeBusqueda {
 	}
 	
 	/**
-	 * Consulta los identificadores de los grupos afines por periodo.
+	 * Consulta los identificadores de los resultados de busqueda por periodo.
 	 * @return Las claves del conjunto.
 	 */
 	public Set<String> getKeysPorPeriodo() {
@@ -178,7 +182,11 @@ public class ConjuntoResultadoDeBusqueda {
 		}
 	}
 	
-	
+	/**
+	 * Inserta un resultado de busqueda al conjunto
+	 * Es una forma de ocultar el polimorfismo con generecidad
+	 * @param RDB resultado de Busqueda que se quiere insertar
+	 */
 	public void add(ResultadoDeBusqueda RDB) {
 		switch(aQueConjunto(RDB.getNombre())){
 		case 1:
@@ -191,20 +199,42 @@ public class ConjuntoResultadoDeBusqueda {
 		break;
 		}
 	}
+	/**
+	 * Consulta los identificadores de todos los resultados de busqueda.
+	 * @return Las claves del conjunto.
+	 */
 	public Set<String> getStringKeys(){
 		
 		Set<String> aux=conjuntoPorDiputado.getStringKeys();
 		aux.addAll(conjuntoPorPeriodo.getStringKeys());
 		return aux;
 	}
-	
+	/**
+	 * Devuelve el resultado de Busqueda identificado por nombreObjeto
+	 * @param nombreObjeto es el identificador del Resultado de Busqueda 
+	 * @return Resultado de Busqueda
+	 */
 	public ResultadoDeBusqueda get(String nombreObjeto) {
 		if(conjuntoPorDiputado.exists(nombreObjeto))return conjuntoPorDiputado.get(nombreObjeto);
 		return conjuntoPorPeriodo.get(nombreObjeto);
 	}
+	/**
+	 * Consulta si existe un elemento del conjunto por Diputados.
+	 * @param nombreObjeto - Identificador del elemento.
+	 * @return <i>true</i> si el conjunto por Diputados contiene el elemento.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean existsPorDiputado(String nombreObjeto){
 		return conjuntoPorDiputado.exists(nombreObjeto);
 	}
+	/**
+	 * Consulta si existe un elemento del conjunto por Periodo.
+	 * @param nombreObjeto - Identificador del elemento.
+	 * @return <i>true</i> si el conjunto por Periodo contiene el elemento.
+	 * <br>
+	 * <i>false</i> en cualquier otro caso.
+	 */
 	public Boolean existsPorPeriodo(String nombreObjeto){
 		return conjuntoPorPeriodo.exists(nombreObjeto);
 	}

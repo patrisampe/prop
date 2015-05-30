@@ -183,6 +183,12 @@ public class ConjuntoGrupoAfin {
 		break;
 		}
 	}
+	
+	/**
+	 * Devuele el Grupo Afin identificado por idObjeto
+	 * @param idObjeto
+	 * @return GrupoAfin
+	 */
 	public GrupoAfin get(Integer idObjeto) {
 		if(conjuntoPorDiputado.exists(idObjeto))return conjuntoPorDiputado.get(idObjeto);
 		return conjuntoPorPeriodo.get(idObjeto);

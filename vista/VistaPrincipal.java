@@ -70,7 +70,7 @@ public final class VistaPrincipal extends javax.swing.JFrame {
                 "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
         	ControladorVista aux= ControladorVista.getInstance();
         	aux.salvarDominio();
-        	 System.exit(0);
+        	System.exit(0);
         }
            
     }                
