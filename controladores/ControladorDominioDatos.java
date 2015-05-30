@@ -597,16 +597,16 @@ public class ControladorDominioDatos extends ControladorDominio {
 				sc.add(encode(cVot.get(e.getForeignKey())));
 				break;
 			case "ResultadoDeBusquedaPorDiputado": 
-				sc.add(encode( (ResultadoDeBusquedaPorDiputado) cRes.get(e.getForeignKey())));
+				sc.add(encode( (ResultadoDeBusquedaPorDiputado) cRes.getResultadoOb(e.getForeignKey())));
 				break;
 			case "ResultadoDeBusquedaPorPeriodo":
-				sc.add(encode( (ResultadoDeBusquedaPorPeriodo) cRes.get(e.getForeignKey())));
+				sc.add(encode( (ResultadoDeBusquedaPorPeriodo) cRes.getResultadoOb(e.getForeignKey())));
 				break;
 			case "GrupoAfinPorDiputado":
-				sc.add(encode(((GrupoAfinPorDiputado)cRes.getGrupo(e.getForeingKey2(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
+				sc.add(encode(((GrupoAfinPorDiputado)cRes.getGrupoAfinOb(e.getForeingKey2(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
 				break;
 			case "GrupoAfinPorPeriodo":
-				sc.add(encode(((GrupoAfinPorPeriodo)cRes.getGrupo(e.getForeingKey2(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
+				sc.add(encode(((GrupoAfinPorPeriodo)cRes.getGrupoAfinOb(e.getForeingKey2(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
 				break;
 			}
 			if (sc.size() > lineaSize*3/2) {
