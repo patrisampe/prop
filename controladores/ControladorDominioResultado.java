@@ -7,14 +7,16 @@ import java.util.Map;
 import java.util.Vector;
 
 import dominio.Criterio;
+import dominio.GrupoAfinPorDiputado;
+import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
 import dominio.ResultadoDeBusquedaPorPeriodo;
 import dominio.ResultadoDeBusquedaPorDiputado;
 import dominio.TipoAlgoritmo;
 import time.*;
 import utiles.CodiError;
-import utiles.Conjunto;
 import utiles.ConjuntoGrupoAfin;
+import utiles.ConjuntoResultadoDeBusqueda;
 
 /**
  * Controlador de dominio para la gestion tanto en conjunto como individualmente de los resultados de busqueda.
@@ -31,7 +33,7 @@ public class ControladorDominioResultado extends ControladorDominio {
 	/**
 	 * Conjunto de resultados de busqueda almacenados en el sistema.
 	 */
-	private Conjunto<ResultadoDeBusqueda> conjuntoResultados;
+	private ConjuntoResultadoDeBusqueda conjuntoResultados;
 	
 	/**
 	 * Ultimo resultado de busqueda sin almacenar en el sistema.
@@ -42,7 +44,7 @@ public class ControladorDominioResultado extends ControladorDominio {
 	 * Crea una nuevo controlador de dominio de resultados.
 	 */
 	private ControladorDominioResultado() {
-		conjuntoResultados = new Conjunto<ResultadoDeBusqueda>(ResultadoDeBusqueda.class);
+		conjuntoResultados = new ConjuntoResultadoDeBusqueda ();
 		ultimoResultado = null;
 	}
 	
@@ -209,6 +211,33 @@ public class ControladorDominioResultado extends ControladorDominio {
 		}
 	}
 	
+	
+	
+	
+	public void nuevoResultadoPorDiputadoSinBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Map<Criterio,Double> criterios) {
+		if (indiceAfinidad < 0 || indiceAfinidad > 100) {
+			error = new CodiError(30);
+		}
+		else if (lapsoDeTiempo < 1) {
+			error = new CodiError(34);
+		}
+		else if (existeDiputado(diputadoRelevante)) {
+			ConjuntoGrupoAfin resultado = new ConjuntoGrupoAfin();
+			conjuntoResultados.add(new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante, criterios));
+		}
+	}
+	
+	public void nuevoResultadoPorPeriodoSinBusqueda(String nombre,Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Map<Criterio,Double> criterios) {
+		if (indiceAfinidad < 0 || indiceAfinidad > 100) { 
+			error = new CodiError(30);
+		}
+		else {
+			
+			ConjuntoGrupoAfin resultado = new ConjuntoGrupoAfin();
+			conjuntoResultados.add(new ResultadoDeBusquedaPorPeriodo(nombre, indiceAfinidad, algoritmo, importancia, false, periodo, resultado, criterios));
+		}
+	}
+
 	/**
 	 * Registra el resultado de la variable ultimoResultado en el conjunto de resultados para que quede registrado en el sistema.
 	 * @param nombre - Nombre con el cual se registra el resultado.
@@ -447,4 +476,39 @@ public class ControladorDominioResultado extends ControladorDominio {
 	public String getAlgoritmo(String nombre) {
 		return conjuntoResultados.get(nombre).getAlgoritmo().toString();
 	}
+	
+	public Set<ResultadoDeBusquedaPorDiputado> getAllPorDiputado(){
+		return conjuntoResultados.getAllPorDiputado();
+	}
+	public Set<ResultadoDeBusquedaPorPeriodo> getAllPorPeriodo(){
+		return conjuntoResultados.getAllPorPeriodo();
+	}
+	
+	public void clear(){
+		conjuntoResultados.clear();
+	}
+	
+	public void addGrupoResultadoPeriodo(String nombreResultado,Integer ID, Set<String> set){
+		if(conjuntoResultados.existsPorPeriodo(nombreResultado)){
+			GrupoAfinPorPeriodo nuevoGrupo= new GrupoAfinPorPeriodo(ID);
+			for(String elem:set){
+				nuevoGrupo.addDiputado(elem, ID);
+			}
+			conjuntoResultados.getPorPeriodo(nombreResultado).addGrupo(nuevoGrupo);
+		}
+	}
+	
+	public void addGrupoResultadoDiputados(String nombreResultado,Integer ID, Date FI, Date FF,Set<String> set){
+		if(conjuntoResultados.existsPorDiputado(nombreResultado)){
+			GrupoAfinPorDiputado nuevoGrupo= new GrupoAfinPorDiputado(ID,FI,FF);
+			for(String elem:set){
+				nuevoGrupo.addDiputado(elem, ID);
+			}
+			
+			conjuntoResultados.getPorDiputado(nombreResultado).addGrupo(nuevoGrupo);
+		}
+	}
+	
+	
+	
 }
