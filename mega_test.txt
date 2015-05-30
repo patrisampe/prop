@@ -1,6 +1,0 @@
-File Encoding Format:MSIOF;
-4
-mega_test1
-mega_test2
-mega_test3
-mega_test4
