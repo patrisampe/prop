@@ -21,7 +21,7 @@ import dominio.*;
 import time.Date;
 import time.DateInterval;
 import utiles.CodiError;
-//import utiles.ExportSet;
+import utiles.ExportSet;
 import utiles.ImportLog;
 
 /**
@@ -577,7 +577,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		cargarFichero(fichero);
 		return validaImport();
 	}
-	/*
+	
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
 		ControladorFichero sf = new ControladorFichero();
 		int i = 0;
@@ -603,10 +603,10 @@ public class ControladorDominioDatos extends ControladorDominio {
 				sc.add(encode( (ResultadoDeBusquedaPorPeriodo) cRes.get(e.getForeignKey())));
 				break;
 			case "GrupoAfinPorDiputado":
-				sc.add(encode(((GrupoAfinPorDiputado)cRes.getGrupo(e.getForeignKey(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
+				sc.add(encode(((GrupoAfinPorDiputado)cRes.getGrupo(e.getForeingKey2(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
 				break;
 			case "GrupoAfinPorPeriodo":
-				sc.add(encode(((GrupoAfinPorPeriodo)cRes.getGrupo(e.getForeignKey(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
+				sc.add(encode(((GrupoAfinPorPeriodo)cRes.getGrupo(e.getForeingKey2(),Integer.parseInt(e.getForeignKey()))), e.getForeingKey2()));
 				break;
 			}
 			if (sc.size() > lineaSize*3/2) {
@@ -615,7 +615,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 			}
 		}
 	}
-	*/
+	
 	public ImportLog getLog() {
 		if (leyendo) return log;
 		return null;
