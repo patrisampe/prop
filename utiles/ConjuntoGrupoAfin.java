@@ -5,7 +5,6 @@ import java.util.Set;
 import dominio.GrupoAfin;
 import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
-import dominio.ResultadoDeBusqueda;
 
 /**
  * Conjunto abstracto auxiliar que almacena grupos afines por diputado y por período.

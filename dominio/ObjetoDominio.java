@@ -1,11 +1,5 @@
 package dominio;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
-
 /**
  * Objeto genérico del dominio de datos.
  * @author David Morán
