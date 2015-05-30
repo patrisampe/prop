@@ -1,4 +1,7 @@
 package dominio.algoritmos;
+
+
+
 import java.util.*;
 
 /**
@@ -14,6 +17,8 @@ public class Clique {
     private static double pMax;
     private static double pMin;
     private static ArrayList<HashSet<String>> cliques; //Tendra TODOS los cliques ordenados del grafo "graph"
+    private static double mediaK;
+
 
     /**
      * Creadora por defecto.
@@ -28,7 +33,6 @@ public class Clique {
      */
     private static ArrayList<HashSet<String>> getAllMaximalCliques()
     {
-
         cliques = new ArrayList<HashSet<String>>();
         ArrayList<String> potential_clique = new ArrayList<String>();
         ArrayList<String> candidates = new ArrayList<String>();
@@ -61,6 +65,7 @@ public class Clique {
                 candidates.remove(candidate);
 
                 //crear new_candidates eliminando nodos de "candidates" conectado al nodo candidate
+
                 for(int j=0; j<candidates.size(); j++){
                     String new_candidate = candidates.get(j);
                     if (graph.existeixAresta(candidate, new_candidate))
@@ -117,10 +122,12 @@ public class Clique {
                 } // of if
             } // of for
             if (edgecounter == candidates.size()) {
-                end = true;
+                //end = true;
+                return true;
             }
         } // of for
-        return end;
+        return false;
+        //return end;
     }
 
     /**
@@ -130,9 +137,14 @@ public class Clique {
     private static ArrayList<HashSet<String>> getCliquesOrder()
     {
         //tenemos en cliques todos los cliques
+        //TODO OBTENER LAS MEDIAS DE LAS K PARA CALCULAR
         int maximum = 0;
+        mediaK = 0.0;
+        int n = 0;
         ArrayList<HashSet<String>> order_cliques = new ArrayList<HashSet<String>>();
         for (HashSet<String> clique : cliques) {
+            n ++;
+            mediaK += clique.size();
             if (maximum < clique.size()) {
                 maximum = clique.size();
             }
@@ -144,6 +156,7 @@ public class Clique {
                 }
             }
         }
+        mediaK = mediaK/n;
         return order_cliques;
     }
 
@@ -152,22 +165,36 @@ public class Clique {
      * @param f Grafo original sin filtrado.
      * @param percentatge indica lo estricto que desea ser.
      */
-    private static void determinarGrafoNuevo(Graf f, Integer percentatge){
+    private static void     determinarGrafoNuevo(Graf f, Integer percentatge){
         //Primero determinamos pMax y pMin
         //obtengo todos los nodos
+        //pMax = Double.MAX_VALUE;
         pMax = -1111111111111111111.0;
         pMin = 1111111111111111111.0;
+        double mediaPesos = 0.0;
         HashSet<String> nodes = f.getNodes();
 
         //para cada nodo miro sus adjacentes y determino pMax, pMin.
+        int c = 0;
         for (String n : nodes) {
             HashSet<String> adj = f.getAdjacents(n);
             for (String nod : adj) {
                 double p = f.getPes(n, nod);
                 if (p > pMax) pMax = p;
                 if (p < pMin) pMin = p;
+                mediaPesos += p;
+                c++;
             }
         }
+
+//        double aux = (mediaPesos*(1-(double)percentatge/100)) / c;
+//        double aux2 = ((mediaPesos/c)*(1-(double)percentatge/100));
+        mediaPesos = mediaPesos/c;
+
+        /**
+         * Cambios hechos, ahora como partimos de la media (estamos ya aprox sobre el 50% de estricto aumententamos o decrecemos ese 50% según el parámetro de estricto que nos piden
+         */
+        double w = calcularMediaEstricta(mediaPesos,pMax,pMin,percentatge);
 
         //Aqui ya tengo el pMax y pMin de el grafo f
         //genero mi grafo nuevo
@@ -175,8 +202,7 @@ public class Clique {
         //Hago una copia.
         graph = new Graf(f);
         //Determino la W segun el peso Maximo, el peso Minimo y El porcentaje de estricto.
-        double w = pMax-((pMax-pMin)*(1-((double)percentatge/100)));
-
+        //double w = pMax-((pMax-pMin)*(1-((double)percentatge/100)));
         //elimino las aristas que no cumple la W:
         for (String n : nodes){
             HashSet<String> adj = f.getAdjacents(n);
@@ -196,16 +222,30 @@ public class Clique {
     public static HashSet<HashSet<String>> executa(Graf G, Integer percentatge){
 
         //GEnero el grafo con la cual va a trabajar para detectar los cliques
+        long before = System.nanoTime();
         determinarGrafoNuevo(G, percentatge);
-
+        long after = System.nanoTime();
+        System.out.println("Esto se demora en determinar grafo nuevo para calcular cliques " + (after - before));
+        //G = null;
+        before = System.nanoTime();
         //ME encuentra todos los cliques que existen en el grafo "GRAPH"
         getAllMaximalCliques();
 
         //Me ordena los cliques de mayor a menor(K mas alta)
-        cliques = getCliquesOrder();
 
+        cliques = getCliquesOrder();
+        after = System.nanoTime();
+        System.out.println("Esto se demora en calcular cliques " + (after - before));
+        //Vamos a vaciar memoria
+        //graph = null;
+        //Llamamos al garbage collector
+        System.gc();
         //PARA OBTENER LAS COMUNIDADES
+        before = System.nanoTime();
+        System.out.println("EMPEZAMOS A BUSCAR LAS COMUNIDADES TRAS ENCONTRAR LOS CLIQUES");
         HashSet<HashSet<String>> res = obtenerComunidades(cliques,percentatge);
+        after = System.nanoTime();
+        System.out.println("Esto se demora en calcular comunidades " + (after - before));
         return res;
     }
 
@@ -236,13 +276,15 @@ public class Clique {
      */
     private static HashSet<HashSet<String>> obtenerComunidades(ArrayList<HashSet<String>> cliques,Integer percentatge){
         int n = cliques.size();
-        int k = kComunidad(cliques.get(0).size(),cliques.get(n-1).size(),percentatge);
+//        int k = kComunidad(cliques.get(0).size(),cliques.get(n-1).size(),percentatge);
+        int k = (int) Math.round(calcularMediaEstricta(mediaK,cliques.get(0).size(),cliques.get(n-1).size(),percentatge));
+        //if(k == 1) k++;
         int overMat[][] = new int[n][n]; //La matriz de NxN cliques inicializada
         //Rellenamos la tabla de overlaping (tenemos el número de nodos en común
         for(int i=0;i<n;i++){
             for (int j = i; j < n; j++) { //Miramos solo diagonal superior solo
                 if(i==j) {
-                    overMat[i][j] = (cliques.get(i)).size();
+                    overMat[i][j] = cliques.get(i).size();
                     if(overMat[i][j]>=k) overMat[i][j] = 1;
                     else overMat[i][j] = 0;
                 }
@@ -264,11 +306,10 @@ public class Clique {
         for(int i =0;i<n;i++){
             //Una fila 1 comunidad provisional si no ha sido ya chekeada/procesada, una fila es chekeada si sus cliques adyacentes han sido procesados
             if(checked[i]==0) {
-                checked[i] = 1; //La marcamos como revisada
                 com = new HashSet<Integer>(); //La comunidad provisional
                 //Ahora para i hemos de obtener todas sus cliques adjacentes, por tanto exploramos
                 com.addAll(obtenerComunidades(overMat, i,checked)); //Añadimos todas las comunidades de i ya hemos explorado también todas de las que son adyacente, así tenemos los nº de cliques adyacentes entre ellos
-                checked[i] = 1; //Acabamos de procesar j
+                checked[i] = 1; //Acabamos de procesar i
                 comProv.add(com);//La añadimos
             }
             //Si ya ha sido procesada no nos interesa
@@ -303,14 +344,22 @@ public class Clique {
      */
     private static HashSet<Integer> obtenerComunidades(int m[][], int i,int c[]){
         HashSet<Integer> cs = new HashSet<>();
-        if(m[i][i]==1) cs.add(i);
+        cs.add(i);
+        if(c[i]==1) return cs;; //Condición de romper la recursividad si ya ha sido examinada esta fila salimos
+        //TODO SI YA ES CONSULTADO SALTARSE EL FOR???? PENSARLO
         for(int j=i+1; j<m.length;j++){
             if(m[i][j]==1) {
-                cs.addAll(obtenerComunidades(m,j,c)); //Obtenemos todos las comunidades que comparte j {su fila}
-                c[j] = 1;
+                if(c[j]==1){
+                    //Ya han evaluado la fila j pero como tiene 1 en overmat están relacionados
+                    cs.add(j);
+                }
+                if(c[j]==0) {
+                    HashSet<Integer> res = obtenerComunidades(m, j, c);
+                    cs.addAll(res); //Obtenemos todos las comunidades que comparte j {su fila}, la procesamos integra y acumulamos
+                    c[j] = 1; //Hemos obtenido todas las comunidades de j por tanto
+                }
             }
         }
-
         return cs;
     }
 
@@ -320,12 +369,42 @@ public class Clique {
      * @param min num de nodos del k-clique mínimo.
      * @param porcentaje lo estricto que será la Kcomunidad
      * @return La k de forma heurística, en función del lo estricto que se pida y el k max,min.
+     * @deprecated ANTIGUA AHORA SE USA CALCULARMEDIAESTRICTA
      */
 
     private static int kComunidad(int max,int min, Integer porcentaje){
-        double por = 1-(porcentaje)/100.0;
-        int k = (int) Math.round(max-((max-min)*por));
-        return k;
+        /**
+         * Cambios hechos, ahora como partimos de la media (estamos ya aprox sobre el 50% de estricto aumententamos o decrecemos ese 50% según el parámetro de estricto que nos piden
+         */
+        //ORIGINAL
+//        double por = (double) 1-(porcentaje)/100.0; //Así conseguimos que aumente o decrezca el promedio de K's
+//        int k = (int) Math.round(max-((max-min)*por));
+        return 0;
+    }
+
+
+    /**
+     * Te permite calcular el valor de la media en función de como de estricto se pida que sea
+     * @param media La media de un conjunto de valores C
+     * @param max El valor máximo presente en el conjunto C
+     * @param min El valor mínimo presente en el conjunto C
+     * @param estricto Como de estricto se pida que sea esa "media" (si muy estricto el valor será proximo al double max y si lo contrario proximo a min)
+     * @return La media en función de lo estricto que se pida que se sea. Consideramos que estrico = 50% es la propia media
+     */
+    private static double calcularMediaEstricta(double media, double max, double min, int estricto){
+        if(estricto == 50){
+            return media;
+        }
+        if(estricto > 50){
+            double porcentaje = (double) 1-((estricto-50)*2/100.00);
+            double i = max-((max-media)*porcentaje);
+            return i;
+        }
+        if (estricto < 50){
+            double porcentaje = (double) 1 - ((estricto/100.00)*2);
+            return media-((media-min)*(porcentaje));
+        }
+        return 0;
     }
 
 }

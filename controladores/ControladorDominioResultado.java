@@ -493,7 +493,7 @@ public class ControladorDominioResultado extends ControladorDominio {
 		if(conjuntoResultados.existsPorPeriodo(nombreResultado)){
 			GrupoAfinPorPeriodo nuevoGrupo= new GrupoAfinPorPeriodo(ID);
 			for(String elem:set){
-				nuevoGrupo.addDiputado(elem, ID);
+				nuevoGrupo.addDiputado(elem);
 			}
 			conjuntoResultados.getPorPeriodo(nombreResultado).addGrupo(nuevoGrupo);
 		}
@@ -503,7 +503,7 @@ public class ControladorDominioResultado extends ControladorDominio {
 		if(conjuntoResultados.existsPorDiputado(nombreResultado)){
 			GrupoAfinPorDiputado nuevoGrupo= new GrupoAfinPorDiputado(ID,FI,FF);
 			for(String elem:set){
-				nuevoGrupo.addDiputado(elem, ID);
+				nuevoGrupo.addDiputado(elem);
 			}
 			
 			conjuntoResultados.getPorDiputado(nombreResultado).addGrupo(nuevoGrupo);
