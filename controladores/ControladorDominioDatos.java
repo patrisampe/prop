@@ -1,9 +1,5 @@
 package controladores;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 93d5aee68d62d2a775267383620a07da1a36d437
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
