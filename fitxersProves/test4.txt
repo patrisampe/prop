@@ -1,0 +1,41 @@
+File Encoding Format:SIOF;
+TipoEvento;TipoEvento 1;2
+Evento 832;11/6/24265;14;Diputado 13628;Diputado 1550;Diputado 18025;Diputado 24841;Diputado 34741;Diputado 40127;Diputado 43951;Diputado 56083;Diputado 77378;Diputado 81018;Diputado 82365;Diputado 8268;Diputado 8373;Diputado 930
+TipoEvento;TipoEvento 2;2
+Evento 555;28/5/29194;7;Diputado 5347;Diputado 57195;Diputado 70224;Diputado 70811;Diputado 73436;Diputado 82434;Diputado 96200
+TipoEvento;TipoEvento 3;5
+Evento 853;5/1/27956;9;Diputado 25274;Diputado 27759;Diputado 28360;Diputado 33778;Diputado 45082;Diputado 51084;Diputado 58155;Diputado 58308;Diputado 84855
+TipoEvento;TipoEvento 4;1
+Evento 580;17/10/20513;7;Diputado 2460;Diputado 32381;Diputado 42286;Diputado 45698;Diputado 51607;Diputado 62971;Diputado 68230
+TipoEvento;TipoEvento 5;2
+Evento 349;30/4/6602;10;Diputado 25527;Diputado 32564;Diputado 42508;Diputado 64846;Diputado 71969;Diputado 74728;Diputado 8046;Diputado 88602;Diputado 91979;Diputado 99056
+TipoEvento;TipoEvento 6;3
+Evento 836;1/2/17802;13;Diputado 13700;Diputado 20000;Diputado 22892;Diputado 27731;Diputado 38631;Diputado 51409;Diputado 54213;Diputado 61303;Diputado 75026;Diputado 77440;Diputado 88914;Diputado 92983;Diputado 969
+TipoEvento;TipoEvento 7;4
+Evento 386;6/2/40714;10;Diputado 1334;Diputado 25426;Diputado 26065;Diputado 32780;Diputado 43614;Diputado 49367;Diputado 49659;Diputado 56800;Diputado 75049;Diputado 75922
+TipoEvento;TipoEvento 8;5
+Evento 489;16/4/7049;14;Diputado 15119;Diputado 22247;Diputado 34903;Diputado 46804;Diputado 46815;Diputado 50622;Diputado 56588;Diputado 69723;Diputado 72914;Diputado 8607;Diputado 88126;Diputado 89808;Diputado 95738;Diputado 99147
+TipoEvento;TipoEvento 9;2
+Evento 413;4/2/42076;15;Diputado 16253;Diputado 26311;Diputado 3020;Diputado 36642;Diputado 38308;Diputado 47254;Diputado 49178;Diputado 50774;Diputado 55423;Diputado 59505;Diputado 63974;Diputado 6417;Diputado 66158;Diputado 71762;Diputado 82842
+TipoEvento;TipoEvento 10;2
+Evento 161;15/5/3333;11;Diputado 23145;Diputado 26567;Diputado 31816;Diputado 3256;Diputado 35221;Diputado 37794;Diputado 42229;Diputado 44918;Diputado 66195;Diputado 76512;Diputado 78360
+TipoEvento;TipoEvento 11;5
+Evento 76;29/5/18760;10;Diputado 15939;Diputado 17453;Diputado 19370;Diputado 22079;Diputado 28504;Diputado 50752;Diputado 61215;Diputado 68869;Diputado 76378;Diputado 95564
+TipoEvento;TipoEvento 12;1
+Evento 780;18/4/22749;12;Diputado 39776;Diputado 44302;Diputado 55297;Diputado 55701;Diputado 60841;Diputado 63140;Diputado 65816;Diputado 67053;Diputado 70658;Diputado 81459;Diputado 83187;Diputado 99983
+TipoEvento;TipoEvento 13;3
+Evento 543;11/10/24860;5;Diputado 12873;Diputado 39667;Diputado 64795;Diputado 79157;Diputado 83438
+TipoEvento;TipoEvento 14;3
+Evento 148;19/11/39801;9;Diputado 18089;Diputado 27071;Diputado 3993;Diputado 40977;Diputado 46002;Diputado 54164;Diputado 67562;Diputado 74669;Diputado 94097
+TipoEvento;TipoEvento 15;2
+Evento 879;16/9/33513;11;Diputado 18154;Diputado 18710;Diputado 37109;Diputado 48659;Diputado 7059;Diputado 72238;Diputado 76723;Diputado 81864;Diputado 87548;Diputado 88734;Diputado 92509
+TipoEvento;TipoEvento 16;2
+Evento 31;17/12/27305;12;Diputado 14343;Diputado 17984;Diputado 2938;Diputado 33445;Diputado 45169;Diputado 51432;Diputado 5792;Diputado 66247;Diputado 75486;Diputado 76098;Diputado 79469;Diputado 83252
+TipoEvento;TipoEvento 17;5
+Evento 608;1/3/42794;8;Diputado 20662;Diputado 22825;Diputado 24684;Diputado 24981;Diputado 28343;Diputado 30051;Diputado 46673;Diputado 91304
+TipoEvento;TipoEvento 18;2
+Evento 79;10/1/30310;13;Diputado 16119;Diputado 48977;Diputado 49495;Diputado 51338;Diputado 52250;Diputado 55427;Diputado 55627;Diputado 55823;Diputado 84243;Diputado 86990;Diputado 89140;Diputado 96556;Diputado 97743
+TipoEvento;TipoEvento 19;5
+Evento 622;4/7/13893;13;Diputado 11497;Diputado 1428;Diputado 17129;Diputado 17312;Diputado 23139;Diputado 27005;Diputado 28172;Diputado 40582;Diputado 51437;Diputado 57449;Diputado 63357;Diputado 79106;Diputado 81438
+TipoEvento;TipoEvento 20;5
+Evento 258;3/11/25108;9;Diputado 25342;Diputado 28022;Diputado 35188;Diputado 55840;Diputado 61112;Diputado 72582;Diputado 78286;Diputado 84421;Diputado 85328
