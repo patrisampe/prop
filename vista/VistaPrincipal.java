@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import controladores.ControladorVista;
+
 
 /**
  *
@@ -52,7 +54,27 @@ public final class VistaPrincipal extends javax.swing.JFrame {
         jTabbedPane1.setIconAt(5, new ImageIcon(getClass().getResource("/vista/imagenes/iconos/iconInformacion30x30.png")));
         rellenaLegislaturas();
         rellenaTiposEvento();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                close();
+            }
+        });
     }
+     
+ 
+    private void close(){
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Desea realmente salir del sistema?",
+                "Salir del sistema", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+        	ControladorVista aux= ControladorVista.getInstance();
+        	aux.salvarDominio();
+        	 System.exit(0);
+        }
+           
+    }                
+    
     
     public static java.util.Date convierteStringADate(String stringFecha) {
         try {

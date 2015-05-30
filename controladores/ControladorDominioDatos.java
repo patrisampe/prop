@@ -21,7 +21,7 @@ import dominio.*;
 import time.Date;
 import time.DateInterval;
 import utiles.CodiError;
-import utiles.ExportSet;
+//import utiles.ExportSet;
 import utiles.ImportLog;
 
 /**
@@ -577,7 +577,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 		cargarFichero(fichero);
 		return validaImport();
 	}
-	
+	/*
 	public void exportarDatos(String fichero, ArrayList<ExportSet> l) {
 		ControladorFichero sf = new ControladorFichero();
 		int i = 0;
@@ -615,7 +615,7 @@ public class ControladorDominioDatos extends ControladorDominio {
 			}
 		}
 	}
-	
+	*/
 	public ImportLog getLog() {
 		if (leyendo) return log;
 		return null;

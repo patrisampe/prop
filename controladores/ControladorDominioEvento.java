@@ -3,7 +3,6 @@ package controladores;
 import java.util.Set;
 import java.util.TreeSet;
 
-import utiles.CodiError;
 import utiles.Conjunto;
 import dominio.Evento;
 import dominio.TipoEvento;

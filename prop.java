@@ -8,6 +8,7 @@ import controladores.ControladorDominioDiputado;
 import controladores.ControladorDominioEvento;
 import controladores.ControladorDominioLegislatura;
 import controladores.ControladorDominioVotacion;
+import controladores.ControladorVista;
 import dominio.TipoVoto;
 import java.util.HashMap;
 import java.util.Map;
@@ -179,8 +180,8 @@ public class prop {
         votaciones.put("Susana", TipoVoto.EN_CONTRA);
         votaciones.put("Basilio", TipoVoto.ABSTENCION);
         ctrlVot.addVotacion("votación_2", Date.parseDate("25/04/1990"), 5,  votaciones);
-        VistaPrincipal vista = new VistaPrincipal();
-        vista.setVisible(true);
+        ControladorVista aux=ControladorVista.getInstance();
+        aux.iniciaVista();
         
     }
     
