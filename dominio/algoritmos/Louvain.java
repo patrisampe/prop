@@ -137,6 +137,8 @@ private static Double ModularityInc(String node, Double m,
 	private static HashSet<HashSet<String>> retorna(Integer percentatge) {
 		Integer Total = Historia.size();
 		Integer Interesante = (100-percentatge)*Total/100;
+		if(Interesante >= Total) Interesante = Total-1;
+		if (Interesante < 0 ) Interesante = 0;
 		HashSet<String> Generacion = new HashSet<String>(Historia.get(Interesante).keySet());
 		HashSet<HashSet<String> >  hs = HSStoHSHSS(Generacion);
 		HashSet<HashSet<String>> ret = new HashSet<HashSet<String>>();
