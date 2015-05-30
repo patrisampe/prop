@@ -214,7 +214,15 @@ public class ControladorDominioResultado extends ControladorDominio {
 	
 	
 	
-	
+	/**
+	 * Crea un nuevo Resultado de Busqueda pero sin realizar la busqueda por Diputado, directamente con los parametros que le pasa el usuario
+	 * @param indiceAfinidad - Valor del porcentaje de afinidad que se desea obtener en la busqueda.
+	 * @param algoritmo - Algoritmo que se desea utilizar para realizar la busqueda.
+	 * @param importancia - Importancia de todos los eventos del sistema.
+	 * @param lapsoDeTiempo - Cantidad de tiempo a tener en cuenta en la busqueda.
+	 * @param diputadoRelevante - Diputado en torno al cual se desean encontrar comunidades.
+	 * @param criterio - Criterio relevante para la busqueda de grupos afines.
+	 */
 	public void nuevoResultadoPorDiputadoSinBusqueda(String nombre, Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, Integer lapsoDeTiempo, String diputadoRelevante, Map<Criterio,Double> criterios) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) {
 			error = new CodiError(30);
@@ -227,7 +235,14 @@ public class ControladorDominioResultado extends ControladorDominio {
 			conjuntoResultados.add(new ResultadoDeBusquedaPorDiputado(nombre, indiceAfinidad, algoritmo, importancia, false, lapsoDeTiempo, resultado, diputadoRelevante, criterios));
 		}
 	}
-	
+	/**
+	 * Crea un nuevo Resultado de Busqueda por Diputado pero sin realizar la busqueda, directamente con los parametros que le pasa el usuario
+	 * @param indiceAfinidad - Valor del porcentaje de afinidad que se desea obtener en la busqueda.
+	 * @param algoritmo - Algoritmo que se desea utilizar para realizar la busqueda.
+	 * @param importancia - Importancia de todos los eventos del sistema.
+	 * @param periodo - Intervalo entre dos fechas a tener en cuenta en la busqueda.
+	 * @param criterio - Criterio relevante para la busqueda de grupos afines.
+	 */
 	public void nuevoResultadoPorPeriodoSinBusqueda(String nombre,Integer indiceAfinidad, TipoAlgoritmo algoritmo, Map<String, Integer> importancia, DateInterval periodo, Map<Criterio,Double> criterios) {
 		if (indiceAfinidad < 0 || indiceAfinidad > 100) { 
 			error = new CodiError(30);
@@ -477,18 +492,32 @@ public class ControladorDominioResultado extends ControladorDominio {
 	public String getAlgoritmo(String nombre) {
 		return conjuntoResultados.get(nombre).getAlgoritmo().toString();
 	}
-	
+	/**
+	 * Devuelve un conjunto con todos los resultados de busqueda por diputado
+	 * @return todos los resultados de busqueda por diputado
+	 */
 	public Set<ResultadoDeBusquedaPorDiputado> getAllPorDiputado(){
 		return conjuntoResultados.getAllPorDiputado();
 	}
+	/**
+	 * Devuelve un conjunto con todos los resultados de busqueda por periodo
+	 * @return todos los resultados de busqueda por periodo
+	 */
 	public Set<ResultadoDeBusquedaPorPeriodo> getAllPorPeriodo(){
 		return conjuntoResultados.getAllPorPeriodo();
 	}
-	
+	/**
+	 * Limpia el conjunto, elimina todos los resultados de busqueda que se hayan podido hacer
+	 */
 	public void clear(){
 		conjuntoResultados.clear();
 	}
-	
+	/**
+	 * Crea y añade un nuevo grupo afin por Periodo al Resultado De Busqueda por periodo identificado por nombreResultado
+	 * @param nombreResultado es el nombre del Resultado al que le queremos añadir el Resultado
+	 * @param ID Es el id del nuevo grupo afin
+	 * @param set es el conjunto de diputados que forman parte del grupo afin que crearemos y añadiremos
+	 */
 	public void addGrupoResultadoPeriodo(String nombreResultado,Integer ID, Set<String> set){
 		if(conjuntoResultados.existsPorPeriodo(nombreResultado)){
 			GrupoAfinPorPeriodo nuevoGrupo= new GrupoAfinPorPeriodo(ID);
@@ -498,7 +527,14 @@ public class ControladorDominioResultado extends ControladorDominio {
 			conjuntoResultados.getPorPeriodo(nombreResultado).addGrupo(nuevoGrupo);
 		}
 	}
-	
+	/**
+	 * Crea y añade un nuevo grupo afin por Diputado al Resultado De Busqueda por Diputado identificado por nombreResultado
+	 * @param nombreResultado es el nombre del Resultado al que le queremos añadir el Resultado
+	 * @param ID Es el id del nuevo grupo afin
+	 * @param FI Fecha inicio de la busqueda
+	 * @param FF Fecha Fin de la Busqueda
+	 * @param set es el conjunto de diputados que forman parte del grupo afin que crearemos y añadiremos
+	 */
 	public void addGrupoResultadoDiputados(String nombreResultado,Integer ID, Date FI, Date FF,Set<String> set){
 		if(conjuntoResultados.existsPorDiputado(nombreResultado)){
 			GrupoAfinPorDiputado nuevoGrupo= new GrupoAfinPorDiputado(ID,FI,FF);
@@ -509,11 +545,20 @@ public class ControladorDominioResultado extends ControladorDominio {
 			conjuntoResultados.getPorDiputado(nombreResultado).addGrupo(nuevoGrupo);
 		}
 	}
-	
+	/**
+	 * Devuelve el resultado de busqueda identificado por nombreRes
+	 * @param nombreRes
+	 * @return el resultado de busqueda identificado por nombreRes
+	 */
 	public ResultadoDeBusqueda getResultadoOb(String nombreRes){
 		return conjuntoResultados.get(nombreRes);
 	}
-	
+	/**
+	 * Devuelve el grupo afin identificada por ID del resultado de busqueda identificado por nombreRes
+	 * @param nombreRes
+	 * @param ID
+	 * @return el grupo afin identificado por ID del resultado de busqueda identificado por nombreRes
+	 */
 	public GrupoAfin getGrupoAfinOb(String nombreRes, Integer ID){
 		return conjuntoResultados.get(nombreRes).getGrupoAfin(ID);
 	}
