@@ -387,15 +387,7 @@ public class Parser {
 					for (Integer j = 1; j < SF.elementAt(i).size(); ++j) {
 						S.write("Clase " + SF.elementAt(i, j).getNombre());
 						for (Integer k = 1; k < SF.elementAt(i, j).size(); ++k) {
-							String out = SF.elementAt(i, j, k);
-							if (out.contains("Evento:")) {
-								StreamObject SO = SF.elementAt(i, j).objectAt(k);
-								S.write("Clase " + SO.getNombre());
-								for (Integer l = 1; l < SO.size(); ++l) {
-									S.write(SO.elementAt(l));
-								}
-							}
-							else S.write(out);
+							S.write(SF.elementAt(i, j, k));
 						}
 					}
 				}

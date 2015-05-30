@@ -570,7 +570,7 @@ public class ControladorFichero {
 					SC.elementAt(index).add(SO);
 				break;
 				case "Legislatura":
-					if (atribs.length != 3) {
+					if (atribs.length != 4) {
 						E.close();
 						throw new FileFormatException(j, "Numero de atributos incorrecto.");
 					}
@@ -581,7 +581,7 @@ public class ControladorFichero {
 					SC.elementAt(index).add(SO);
 				break;
 				case "TipoEvento":
-					if (atribs.length != 4) {
+					if (atribs.length != 3) {
 						E.close();
 						throw new FileFormatException(j, "Numero de atributos incorrecto.");
 					}
@@ -592,20 +592,21 @@ public class ControladorFichero {
 				break;
 				case "Evento":
 					try {
-						n = Integer.parseInt(atribs[3]);
+						n = Integer.parseInt(atribs[4]);
 					} catch (NumberFormatException e) {
 						E.close();
 						throw new FileFormatException(j, e.getMessage());
 					}
-					if (atribs.length != 4 + n) {
+					if (atribs.length != 5 + n) {
 						E.close();
 						throw new FileFormatException(j, "Numero de atributos incorrecto.");
 					}
 					SO = new StreamObject("Evento");
 					SO.add(atribs[1]);
 					SO.add(atribs[2]);
+					SO.add(atribs[3]);
 					set = new HashSet<String>();
-					for (Integer i = 0; i < n; ++i) set.add(atribs[i+4]);
+					for (Integer i = 0; i < n; ++i) set.add(atribs[i+5]);
 					SO.add(set);
 					++index;
 					SC.add(new StreamContainer("Import " + index));
