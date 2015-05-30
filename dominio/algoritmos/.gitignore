@@ -10,3 +10,5 @@
 /GrafNewman$QueueVector.class
 /Graf$LlistaAdjacencia.class
 /Graf$Aresta.class
+/GrafNewman$ArcP.class
+/GrafNewman$arcPCCompara.class

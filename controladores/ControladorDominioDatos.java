@@ -1,15 +1,12 @@
 package controladores;
 
-import io.Entrada;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -38,8 +35,6 @@ public class ControladorDominioDatos extends ControladorDominio {
 	private String fLeyendo;
 	
 	private Set<String> ficheros;
-	
-	private ArrayList<StreamObject> temp;
 	
 	private static final String ext = ".ciof";
 	
