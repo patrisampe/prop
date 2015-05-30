@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import dominio.Criterio;
+import dominio.GrupoAfin;
 import dominio.GrupoAfinPorDiputado;
 import dominio.GrupoAfinPorPeriodo;
 import dominio.ResultadoDeBusqueda;
@@ -509,6 +510,12 @@ public class ControladorDominioResultado extends ControladorDominio {
 		}
 	}
 	
+	public ResultadoDeBusqueda getResultadoOb(String nombreRes){
+		return conjuntoResultados.get(nombreRes);
+	}
 	
+	public GrupoAfin getGrupoAfinOb(String nombreRes, Integer ID){
+		return conjuntoResultados.get(nombreRes).getGrupoAfin(ID);
+	}
 	
 }

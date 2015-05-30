@@ -220,6 +220,10 @@ public abstract class ResultadoDeBusqueda extends ObjetoDominio{
 		return gruposAfines;
 	}
 	
+	public GrupoAfin getGrupoAfin(Integer id) {
+		return gruposAfines.get(id);
+	}
+	
 	/**
 	 * Suministra un nuevo conjunto con todos los grupos afines del resultado.
 	 * @return Conjunto de grupos afines.
