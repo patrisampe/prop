@@ -104,7 +104,7 @@ public class ControladorFichero {
 	 */
 	public Integer length() {
 		Integer l = 0;
-		for (Integer i = 0; i <= contenido.size(); ++i)
+		for (Integer i = 0; i < contenido.size(); ++i)
 			l += contenido.elementAt(i).length();
 		return l;
 	}
