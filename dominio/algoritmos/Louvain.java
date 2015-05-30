@@ -42,8 +42,8 @@ public class Louvain {
 		
 	}
 
-	private static void agregaGraf(long t) {
-		System.out.println("Agregando Grafo "+(System.currentTimeMillis()-t)+"ms");
+	private static void agregaGraf() {
+		//System.out.println("Agregando Grafo "+(System.currentTimeMillis()-t)+"ms");
 		GrafLouvain NouGraf = new GrafLouvain();
 		Iterator<HashSet<String> >  iHS = Comunidades.iterator();
 		HashMap<String, HashSet<String>> Mapa = new HashMap<String, HashSet<String>>();
@@ -71,7 +71,7 @@ public class Louvain {
 			if(c1.equals(c2) && !a.getNode1().equals(a.getNode2())) NouGraf.setPes(c1, c2, NouGraf.getPes(c1, c2)+a.getPes());
 		}
 		G = NouGraf; //Graf actualitzat
-		System.out.println("Calculando Pertenencias... "+(System.currentTimeMillis()-t)+"ms");
+		//System.out.println("Calculando Pertenencias... "+(System.currentTimeMillis()-t)+"ms");
 		calcPertenencia();
 	}
 	
@@ -190,7 +190,7 @@ private static Double ModularityInc(String node, Double m,
 		while(Comunidades.size() > 1 && modificacion) {
 			modificacion = false;
 			++i;
-			System.out.println("Iteracion "+i.toString()+", "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
+			//System.out.println("Iteracion "+i.toString()+", "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
 			//Integer j = 0;
 			while(IncrementModularity()) {
 				modificacion = true; 
@@ -198,11 +198,11 @@ private static Double ModularityInc(String node, Double m,
 				//System.out.println("Iteracion "+i.toString()+" Incrementro "+j.toString()+". "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
 				
 			}
-			System.out.println("Iteracion "+i.toString()+" finalizada. "+(System.currentTimeMillis()-t)+"ms");
-			agregaGraf(t);
+			//System.out.println("Iteracion "+i.toString()+" finalizada. "+(System.currentTimeMillis()-t)+"ms");
+			agregaGraf();
 			
 		}
-		System.out.println("Final, "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
+		//System.out.println("Final, "+Comunidades.size()+" comunidades. "+(System.currentTimeMillis()-t)+"ms");
 		//G.print(sC);
 		return retorna(percentatge);
 		
